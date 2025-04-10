@@ -1,0 +1,63 @@
+import { Link, Warning, Contribution } from '@brillout/docpress'
+
+What we have been working on in June.
+
+> We're [looking for sponsors](https://github.com/vikejs/vike/issues/1350) 💚
+
+<Contribution>
+We're [looking for sponsors](https://github.com/vikejs/vike/issues/1350).
+</Contribution>
+
+<Warning>This is a draft.</Warning>
+
+**Features**
+
+<Link href="#improved-nested-layouts" /><br/>
+<Link href="#pages-marketing" /><br/>
+
+## Improved Nested Layouts
+
+Vike now has first-class support for nested layouts.
+
+```yaml
+# Outer layout, common to all pages
+pages/+Layout.js
+# Layout for product page
+pages/product/@id/+Layout.js
+# Nested layout
+pages/product/@id/pricing/+Page.js
+# Nested layout
+pages/product/@id/reviews/+Page.js
+```
+
+> Fetching data in outer layouts is work-in-progress, see [#1689 - [Nested Layouts] Fetch data on layout-level](https://github.com/vikejs/vike/issues/1689).
+
+> 🙏 Author: [`Blankeos`](https://github.com/Blankeos), [`brillout`](https://github.com/brillout)
+
+<Contribution>
+Authors: [`Blankeos`](https://github.com/Blankeos), [`brillout`](https://github.com/brillout)
+</Contribution>
+
+
+
+## `pages/(marketing)/`
+
+You can now organize your pages into groups:
+
+```yaml
+FILESYSTEM                             URL
+================================       ==================
+pages/(marketing)/index/+Page.js       /
+pages/(marketing)/about/+Page.js       /about
+pages/admin-panel/index/+Page.js       /admin-panel
+pages/admin-panel/users/+Page.js       /admin-panel/users
+```
+> The directory `(marketing)` is ignored because it's wrapped by parentheses.
+
+Beyond improved organization, it allows you to apply different configurations to different pages.
+
+> 🙏 Author: [`brillout`](https://github.com/brillout)
+
+<Contribution>
+Author: [`brillout`](https://github.com/brillout)
+</Contribution>

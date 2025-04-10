@@ -1,0 +1,98 @@
+import { Link, FileRemoved, FileAdded, CodeBlockTransformer, Contribution } from '@brillout/docpress'
+
+This page is for testing/developing DocPress features.
+
+## Detached pages
+
+- <Link href="/orphan" />
+- <Link href="/orphan-2" />
+
+## `<Link>`
+
+- <Link href="/some-page" /> (basic link)
+- <Link href="/orphan" /> (link to detached page)
+- <Link href="#link" /> (same-page link, non-inferred original heading title without needing `sectionTitles`)
+- <Link href="/notes#danger" /> (page link with hash)
+- <Link href="#basic" /> (same-page link, sub heading)
+
+## Code blocks
+
+### Basic
+
+```js
+console.log('hello')
+console.log(`wo${'r'}ld`)
+```
+
+```
+No language
+Second line
+```
+
+### Diff
+
+Powered by `shiki` and `rehype-pretty-code`.
+
+Code diffs powered by `import { transformerNotationDiff } from '@shikijs/transformers'` and custom CSS rule at `css/code/diff.css`.
+
+```ts
+// /pages/+config.js
+
+import type { Config } from 'vike/types'
+
+export default {
+  meta: {
+    Page: { // some comment
+       env: { server: true, client: true } // [!code --]
+       env: { server: true } // [!code ++]
+    }
+  }
+} satisfies Config
+```
+
+Removed/Added file using `<FileRemoved>`/`<FileAdded>` wrapper:
+
+<FileRemoved>
+```js
+// old.js
+export default /* ... */
+```
+</FileRemoved>
+
+<FileAdded>
+```js
+// new.js
+
+export default /* ... */
+```
+</FileAdded>
+
+Old school diffs:
+
+```diff
+  no change
+- deleted
+  no change
++ added
+  no change
+```
+
+### `<CodeBlockTransformer>`
+
+`<CodeBlockTransformer lineBreak="white-space">`
+
+<CodeBlockTransformer lineBreak="white-space">
+```
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module 'node_modules/some-library/dist/esm/some-file' imported from node_modules/some-library/dist/esm/index.js
+Did you mean to import some-file.js?
+```
+</CodeBlockTransformer>
+
+`<CodeBlockTransformer lineBreak="break-word">`
+
+<CodeBlockTransformer lineBreak="break-word">
+```
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module 'node_modules/some-library/dist/esm/some-file' imported from node_modules/some-library/dist/esm/index.js
+Did you mean to import some-file.js?
+```
+</CodeBlockTransformer>
