@@ -1,18 +1,107 @@
-<svg width="142.88mm" height="142.88mm" version="1.1" viewBox="0 0 142.88 142.88" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<defs>
-<radialGradient id="radialGradient34329-69" cx="1250" cy="4e3" r="270" gradientTransform="translate(744.91 642.53)" gradientUnits="userSpaceOnUse">
-<stop stop-color="#f7df1e" stop-opacity=".61002" offset="0"/>
-<stop stop-color="#f7df1e" stop-opacity="0" offset="1"/>
-</radialGradient>
-<filter id="filter1715-45" x="-.73345" y="-.73345" width="2.4669" height="2.4669" color-interpolation-filters="sRGB">
-<feGaussianBlur stdDeviation="24.310502"/>
-</filter>
-</defs>
-<g transform="translate(41.285 -79.324)">
-<g transform="matrix(.26458 0 0 .26458 -497.67 -1077.6)">
-<circle cx="1994.9" cy="4642.5" r="270" fill="url(#radialGradient34329-69)" style="mix-blend-mode:normal;paint-order:markers fill stroke"/>
-<circle cx="1994.9" cy="4642.5" r="50" fill="none" filter="url(#filter1715-45)" stroke="#fff" stroke-width="30" style="mix-blend-mode:normal"/>
-<circle cx="1994.9" cy="4642.5" r="50" fill="#f7df1e"/>
-</g>
-</g>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="142.875mm"
+   height="142.875mm"
+   viewBox="0 0 142.875 142.875"
+   version="1.1"
+   id="svg8477"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="photon.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview8479"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.20715275"
+     inkscape:cx="-299.29606"
+     inkscape:cy="144.82067"
+     inkscape:window-width="1366"
+     inkscape:window-height="745"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs8474">
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient15238"
+       id="radialGradient34329-28-5"
+       cx="1250"
+       cy="4000"
+       fx="1250"
+       fy="4000"
+       r="270"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(750.00005,1499.9998)" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient15238">
+      <stop
+         style="stop-color:#f7df1e;stop-opacity:0.61001807;"
+         offset="0"
+         id="stop15230" />
+      <stop
+         style="stop-color:#f7df1e;stop-opacity:0;"
+         offset="1"
+         id="stop15236" />
+    </linearGradient>
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter2260-6"
+       x="-0.52597587"
+       y="-0.52597587"
+       width="2.0519517"
+       height="2.0519517">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="15.699229"
+         id="feGaussianBlur2262-1" />
+    </filter>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-15.207561,-90.781316)">
+    <g
+       id="g5654"
+       transform="matrix(0.26458333,0,0,0.26458333,-442.5216,-1292.9895)">
+      <circle
+         cx="2000"
+         cy="5500"
+         fill="#008000"
+         id="circle552-3-5-3-6-5-2-2-6-0-2-8-2-93-6"
+         style="mix-blend-mode:normal;fill:url(#radialGradient34329-28-5);fill-opacity:1;stroke:none;stroke-width:3;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
+         r="270" />
+      <circle
+         style="mix-blend-mode:normal;fill:#ffffff;stroke:none;stroke-width:11.4943;stroke-linecap:square;stroke-dashoffset:60.8;paint-order:markers fill stroke;filter:url(#filter2260-6)"
+         id="path2258-3"
+         cx="1455.543"
+         cy="4834.1064"
+         r="35.817375"
+         transform="matrix(1.7399894,0,0,1.7399894,-532.62933,-2911.294)" />
+      <circle
+         cx="2000"
+         cy="5500"
+         fill="#008000"
+         id="circle552-3-5-6-7-947-2"
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:9.99999;stroke-dasharray:none;stroke-opacity:1"
+         r="35" />
+    </g>
+  </g>
 </svg>
