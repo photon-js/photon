@@ -3,8 +3,8 @@ import type { Plugin } from 'vite'
 import { assert, assertUsage } from '../../utils/assert.js'
 import type { PhotonEntryServer, SupportedServers } from '../../validators/types.js'
 
+import { resolvePhotonConfig } from "../../validators/coerce.js";
 import {
-  assertPhotonEntryId,
   extractPhotonEntryId,
   includesPhotonEntryId,
   isPhotonEntryId,
@@ -80,25 +80,38 @@ export function photonEntry(): Plugin[] {
 
   return [
     {
-      name: 'photonjs:set-entry',
+      name: 'photonjs:set-input',
       apply: 'build',
-      enforce: 'pre',
+      enforce: 'post',
 
       applyToEnvironment(env) {
         return env.config.consumer === 'server'
       },
 
-      buildStart() {
-        const { entry } = this.environment.config.photonjs
+      config: {
+        order: 'post',
+        handler(config) {
+          const { entry } = resolvePhotonConfig(config.photonjs)
 
-        for (const [name, photonEntry] of Object.entries(entry)) {
-          assertPhotonEntryId(photonEntry.id)
-          this.emitFile({
-            type: 'chunk',
-            fileName: `${name}.js`,
-            id: photonEntry.id,
-          })
-        }
+          return {
+            build: {
+              rollupOptions: {
+                input: Object.fromEntries(Object.entries(entry).map(([key, value]) => [key, value.id])),
+              },
+            },
+          }
+        },
+      },
+
+      sharedDuringBuild: true,
+    },
+    {
+      name: 'photonjs:compute-meta',
+      apply: 'build',
+      enforce: 'pre',
+
+      applyToEnvironment(env) {
+        return env.config.consumer === 'server'
       },
 
       async resolveId(id, importer, opts) {

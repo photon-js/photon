@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs'
 import type { Plugin } from 'vite'
 
 export function simpleFrameworkPlugin(render: (url: string) => { html: string }): Plugin {
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   let indexHtmlAsset: any
 
   return {
@@ -16,7 +17,9 @@ export function simpleFrameworkPlugin(render: (url: string) => { html: string })
         ssr: {},
         builder: {
           async buildApp(builder) {
+            // biome-ignore lint/style/noNonNullAssertion: <explanation>
             await builder.build(builder.environments.client!)
+            // biome-ignore lint/style/noNonNullAssertion: <explanation>
             await builder.build(builder.environments.ssr!)
           },
         },
@@ -38,10 +41,6 @@ export {
         return {
           build: {
             outDir: './dist/ssr',
-            rollupOptions: {
-              // FIXME should be done by photon
-              input: 'server.ts',
-            },
             emptyOutDir: false,
           },
         }

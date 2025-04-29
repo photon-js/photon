@@ -10,7 +10,9 @@ export default defineConfig(({ mode }) => {
     plugins: [
       mode === 'cloudflare' ? cloudflare() : undefined,
       photonjs({
-        entry: 'server.ts',
+        entry: {
+          index: 'server.ts',
+        },
       }),
       simpleFrameworkPlugin(render),
     ] as Plugin[],
