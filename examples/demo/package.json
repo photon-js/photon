@@ -26,19 +26,19 @@
   "exports": {
     "./universal-middlewares": {
       "development": {
-        "import": "./src/middlewares/dev.js",
-        "default": "./src/middlewares/dev.js"
+        "import": "./framework/middlewares/dev.js",
+        "default": "./framework/middlewares/dev.js"
       },
       "workerd": {
-        "import": "./src/middlewares/edge.js",
-        "default": "./src/middlewares/edge.js"
+        "import": "./framework/middlewares/edge.js",
+        "default": "./framework/middlewares/edge.js"
       },
       "worker": {
-        "import": "./src/middlewares/edge.js",
-        "default": "./src/middlewares/edge.js"
+        "import": "./framework/middlewares/edge.js",
+        "default": "./framework/middlewares/edge.js"
       },
-      "import": "./src/middlewares/prod.js",
-      "default": "./src/middlewares/prod.js"
+      "import": "./framework/middlewares/prod.js",
+      "default": "./framework/middlewares/prod.js"
     }
   }
 }
