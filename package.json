@@ -1,5 +1,7 @@
 {
   "scripts": {
+    "========= Basics": "",
+    "build": "pnpm --recursive --filter {packages/*} run build",
     "========= Formatting": "",
     "format": "pnpm run format:biome",
     "format:prettier": "git ls-files | egrep '\\.(json|js|jsx|css|ts|tsx|vue|mjs|cjs)$' | grep --invert-match package.json | xargs pnpm exec prettier --write",
@@ -13,6 +15,11 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "prettier": "^3.2.5"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "@cloudflare/vite-plugin": "patches/@cloudflare__vite-plugin.patch"
+    }
   },
   "packageManager": "pnpm@9.15.9"
 }
