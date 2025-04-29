@@ -14,6 +14,7 @@
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.0.12",
     "@photonjs/core": "^0.0.1",
+    "@photonjs/cloudflare": "^0.0.1",
     "@universal-middleware/core": "^0.4.7",
     "typescript": "^5.8.3",
     "vite": "^6.3.3",

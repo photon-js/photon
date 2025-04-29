@@ -4,7 +4,10 @@
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "exports": {},
+  "exports": {
+    ".": "./dist/index.js",
+    "./vite": "./dist/vite.js"
+  },
   "scripts": {
     "dev": "tsup --watch",
     "build": "rm -rf dist && tsup",
@@ -14,11 +17,13 @@
     "release:commit": "release-me commit"
   },
   "dependencies": {
+    "@cloudflare/vite-plugin": "^1.0.12"
   },
   "devDependencies": {
     "@brillout/release-me": "^0.4.3",
     "tsup": "^8.4.0",
     "typescript": "^5.8.3",
+    "@photonjs/core": "workspace:^",
     "vite": "^6.3.3"
   },
   "files": [

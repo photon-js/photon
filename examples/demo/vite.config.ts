@@ -1,4 +1,4 @@
-import { cloudflare } from '@cloudflare/vite-plugin'
+import { cloudflare } from '@photonjs/cloudflare/vite'
 import { photonjs } from '@photonjs/core/plugin'
 import { defineConfig, type Plugin } from 'vite'
 import { simpleFrameworkPlugin } from './framework/vite-plugin.js'
@@ -8,11 +8,9 @@ export default defineConfig(({ mode }) => {
   return {
     appType: 'custom',
     plugins: [
-      mode === 'cloudflare' ? cloudflare({ viteEnvironment: { name: 'ssr' } }) : undefined,
+      mode === 'cloudflare' ? cloudflare() : undefined,
       photonjs({
         entry: 'server.ts',
-        // FIXME will be automatically configured by @photonjs/cloudflare
-        devServer: mode === 'cloudflare' ? false : {},
       }),
       simpleFrameworkPlugin(render),
     ] as Plugin[],

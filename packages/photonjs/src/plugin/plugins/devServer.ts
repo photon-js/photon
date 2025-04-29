@@ -1,4 +1,4 @@
-import { type IncomingMessage, type Server, createServer } from 'node:http'
+import { createServer, type IncomingMessage, type Server } from 'node:http'
 import type {
   DevEnvironment,
   Environment,
@@ -46,28 +46,32 @@ export function devServer(config?: Photon.Config): Plugin {
       return command === 'serve' && mode !== 'test'
     },
     enforce: 'pre',
-    async config() {
-      // FIXME
-      if (isBun) {
+    config: {
+      order: 'post',
+      handler(userConfig) {
+        if (userConfig.photonjs?.devServer === false) return
+        // FIXME
+        if (isBun) {
+          return {
+            appType: 'custom',
+            server: {
+              middlewareMode: true,
+            },
+          }
+        }
+
+        HMRServer = createServer()
         return {
           appType: 'custom',
           server: {
             middlewareMode: true,
+            hmr: {
+              server: HMRServer,
+              path: VITE_HMR_PATH,
+            },
           },
         }
-      }
-
-      HMRServer = createServer()
-      return {
-        appType: 'custom',
-        server: {
-          middlewareMode: true,
-          hmr: {
-            server: HMRServer,
-            path: VITE_HMR_PATH,
-          },
-        },
-      }
+      },
     },
 
     configResolved(config) {
@@ -77,7 +81,6 @@ export function devServer(config?: Photon.Config): Plugin {
     },
 
     async hotUpdate(ctx) {
-      if (this.environment.config.photonjs.hmr === false) return
       // FIXME: tag modules like +middlewares as meta.photonjs.importedByType = 'server'
       const imported = isImported(ctx.modules)
       if (imported) {
@@ -100,6 +103,7 @@ export function devServer(config?: Photon.Config): Plugin {
     },
 
     configureServer(vite) {
+      if (vite.config.photonjs.devServer === false) return
       if (viteDevServer) {
         if (vite.config.photonjs.hmr === 'prefer-restart') {
           restartProcess()
@@ -131,7 +135,10 @@ export function devServer(config?: Photon.Config): Plugin {
         setupErrorHandlers()
       }
       patchViteServer(vite)
-      if (typeof config?.devServer === 'object' && config?.devServer?.autoServeIndex !== false) {
+      if (
+        config?.devServer === undefined ||
+        (typeof config?.devServer === 'object' && config?.devServer?.autoServeIndex !== false)
+      ) {
         initializeServerEntry(vite)
       }
     },

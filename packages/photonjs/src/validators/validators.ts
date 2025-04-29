@@ -56,4 +56,7 @@ export const PhotonConfigResolved = type({
     esbuild: 'object' as type.cast<Omit<BuildOptions, 'manifest'>>,
   }),
   'middlewares?': 'object' as type.cast<GetPhotonCondition[]>,
+  'devServer?': type('boolean').or({
+    'autoServeIndex?': 'boolean',
+  }),
 })
