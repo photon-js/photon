@@ -133,8 +133,8 @@ export function bunServe(options: ServerOptions, handler: Handler) {
   onReady({ isHttps, ...options, port })()
 }
 
-export function getPort(options: ServerOptions) {
-  return options.port ?? 3000
+export function getPort(options?: ServerOptions) {
+  return options?.port ?? 3000
 }
 
 /**

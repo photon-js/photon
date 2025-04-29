@@ -3,7 +3,7 @@ import { createServer } from 'node:http'
 import { toNodeListener } from 'h3'
 import { installServerHMR, type NodeHandler, nodeServe, type ServerOptions } from '../utils.js'
 
-export function serve<App extends Parameters<typeof applyAdapter>[0]>(app: App, options: ServerOptions) {
+export function serve<App extends Parameters<typeof applyAdapter>[0]>(app: App, options: ServerOptions = {}) {
   if (!options.createServer) options.createServer = createServer
   const _serve = () => nodeServe(options, toNodeListener(app) as NodeHandler)
 

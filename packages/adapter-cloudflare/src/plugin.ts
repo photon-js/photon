@@ -1,8 +1,8 @@
 /// <reference types="@photonjs/core/api" />
-import { cloudflare as cloudflareVitePlugins } from '@cloudflare/vite-plugin'
+import { cloudflare as cloudflareVitePlugins, type PluginConfig } from '@cloudflare/vite-plugin'
 import type { Plugin } from 'vite'
 
-export function cloudflare(): Plugin[] {
+export function cloudflare(config?: Omit<PluginConfig, 'viteEnvironment'>): Plugin[] {
   return [
     {
       name: 'photonjs:cloudflare',
@@ -18,6 +18,6 @@ export function cloudflare(): Plugin[] {
         },
       },
     },
-    ...cloudflareVitePlugins({ viteEnvironment: { name: 'ssr' } }),
+    ...cloudflareVitePlugins({ ...config, viteEnvironment: { name: 'ssr' } }),
   ]
 }

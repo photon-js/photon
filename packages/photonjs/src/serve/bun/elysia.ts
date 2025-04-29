@@ -2,7 +2,7 @@ import type { apply as applyAdapter } from '@universal-middleware/elysia'
 import type { Serve } from 'elysia/universal'
 import { getPort, onReady, type ServerOptionsBase } from '../utils.js'
 
-export function serve<App extends Parameters<typeof applyAdapter>[0]>(app: App, options: ServerOptionsBase) {
+export function serve<App extends Parameters<typeof applyAdapter>[0]>(app: App, options: ServerOptionsBase = {}) {
   const port = getPort(options)
 
   return app.listen(
