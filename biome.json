@@ -1,0 +1,22 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "files": {
+    "ignore": ["dist/", ".vercel/", "package.json", ".wrangler/"]
+  },
+  "formatter": {
+    "indentWidth": 2,
+    "indentStyle": "space"
+  },
+  "javascript": {
+    "formatter": {
+      "semicolons": "asNeeded",
+      "lineWidth": 120,
+      "quoteStyle": "single",
+      "trailingCommas": "all"
+    }
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git"
+  }
+}
