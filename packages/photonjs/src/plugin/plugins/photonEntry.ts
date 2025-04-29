@@ -3,7 +3,7 @@ import type { Plugin } from 'vite'
 import { assert, assertUsage } from '../../utils/assert.js'
 import type { PhotonEntryServer, SupportedServers } from '../../validators/types.js'
 
-import { resolvePhotonConfig } from "../../validators/coerce.js";
+import { resolvePhotonConfig } from '../../validators/coerce.js'
 import {
   extractPhotonEntryId,
   includesPhotonEntryId,

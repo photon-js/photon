@@ -6,14 +6,16 @@ import { render } from './src/entry-server.js'
 
 export default defineConfig(({ mode }) => {
   return {
-    appType: 'custom',
     plugins: [
-      mode === 'cloudflare' ? cloudflare() : undefined,
+      // Define Photon entries
       photonjs({
         entry: {
           index: 'server.ts',
         },
       }),
+      // Use Photon's Cloudflare adapter. @photonjs/auto will take care of this more properly in the future
+      mode === 'cloudflare' ? cloudflare() : undefined,
+      // Basic SSR framework
       simpleFrameworkPlugin(render),
     ] as Plugin[],
   }

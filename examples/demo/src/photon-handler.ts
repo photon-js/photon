@@ -2,6 +2,7 @@ import { enhance } from '@universal-middleware/core'
 import { render } from './entry-server.js'
 
 export const handler = (template: string) =>
+  // tag this handler with a name, path and method
   enhance(
     async (request: Request) => {
       const rendered = render(request.url)
