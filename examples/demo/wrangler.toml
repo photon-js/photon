@@ -1,0 +1,4 @@
+name = "cloudflare-vite-get-started"
+compatibility_date = "2025-04-03"
+compatibility_flags = [ "nodejs_compat" ]
+main = "photonjs:entry:serve.ts"

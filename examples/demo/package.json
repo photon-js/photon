@@ -1,0 +1,40 @@
+{
+  "name": "photon-example",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:cloudflare": "vite --mode cloudflare",
+    "build": "vite build",
+    "build:cloudflare": "vite build --mode cloudflare",
+    "preview": "pnpm run build && node dist/ssr/server.js",
+    "preview:cloudflare": "pnpm run build:cloudflare && vite preview --mode cloudflare"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.0.12",
+    "@photonjs/core": "^0.0.1",
+    "@universal-middleware/core": "^0.4.7",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.3",
+    "wrangler": "^4.13.2"
+  },
+  "dependencies": {
+    "@universal-middleware/sirv": "^0.1.20",
+    "hono": "^4.7.8"
+  },
+  "exports": {
+    "./universal-middlewares": {
+      "development": {
+        "import": "./src/middlewares/dev.js",
+        "default": "./src/middlewares/dev.js"
+      },
+      "workerd": {
+        "import": "./src/middlewares/edge.js",
+        "default": "./src/middlewares/edge.js"
+      },
+      "import": "./src/middlewares/prod.js",
+      "default": "./src/middlewares/prod.js"
+    }
+  }
+}
