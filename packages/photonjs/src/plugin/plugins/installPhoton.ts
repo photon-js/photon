@@ -2,11 +2,11 @@ import type { Plugin } from 'vite'
 
 export type GetPhotonCondition = (condition: 'dev' | 'edge' | 'node', server: string) => string
 
-export interface DefinePhotonLibOptions {
+export interface InstallPhotonOptions {
   resolveMiddlewares?: GetPhotonCondition
 }
 
-export function definePhotonLib(name: string, options?: DefinePhotonLibOptions): Plugin[] {
+export function installPhoton(name: string, options?: InstallPhotonOptions): Plugin[] {
   const plugins: Plugin[] = [
     {
       name: `photonjs:resolve-virtual-importer:${name}`,
