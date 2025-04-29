@@ -3,7 +3,7 @@ import type {
   IncomingMessage,
   Server,
   ServerOptions as ServerOptionsHTTP,
-  ServerResponse
+  ServerResponse,
 } from 'node:http'
 import type {
   createSecureServer as createServerHTTP2,
@@ -11,7 +11,7 @@ import type {
   Http2Server,
   Http2ServerRequest,
   Http2ServerResponse,
-  SecureServerOptions as ServerOptionsHTTP2
+  SecureServerOptions as ServerOptionsHTTP2,
 } from 'node:http2'
 import type { createServer as createServerHTTPS, ServerOptions as ServerOptionsHTTPS } from 'node:https'
 import type { Socket } from 'node:net'

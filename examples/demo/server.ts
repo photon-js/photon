@@ -1,7 +1,7 @@
 import { apply, serve } from '@photonjs/core/hono'
-import { Hono } from 'hono'
 // @ts-ignore
-import middlewares from 'photon-example/universal-middlewares'
+import middlewares from '@photonjs/demo/universal-middlewares'
+import { Hono } from 'hono'
 import { handler } from './src/photon-handler.js'
 
 async function startServer() {
@@ -11,7 +11,7 @@ async function startServer() {
   apply(app, [...middlewares, handler((await import('./_index.html?raw')).default)])
 
   return serve(app, {
-    port: +port
+    port: +port,
   })
 }
 

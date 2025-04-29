@@ -24,8 +24,8 @@ export function definePhotonLib(name: string, options?: DefinePhotonLibOptions):
             }
           }
         }
-      }
-    }
+      },
+    },
   ]
 
   if (options?.resolveMiddlewares) {
@@ -35,11 +35,11 @@ export function definePhotonLib(name: string, options?: DefinePhotonLibOptions):
         if (options?.resolveMiddlewares) {
           return {
             photonjs: {
-              middlewares: [options.resolveMiddlewares]
-            }
+              middlewares: [options.resolveMiddlewares],
+            },
           }
         }
-      }
+      },
     })
   }
 

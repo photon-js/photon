@@ -9,9 +9,9 @@ export function serve<App extends Parameters<typeof applyAdapter>[0]>(app: App, 
     app.listen(
       {
         port,
-        host: options?.hostname
+        host: options?.hostname,
       } as FastifyListenOptions,
-      onReady({ ...options, port })
+      onReady({ ...options, port }),
     )
     const server = app.server
     // onCreate hook
@@ -27,8 +27,8 @@ export function serve<App extends Parameters<typeof applyAdapter>[0]>(app: App, 
     if (optionsSymbol && !appAny[optionsSymbol]?.forceCloseConnections) {
       console.warn(
         pc.yellow(
-          `${pc.bold('[vike-server:fastify]')} Please make sure that fastify is initialized with \`{ forceCloseConnections: true }\` for proper HMR support.`
-        )
+          `${pc.bold('[vike-server:fastify]')} Please make sure that fastify is initialized with \`{ forceCloseConnections: true }\` for proper HMR support.`,
+        ),
       )
     }
 

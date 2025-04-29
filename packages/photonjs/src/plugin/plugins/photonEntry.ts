@@ -2,7 +2,14 @@ import type { ModuleInfo, PluginContext } from 'rollup'
 import type { Plugin } from 'vite'
 import { assert, assertUsage } from '../../utils/assert.js'
 import type { PhotonEntryServer, SupportedServers } from '../../validators/types.js'
-import { assertPhotonEntryId, isPhotonEntryId, isPhotonMeta, stripPhotonEntryId } from '../utils/entry.js'
+import {
+  assertPhotonEntryId,
+  extractPhotonEntryId,
+  includesPhotonEntryId,
+  isPhotonEntryId,
+  isPhotonMeta,
+  stripPhotonEntryId,
+} from '../utils/entry.js'
 
 const idsToServers: Record<string, SupportedServers> = {
   '@photonjs/hono': 'hono',
@@ -16,13 +23,13 @@ const idsToServers: Record<string, SupportedServers> = {
   '@photonjs/core/express': 'express',
   '@photonjs/core/fastify': 'fastify',
   '@photonjs/core/h3': 'h3',
-  '@photonjs/core/elysia': 'elysia'
+  '@photonjs/core/elysia': 'elysia',
 }
 
 function computePhotonMeta(
   pluginContext: PluginContext,
   resolvedIdsToServers: Record<string, SupportedServers>,
-  info: ModuleInfo
+  info: ModuleInfo,
 ) {
   assertUsage(!info.isExternal, `Entry should not be external: ${info.id}`)
   // early return for better performance
@@ -62,7 +69,7 @@ function computePhotonMeta(
   } else {
     // TODO better error message with link to documentation
     pluginContext.error(
-      `Cannot guess "${info.id}" entry type. Make sure to provide a default export, and if you use a server, use "@photonjs/<server>" package`
+      `Cannot guess "${info.id}" entry type. Make sure to provide a default export, and if you use a server, use "@photonjs/<server>" package`,
     )
   }
 }
@@ -88,7 +95,7 @@ export function photonEntry(): Plugin[] {
           this.emitFile({
             type: 'chunk',
             fileName: `${name}.js`,
-            id: photonEntry.id
+            id: photonEntry.id,
           })
         }
       },
@@ -110,7 +117,22 @@ export function photonEntry(): Plugin[] {
         }
       },
 
-      sharedDuringBuild: true
+      sharedDuringBuild: true,
+    },
+    {
+      // Some plugins, like @cloudflare/vite-plugin try to resolve the entry beforehand,
+      // resulting in photon entries prefixed by cwd() or some other folder
+      name: 'photonjs:clean-photon-entry',
+      enforce: 'pre',
+
+      resolveId: {
+        order: 'pre',
+        async handler(id, importer, opts) {
+          if (includesPhotonEntryId(id)) {
+            return this.resolve(extractPhotonEntryId(id), importer, opts)
+          }
+        },
+      },
     },
     {
       name: 'photonjs:resolve-entry-meta',
@@ -127,13 +149,13 @@ export function photonEntry(): Plugin[] {
             importer && isPhotonEntryId(importer)
               ? await this.resolve(id, stripPhotonEntryId(importer), {
                   ...opts,
-                  skipSelf: false
+                  skipSelf: false,
                 })
               : isPhotonEntryId(id)
                 ? await this.resolve(stripPhotonEntryId(id), undefined, {
                     ...opts,
                     isEntry: true,
-                    skipSelf: false
+                    skipSelf: false,
                   })
                 : null
 
@@ -148,17 +170,17 @@ export function photonEntry(): Plugin[] {
                 ...resolved,
                 meta: {
                   photonjs: {
-                    type: 'auto'
-                  }
+                    type: 'auto',
+                  },
                 },
-                resolvedBy: 'photonjs'
+                resolvedBy: 'photonjs',
               }
             }
             return resolved
           }
-        }
+        },
       },
-      sharedDuringBuild: true
-    }
+      sharedDuringBuild: true,
+    },
   ]
 }

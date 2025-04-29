@@ -1,5 +1,5 @@
 {
-  "name": "photon-example",
+  "name": "@photonjs/demo",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -30,6 +30,10 @@
         "default": "./src/middlewares/dev.js"
       },
       "workerd": {
+        "import": "./src/middlewares/edge.js",
+        "default": "./src/middlewares/edge.js"
+      },
+      "worker": {
         "import": "./src/middlewares/edge.js",
         "default": "./src/middlewares/edge.js"
       },

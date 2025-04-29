@@ -19,13 +19,13 @@ function commonConfig(): Plugin[] {
             externalConditions:
               config.consumer === 'server'
                 ? [...(isBun ? ['bun'] : isDeno ? ['deno'] : []), 'node', 'development|production']
-                : []
+                : [],
           },
           build: {
-            target: 'es2022'
-          }
+            target: 'es2022',
+          },
         }
-      }
-    }
+      },
+    },
   ]
 }

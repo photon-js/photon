@@ -1,10 +1,11 @@
-import { createServer, type IncomingMessage, type Server } from 'node:http'
-import {
-  type DevEnvironment,
-  type EnvironmentModuleNode,
-  isRunnableDevEnvironment,
-  type Plugin,
-  type ViteDevServer
+import { type IncomingMessage, type Server, createServer } from 'node:http'
+import type {
+  DevEnvironment,
+  Environment,
+  EnvironmentModuleNode,
+  Plugin,
+  RunnableDevEnvironment,
+  ViteDevServer,
 } from 'vite'
 
 import { fork } from 'node:child_process'
@@ -20,6 +21,10 @@ const VITE_HMR_PATH = '/__vite_hmr'
 const RESTART_EXIT_CODE = 33
 const IS_RESTARTER_SET_UP = '__PHOTON__IS_RESTARTER_SET_UP'
 
+export function isRunnableDevEnvironment(environment: Environment): environment is RunnableDevEnvironment {
+  return 'runner' in environment
+}
+
 export function devServer(config?: Photon.Config): Plugin {
   let resolvedEntryId: string
   let HMRServer: ReturnType<typeof createServer> | undefined
@@ -31,7 +36,7 @@ export function devServer(config?: Photon.Config): Plugin {
       name: 'photonjs:devserver:disabled',
       configureServer() {
         globalStore.viteDevServer = false
-      }
+      },
     }
   }
 
@@ -47,8 +52,8 @@ export function devServer(config?: Photon.Config): Plugin {
         return {
           appType: 'custom',
           server: {
-            middlewareMode: true
-          }
+            middlewareMode: true,
+          },
         }
       }
 
@@ -59,9 +64,9 @@ export function devServer(config?: Photon.Config): Plugin {
           middlewareMode: true,
           hmr: {
             server: HMRServer,
-            path: VITE_HMR_PATH
-          }
-        }
+            path: VITE_HMR_PATH,
+          },
+        },
       }
     },
 
@@ -129,7 +134,7 @@ export function devServer(config?: Photon.Config): Plugin {
       if (typeof config?.devServer === 'object' && config?.devServer?.autoServeIndex !== false) {
         initializeServerEntry(vite)
       }
-    }
+    },
   }
 
   // Bypass "vite dev" CLI checks on usage
@@ -145,7 +150,7 @@ export function devServer(config?: Photon.Config): Plugin {
     env: DevEnvironment,
     invalidatedModules?: Set<EnvironmentModuleNode>,
     timestamp?: number,
-    isHmr?: boolean
+    isHmr?: boolean,
   ) {
     const entryModule = env.moduleGraph.getModuleById(resolvedEntryId)
     if (entryModule) {
@@ -181,19 +186,19 @@ export function devServer(config?: Photon.Config): Plugin {
   }
 
   function isImported(
-    modules: EnvironmentModuleNode[]
+    modules: EnvironmentModuleNode[],
   ): { type: 'entry' | '+middleware'; module: EnvironmentModuleNode } | undefined {
     const modulesSet = new Set(modules)
     for (const module of modulesSet.values()) {
       if (module.file === resolvedEntryId)
         return {
           type: 'entry',
-          module
+          module,
         }
       if (module.file?.match(/\+middleware\.[mc]?[jt]sx?$/))
         return {
           type: '+middleware',
-          module
+          module,
         }
       // biome-ignore lint/complexity/noForEach: <explanation>
       module.importers.forEach((importer) => modulesSet.add(importer))
@@ -203,11 +208,11 @@ export function devServer(config?: Photon.Config): Plugin {
   async function initializeServerEntry(vite: ViteDevServer) {
     const { index } = vite.config.photonjs.entry
     const indexResolved = await vite.environments.ssr.pluginContainer.resolveId(index.id, undefined, {
-      isEntry: true
+      isEntry: true,
     })
     assertUsage(
       indexResolved?.id,
-      `Cannot find server entry ${pc.cyan(index.id)}. Make sure its path is relative to the root of your project.`
+      `Cannot find server entry ${pc.cyan(index.id)}. Make sure its path is relative to the root of your project.`,
     )
     resolvedEntryId = indexResolved.id
     const ssr = vite.environments.ssr

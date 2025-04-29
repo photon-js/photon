@@ -80,7 +80,7 @@ export function getMiddlewaresPlugin(): Plugin[] {
         if (match) {
           return getAllPhotonMiddlewares(this, id)
         }
-      }
-    }
+      },
+    },
   ]
 }

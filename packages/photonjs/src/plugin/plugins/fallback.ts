@@ -33,6 +33,6 @@ function startServer() {
 export default startServer()
 `
       }
-    }
+    },
   }
 }

@@ -38,6 +38,6 @@ export const devServerMiddleware = (() =>
     },
     {
       name: 'photonjs:dev-server',
-      immutable: false
-    }
+      immutable: false,
+    },
   )) satisfies Get<[], UniversalMiddleware>

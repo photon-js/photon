@@ -63,13 +63,13 @@ export type RuntimeAdapter = RuntimeAdapterTarget<${JSON.stringify(match.server)
   const result = oxc.transform(`${match.server}.${match.condition}.ts`, code, {
     sourcemap: true,
     typescript: {
-      declaration: {}
-    }
+      declaration: {},
+    },
   })
 
   return {
     ...match,
-    ...result
+    ...result,
   }
 }
 
@@ -84,13 +84,13 @@ export { serve } from '@photonjs/core/${match.server}/serve'
   const result = oxc.transform(`${match.server}.ts`, code, {
     sourcemap: true,
     typescript: {
-      declaration: {}
-    }
+      declaration: {},
+    },
   })
 
   return {
     ...match,
-    ...result
+    ...result,
   }
 }
 
@@ -121,7 +121,7 @@ const entries = {
   fastify: 'photonjs:virtual-index:fastify',
   h3: 'photonjs:virtual-index:h3',
   hattip: 'photonjs:virtual-index:hattip',
-  hono: 'photonjs:virtual-index:hono'
+  hono: 'photonjs:virtual-index:hono',
 }
 
 export const virtualApplyFactory: UnpluginFactory<undefined> = () => {
@@ -147,7 +147,7 @@ export const virtualApplyFactory: UnpluginFactory<undefined> = () => {
         opts.external.push('@photonjs/core/hattip/serve')
         opts.external.push('@photonjs/core/hono/apply')
         opts.external.push('@photonjs/core/hono/serve')
-      }
+      },
     },
 
     async resolveId(id) {
@@ -172,13 +172,13 @@ export const virtualApplyFactory: UnpluginFactory<undefined> = () => {
             type: 'asset',
             fileName: `${fileName}.d.ts`,
             // biome-ignore lint/style/noNonNullAssertion: <explanation>
-            source: compiled.declaration!
+            source: compiled.declaration!,
           })
 
           return {
             code: compiled.code,
             // biome-ignore lint/style/noNonNullAssertion: <explanation>
-            map: compiled.map!
+            map: compiled.map!,
           }
         }
       }
@@ -193,16 +193,16 @@ export const virtualApplyFactory: UnpluginFactory<undefined> = () => {
             type: 'asset',
             fileName: `${fileName}.d.ts`,
             // biome-ignore lint/style/noNonNullAssertion: <explanation>
-            source: compiled.declaration!
+            source: compiled.declaration!,
           })
 
           return {
             code: compiled.code,
             // biome-ignore lint/style/noNonNullAssertion: <explanation>
-            map: compiled.map!
+            map: compiled.map!,
           }
         }
       }
-    }
+    },
   }
 }

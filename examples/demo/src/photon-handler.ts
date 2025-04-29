@@ -10,13 +10,13 @@ export const handler = (template: string) =>
       return new Response(html, {
         status: 200,
         headers: {
-          'Content-Type': 'text/html'
-        }
+          'Content-Type': 'text/html',
+        },
       })
     },
     {
       name: 'photon-example-route',
       path: '/**',
-      method: 'GET'
-    }
+      method: 'GET',
+    },
   )

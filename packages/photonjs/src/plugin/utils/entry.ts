@@ -3,9 +3,20 @@ import { assert } from '../../utils/assert.js'
 import type { SupportedServers } from '../../validators/types.js'
 
 export const virtualPhotonEntry = 'photonjs:entry'
+export const re_virtualPhotonEntry = /.*(photonjs:entry.*)/
 
 export function isPhotonEntryId(id: string) {
   return id.startsWith(virtualPhotonEntry)
+}
+
+export function includesPhotonEntryId(id: string) {
+  return id.includes(virtualPhotonEntry)
+}
+
+export function extractPhotonEntryId(id: string) {
+  const match = id.match(re_virtualPhotonEntry)
+  if (match) return match[1] as string
+  return id
 }
 
 export function asPhotonEntryId(id: string) {

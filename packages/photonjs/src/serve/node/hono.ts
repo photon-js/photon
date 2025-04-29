@@ -15,9 +15,9 @@ export function serve<App extends Parameters<typeof applyAdapter>[0]>(app: App, 
         ...(options as any),
         port,
         hostname: options?.hostname,
-        fetch: app.fetch
+        fetch: app.fetch,
       },
-      onReady({ isHttps, ...options, port })
+      onReady({ isHttps, ...options, port }),
     )
     // onCreate hook
     options.onCreate?.(server)

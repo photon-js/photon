@@ -16,7 +16,7 @@ export function serve<App extends Parameters<typeof applyAdapter>[0]>(app: App, 
       platform: { name: 'bun' },
       env(variable: string) {
         return process.env[variable]
-      }
+      },
     })
   })
 

@@ -9,7 +9,7 @@ export function resolvePhotonConfigPlugin(userConfig?: Photon.Config): Plugin {
     config() {
       if (userConfig) {
         return {
-          photonjs: resolvePhotonConfig(userConfig)
+          photonjs: resolvePhotonConfig(userConfig),
         }
       }
     },
@@ -18,7 +18,7 @@ export function resolvePhotonConfigPlugin(userConfig?: Photon.Config): Plugin {
       order: 'pre',
       handler(config) {
         config.photonjs = resolvePhotonConfig(config.photonjs, true)
-      }
-    }
+      },
+    },
   }
 }

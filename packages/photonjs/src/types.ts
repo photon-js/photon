@@ -4,7 +4,7 @@ import type {
   PhotonEntryAuto,
   PhotonEntryBase,
   PhotonEntryServer,
-  PhotonEntryUniversalHandler
+  PhotonEntryUniversalHandler,
 } from './validators/types.js'
 
 declare global {

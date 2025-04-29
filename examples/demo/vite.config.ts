@@ -1,8 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { cloudflare } from '@cloudflare/vite-plugin'
 import { photonjs } from '@photonjs/core/plugin'
-import { isPhotonMeta } from '@photonjs/core/api'
-import { defineConfig, type Plugin } from 'vite'
+import { type Plugin, defineConfig } from 'vite'
 import { render } from './src/entry-server.js'
 
 function simpleFrameworkPlugin(): Plugin {
@@ -22,8 +21,8 @@ function simpleFrameworkPlugin(): Plugin {
           async buildApp(builder) {
             await builder.build(builder.environments.client!)
             await builder.build(builder.environments.ssr!)
-          }
-        }
+          },
+        },
       }
     },
     generateBundle(_opts, bundle) {
@@ -44,10 +43,10 @@ export {
             outDir: './dist/ssr',
             rollupOptions: {
               // FIXME should be done by photon
-              input: 'server.ts'
+              input: 'server.ts',
             },
-            emptyOutDir: false
-          }
+            emptyOutDir: false,
+          },
         }
       }
       if (name === 'client') {
@@ -55,25 +54,13 @@ export {
           build: {
             outDir: './dist/client',
             rollupOptions: {
-              input: '_index.html'
-            }
-          }
+              input: '_index.html',
+            },
+          },
         }
       }
     },
-    sharedDuringBuild: true
-  }
-}
-
-function photonCloudflarePlugin(): Plugin {
-  return {
-    name: 'photon-example:cloudflare',
-
-    load(id) {
-      if (isPhotonMeta) {
-
-      }
-    }
+    sharedDuringBuild: true,
   }
 }
 
@@ -82,13 +69,12 @@ export default defineConfig(({ mode }) => {
     appType: 'custom',
     plugins: [
       mode === 'cloudflare' ? cloudflare({ viteEnvironment: { name: 'ssr' } }) : undefined,
-      mode === 'cloudflare' ? photonCloudflarePlugin() : undefined,
       photonjs({
         entry: 'server.ts',
-        // Will be automatically configured by @photonjs/cloudflare
-        devServer: mode === 'cloudflare' ? false : {}
+        // FIXME will be automatically configured by @photonjs/cloudflare
+        devServer: mode === 'cloudflare' ? false : {},
       }),
-      simpleFrameworkPlugin()
-    ]
+      simpleFrameworkPlugin(),
+    ] as Plugin[],
   }
 })

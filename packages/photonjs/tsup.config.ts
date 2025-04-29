@@ -13,7 +13,7 @@ const commonOptions: TsupOptions = {
   dts: true,
   outDir: 'dist',
   treeshake: true,
-  removeNodeProtocol: false
+  removeNodeProtocol: false,
 }
 
 export default defineConfig([
@@ -44,13 +44,13 @@ export default defineConfig([
       'fastify/serve.node': './src/serve/node/fastify.ts',
       'h3/serve.node': './src/serve/node/h3.ts',
       'hattip/serve.node': './src/serve/node/hattip.ts',
-      'hono/serve.node': './src/serve/node/hono.ts'
+      'hono/serve.node': './src/serve/node/hono.ts',
     },
     esbuildPlugins: [virtualApply()],
     external: externalServers
       .concat(...builtinModules.flatMap((e) => [e, `node:${e}`]))
       .concat(/^photonjs:get-middlewares:/)
-      .concat('@photonjs/core/dev')
+      .concat('@photonjs/core/dev'),
   },
   {
     ...commonOptions,
@@ -59,7 +59,7 @@ export default defineConfig([
       plugin: './src/plugin/index.ts',
       api: './src/api.ts',
       dev: './src/dev.ts',
-      index: './src/index.ts'
-    }
-  }
+      index: './src/index.ts',
+    },
+  },
 ])

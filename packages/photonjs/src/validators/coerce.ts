@@ -8,20 +8,20 @@ function entryToPhoton(entry: string | PhotonEntry): PhotonEntry {
   if (typeof entry === 'string')
     return {
       id: asPhotonEntryId(entry),
-      type: 'auto'
+      type: 'auto',
     }
   return {
     ...entry,
-    id: asPhotonEntryId(entry.id)
+    id: asPhotonEntryId(entry.id),
   }
 }
 
 function entriesToPhoton(
-  entry: string | PhotonEntry | Record<string, PhotonEntry | string>
+  entry: string | PhotonEntry | Record<string, PhotonEntry | string>,
 ): Record<string, PhotonEntry> {
   if (typeof entry === 'string' || 'id' in entry) {
     return {
-      index: entryToPhoton(entry as string | PhotonEntry)
+      index: entryToPhoton(entry as string | PhotonEntry),
     }
   }
 
@@ -33,19 +33,19 @@ export function resolvePhotonConfig(config: PhotonConfig | undefined, fallback?:
     const toPhotonEntry = match
       .in<PhotonConfig>()
       .match({
-        string: (v) => entriesToPhoton(v)
+        string: (v) => entriesToPhoton(v),
       })
       .case(
         { entry: 'unknown' },
         match
           .at('entry')
           .match({
-            string: (v) => entriesToPhoton(v.entry)
+            string: (v) => entriesToPhoton(v.entry),
           })
           .case({ id: 'string' }, (v) => entriesToPhoton(v.entry))
           .case({ '[string]': 'string' }, (v) => entriesToPhoton(v.entry))
           .case({ '[string]': Validators.PhotonEntry }, (v) => entriesToPhoton(v.entry))
-          .default('assert')
+          .default('assert'),
       )
       .default(
         fallback
@@ -54,9 +54,9 @@ export function resolvePhotonConfig(config: PhotonConfig | undefined, fallback?:
               entriesToPhoton({
                 id: 'photonjs:fallback-entry',
                 type: 'server',
-                server: 'hono'
+                server: 'hono',
               })
-          : 'assert'
+          : 'assert',
       )
 
     const toHmr = match
@@ -95,7 +95,7 @@ export function resolvePhotonConfig(config: PhotonConfig | undefined, fallback?:
       hmr,
       standalone,
       middlewares,
-      ...rest
+      ...rest,
     }
   }, Validators.PhotonConfigResolved)(config)
 
