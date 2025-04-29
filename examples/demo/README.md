@@ -4,6 +4,7 @@ Relevant files:
 - [server.ts](./server.ts): generic PhotonJS entry, compatible with any adapter
 - [vite.config.ts](./vite.config.ts): this is where we define our PhotonJS entry, and declare Cloudflare adapter
 - [wrangler.toml](./wrangler.toml): required when targetting cloudflare. Contains a `main` property pointing to a PhotonJS entry
+- [framework/middlewares](./framework/middlewares) + [package.json#exports](./package.json): demo of a framework declaring middlewares behind exports conditions
 
 ### scripts
 
