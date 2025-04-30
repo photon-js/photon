@@ -7,9 +7,9 @@ import { photonEntry } from './plugins/photonEntry.js'
 import { resolvePhotonConfigPlugin } from './plugins/resolvePhotonConfigPlugin.js'
 import '../types.js'
 
-export { photonjs, photonjs as default }
+export { photon, photon as default }
 
-function photonjs(config?: Photon.Config): Plugin[] {
+function photon(config?: Photon.Config): Plugin[] {
   return [
     ...commonConfig(),
     resolvePhotonConfigPlugin(config),

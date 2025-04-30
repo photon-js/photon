@@ -6,7 +6,7 @@
   "types": "./dist/index.d.ts",
   "exports": {
     "./config": "./dist/config.js",
-    "./plugin": "./dist/plugin.js",
+    "./vite": "./dist/plugin.js",
     "./api": "./dist/api.js",
     "./dev": "./dist/dev.js",
     ".": "./dist/index.js",

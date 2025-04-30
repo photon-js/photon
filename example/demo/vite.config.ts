@@ -1,5 +1,5 @@
 import { cloudflare } from '@photonjs/cloudflare/vite'
-import { photonjs } from '@photonjs/core/plugin'
+import { photon } from '@photonjs/core/vite'
 import { defineConfig, type Plugin } from 'vite'
 import { simpleFrameworkPlugin } from './framework/vite-plugin.js'
 import { render } from './src/entry-server.js'
@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [
       // Define Photon entries
-      photonjs({
+      photon({
         entry: {
           index: 'server.ts',
         },

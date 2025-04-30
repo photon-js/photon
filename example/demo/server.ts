@@ -1,3 +1,4 @@
+// Will be moved to @photonjs/hono
 import { apply, serve } from '@photonjs/core/hono'
 // @ts-ignore forces resolving through exports conditions
 import middlewares from '@photonjs/demo/universal-middlewares'
