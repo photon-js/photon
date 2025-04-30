@@ -4,7 +4,7 @@ import { apiHandler } from '../handlers/api-handler'
 import { defaultHandler } from '../handlers/default-handler'
 import { logger } from './logger'
 
-// sirv middleware in prod (node)
+// Production with Node.js/Bun/Deno
 export default [
   logger,
   enhance(sirv('dist/client'), {

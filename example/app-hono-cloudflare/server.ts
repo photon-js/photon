@@ -1,6 +1,6 @@
 // Will be moved to @photonjs/hono
 import { apply, serve } from '@photonjs/core/hono'
-import middlewares from 'awesome-framework/universal-middleware'
+import awesomeFramework from 'awesome-framework/universal-middleware'
 import { Hono } from 'hono'
 
 async function startServer() {
@@ -8,8 +8,8 @@ async function startServer() {
 
   apply(
     app,
-    // Adds frameworks middlewares and handlers
-    middlewares,
+    // Adds the framework's middlewares
+    awesomeFramework,
   )
 
   return serve(app)

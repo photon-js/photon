@@ -1,9 +1,9 @@
-### demo: how to use a framework using PhotonJS
+### App using a framework powered by Vite and Photon
 
 Relevant files:
-- [server.ts](./server.ts): generic PhotonJS entry, compatible with any adapter
-- [vite.config.ts](./vite.config.ts): this is where we define our PhotonJS entry, and declare Cloudflare adapter
-- [wrangler.toml](./wrangler.toml): required when targetting cloudflare. Contains a `main` property pointing to a PhotonJS entry
+- [server.ts](./server.ts): user server entry, can be any server that Photon supports (Hono, Express.js, Fastify, H3, ...)
+- [vite.config.ts](./vite.config.ts): this is where the user tells Photon where his server entry lives, and where the user adds Photon's Cloudflare adapter (if he doesn't use `@photonjs/auto`)
+- [wrangler.toml](./wrangler.toml): required when targetting Cloudflare, contains a `main` property pointing to a Photon virtual file (the "real server entry" which wraps the user server entry)
 
 ### scripts
 
@@ -12,7 +12,7 @@ Relevant files:
 # dev on node
 pnpm run dev
 
-# build for node runtime and runs `node dist/ssr/server.js`
+# builds for node runtime and runs `$ node dist/ssr/server.js`
 pnpm run preview
 ```
 
@@ -21,7 +21,7 @@ pnpm run preview
 # dev on cloudflare workerd
 pnpm run dev:cloudflare
 
-# build for cloudflare runtime and run `vite preview`
+# builds for cloudflare runtime and runs `$ vite preview`
 pnpm run preview:cloudflare
 ```
 

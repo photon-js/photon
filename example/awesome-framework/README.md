@@ -1,6 +1,6 @@
-### demo: how to integrate PhotonJS in your framework?
+### Integrating Photon into a Vite-based framework
 
-Most relevant files are contained in [src/photon](./src/photon) folder:
-- [handlers](./src/photon/handlers): Here are defined handlers for specific routes, the most important one being [default-handler.ts](./src/photon/handlers/default-handler.ts), as it's the default render of our framework
-- [middlewares](./src/photon/middlewares): Exports all required middlewares to make the framework 100% operational, including handlers. Leverages [exports conditions](./package.json) to include middlewares conditionally.
-- [plugins](./src/plugins/index.ts): Use `installPhoton` helper as part of the framework own plugins.
+Most relevant files:
+- [src/photon/handlers/](./src/photon/handlers): Here are defined handlers for specific routes, the most important one being [default-handler.ts](./src/photon/handlers/default-handler.ts), as it's the default render of the framework.
+- [src/photon/middlewares/](./src/photon/middlewares): Exports all the framework's middlewares. Leverages [exports conditions](./package.json) to include middlewares conditionally.
+- [src/plugins/](./src/plugins/index.ts): Uses `installPhoton()` to add Photon's Vite plugin.

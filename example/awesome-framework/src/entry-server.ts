@@ -1,3 +1,4 @@
+// A real framework would render the user's React/Vue/Solid root component
 export function render(_url: string) {
   const html = `
     <div>
