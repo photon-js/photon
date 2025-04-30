@@ -1,0 +1,43 @@
+{
+  "name": "awesome-framework",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@universal-middleware/core": "^0.4.7",
+    "@universal-middleware/sirv": "^0.1.20"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.4",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.3"
+  },
+  "exports": {
+    "./entry-client": "./dist/entry-client.js",
+    "./entry-server": "./dist/entry-server.js",
+    "./vite": "./dist/plugins/vite-plugin.js",
+    "./universal-middleware": {
+      "types": "./dist/photon/middlewares/prod.d.ts",
+      "development": {
+        "types": "./dist/photon/middlewares/dev.d.ts",
+        "import": "./dist/photon/middlewares/dev.js",
+        "default": "./dist/photon/middlewares/dev.js"
+      },
+      "workerd": {
+        "types": "./dist/photon/middlewares/edge.d.ts",
+        "import": "./dist/photon/middlewares/edge.js",
+        "default": "./dist/photon/middlewares/edge.js"
+      },
+      "worker": {
+        "types": "./dist/photon/middlewares/edge.d.ts",
+        "import": "./dist/photon/middlewares/edge.js",
+        "default": "./dist/photon/middlewares/edge.js"
+      },
+      "import": "./dist/photon/middlewares/prod.js",
+      "default": "./dist/photon/middlewares/prod.js"
+    }
+  }
+}
