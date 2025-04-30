@@ -33,7 +33,7 @@ export function devServer(config?: Photon.Config): Plugin {
 
   if (config?.devServer === false) {
     return {
-      name: 'photonjs:devserver:disabled',
+      name: 'photon:devserver:disabled',
       configureServer() {
         globalStore.viteDevServer = false
       },
@@ -41,7 +41,7 @@ export function devServer(config?: Photon.Config): Plugin {
   }
 
   return {
-    name: 'photonjs:devserver',
+    name: 'photon:devserver',
     apply(_config, { command, mode }) {
       return command === 'serve' && mode !== 'test'
     },
@@ -49,7 +49,7 @@ export function devServer(config?: Photon.Config): Plugin {
     config: {
       order: 'post',
       handler(userConfig) {
-        if (userConfig.photonjs?.devServer === false) return
+        if (userConfig.photon?.devServer === false) return
         // FIXME
         if (isBun) {
           return {
@@ -75,16 +75,16 @@ export function devServer(config?: Photon.Config): Plugin {
     },
 
     configResolved(config) {
-      if (config.photonjs.hmr === 'prefer-restart') {
+      if (config.photon.hmr === 'prefer-restart') {
         return setupProcessRestarter()
       }
     },
 
     async hotUpdate(ctx) {
-      // FIXME: tag modules like +middlewares as meta.photonjs.importedByType = 'server'
+      // FIXME: tag modules like +middlewares as meta.photon.importedByType = 'server'
       const imported = isImported(ctx.modules)
       if (imported) {
-        if (this.environment.config.photonjs.hmr === 'prefer-restart') {
+        if (this.environment.config.photon.hmr === 'prefer-restart') {
           restartProcess()
         } else {
           const invalidatedModules = new Set<EnvironmentModuleNode>()
@@ -103,24 +103,24 @@ export function devServer(config?: Photon.Config): Plugin {
     },
 
     configureServer(vite) {
-      if (vite.config.photonjs.devServer === false) return
+      if (vite.config.photon.devServer === false) return
       if (viteDevServer) {
-        if (vite.config.photonjs.hmr === 'prefer-restart') {
+        if (vite.config.photon.hmr === 'prefer-restart') {
           restartProcess()
         }
         return
       }
 
-      if (vite.config.photonjs.hmr === true) {
+      if (vite.config.photon.hmr === true) {
         // Once existing server is closed and invalidated, reimport its updated entry file
-        vite.environments.ssr.hot.on('photonjs:server-closed', () => {
+        vite.environments.ssr.hot.on('photon:server-closed', () => {
           setupHMRProxyDone = false
           if (isRunnableDevEnvironment(vite.environments.ssr)) {
             vite.environments.ssr.runner.import(resolvedEntryId).catch(logRestartMessage)
           }
         })
 
-        vite.environments.ssr.hot.on('photonjs:reloaded', () => {
+        vite.environments.ssr.hot.on('photon:reloaded', () => {
           vite.environments.client.hot.send({ type: 'full-reload' })
         })
       }
@@ -213,7 +213,7 @@ export function devServer(config?: Photon.Config): Plugin {
   }
 
   async function initializeServerEntry(vite: ViteDevServer) {
-    const { index } = vite.config.photonjs.entry
+    const { index } = vite.config.photon.entry
     const indexResolved = await vite.environments.ssr.pluginContainer.resolveId(index.id, undefined, {
       isEntry: true,
     })

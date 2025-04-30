@@ -2,6 +2,6 @@ declare module 'virtual:*' {
   export default any
 }
 
-declare module 'photonjs:*' {
+declare module 'photon:*' {
   export default any
 }

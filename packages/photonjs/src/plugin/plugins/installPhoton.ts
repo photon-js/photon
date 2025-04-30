@@ -11,11 +11,11 @@ export function installPhoton(name: string, options?: InstallPhotonOptions & Pho
   const plugins: Plugin[] = [
     ...photon(options),
     {
-      name: `photonjs:resolve-virtual-importer:${name}`,
+      name: `photon:resolve-virtual-importer:${name}`,
       enforce: 'post',
 
       async resolveId(id, importer, opts) {
-        if (importer === 'photonjs:fallback-entry' || importer?.startsWith('photonjs:get-middlewares:')) {
+        if (importer === 'photon:fallback-entry' || importer?.startsWith('photon:get-middlewares:')) {
           const resolved = await this.resolve(id, importer, opts)
 
           if (!resolved) {
@@ -32,11 +32,11 @@ export function installPhoton(name: string, options?: InstallPhotonOptions & Pho
 
   if (options?.resolveMiddlewares) {
     plugins.push({
-      name: `photonjs:define-middlewares:${name}`,
+      name: `photon:define-middlewares:${name}`,
       config() {
         if (options?.resolveMiddlewares) {
           return {
-            photonjs: {
+            photon: {
               middlewares: [options.resolveMiddlewares],
             },
           }

@@ -4,17 +4,17 @@ export { fallback }
 
 function fallback(): Plugin {
   return {
-    name: 'photonjs:fallback',
+    name: 'photon:fallback',
 
     resolveId(id) {
-      if (id === 'photonjs:fallback-entry') {
+      if (id === 'photon:fallback-entry') {
         // FIXME
         return id
       }
     },
 
     load(id) {
-      if (id === 'photonjs:fallback-entry') {
+      if (id === 'photon:fallback-entry') {
         //language=ts
         return `import { apply, serve } from '@photonjs/core/hono'
 import { Hono } from 'hono'

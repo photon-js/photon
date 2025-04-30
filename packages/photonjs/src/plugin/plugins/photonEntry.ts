@@ -34,7 +34,7 @@ function computePhotonMeta(
 ) {
   assertUsage(!info.isExternal, `Entry should not be external: ${info.id}`)
   // early return for better performance
-  if (isPhotonMeta(info.meta) && info.meta.photonjs.type && info.meta.photonjs.type !== 'auto') return
+  if (isPhotonMeta(info.meta) && info.meta.photon.type && info.meta.photon.type !== 'auto') return
   const graph = new Set([...info.importedIdResolutions, ...info.dynamicallyImportedIdResolutions])
 
   let found: SupportedServers | undefined
@@ -50,7 +50,7 @@ function computePhotonMeta(
     }
   }
 
-  const entry = Object.values(pluginContext.environment.config.photonjs.entry).find((e) => e.resolvedId === info.id)
+  const entry = Object.values(pluginContext.environment.config.photon.entry).find((e) => e.resolvedId === info.id)
   assert(entry)
 
   if (found) {
@@ -59,14 +59,14 @@ function computePhotonMeta(
       pluginContext.error(`Entry "${info.id}" seems to use "${found}", but no default export was found`)
     }
     info.meta ??= {}
-    info.meta.photonjs ??= {}
-    info.meta.photonjs.type = 'server'
-    info.meta.photonjs.server = found
-    entry.type = info.meta.photonjs.type
-    ;(entry as PhotonEntryServer).server = info.meta.photonjs.server
+    info.meta.photon ??= {}
+    info.meta.photon.type = 'server'
+    info.meta.photon.server = found
+    entry.type = info.meta.photon.type
+    ;(entry as PhotonEntryServer).server = info.meta.photon.server
   } else if (info.hasDefaultExport) {
-    info.meta.photonjs.type = 'universal-handler'
-    entry.type = info.meta.photonjs.type
+    info.meta.photon.type = 'universal-handler'
+    entry.type = info.meta.photon.type
   } else {
     // TODO better error message with link to documentation
     pluginContext.error(
@@ -80,7 +80,7 @@ export function photonEntry(): Plugin[] {
 
   return [
     {
-      name: 'photonjs:set-input',
+      name: 'photon:set-input',
       apply: 'build',
       enforce: 'post',
 
@@ -91,7 +91,7 @@ export function photonEntry(): Plugin[] {
       config: {
         order: 'post',
         handler(config) {
-          const { entry } = resolvePhotonConfig(config.photonjs)
+          const { entry } = resolvePhotonConfig(config.photon)
 
           return {
             environments: {
@@ -110,7 +110,7 @@ export function photonEntry(): Plugin[] {
       sharedDuringBuild: true,
     },
     {
-      name: 'photonjs:compute-meta',
+      name: 'photon:compute-meta',
       apply: 'build',
       enforce: 'pre',
 
@@ -140,7 +140,7 @@ export function photonEntry(): Plugin[] {
     {
       // Some plugins, like @cloudflare/vite-plugin try to resolve the entry beforehand,
       // resulting in photon entries prefixed by cwd() or some other folder
-      name: 'photonjs:clean-photon-entry',
+      name: 'photon:clean-photon-entry',
       enforce: 'pre',
 
       resolveId: {
@@ -153,7 +153,7 @@ export function photonEntry(): Plugin[] {
       },
     },
     {
-      name: 'photonjs:resolve-entry-meta',
+      name: 'photon:resolve-entry-meta',
       enforce: 'pre',
 
       resolveId: {
@@ -175,19 +175,19 @@ export function photonEntry(): Plugin[] {
 
           if (resolved) {
             if (isPhotonEntryId(id)) {
-              // FIXME photonjs:entry:./server.ts and photonjs:entry:server.ts should point to the same entry
-              const entry = Object.values(this.environment.config.photonjs.entry).find((e) => e.id === id)
+              // FIXME photon:entry:./server.ts and photon:entry:server.ts should point to the same entry
+              const entry = Object.values(this.environment.config.photon.entry).find((e) => e.id === id)
               assert(entry)
               entry.resolvedId = resolved.id
 
               return {
                 ...resolved,
                 meta: {
-                  photonjs: {
+                  photon: {
                     type: 'auto',
                   },
                 },
-                resolvedBy: 'photonjs',
+                resolvedBy: 'photon',
               }
             }
             return resolved

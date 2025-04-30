@@ -27,7 +27,7 @@ export function serve<App extends Parameters<typeof applyAdapter>[0]>(app: App, 
     if (optionsSymbol && !appAny[optionsSymbol]?.forceCloseConnections) {
       console.warn(
         pc.yellow(
-          `${pc.bold('[photonjs:fastify]')} Please make sure that fastify is initialized with \`{ forceCloseConnections: true }\` for proper HMR support.`,
+          `${pc.bold('[photon:fastify]')} Please make sure that fastify is initialized with \`{ forceCloseConnections: true }\` for proper HMR support.`,
         ),
       )
     }

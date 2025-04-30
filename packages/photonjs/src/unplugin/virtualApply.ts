@@ -2,8 +2,8 @@ import oxc from 'oxc-transform'
 import type { UnpluginFactory } from 'unplugin'
 import { assert } from '../utils/assert.js'
 
-const re_apply = /^photonjs:virtual-apply:(?<condition>dev|edge|node):(?<server>[^:]+)(?<rest>.*)/
-const re_index = /^photonjs:virtual-index:(?<server>[^:]+)(?<rest>.*)/
+const re_apply = /^photon:virtual-apply:(?<condition>dev|edge|node):(?<server>[^:]+)(?<rest>.*)/
+const re_index = /^photon:virtual-index:(?<server>[^:]+)(?<rest>.*)/
 interface MatchGroups {
   condition?: 'dev' | 'edge' | 'node'
   server: string
@@ -24,13 +24,13 @@ function compileApply(id: string) {
 
   //language=ts
   const code = `import { apply as applyAdapter } from '@universal-middleware/${match.server}';
-import getUniversalMiddlewares from 'photonjs:get-middlewares:${match.condition}:${match.server}${match.rest}';
+import getUniversalMiddlewares from 'photon:get-middlewares:${match.condition}:${match.server}${match.rest}';
 import { type RuntimeAdapterTarget, type UniversalMiddleware, getUniversalProp, nameSymbol } from '@universal-middleware/core';
 ${match.condition === 'dev' ? 'import { devServerMiddleware } from "@photonjs/core/dev";' : ''}
 
 function isValidUniversalMiddleware(middleware: unknown): asserts middleware is UniversalMiddleware {
   if (!getUniversalProp(middleware, nameSymbol)) {
-    throw new TypeError("[photonjs] All middlewares require a name. Use enhance helper as described in the documentation: https://universal-middleware.dev/helpers/enhance");
+    throw new TypeError("[photon] All middlewares require a name. Use enhance helper as described in the documentation: https://universal-middleware.dev/helpers/enhance");
   }
 }
 
@@ -97,36 +97,36 @@ export { serve } from '@photonjs/core/${match.server}/serve'
 const entries = {
   // -- apply
   // dev
-  'elysia/apply.dev': 'photonjs:virtual-apply:dev:elysia',
-  'express/apply.dev': 'photonjs:virtual-apply:dev:express',
-  'fastify/apply.dev': 'photonjs:virtual-apply:dev:fastify',
-  'h3/apply.dev': 'photonjs:virtual-apply:dev:h3',
-  'hattip/apply.dev': 'photonjs:virtual-apply:dev:hattip',
-  'hono/apply.dev': 'photonjs:virtual-apply:dev:hono',
+  'elysia/apply.dev': 'photon:virtual-apply:dev:elysia',
+  'express/apply.dev': 'photon:virtual-apply:dev:express',
+  'fastify/apply.dev': 'photon:virtual-apply:dev:fastify',
+  'h3/apply.dev': 'photon:virtual-apply:dev:h3',
+  'hattip/apply.dev': 'photon:virtual-apply:dev:hattip',
+  'hono/apply.dev': 'photon:virtual-apply:dev:hono',
   // edge
-  'elysia/apply.edge': 'photonjs:virtual-apply:edge:elysia',
-  'h3/apply.edge': 'photonjs:virtual-apply:edge:h3',
-  'hattip/apply.edge': 'photonjs:virtual-apply:edge:hattip',
-  'hono/apply.edge': 'photonjs:virtual-apply:edge:hono',
+  'elysia/apply.edge': 'photon:virtual-apply:edge:elysia',
+  'h3/apply.edge': 'photon:virtual-apply:edge:h3',
+  'hattip/apply.edge': 'photon:virtual-apply:edge:hattip',
+  'hono/apply.edge': 'photon:virtual-apply:edge:hono',
   // node
-  'elysia/apply': 'photonjs:virtual-apply:node:elysia',
-  'express/apply': 'photonjs:virtual-apply:node:express',
-  'fastify/apply': 'photonjs:virtual-apply:node:fastify',
-  'h3/apply': 'photonjs:virtual-apply:node:h3',
-  'hattip/apply': 'photonjs:virtual-apply:node:hattip',
-  'hono/apply': 'photonjs:virtual-apply:node:hono',
+  'elysia/apply': 'photon:virtual-apply:node:elysia',
+  'express/apply': 'photon:virtual-apply:node:express',
+  'fastify/apply': 'photon:virtual-apply:node:fastify',
+  'h3/apply': 'photon:virtual-apply:node:h3',
+  'hattip/apply': 'photon:virtual-apply:node:hattip',
+  'hono/apply': 'photon:virtual-apply:node:hono',
   // -- index,
-  elysia: 'photonjs:virtual-index:elysia',
-  express: 'photonjs:virtual-index:express',
-  fastify: 'photonjs:virtual-index:fastify',
-  h3: 'photonjs:virtual-index:h3',
-  hattip: 'photonjs:virtual-index:hattip',
-  hono: 'photonjs:virtual-index:hono',
+  elysia: 'photon:virtual-index:elysia',
+  express: 'photon:virtual-index:express',
+  fastify: 'photon:virtual-index:fastify',
+  h3: 'photon:virtual-index:h3',
+  hattip: 'photon:virtual-index:hattip',
+  hono: 'photon:virtual-index:hono',
 }
 
 export const virtualApplyFactory: UnpluginFactory<undefined> = () => {
   return {
-    name: 'photonjs:virtual-apply',
+    name: 'photon:virtual-apply',
 
     esbuild: {
       config(opts) {

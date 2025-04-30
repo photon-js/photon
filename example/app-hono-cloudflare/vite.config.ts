@@ -4,7 +4,7 @@ import { defineConfig, type Plugin } from 'vite'
 
 export default defineConfig(({ mode }) => {
   return {
-    photonjs: {
+    photon: {
       // Define Photon entries
       entry: {
         index: 'server.ts',

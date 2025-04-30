@@ -49,7 +49,7 @@ export default defineConfig([
     esbuildPlugins: [virtualApply()],
     external: externalServers
       .concat(...builtinModules.flatMap((e) => [e, `node:${e}`]))
-      .concat(/^photonjs:get-middlewares:/)
+      .concat(/^photon:get-middlewares:/)
       .concat('@photonjs/core/dev'),
   },
   {

@@ -8,10 +8,10 @@ export { setPhotonEntry } from './api/setPhotonEntry.js'
 
 declare module 'vite' {
   interface UserConfig {
-    photonjs?: Photon.Config
+    photon?: Photon.Config
   }
 
   interface ResolvedConfig {
-    photonjs: Photon.ConfigResolved
+    photon: Photon.ConfigResolved
   }
 }

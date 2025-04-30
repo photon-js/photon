@@ -2,8 +2,8 @@ import type { CustomPluginOptions } from 'rollup'
 import { assert } from '../../utils/assert.js'
 import type { SupportedServers } from '../../validators/types.js'
 
-export const virtualPhotonEntry = 'photonjs:entry'
-export const re_virtualPhotonEntry = /.*(photonjs:entry.*)/
+export const virtualPhotonEntry = 'photon:entry'
+export const re_virtualPhotonEntry = /.*(photon:entry.*)/
 
 export function isPhotonEntryId(id: string) {
   return id.startsWith(virtualPhotonEntry)
@@ -32,8 +32,8 @@ export function stripPhotonEntryId(id: string) {
   return isPhotonEntryId(id) ? id.substring(virtualPhotonEntry.length + 1) : id
 }
 
-export function isPhotonMeta(meta?: CustomPluginOptions): meta is { photonjs: PhotonMeta } {
-  return Boolean(meta && 'photonjs' in meta)
+export function isPhotonMeta(meta?: CustomPluginOptions): meta is { photon: PhotonMeta } {
+  return Boolean(meta && 'photon' in meta)
 }
 
 export interface PhotonMetaServer {

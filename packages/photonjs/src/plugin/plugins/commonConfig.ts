@@ -7,7 +7,7 @@ export { commonConfig }
 function commonConfig(): Plugin[] {
   return [
     {
-      name: 'photonjs:commonConfig',
+      name: 'photon:commonConfig',
 
       configEnvironment(name, config) {
         if (!config.consumer) {

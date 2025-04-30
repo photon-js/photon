@@ -52,7 +52,7 @@ export function resolvePhotonConfig(config: PhotonConfig | undefined, fallback?:
           ? // Fallback to a simple Hono server for now for simplicity
             () =>
               entriesToPhoton({
-                id: 'photonjs:fallback-entry',
+                id: 'photon:fallback-entry',
                 type: 'server',
                 server: 'hono',
               })

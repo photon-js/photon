@@ -37,7 +37,7 @@ export const devServerMiddleware = (() =>
       }
     },
     {
-      name: 'photonjs:dev-server',
+      name: 'photon:dev-server',
       immutable: false,
     },
   )) satisfies Get<[], UniversalMiddleware>

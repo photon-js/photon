@@ -3,13 +3,13 @@ import { resolvePhotonConfig } from '../../validators/coerce.js'
 
 export function resolvePhotonConfigPlugin(userConfig?: Photon.Config): Plugin {
   return {
-    name: 'photonjs:resolve-config',
+    name: 'photon:resolve-config',
     enforce: 'pre',
 
     config() {
       if (userConfig) {
         return {
-          photonjs: resolvePhotonConfig(userConfig),
+          photon: resolvePhotonConfig(userConfig),
         }
       }
     },
@@ -17,7 +17,7 @@ export function resolvePhotonConfigPlugin(userConfig?: Photon.Config): Plugin {
     configResolved: {
       order: 'pre',
       handler(config) {
-        config.photonjs = resolvePhotonConfig(config.photonjs, true)
+        config.photon = resolvePhotonConfig(config.photon, true)
       },
     },
   }

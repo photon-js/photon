@@ -5,12 +5,12 @@ import type { Plugin } from 'vite'
 export function cloudflare(config?: Omit<PluginConfig, 'viteEnvironment'>): Plugin[] {
   return [
     {
-      name: 'photonjs:cloudflare',
+      name: 'photon:cloudflare',
       enforce: 'pre',
       config: {
         handler() {
           return {
-            photonjs: {
+            photon: {
               // @cloudflare/vite-plugin has its own dev server
               devServer: false,
             },

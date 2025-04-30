@@ -2,7 +2,7 @@ import type { PluginContext } from 'rollup'
 import type { Plugin } from 'vite'
 
 // TODO remove rest param?
-const re_getMiddlewares = /^photonjs:get-middlewares:(?<condition>dev|edge|node):(?<server>[^:]+)(?<rest>.*)/
+const re_getMiddlewares = /^photon:get-middlewares:(?<condition>dev|edge|node):(?<server>[^:]+)(?<rest>.*)/
 interface MatchGroups {
   condition: 'dev' | 'edge' | 'node'
   server: string
@@ -19,7 +19,7 @@ function getAllPhotonMiddlewares(pluginContext: PluginContext, id: string) {
   const match = testGetMiddlewares(id)
   if (!match) throw new Error(`Invalid id ${id}`)
 
-  const getMiddlewares = pluginContext.environment.config.photonjs.middlewares ?? []
+  const getMiddlewares = pluginContext.environment.config.photon.middlewares ?? []
   const middlewares = getMiddlewares.map((m) => m(match.condition, match.server))
 
   // TODO handle libs returning UniversalMiddleware, UniversalMiddleware[], and (options?) => UniversalMiddleware | UniversalMiddleware[]
@@ -66,7 +66,7 @@ export default function getUniversalMiddlewares() {
 export function getMiddlewaresPlugin(): Plugin[] {
   return [
     {
-      name: 'photonjs:get-middlewares',
+      name: 'photon:get-middlewares',
 
       async resolveId(id) {
         const match = testGetMiddlewares(id)
