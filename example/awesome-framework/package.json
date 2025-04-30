@@ -7,18 +7,19 @@
     "build": "tsc"
   },
   "dependencies": {
+    "@photonjs/core": "workspace:",
     "@universal-middleware/core": "^0.4.7",
     "@universal-middleware/sirv": "^0.1.20"
   },
   "devDependencies": {
-    "@types/node": "^22.13.4",
+    "@types/node": "^20.17.32",
     "typescript": "^5.8.3",
     "vite": "^6.3.3"
   },
   "exports": {
     "./entry-client": "./dist/entry-client.js",
     "./entry-server": "./dist/entry-server.js",
-    "./vite": "./dist/plugins/vite-plugin.js",
+    "./vite": "./dist/plugins/index.js",
     "./universal-middleware": {
       "types": "./dist/photon/middlewares/prod.d.ts",
       "development": {

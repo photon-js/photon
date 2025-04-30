@@ -1,21 +1,20 @@
 import { cloudflare } from '@photonjs/cloudflare/vite'
-import { photon } from '@photonjs/core/vite'
 import { awesomeFramework } from 'awesome-framework/vite'
 import { defineConfig, type Plugin } from 'vite'
 
 export default defineConfig(({ mode }) => {
   return {
-    plugins: [
+    photonjs: {
       // Define Photon entries
-      photon({
-        entry: {
-          index: 'server.ts',
-        },
-      }),
+      entry: {
+        index: 'server.ts',
+      },
+    },
+    plugins: [
       // Use Photon's Cloudflare adapter. @photonjs/auto will take care of this more properly in the future
       mode === 'cloudflare' ? cloudflare() : undefined,
-      // Basic SSR framework
-      awesomeFramework(),
+      // SSR framework using PhotonJS
+      ...awesomeFramework(),
     ] as Plugin[],
   }
 })

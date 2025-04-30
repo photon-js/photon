@@ -16,6 +16,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
+    "verbatimModuleSyntax": true,
     "outDir": "./dist/"
   },
   "exclude": ["**/*.spec.ts", "./node_modules/", "./dist/"]

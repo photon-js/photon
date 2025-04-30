@@ -4,7 +4,7 @@ import indexHtml from '../index-html.js'
 
 const virtualIndex = 'virtual:awesome-plugin:index.html'
 
-export function awesomeFramework(): Plugin {
+export function awesomeFrameworkPlugin(): Plugin {
   return {
     name: 'awesome-framework',
     config() {
