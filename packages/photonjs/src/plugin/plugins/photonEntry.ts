@@ -94,9 +94,13 @@ export function photonEntry(): Plugin[] {
           const { entry } = resolvePhotonConfig(config.photonjs)
 
           return {
-            build: {
-              rollupOptions: {
-                input: Object.fromEntries(Object.entries(entry).map(([key, value]) => [key, value.id])),
+            environments: {
+              ssr: {
+                build: {
+                  rollupOptions: {
+                    input: Object.fromEntries(Object.entries(entry).map(([key, value]) => [key, value.id])),
+                  },
+                },
               },
             },
           }
@@ -151,10 +155,6 @@ export function photonEntry(): Plugin[] {
     {
       name: 'photonjs:resolve-entry-meta',
       enforce: 'pre',
-
-      applyToEnvironment(env) {
-        return env.config.consumer === 'server'
-      },
 
       resolveId: {
         order: 'post',
