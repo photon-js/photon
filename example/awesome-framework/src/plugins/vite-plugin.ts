@@ -1,5 +1,5 @@
 import type { Plugin } from 'vite'
-import { render } from '../entry-server.js'
+import { render } from '../render.js'
 import indexHtml from '../index-html.js'
 
 const virtualIndex = 'virtual:awesome-plugin:index.html'

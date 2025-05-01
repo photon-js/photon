@@ -1,5 +1,5 @@
 import { enhance } from '@universal-middleware/core'
-import { render } from '../../entry-server.js'
+import { render } from '../../render.js'
 import indexHtml from '../../index-html.js'
 
 export const defaultHandler = enhance(

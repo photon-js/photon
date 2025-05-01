@@ -18,7 +18,7 @@
   },
   "exports": {
     "./entry-client": "./dist/entry-client.js",
-    "./entry-server": "./dist/entry-server.js",
+    "./render": "./dist/render.js",
     "./vite": "./dist/plugins/index.js",
     "./universal-middleware": {
       "types": "./dist/photon/middlewares/prod.d.ts",
