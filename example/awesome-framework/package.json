@@ -21,24 +21,24 @@
     "./render": "./dist/render.js",
     "./vite": "./dist/plugins/index.js",
     "./universal-middleware": {
-      "types": "./dist/photon/middlewares/prod.d.ts",
+      "types": "./dist/photon/entries/prod.d.ts",
       "development": {
-        "types": "./dist/photon/middlewares/dev.d.ts",
-        "import": "./dist/photon/middlewares/dev.js",
-        "default": "./dist/photon/middlewares/dev.js"
+        "types": "./dist/photon/entries/dev.d.ts",
+        "import": "./dist/photon/entries/dev.js",
+        "default": "./dist/photon/entries/dev.js"
       },
       "workerd": {
-        "types": "./dist/photon/middlewares/edge.d.ts",
-        "import": "./dist/photon/middlewares/edge.js",
-        "default": "./dist/photon/middlewares/edge.js"
+        "types": "./dist/photon/entries/edge.d.ts",
+        "import": "./dist/photon/entries/edge.js",
+        "default": "./dist/photon/entries/edge.js"
       },
       "worker": {
-        "types": "./dist/photon/middlewares/edge.d.ts",
-        "import": "./dist/photon/middlewares/edge.js",
-        "default": "./dist/photon/middlewares/edge.js"
+        "types": "./dist/photon/entries/edge.d.ts",
+        "import": "./dist/photon/entries/edge.js",
+        "default": "./dist/photon/entries/edge.js"
       },
-      "import": "./dist/photon/middlewares/prod.js",
-      "default": "./dist/photon/middlewares/prod.js"
+      "import": "./dist/photon/entries/prod.js",
+      "default": "./dist/photon/entries/prod.js"
     }
   }
 }
