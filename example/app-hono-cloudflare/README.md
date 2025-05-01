@@ -1,6 +1,6 @@
 # App using `awesome-framework`
 
-App using [`awesome-framework` — a demo framework](../awesome-framework) powered by Vite and Photon.
+App using [`awesome-framework`](../awesome-framework) — a demo framework powered by Vite and Photon.
 
 Relevant files:
 - [server.ts](./server.ts): user server entry, can be any server that Photon supports (Hono, Express.js, Fastify, H3, ...)
