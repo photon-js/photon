@@ -1,11 +1,9 @@
 import { enhance } from '@universal-middleware/core'
-import { render } from '../../render.js'
-import indexHtml from '../../index-html.js'
+import { renderUrl } from '../../render.js'
 
 export const defaultHandler = enhance(
   async (request: Request) => {
-    const rendered = render(request.url)
-    const html = indexHtml.replace('<!--app-html-->', rendered.html ?? '')
+    const html = renderUrl(request.url)
 
     return new Response(html, {
       status: 200,
