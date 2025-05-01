@@ -12,8 +12,8 @@
     "preview:cloudflare": "pnpm run build:cloudflare && vite preview --mode cloudflare"
   },
   "devDependencies": {
-    "@photonjs/core": "^0.0.1",
-    "@photonjs/cloudflare": "^0.0.1",
+    "@photonjs/core": "workspace:",
+    "@photonjs/cloudflare": "workspace:",
     "typescript": "^5.8.3",
     "vite": "^6.3.3",
     "wrangler": "^4.13.2"
