@@ -15,7 +15,7 @@ Relevant files:
 # dev on node
 pnpm run dev
 
-# builds for node runtime and runs `$ node dist/server/server.js`
+# builds for node runtime and runs `$ node dist/server/index.js`
 pnpm run preview
 ```
 
