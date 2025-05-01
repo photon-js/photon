@@ -1,0 +1,4 @@
+- [packages/photonjs](./packages/photonjs): Photon core
+- [packages/adapter-cloudflare](./packages/adapter-cloudflare): Photon cloudflare adapter
+- [example/awesome-framework](./example/awesome-framework): Minimal SSR framework demonstrating how to integrate Photon
+- [example/app-hono-cloudflare](./example/app-hono-cloudflare): A demo app using our minimal framework + cloudflare target
