@@ -1,11 +1,9 @@
 import { enhance } from '@universal-middleware/core'
-import { render } from '../../entry-server.js'
-import indexHtml from '../../index-html.js'
+import { renderUrl } from '../../renderUrl.js'
 
-export const defaultHandler = enhance(
+export const ssrMiddleware = enhance(
   async (request: Request) => {
-    const rendered = render(request.url)
-    const html = indexHtml.replace('<!--app-html-->', rendered.html ?? '')
+    const html = renderUrl(request.url)
 
     return new Response(html, {
       status: 200,
@@ -16,7 +14,7 @@ export const defaultHandler = enhance(
   },
   // enhance() adds meta data (a Universal Middleware in itself is just a Request => Response function)
   {
-    name: 'awesome-framework:default-route',
+    name: 'awesome-framework:ssr',
     path: '/**',
     method: 'GET',
   },

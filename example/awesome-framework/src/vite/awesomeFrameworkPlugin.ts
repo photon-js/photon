@@ -1,6 +1,5 @@
 import type { Plugin } from 'vite'
-import { render } from '../entry-server.js'
-import indexHtml from '../index-html.js'
+import { renderUrl } from '../renderUrl.js'
 
 const virtualIndex = 'virtual:awesome-plugin:index.html'
 
@@ -47,8 +46,7 @@ export function awesomeFrameworkPlugin(): Plugin {
     },
     load(id) {
       if (id === 'index.html') {
-        const rendered = render('/')
-        return indexHtml.replace('<!--app-html-->', rendered.html ?? '')
+        return renderUrl('/')
       }
     },
     sharedDuringBuild: true,
