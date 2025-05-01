@@ -1,7 +1,7 @@
 import { enhance, type UniversalMiddleware } from '@universal-middleware/core'
 import sirv from '@universal-middleware/sirv'
 import { apiHandler } from '../middlewares/api'
-import { defaultHandler } from '../middlewares/ssr'
+import { ssrMiddleware } from '../middlewares/ssr'
 import { logger } from '../middlewares/logger'
 
 // Production with Node.js/Bun/Deno
@@ -11,5 +11,5 @@ export default [
     name: 'sirv',
   }),
   apiHandler,
-  defaultHandler,
+  ssrMiddleware,
 ] as UniversalMiddleware[]
