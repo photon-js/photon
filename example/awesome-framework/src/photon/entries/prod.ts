@@ -7,9 +7,7 @@ import { loggerMiddleware } from '../middlewares/logger'
 // Production with Node.js/Bun/Deno
 export default [
   loggerMiddleware,
-  enhance(sirv('dist/client'), {
-    name: 'sirv',
-  }),
+  enhance(sirv('dist/client'), { name: 'sirv' }),
   apiMiddleware,
   ssrMiddleware,
 ] as UniversalMiddleware[]
