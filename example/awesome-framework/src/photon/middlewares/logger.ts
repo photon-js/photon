@@ -1,6 +1,6 @@
 import { enhance, MiddlewareOrder } from '@universal-middleware/core'
 
-export const logger = enhance(
+export const loggerMiddleware = enhance(
   (request: Request) => {
     console.log('Request:', request.url)
   },
