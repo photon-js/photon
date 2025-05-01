@@ -1,0 +1,25 @@
+{
+  "name": "app-hono-cloudflare",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:cloudflare": "vite --mode cloudflare",
+    "build": "vite build",
+    "build:cloudflare": "vite build --mode cloudflare",
+    "preview": "pnpm run build && node dist/ssr/index.js",
+    "preview:cloudflare": "pnpm run build:cloudflare && vite preview --mode cloudflare"
+  },
+  "devDependencies": {
+    "@photonjs/core": "^0.0.1",
+    "@photonjs/cloudflare": "^0.0.1",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.3",
+    "wrangler": "^4.13.2"
+  },
+  "dependencies": {
+    "awesome-framework": "workspace:",
+    "hono": "^4.7.8"
+  }
+}
