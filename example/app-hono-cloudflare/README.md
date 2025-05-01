@@ -1,4 +1,4 @@
-### App using `awesome-framework`
+# App using `awesome-framework`
 
 App using [`awesome-framework` — a demo framework](../awesome-framework) powered by Vite and Photon.
 
@@ -7,9 +7,10 @@ Relevant files:
 - [vite.config.ts](./vite.config.ts): this is where the user tells Photon where his server entry lives, and where the user adds Photon's Cloudflare adapter (if he doesn't use `@photonjs/auto`)
 - [wrangler.toml](./wrangler.toml): required when targetting Cloudflare, contains a `main` property pointing to a Photon virtual file (the "real server entry" which wraps the user server entry)
 
-### scripts
+## scripts
 
-#### Run and build for node
+### Run and build for node
+
 ```sh
 # dev on node
 pnpm run dev
@@ -18,7 +19,8 @@ pnpm run dev
 pnpm run preview
 ```
 
-#### Run and build for cloudflare
+### Run and build for cloudflare
+
 ```sh
 # dev on cloudflare workerd
 pnpm run dev:cloudflare
@@ -27,8 +29,10 @@ pnpm run dev:cloudflare
 pnpm run preview:cloudflare
 ```
 
-#### Run and build for vercel
+### Run and build for vercel
+
 Coming soon
 
 ### Demo with a virtual entry
+
 Coming soon

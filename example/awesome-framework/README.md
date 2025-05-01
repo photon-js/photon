@@ -1,4 +1,4 @@
-### Framework powered by Vite and Photon
+# Framework powered by Vite and Photon
 
 A demo framework showcasing how to integrate Photon into a Vite-based framework.
 
