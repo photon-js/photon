@@ -14,7 +14,7 @@ export const defaultHandler = enhance(
   },
   // enhance() adds meta data (a Universal Middleware in itself is just a Request => Response function)
   {
-    name: 'awesome-framework:default-route',
+    name: 'awesome-framework:ssr',
     path: '/**',
     method: 'GET',
   },
