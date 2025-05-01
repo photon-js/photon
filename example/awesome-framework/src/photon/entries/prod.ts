@@ -1,7 +1,7 @@
 import { enhance, type UniversalMiddleware } from '@universal-middleware/core'
 import sirv from '@universal-middleware/sirv'
-import { apiHandler } from '../handlers/api-handler'
-import { defaultHandler } from '../handlers/default-handler'
+import { apiHandler } from '../middlewares/api-handler'
+import { defaultHandler } from '../middlewares/default-handler'
 import { logger } from './logger'
 
 // Production with Node.js/Bun/Deno
