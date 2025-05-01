@@ -69,10 +69,10 @@ importers:
         version: 4.7.8
     devDependencies:
       '@photonjs/cloudflare':
-        specifier: ^0.0.1
+        specifier: 'workspace:'
         version: link:../../packages/adapter-cloudflare
       '@photonjs/core':
-        specifier: ^0.0.1
+        specifier: 'workspace:'
         version: link:../../packages/photonjs
       typescript:
         specifier: ^5.8.3
