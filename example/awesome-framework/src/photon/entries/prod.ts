@@ -1,6 +1,6 @@
 import { enhance, type UniversalMiddleware } from '@universal-middleware/core'
 import sirv from '@universal-middleware/sirv'
-import { apiHandler } from '../middlewares/api-handler'
+import { apiHandler } from '../middlewares/api'
 import { defaultHandler } from '../middlewares/ssr'
 import { logger } from '../middlewares/logger'
 
