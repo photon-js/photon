@@ -19,7 +19,7 @@
   "exports": {
     "./entry-client": "./dist/entry-client.js",
     "./render": "./dist/render.js",
-    "./vite": "./dist/plugins/index.js",
+    "./vite": "./dist/vite/index.js",
     "./universal-middleware": {
       "types": "./dist/photon/entries/prod.d.ts",
       "development": {
