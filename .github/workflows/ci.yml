@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node_version: [20]
+      fail-fast: false
+    name: 'Test on node-${{ matrix.node_version }}, ${{ matrix.os }}'
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - name: Set Node.js version to ${{ matrix.node_version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node_version }}
+          # TODO/eventually: try using the cache again
+          # The cache breaks playwright installation, see https://github.com/vikejs/vike-vue/pull/119
+          # cache: "pnpm"
+      - run: pnpm install
+      - run: pnpm exec playwright install chromium
+      - run: pnpm run build
+      - run: pnpm run test
