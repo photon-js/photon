@@ -1,5 +1,5 @@
 import type { Plugin } from 'vite'
-import { renderUrl } from '../render.js'
+import { renderUrl } from '../renderUrl.js'
 
 const virtualIndex = 'virtual:awesome-plugin:index.html'
 

@@ -1,5 +1,5 @@
 import { enhance } from '@universal-middleware/core'
-import { renderUrl } from '../../render.js'
+import { renderUrl } from '../../renderUrl.js'
 
 export const defaultHandler = enhance(
   async (request: Request) => {
