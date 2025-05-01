@@ -1,6 +1,6 @@
 import { enhance } from '@universal-middleware/core'
 
-export const apiHandler = enhance(
+export const apiMiddleware = enhance(
   async () => {
     return new Response('The API Route', {
       status: 200,

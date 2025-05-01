@@ -1,6 +1,6 @@
 import { enhance, type UniversalMiddleware } from '@universal-middleware/core'
 import sirv from '@universal-middleware/sirv'
-import { apiHandler } from '../middlewares/api'
+import { apiMiddleware } from '../middlewares/api'
 import { ssrMiddleware } from '../middlewares/ssr'
 import { logger } from '../middlewares/logger'
 
@@ -10,6 +10,6 @@ export default [
   enhance(sirv('dist/client'), {
     name: 'sirv',
   }),
-  apiHandler,
+  apiMiddleware,
   ssrMiddleware,
 ] as UniversalMiddleware[]
