@@ -8,7 +8,7 @@
     "dev:cloudflare": "vite --mode cloudflare",
     "build": "vite build",
     "build:cloudflare": "vite build --mode cloudflare",
-    "preview": "pnpm run build && node dist/ssr/index.js",
+    "preview": "pnpm run build && node dist/server/index.js",
     "preview:cloudflare": "pnpm run build:cloudflare && vite preview --mode cloudflare"
   },
   "devDependencies": {

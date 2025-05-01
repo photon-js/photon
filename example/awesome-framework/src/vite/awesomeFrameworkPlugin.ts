@@ -23,7 +23,7 @@ export function awesomeFrameworkPlugin(): Plugin {
       if (name === 'ssr') {
         return {
           build: {
-            outDir: './dist/ssr',
+            outDir: './dist/server',
             emptyOutDir: false,
           },
         }
