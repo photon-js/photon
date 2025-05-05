@@ -13,13 +13,10 @@ function fallback(): Plugin {
       }
     },
 
-    load: {
-      // So this can easily be overriden by adapters
-      order: 'post',
-      handler(id) {
-        if (id === 'photon:fallback-entry') {
-          //language=ts
-          return `import { apply, serve } from '@photonjs/core/hono'
+    load(id) {
+      if (id === 'photon:fallback-entry') {
+        //language=ts
+        return `import { apply, serve } from '@photonjs/core/hono'
 import { Hono } from 'hono'
 
 function startServer() {
@@ -35,8 +32,7 @@ function startServer() {
 
 export default startServer()
 `
-        }
-      },
+      }
     },
   }
 }

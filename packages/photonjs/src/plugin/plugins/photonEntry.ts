@@ -3,6 +3,8 @@ import type { Plugin } from 'vite'
 import { assert, assertUsage } from '../../utils/assert.js'
 import type { PhotonEntryServer, SupportedServers } from '../../validators/types.js'
 
+import { walk } from 'estree-walker'
+import MagicString from 'magic-string'
 import { resolvePhotonConfig } from '../../validators/coerce.js'
 import {
   extractPhotonEntryId,
@@ -194,6 +196,95 @@ export function photonEntry(): Plugin[] {
           }
         },
       },
+      sharedDuringBuild: true,
+    },
+    {
+      name: 'photon:enhance-entries',
+      enforce: 'post',
+
+      transform(code, id) {
+        const info = this.getModuleInfo(id)
+        if (
+          info &&
+          isPhotonMeta(info.meta) &&
+          info.meta.photon.type === 'universal-handler' &&
+          info.meta.photon.route
+        ) {
+          const ast = this.parse(code)
+
+          const magicString = new MagicString(code)
+          let hasExportDefault = false
+          let hasEnhanceImport = false
+
+          // Walk the AST
+          walk(ast, {
+            enter(node) {
+              if (
+                !hasEnhanceImport &&
+                node.type === 'ImportDeclaration' &&
+                node.source.value === '@universal-middleware/core'
+              ) {
+                // Check if enhance is among the imported specifiers
+                for (const specifier of node.specifiers) {
+                  if (
+                    (specifier.type === 'ImportSpecifier' &&
+                      specifier.imported &&
+                      'name' in specifier.imported &&
+                      specifier.imported.name === 'enhance') ||
+                    (specifier.type === 'ImportDefaultSpecifier' && specifier.local.name === 'enhance')
+                  ) {
+                    hasEnhanceImport = true
+                  }
+                }
+              }
+
+              if (node.type === 'ExportAllDeclaration') {
+                if (node.exported && 'name' in node.exported && node.exported.name === 'default') {
+                  hasExportDefault = true
+                  // TODO
+                  assertUsage(false, `Entry ${id}: export { ... as default } is not yet supported`)
+                }
+              }
+              if (node.type === 'ExportDefaultDeclaration') {
+                hasExportDefault = true
+
+                // Find the start and end of the declaration value
+                // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+                const declarationStart: number = (node.declaration as any).start
+                // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+                const declarationEnd: number = (node.declaration as any).end
+
+                assert(declarationStart)
+                assert(declarationEnd)
+
+                // Replace the declaration with enhance call
+                magicString.overwrite(
+                  declarationStart,
+                  declarationEnd,
+                  `enhance(${code.slice(declarationStart, declarationEnd)}, {
+  name: ${JSON.stringify(id)},
+  method: ['GET', 'POST'],
+  path: ${JSON.stringify(info.meta.photon.route)},
+  immutable: false
+})`,
+                )
+              }
+            },
+          })
+
+          assertUsage(hasExportDefault, `Entry ${id} must have a default export`)
+
+          if (!hasEnhanceImport) {
+            magicString.prepend(`import { enhance } from '@universal-middleware/core';\n`)
+          }
+
+          return {
+            code: magicString.toString(),
+            map: magicString.generateMap(),
+          }
+        }
+      },
+
       sharedDuringBuild: true,
     },
   ]

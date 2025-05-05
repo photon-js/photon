@@ -43,6 +43,7 @@ export interface PhotonMetaServer {
 
 export interface PhotonMetaUniversalHandler {
   type: 'universal-handler'
+  route?: string
 }
 
 export type PhotonMeta = PhotonMetaServer | PhotonMetaUniversalHandler | { type?: 'auto' }
