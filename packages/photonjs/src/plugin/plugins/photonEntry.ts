@@ -91,7 +91,7 @@ export function photonEntry(): Plugin[] {
       config: {
         order: 'post',
         handler(config) {
-          const { entry } = resolvePhotonConfig(config.photon)
+          const { entry } = resolvePhotonConfig(config.photon, true)
 
           return {
             environments: {
