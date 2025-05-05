@@ -25,9 +25,20 @@ function entriesToPhoton(
     }
   }
 
-  return Object.fromEntries(Object.entries(entry).map(([key, value]) => [key, entryToPhoton(value)]))
+  const entries = Object.fromEntries(Object.entries(entry).map(([key, value]) => [key, entryToPhoton(value)]))
+
+  if (!entries.index) {
+    entries.index = entryToPhoton({
+      id: 'photon:fallback-entry',
+      type: 'server',
+      server: 'hono',
+    })
+  }
+
+  return entries
 }
 
+// TODO always fallback? This should allow better DX and error messages
 export function resolvePhotonConfig(config: PhotonConfig | undefined, fallback?: boolean): PhotonConfigResolved {
   const out = Validators.PhotonConfig.pipe.try((c) => {
     const toPhotonEntry = match
