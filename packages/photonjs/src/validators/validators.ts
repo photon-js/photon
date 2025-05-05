@@ -32,7 +32,7 @@ export const PhotonEntry = type(PhotonEntryServer).or(PhotonEntryUniversalHandle
 
 export const PhotonConfig = type({
   'entry?': PhotonEntry.or({
-    index: type('string').or(PhotonEntry),
+    'index?': type('string').or(PhotonEntry),
     '[string]': type('string').or(PhotonEntry),
   }).or('string'),
   'hmr?': "boolean | 'prefer-restart'",
