@@ -1,8 +1,13 @@
 import { type } from 'arktype'
 import type { BuildOptions } from 'esbuild'
+import type { PluginContext } from 'rollup'
 
 // FIXME server should be optional?
-export type GetPhotonCondition = (condition: 'dev' | 'edge' | 'node', server: string) => string
+export type GetPhotonCondition = (
+  this: PluginContext,
+  condition: 'dev' | 'edge' | 'node',
+  server: string,
+) => string | string[] | undefined | null
 
 export const SupportedServers = type("'hono' | 'hattip' | 'elysia' | 'express' | 'fastify' | 'h3'")
 

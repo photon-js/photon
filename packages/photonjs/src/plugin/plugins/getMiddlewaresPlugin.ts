@@ -20,7 +20,10 @@ function getAllPhotonMiddlewares(pluginContext: PluginContext, id: string) {
   if (!match) throw new Error(`Invalid id ${id}`)
 
   const getMiddlewares = pluginContext.environment.config.photon.middlewares ?? []
-  const middlewares = getMiddlewares.map((m) => m(match.condition, match.server))
+  const middlewares = getMiddlewares
+    .map((m) => m.call(pluginContext, match.condition, match.server))
+    .filter((x) => typeof x === 'string' || Array.isArray(x))
+    .flat(1)
 
   // TODO handle libs returning UniversalMiddleware, UniversalMiddleware[], and (options?) => UniversalMiddleware | UniversalMiddleware[]
   //language=ts

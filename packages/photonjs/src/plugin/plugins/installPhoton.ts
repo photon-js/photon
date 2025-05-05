@@ -1,6 +1,5 @@
 import type { Plugin } from 'vite'
-
-export type GetPhotonCondition = (condition: 'dev' | 'edge' | 'node', server: string) => string
+import type { GetPhotonCondition } from '../../validators/types.js'
 
 export interface InstallPhotonBaseOptions {
   resolveMiddlewares?: GetPhotonCondition

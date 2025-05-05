@@ -128,6 +128,24 @@ importers:
         specifier: ^6.3.3
         version: 6.3.4(@types/node@20.17.32)
 
+  packages/adapter-node:
+    devDependencies:
+      '@brillout/release-me':
+        specifier: ^0.4.3
+        version: 0.4.3
+      '@photonjs/core':
+        specifier: workspace:^
+        version: link:../photonjs
+      tsup:
+        specifier: ^8.4.0
+        version: 8.4.0(@swc/core@1.11.24)(postcss@8.5.3)(typescript@5.8.3)
+      typescript:
+        specifier: ^5.8.3
+        version: 5.8.3
+      vite:
+        specifier: ^6.3.3
+        version: 6.3.4(@types/node@20.17.32)
+
   packages/photonjs:
     dependencies:
       '@brillout/picocolors':
@@ -3183,6 +3201,7 @@ packages:
   wrangler@4.14.0:
     resolution: {integrity: sha512-WhypgOBEYuUMo/ZFw8MgZ0wtyE7EmDanytjD8Me+OMm62raKU9V9DZTlF1UVLkNfilfQNlRbMnFRdzSBji/MEA==}
     engines: {node: '>=18.0.0'}
+    deprecated: Workers with configured tail consumers would sometimes prevent wrangler dev from running. Downgrade to 4.13.2 to workaround this issue
     hasBin: true
     peerDependencies:
       '@cloudflare/workers-types': ^4.20250428.0
