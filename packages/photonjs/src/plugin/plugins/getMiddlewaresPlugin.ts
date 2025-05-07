@@ -29,81 +29,39 @@ function getAllPhotonMiddlewares(pluginContext: PluginContext, id: string) {
     .filter((x) => typeof x === 'string' || Array.isArray(x))
     .flat(1)
 
-  // TODO support libs returning UniversalMiddleware, UniversalMiddleware[]
-  //  drop support for libs returning (options?) => UniversalMiddleware | UniversalMiddleware[]
-  //  as it makes debugging way worse in case of missing enhance.
   //language=ts
   return `
-import { getUniversal, getUniversalProp, nameSymbol } from '@universal-middleware/core';
+import { getUniversal, nameSymbol } from '@universal-middleware/core';
 ${middlewares.map((m, i) => `import m${i} from ${JSON.stringify(m)};`).join('\n')}
 ${universalEntries.map((m, i) => `import u${i} from ${JSON.stringify(m)};`).join('\n')}
 
-function errorMessage1(id) {
-  return \`PhotonError: "\${id}" default export must be wrapped with enhance helper. See https://universal-middleware.dev/helpers/enhance\`
+function errorMessageMiddleware(id) {
+  return \`PhotonError: "\${id}" default export must respect the following type: UniversalMiddleware | UniversalMiddleware[]. Each individual middleware must be wrapped with enhance helper. See https://universal-middleware.dev/helpers/enhance\`
 }
 
-function errorMessage2(id) {
-  return \`PhotonError: "\${id}" default export must be a function or an array of functions.\`
+function errorMessageEntry(id) {
+  return \`PhotonError: "\${id}" default export must respect the following type: UniversalHandler. Make sure this entry have a route defined through Photon config or through enhance helper (https://universal-middleware.dev/helpers/enhance)\`
 }
 
-export function isValidUniversalMiddleware(middleware, id) {
-  if (!getUniversalProp(middleware, nameSymbol)) {
-    throw new TypeError(\`PhotonError: \${id} requires a name. Use enhance helper as described in the documentation: https://universal-middleware.dev/helpers/enhance\`);
-  }
-  return middleware;
-}
-
-function extractUniversal(mi, id) {
+function extractUniversal(mi, id, errorMessage) {
   return [mi]
     .flat(Number.POSITIVE_INFINITY)
+    .map(getUniversal)
     .map(m => {
-      if (typeof m === 'function') {
-        return getUniversal(m);
+      if (typeof m === 'function' && nameSymbol in m) {
+        return m;
       }
-      throw new Error(errorMessage2(id));
+      throw new Error(errorMessage(id));
     }
   );
 }
 
-function getMiddlewares(mi, id) {
-  return [mi]
-    .flat(Number.POSITIVE_INFINITY)
-    .map(m => {
-      if (nameSymbol in m) {
-        return m;
-      }
-      if (typeof m === 'function') {
-        // Assume it's a UniversalMidleware getter
-        let r;
-        try {
-          r = m();
-        } catch (e) {
-          throw new Error(errorMessage1(id), { cause: e })
-        }
-        if (r instanceof Promise) {
-          r.catch(e => {
-            throw new Error(errorMessage1(id), { cause: e })
-          });
-          throw new Error(errorMessage1(id));
-        }
-        return r;
-      }
-      throw new Error(errorMessage2(id));
-    })
-    .map(m => extractUniversal(m, id))
-    .flat(Number.POSITIVE_INFINITY);
-}
-
 export function getUniversalMiddlewares() {
-  return [${middlewares.map((m, i) => `getMiddlewares(extractUniversal(m${i}, ${JSON.stringify(m)}), ${JSON.stringify(m)})`).join(', ')}]
-    .flat(Number.POSITIVE_INFINITY)
-    .map(isValidUniversalMiddleware);
+  return [${middlewares.map((m, i) => `extractUniversal(m${i}, ${JSON.stringify(m)}, errorMessageMiddleware)`).join(', ')}].flat(1);
 }
 
 export function getUniversalEntries() {
-  return [${universalEntries.map((m, i) => `extractUniversal(u${i}, ${JSON.stringify(m)})`).join(', ')}]
-    .flat(Number.POSITIVE_INFINITY)
-    .map(isValidUniversalMiddleware);
+  return [${universalEntries.map((m, i) => `extractUniversal(u${i}, ${JSON.stringify(m)}, errorMessageEntry)`).join(', ')}].flat(1);
 }
 `
 }
