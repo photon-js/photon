@@ -7,7 +7,8 @@ export type GetPhotonCondition = (
   this: PluginContext,
   condition: 'dev' | 'edge' | 'node',
   server: string,
-) => string | string[] | undefined | null
+  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
+) => string | string[] | undefined | null | void
 
 export const SupportedServers = type("'hono' | 'hattip' | 'elysia' | 'express' | 'fastify' | 'h3'")
 

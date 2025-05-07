@@ -59,6 +59,31 @@ importers:
         specifier: ^6.3.3
         version: 6.3.4(@types/node@20.17.32)
 
+  example/app-cloudflare:
+    dependencies:
+      awesome-framework:
+        specifier: 'workspace:'
+        version: link:../awesome-framework
+      hono:
+        specifier: ^4.7.8
+        version: 4.7.8
+    devDependencies:
+      '@photonjs/cloudflare':
+        specifier: 'workspace:'
+        version: link:../../packages/adapter-cloudflare
+      '@photonjs/core':
+        specifier: 'workspace:'
+        version: link:../../packages/photonjs
+      typescript:
+        specifier: ^5.8.3
+        version: 5.8.3
+      vite:
+        specifier: ^6.3.3
+        version: 6.3.4(@types/node@20.17.32)
+      wrangler:
+        specifier: ^4.13.2
+        version: 4.14.0
+
   example/app-hono-cloudflare:
     dependencies:
       awesome-framework:

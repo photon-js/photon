@@ -2,9 +2,6 @@ import type { ModuleInfo, PluginContext } from 'rollup'
 import type { Plugin } from 'vite'
 import { assert, assertUsage } from '../../utils/assert.js'
 import type { PhotonEntryServer, SupportedServers } from '../../validators/types.js'
-
-import { walk } from 'estree-walker'
-import MagicString from 'magic-string'
 import { resolvePhotonConfig } from '../../validators/coerce.js'
 import {
   extractPhotonEntryId,
@@ -77,9 +74,8 @@ function computePhotonMeta(
   }
 }
 
+const resolvedIdsToServers: Record<string, SupportedServers> = {}
 export function photonEntry(): Plugin[] {
-  const resolvedIdsToServers: Record<string, SupportedServers> = {}
-
   return [
     {
       name: 'photon:set-input',
@@ -185,9 +181,13 @@ export function photonEntry(): Plugin[] {
               return {
                 ...resolved,
                 meta: {
-                  photon: {
-                    type: 'auto',
-                  },
+                  photon:
+                    entry.type === 'server'
+                      ? {
+                          type: entry.type,
+                          server: entry.server,
+                        }
+                      : { type: entry.type ?? 'auto' },
                 },
                 resolvedBy: 'photon',
               }
@@ -198,18 +198,20 @@ export function photonEntry(): Plugin[] {
       },
       sharedDuringBuild: true,
     },
-    {
+    /*{
       name: 'photon:enhance-entries',
       enforce: 'post',
+      apply: 'build',
 
       transform(code, id) {
         const info = this.getModuleInfo(id)
-        if (
-          info &&
-          isPhotonMeta(info.meta) &&
-          info.meta.photon.type === 'universal-handler' &&
-          info.meta.photon.route
-        ) {
+
+        if (!info) return
+        computePhotonMeta(this, resolvedIdsToServers, info)
+
+        // FIXME find an alternative solution, as this only work while building
+        // A route is specified in Photon config. Enforce the same route with enhance
+        if (isPhotonMeta(info.meta) && info.meta.photon.type === 'universal-handler' && info.meta.photon.route) {
           const ast = this.parse(code)
 
           const magicString = new MagicString(code)
@@ -286,6 +288,6 @@ export function photonEntry(): Plugin[] {
       },
 
       sharedDuringBuild: true,
-    },
+    },*/
   ]
 }
