@@ -24,7 +24,7 @@ function compileApply(id: string) {
 
   //language=ts
   const code = `import { apply as applyAdapter } from '@universal-middleware/${match.server}';
-import getUniversalMiddlewares from 'photon:get-middlewares:${match.condition}:${match.server}${match.rest}';
+import { getUniversalMiddlewares, getUniversalEntries } from 'photon:get-middlewares:${match.condition}:${match.server}${match.rest}';
 import { type RuntimeAdapterTarget, type UniversalMiddleware, getUniversalProp, nameSymbol } from '@universal-middleware/core';
 ${match.condition === 'dev' ? 'import { devServerMiddleware } from "@photonjs/core/dev";' : ''}
 
@@ -36,10 +36,12 @@ function isValidUniversalMiddleware(middleware: unknown): asserts middleware is 
 
 export ${isAsync ? 'async' : ''} function apply(app: Parameters<typeof applyAdapter>[0], additionalMiddlewares?: UniversalMiddleware[]): ${isAsync ? 'Promise<Parameters<typeof applyAdapter>[0]>' : 'Parameters<typeof applyAdapter>[0]'} {
   const middlewares = getUniversalMiddlewares();
+  const entries = getUniversalEntries();
   ${match.condition === 'dev' ? 'middlewares.unshift(devServerMiddleware());' : ''}
 
   // sanity check
   middlewares.forEach(isValidUniversalMiddleware);
+  entries.forEach(isValidUniversalMiddleware);
   
   // dedupe
   if (additionalMiddlewares) {
@@ -53,7 +55,7 @@ export ${isAsync ? 'async' : ''} function apply(app: Parameters<typeof applyAdap
     }
   }
 
-  ${isAsync ? 'await' : ''} applyAdapter(app, middlewares);
+  ${isAsync ? 'await' : ''} applyAdapter(app, [...middlewares, ...entries]);
 
   return app;
 }

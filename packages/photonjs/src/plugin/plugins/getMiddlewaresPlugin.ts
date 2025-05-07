@@ -19,6 +19,10 @@ function getAllPhotonMiddlewares(pluginContext: PluginContext, id: string) {
   const match = testGetMiddlewares(id)
   if (!match) throw new Error(`Invalid id ${id}`)
 
+  const { index, ...nonIndexEntries } = pluginContext.environment.config.photon.entry
+  // non-index entries are always considered Universal Handlers
+  const universalEntries = Object.values(nonIndexEntries).map((e) => e.id)
+
   const getMiddlewares = pluginContext.environment.config.photon.middlewares ?? []
   const middlewares = getMiddlewares
     .map((m) => m.call(pluginContext, match.condition, match.server))
@@ -29,11 +33,12 @@ function getAllPhotonMiddlewares(pluginContext: PluginContext, id: string) {
   //language=ts
   return `
 ${middlewares.map((m, i) => `import m${i} from ${JSON.stringify(m)};`).join('\n')}
+${universalEntries.map((m, i) => `import u${i} from ${JSON.stringify(m)};`).join('\n')}
 
 const universalSymbol = Symbol.for("universal");
 const unNameSymbol = Symbol.for("unName");
 
-export default function getUniversalMiddlewares() {
+export function getUniversalMiddlewares() {
   return [${middlewares.map((_, i) => `m${i}`).join(', ')}]
     .flat(Number.POSITIVE_INFINITY)
     .map(m => {
@@ -61,6 +66,11 @@ export default function getUniversalMiddlewares() {
       }
       // TODO else
     })
+    .flat(Number.POSITIVE_INFINITY);
+}
+
+export function getUniversalEntries() {
+  return [${universalEntries.map((_, i) => `u${i}`).join(', ')}]
     .flat(Number.POSITIVE_INFINITY);
 }
 `
