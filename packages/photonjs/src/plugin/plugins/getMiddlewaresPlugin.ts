@@ -29,10 +29,12 @@ function getAllPhotonMiddlewares(pluginContext: PluginContext, id: string) {
     .filter((x) => typeof x === 'string' || Array.isArray(x))
     .flat(1)
 
-  // TODO handle libs returning UniversalMiddleware, UniversalMiddleware[], and (options?) => UniversalMiddleware | UniversalMiddleware[]
+  // TODO support libs returning UniversalMiddleware, UniversalMiddleware[]
+  //  drop support for libs returning (options?) => UniversalMiddleware | UniversalMiddleware[]
+  //  as it makes debugging way worse in case of missing enhance.
   //language=ts
   return `
-import { getUniversal, getUniversalProp, nameSymbol, universalSymbol } from '@universal-middleware/core';
+import { getUniversal, getUniversalProp, nameSymbol } from '@universal-middleware/core';
 ${middlewares.map((m, i) => `import m${i} from ${JSON.stringify(m)};`).join('\n')}
 ${universalEntries.map((m, i) => `import u${i} from ${JSON.stringify(m)};`).join('\n')}
 
