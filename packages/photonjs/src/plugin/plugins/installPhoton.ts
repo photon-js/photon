@@ -7,19 +7,48 @@ export interface InstallPhotonBaseOptions {
 
 export function installPhotonBase(name: string, options?: InstallPhotonBaseOptions): Plugin[] {
   const plugins: Plugin[] = [
+    // Vite node modules resolution is not on par with node, so we have to help it resolve some modules
     {
       name: `photon:resolve-virtual-importer:${name}`,
       enforce: 'post',
 
       async resolveId(id, importer, opts) {
-        if (importer === 'photon:fallback-entry' || importer?.startsWith('photon:get-middlewares:')) {
-          const resolved = await this.resolve(id, importer, opts)
+        if (
+          importer === 'photon:fallback-entry' ||
+          importer?.startsWith('photon:get-middlewares:') ||
+          id.startsWith('@universal-middleware')
+        ) {
+          // first, try basic resolve
+          let resolved = await this.resolve(id, importer, opts)
 
-          if (!resolved) {
-            const resolvedPkg = await this.resolve(name)
-            // Multiple libs can try to resolve this
-            if (resolvedPkg) {
-              return this.resolve(id, resolvedPkg.id, opts)
+          if (resolved) {
+            return resolved
+          }
+
+          const resolvedPkg = await this.resolve(name)
+          // Multiple libs can try to resolve this
+          if (resolvedPkg) {
+            // next, try to resolve from `name`
+            resolved = await this.resolve(id, resolvedPkg.id, opts)
+
+            if (resolved) {
+              return resolved
+            }
+
+            const resolving = await Promise.all([
+              this.resolve('@photonjs/core', undefined, opts),
+              this.resolve('@photonjs/core', resolvedPkg.id, opts),
+            ])
+
+            const foundPhotonCore = resolving.find((r) => Boolean(r))
+
+            if (foundPhotonCore) {
+              // lastly, try to resolve from @photonjs/core
+              resolved = await this.resolve(id, foundPhotonCore.id, opts)
+            }
+
+            if (resolved) {
+              return resolved
             }
           }
         }
