@@ -23,7 +23,10 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
       // Will be replaced with a photon.target setting
-      mode === 'cloudflare' && cloudflare(), // not needed when using @photonjs/auto
+      mode === 'cloudflare' &&
+        cloudflare({
+          inspectorPort: false,
+        }), // not needed when using @photonjs/auto
       awesomeFramework(),
     ],
   }

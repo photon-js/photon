@@ -14,5 +14,6 @@
     "declaration": true,
     "exactOptionalPropertyTypes": true,
     "outDir": "./dist/"
-  }
+  },
+  "include": ["./.testRun.ts"]
 }

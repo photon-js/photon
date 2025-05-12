@@ -29,7 +29,7 @@ function getAllPhotonMiddlewares(pluginContext: PluginContext, id: string) {
     .filter((x) => typeof x === 'string' || Array.isArray(x))
     .flat(1)
 
-  //language=ts
+  //language=javascript
   return `
 import { getUniversal, nameSymbol } from '@universal-middleware/core';
 ${middlewares.map((m, i) => `import m${i} from ${JSON.stringify(m)};`).join('\n')}
@@ -43,15 +43,15 @@ function errorMessageEntry(id) {
   return \`PhotonError: "\${id}" default export must respect the following type: UniversalHandler. Make sure this entry have a route defined through Photon config or through enhance helper (https://universal-middleware.dev/helpers/enhance)\`
 }
 
-function extractUniversal(mi, id, errorMessage) {
+export function extractUniversal(mi, id, errorMessage) {
   return [mi]
     .flat(Number.POSITIVE_INFINITY)
     .map(getUniversal)
-    .map(m => {
+    .map((m, i) => {
       if (typeof m === 'function' && nameSymbol in m) {
         return m;
       }
-      throw new Error(errorMessage(id));
+      throw new Error(errorMessage(id, i));
     }
   );
 }
@@ -81,7 +81,10 @@ export function getMiddlewaresPlugin(): Plugin[] {
       load(id) {
         const match = testGetMiddlewares(id)
         if (match) {
-          return getAllPhotonMiddlewares(this, id)
+          return {
+            code: getAllPhotonMiddlewares(this, id),
+            map: { mappings: '' },
+          }
         }
       },
     },

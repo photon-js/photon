@@ -24,10 +24,14 @@ function compileApply(id: string) {
 
   //language=ts
   const code = `import { apply as applyAdapter } from '@universal-middleware/${match.server}';
-import { getUniversalMiddlewares, getUniversalEntries, isValidUniversalMiddleware } from 'photon:get-middlewares:${match.condition}:${match.server}${match.rest}';
+import { getUniversalMiddlewares, getUniversalEntries, extractUniversal, errorMessageMiddleware } from 'photon:get-middlewares:${match.condition}:${match.server}${match.rest}';
 import { type RuntimeAdapterTarget, type UniversalMiddleware, getUniversalProp, nameSymbol } from '@universal-middleware/core';
 ${match.condition === 'dev' ? 'import { devServerMiddleware } from "@photonjs/core/dev";' : ''}
 
+function errorMessageMiddleware(id, index) {
+  return \`PhotonError: additional middleware at index \${index} default export must respect the following type: UniversalMiddleware | UniversalMiddleware[]. Each individual middleware must be wrapped with enhance helper. See https://universal-middleware.dev/helpers/enhance\`
+}
+  
 export ${isAsync ? 'async' : ''} function apply(app: Parameters<typeof applyAdapter>[0], additionalMiddlewares?: UniversalMiddleware[]): ${isAsync ? 'Promise<Parameters<typeof applyAdapter>[0]>' : 'Parameters<typeof applyAdapter>[0]'} {
   const middlewares = getUniversalMiddlewares();
   const entries = getUniversalEntries();
@@ -36,8 +40,7 @@ export ${isAsync ? 'async' : ''} function apply(app: Parameters<typeof applyAdap
   // dedupe
   if (additionalMiddlewares) {
     let index = 0;
-    for (const middleware of additionalMiddlewares) {
-      isValidUniversalMiddleware(middleware, 'additional middleware at index ' + index);
+    for (const middleware of extractUniversal(additionalMiddlewares, '', errorMessageMiddleware)) {
       const i = middlewares.findIndex(m => getUniversalProp(m, nameSymbol) === getUniversalProp(middleware, nameSymbol));
       if (i !== -1) {
         middlewares.splice(i, 1);

@@ -1,6 +1,6 @@
 export { testRun }
 
-import { test, expect, run, fetchHtml, page, getServerUrl, autoRetry } from '@brillout/test-e2e'
+import { autoRetry, expect, fetchHtml, getServerUrl, page, run, test } from '@brillout/test-e2e'
 
 function testRun(cmd: `pnpm run ${string}`) {
   run(cmd, {
@@ -15,7 +15,7 @@ function testRun(cmd: `pnpm run ${string}`) {
   })
 
   test('page is rendered to the DOM and interactive', async () => {
-    await page.goto(getServerUrl() + '/')
+    await page.goto(`${getServerUrl()}/`)
     expect(await page.textContent('h1')).toBe('Hello Vite!')
     await testCounter()
   })
