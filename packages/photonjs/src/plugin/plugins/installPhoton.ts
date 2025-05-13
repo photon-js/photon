@@ -1,7 +1,7 @@
 import type { ResolvedId } from 'rollup'
 import type { Plugin } from 'vite'
 import type { GetPhotonCondition } from '../../validators/types.js'
-import { resolveFirst } from "../utils/resolve.js";
+import { resolveFirst } from '../utils/resolve.js'
 
 export interface InstallPhotonBaseOptions {
   resolveMiddlewares?: GetPhotonCondition

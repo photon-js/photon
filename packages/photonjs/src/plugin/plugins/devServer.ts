@@ -12,6 +12,7 @@ import { fork } from 'node:child_process'
 import pc from '@brillout/picocolors'
 import { globalStore } from '../../runtime/globalStore.js'
 import { assert, assertUsage } from '../../utils/assert.js'
+import { isPhotonMetaConfig } from '../utils/entry.js'
 import { isBun } from '../utils/isBun.js'
 import { logViteInfo } from '../utils/logVite.js'
 
@@ -82,7 +83,7 @@ export function devServer(config?: Photon.Config): Plugin {
     },
 
     async hotUpdate(ctx) {
-      // FIXME: tag modules like +middlewares as meta.photon.importedByType = 'server'
+      // TODO(vike): tag +middleware files with photonConfig.isGlobal: true
       const imported = isImported(ctx.modules)
       if (imported) {
         if (this.environment.config.photon.hmr === 'prefer-restart') {
@@ -192,20 +193,15 @@ export function devServer(config?: Photon.Config): Plugin {
     return url.pathname === VITE_HMR_PATH
   }
 
-  function isImported(
-    modules: EnvironmentModuleNode[],
-  ): { type: 'entry' | '+middleware'; module: EnvironmentModuleNode } | undefined {
+  function isImported(modules: EnvironmentModuleNode[]): { module: EnvironmentModuleNode } | undefined {
     const modulesSet = new Set(modules)
     for (const module of modulesSet.values()) {
-      console.log('isImported', module.id, module.info)
       if (module.file === resolvedEntryId)
         return {
-          type: 'entry',
           module,
         }
-      if (module.file?.match(/\+middleware\.[mc]?[jt]sx?$/))
+      if (isPhotonMetaConfig(module.info) && module.info.photonConfig.isGlobal)
         return {
-          type: '+middleware',
           module,
         }
       // biome-ignore lint/complexity/noForEach: <explanation>

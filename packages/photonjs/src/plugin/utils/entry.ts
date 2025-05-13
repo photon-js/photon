@@ -36,6 +36,10 @@ export function isPhotonMeta(meta?: CustomPluginOptions): meta is { photon: Phot
   return Boolean(meta && 'photon' in meta)
 }
 
+export function isPhotonMetaConfig(meta?: CustomPluginOptions): meta is { photonConfig: PhotonMetaConfig } {
+  return Boolean(meta && 'photonConfig' in meta)
+}
+
 export interface PhotonMetaServer {
   type: 'server'
   server: SupportedServers
@@ -47,3 +51,11 @@ export interface PhotonMetaUniversalHandler {
 }
 
 export type PhotonMeta = PhotonMetaServer | PhotonMetaUniversalHandler | { type?: 'auto' }
+
+export interface PhotonMetaConfig {
+  /**
+   * If true, whenever a module with this config triggers `hotUpdate`,
+   * a 'full-reload' will occur.
+   */
+  isGlobal?: boolean
+}
