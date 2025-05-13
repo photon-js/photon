@@ -20,8 +20,10 @@
     "@brillout/release-me": "^0.4.3",
     "tsup": "^8.4.0",
     "typescript": "^5.8.3",
-    "@photonjs/core": "workspace:^",
     "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "@photonjs/core": "workspace:^"
   },
   "files": [
     "dist/"
