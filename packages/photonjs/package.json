@@ -292,7 +292,7 @@
     "tsup": "^8.4.0",
     "typescript": "^5.8.3",
     "unplugin": "^2.3.2",
-    "vite": "^6.3.3"
+    "vite": "^6.3.5"
   },
   "files": [
     "dist/"

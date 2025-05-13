@@ -1,23 +1,50 @@
+import type { ResolvedId } from 'rollup'
 import type { Plugin } from 'vite'
 import type { GetPhotonCondition } from '../../validators/types.js'
+import { resolveFirst } from "../utils/resolve.js";
 
 export interface InstallPhotonBaseOptions {
   resolveMiddlewares?: GetPhotonCondition
 }
 
 export function installPhotonBase(name: string, options?: InstallPhotonBaseOptions): Plugin[] {
+  let resolvedName: ResolvedId | null | undefined = undefined
   const plugins: Plugin[] = [
     // Vite node modules resolution is not on par with node, so we have to help it resolve some modules
+    {
+      name: `photon:resolve-from-photon:${name}`,
+      enforce: 'pre',
+
+      async resolveId(id, importer, opts) {
+        if (id.startsWith('photon:resolve-from-photon:')) {
+          if (opts.custom?.photonScope !== undefined && opts.custom.photonScope !== name) return
+
+          const actualId = id.replace('photon:resolve-from-photon:', '')
+
+          resolvedName ??= await resolveFirst(this, [
+            { source: name, importer: undefined },
+            { source: name, importer },
+          ])
+
+          const foundPhotonCore = await resolveFirst(this, [
+            { source: '@photonjs/core', importer: undefined, opts },
+            resolvedName ? { source: '@photonjs/core', importer: resolvedName.id, opts } : undefined,
+          ])
+
+          if (foundPhotonCore) {
+            return this.resolve(actualId, foundPhotonCore.id, opts)
+          }
+        }
+      },
+
+      sharedDuringBuild: true,
+    },
     {
       name: `photon:resolve-virtual-importer:${name}`,
       enforce: 'post',
 
       async resolveId(id, importer, opts) {
-        if (
-          importer === 'photon:fallback-entry' ||
-          importer?.startsWith('photon:get-middlewares:') ||
-          id.startsWith('@universal-middleware')
-        ) {
+        if (importer === 'photon:fallback-entry' || importer?.startsWith('photon:get-middlewares:')) {
           // first, try basic resolve
           let resolved = await this.resolve(id, importer, opts)
 
@@ -25,34 +52,33 @@ export function installPhotonBase(name: string, options?: InstallPhotonBaseOptio
             return resolved
           }
 
-          const resolvedPkg = await this.resolve(name)
+          resolvedName ??= await resolveFirst(this, [
+            { source: name, importer: undefined },
+            { source: name, importer },
+          ])
+
           // Multiple libs can try to resolve this
-          if (resolvedPkg) {
+          if (resolvedName) {
             // next, try to resolve from `name`
-            resolved = await this.resolve(id, resolvedPkg.id, opts)
-
-            if (resolved) {
-              return resolved
-            }
-
-            const resolving = await Promise.all([
-              this.resolve('@photonjs/core', undefined, opts),
-              this.resolve('@photonjs/core', resolvedPkg.id, opts),
-            ])
-
-            const foundPhotonCore = resolving.find((r) => Boolean(r))
-
-            if (foundPhotonCore) {
-              // lastly, try to resolve from @photonjs/core
-              resolved = await this.resolve(id, foundPhotonCore.id, opts)
-            }
+            resolved = await this.resolve(id, resolvedName.id, opts)
 
             if (resolved) {
               return resolved
             }
           }
+
+          // finally, fallback to finding photon and trying to resolve from there
+          return this.resolve(`photon:resolve-from-photon:${id}`, importer, {
+            ...opts,
+            custom: {
+              ...opts.custom,
+              photonScope: name,
+            },
+          })
         }
       },
+
+      sharedDuringBuild: true,
     },
   ]
 

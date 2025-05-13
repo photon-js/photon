@@ -30,7 +30,7 @@ importers:
     dependencies:
       '@brillout/docpress':
         specifier: ^0.12.4
-        version: 0.12.6(@algolia/client-search@5.24.0)(@types/react@18.3.20)(@vitejs/plugin-react-swc@3.9.0(vite@6.3.4(@types/node@20.17.32)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.38.0)(search-insights@2.17.3)(typescript@5.8.3)(vike@0.4.229(vite@6.3.4(@types/node@20.17.32)))(vite@6.3.4(@types/node@20.17.32))
+        version: 0.12.6(@algolia/client-search@5.24.0)(@types/react@18.3.20)(@vitejs/plugin-react-swc@3.9.0(vite@6.3.5(@types/node@20.17.32)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.38.0)(search-insights@2.17.3)(typescript@5.8.3)(vike@0.4.229(vite@6.3.5(@types/node@20.17.32)))(vite@6.3.5(@types/node@20.17.32))
       '@types/node':
         specifier: ^20.17.32
         version: 20.17.32
@@ -42,7 +42,7 @@ importers:
         version: 18.3.7(@types/react@18.3.20)
       '@vitejs/plugin-react-swc':
         specifier: ^3.8.1
-        version: 3.9.0(vite@6.3.4(@types/node@20.17.32))
+        version: 3.9.0(vite@6.3.5(@types/node@20.17.32))
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -54,10 +54,10 @@ importers:
         version: 5.8.3
       vike:
         specifier: ^0.4.229
-        version: 0.4.229(vite@6.3.4(@types/node@20.17.32))
+        version: 0.4.229(vite@6.3.5(@types/node@20.17.32))
       vite:
-        specifier: ^6.3.3
-        version: 6.3.4(@types/node@20.17.32)
+        specifier: ^6.3.5
+        version: 6.3.5(@types/node@20.17.32)
 
   example/app-cloudflare:
     dependencies:
@@ -81,8 +81,8 @@ importers:
         specifier: ^5.8.3
         version: 5.8.3
       vite:
-        specifier: ^6.3.3
-        version: 6.3.4(@types/node@20.17.32)
+        specifier: ^6.3.5
+        version: 6.3.5(@types/node@20.17.32)
       wrangler:
         specifier: ^4.13.2
         version: 4.14.0
@@ -106,8 +106,8 @@ importers:
         specifier: ^5.8.3
         version: 5.8.3
       vite:
-        specifier: ^6.3.3
-        version: 6.3.4(@types/node@20.17.32)
+        specifier: ^6.3.5
+        version: 6.3.5(@types/node@20.17.32)
       wrangler:
         specifier: ^4.13.2
         version: 4.14.0
@@ -131,14 +131,14 @@ importers:
         specifier: ^5.8.3
         version: 5.8.3
       vite:
-        specifier: ^6.3.3
-        version: 6.3.4(@types/node@20.17.32)
+        specifier: ^6.3.5
+        version: 6.3.5(@types/node@20.17.32)
 
   packages/adapter-cloudflare:
     dependencies:
       '@cloudflare/vite-plugin':
         specifier: ^1.0.12
-        version: 1.0.13(patch_hash=tqdwyplpub3vqvrihrnoi2lvea)(rollup@4.38.0)(vite@6.3.4(@types/node@20.17.32))(workerd@1.20250428.0)(wrangler@4.14.0)
+        version: 1.0.13(patch_hash=tqdwyplpub3vqvrihrnoi2lvea)(rollup@4.38.0)(vite@6.3.5(@types/node@20.17.32))(workerd@1.20250428.0)(wrangler@4.14.0)
     devDependencies:
       '@brillout/release-me':
         specifier: ^0.4.3
@@ -153,8 +153,8 @@ importers:
         specifier: ^5.8.3
         version: 5.8.3
       vite:
-        specifier: ^6.3.3
-        version: 6.3.4(@types/node@20.17.32)
+        specifier: ^6.3.5
+        version: 6.3.5(@types/node@20.17.32)
 
   packages/adapter-node:
     devDependencies:
@@ -171,8 +171,8 @@ importers:
         specifier: ^5.8.3
         version: 5.8.3
       vite:
-        specifier: ^6.3.3
-        version: 6.3.4(@types/node@20.17.32)
+        specifier: ^6.3.5
+        version: 6.3.5(@types/node@20.17.32)
 
   packages/photonjs:
     dependencies:
@@ -271,8 +271,8 @@ importers:
         specifier: ^2.3.2
         version: 2.3.2
       vite:
-        specifier: ^6.3.3
-        version: 6.3.4(@types/node@20.17.32)
+        specifier: ^6.3.5
+        version: 6.3.5(@types/node@20.17.32)
 
 packages:
 
@@ -3158,8 +3158,8 @@ packages:
       vite:
         optional: true
 
-  vite@6.3.4:
-    resolution: {integrity: sha512-BiReIiMS2fyFqbqNT/Qqt4CVITDU9M9vE+DKcVAsB+ZV0wvTKd+3hMbkpxz1b+NmEDMegpVbisKiAZOnvO92Sw==}
+  vite@6.3.5:
+    resolution: {integrity: sha512-cZn6NDFE7wdTpINgs++ZJ4N49W2vRp8LCKrn3Ob1kYNtOo21vfDoaV5GzBfLU4MovSAB8uNRm4jgzVQZ+mBzPQ==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
     peerDependencies:
@@ -3432,7 +3432,7 @@ snapshots:
   '@biomejs/cli-win32-x64@1.9.4':
     optional: true
 
-  '@brillout/docpress@0.12.6(@algolia/client-search@5.24.0)(@types/react@18.3.20)(@vitejs/plugin-react-swc@3.9.0(vite@6.3.4(@types/node@20.17.32)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.38.0)(search-insights@2.17.3)(typescript@5.8.3)(vike@0.4.229(vite@6.3.4(@types/node@20.17.32)))(vite@6.3.4(@types/node@20.17.32))':
+  '@brillout/docpress@0.12.6(@algolia/client-search@5.24.0)(@types/react@18.3.20)(@vitejs/plugin-react-swc@3.9.0(vite@6.3.5(@types/node@20.17.32)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.38.0)(search-insights@2.17.3)(typescript@5.8.3)(vike@0.4.229(vite@6.3.5(@types/node@20.17.32)))(vite@6.3.5(@types/node@20.17.32))':
     dependencies:
       '@brillout/picocolors': 1.0.26
       '@docsearch/css': 3.9.0
@@ -3447,10 +3447,10 @@ snapshots:
       remark-gfm: 4.0.0
       shiki: 1.2.0
       typescript: 5.8.3
-      vike: 0.4.229(vite@6.3.4(@types/node@20.17.32))
+      vike: 0.4.229(vite@6.3.5(@types/node@20.17.32))
     optionalDependencies:
-      '@vitejs/plugin-react-swc': 3.9.0(vite@6.3.4(@types/node@20.17.32))
-      vite: 6.3.4(@types/node@20.17.32)
+      '@vitejs/plugin-react-swc': 3.9.0(vite@6.3.5(@types/node@20.17.32))
+      vite: 6.3.5(@types/node@20.17.32)
     transitivePeerDependencies:
       - '@algolia/client-search'
       - '@types/react'
@@ -3507,7 +3507,7 @@ snapshots:
     optionalDependencies:
       workerd: 1.20250428.0
 
-  '@cloudflare/vite-plugin@1.0.13(patch_hash=tqdwyplpub3vqvrihrnoi2lvea)(rollup@4.38.0)(vite@6.3.4(@types/node@20.17.32))(workerd@1.20250428.0)(wrangler@4.14.0)':
+  '@cloudflare/vite-plugin@1.0.13(patch_hash=tqdwyplpub3vqvrihrnoi2lvea)(rollup@4.38.0)(vite@6.3.5(@types/node@20.17.32))(workerd@1.20250428.0)(wrangler@4.14.0)':
     dependencies:
       '@cloudflare/unenv-preset': 2.3.1(unenv@2.0.0-rc.15)(workerd@1.20250428.0)
       '@hattip/adapter-node': 0.0.49
@@ -3517,7 +3517,7 @@ snapshots:
       picocolors: 1.1.1
       tinyglobby: 0.2.13
       unenv: 2.0.0-rc.15
-      vite: 6.3.4(@types/node@20.17.32)
+      vite: 6.3.5(@types/node@20.17.32)
       wrangler: 4.14.0
       ws: 8.18.0
     transitivePeerDependencies:
@@ -4357,10 +4357,10 @@ snapshots:
       mrmime: 2.0.1
       totalist: 3.0.1
 
-  '@vitejs/plugin-react-swc@3.9.0(vite@6.3.4(@types/node@20.17.32))':
+  '@vitejs/plugin-react-swc@3.9.0(vite@6.3.5(@types/node@20.17.32))':
     dependencies:
       '@swc/core': 1.11.24
-      vite: 6.3.4(@types/node@20.17.32)
+      vite: 6.3.5(@types/node@20.17.32)
     transitivePeerDependencies:
       - '@swc/helpers'
 
@@ -6356,7 +6356,7 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.2
 
-  vike@0.4.229(vite@6.3.4(@types/node@20.17.32)):
+  vike@0.4.229(vite@6.3.5(@types/node@20.17.32)):
     dependencies:
       '@brillout/import': 0.2.6
       '@brillout/json-serializer': 0.5.15
@@ -6375,9 +6375,9 @@ snapshots:
       source-map-support: 0.5.21
       tinyglobby: 0.2.13
     optionalDependencies:
-      vite: 6.3.4(@types/node@20.17.32)
+      vite: 6.3.5(@types/node@20.17.32)
 
-  vite@6.3.4(@types/node@20.17.32):
+  vite@6.3.5(@types/node@20.17.32):
     dependencies:
       esbuild: 0.25.3
       fdir: 6.4.4(picomatch@4.0.2)

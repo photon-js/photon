@@ -197,6 +197,7 @@ export function devServer(config?: Photon.Config): Plugin {
   ): { type: 'entry' | '+middleware'; module: EnvironmentModuleNode } | undefined {
     const modulesSet = new Set(modules)
     for (const module of modulesSet.values()) {
+      console.log('isImported', module.id, module.info)
       if (module.file === resolvedEntryId)
         return {
           type: 'entry',

@@ -31,7 +31,7 @@ function getAllPhotonMiddlewares(pluginContext: PluginContext, id: string) {
 
   //language=javascript
   return `
-import { getUniversal, nameSymbol } from '@universal-middleware/core';
+import { getUniversal, nameSymbol } from 'photon:resolve-from-photon:@universal-middleware/core';
 ${middlewares.map((m, i) => `import m${i} from ${JSON.stringify(m)};`).join('\n')}
 ${universalEntries.map((m, i) => `import u${i} from ${JSON.stringify(m)};`).join('\n')}
 
