@@ -21,6 +21,7 @@ const VITE_HMR_PATH = '/__vite_hmr'
 const RESTART_EXIT_CODE = 33
 const IS_RESTARTER_SET_UP = '__PHOTON__IS_RESTARTER_SET_UP'
 
+// Vite's isRunnableDevEnvironment isn't reliable when multiple Vite versions are installed
 export function isRunnableDevEnvironment(environment: Environment): environment is RunnableDevEnvironment {
   return 'runner' in environment
 }
@@ -115,9 +116,8 @@ export function devServer(config?: Photon.Config): Plugin {
         // Once existing server is closed and invalidated, reimport its updated entry file
         vite.environments.ssr.hot.on('photon:server-closed', () => {
           setupHMRProxyDone = false
-          if (isRunnableDevEnvironment(vite.environments.ssr)) {
-            vite.environments.ssr.runner.import(resolvedEntryId).catch(logRestartMessage)
-          }
+          assertUsage(isRunnableDevEnvironment(vite.environments.ssr), 'SSR environment is not runnable')
+          vite.environments.ssr.runner.import(resolvedEntryId).catch(logRestartMessage)
         })
 
         vite.environments.ssr.hot.on('photon:reloaded', () => {
@@ -223,9 +223,8 @@ export function devServer(config?: Photon.Config): Plugin {
     )
     resolvedEntryId = indexResolved.id
     const ssr = vite.environments.ssr
-    if (isRunnableDevEnvironment(ssr)) {
-      ssr.runner.import(index.id).catch(logRestartMessage)
-    }
+    assertUsage(isRunnableDevEnvironment(ssr), 'SSR environment is not runnable')
+    ssr.runner.import(index.id).catch(logRestartMessage)
   }
 }
 

@@ -1,6 +1,8 @@
 import { installPhoton } from '@photonjs/core/vite'
 import type { Plugin } from 'vite'
 
+const virtualPhotonNodeId = 'photon:node:bundle-entries'
+
 export function node(): Plugin[] {
   return [
     {
@@ -8,16 +10,16 @@ export function node(): Plugin[] {
       apply: 'build',
 
       resolveId(id) {
-        if (id === 'photon:node:bundle-entries') {
+        if (id === virtualPhotonNodeId) {
           return id
         }
       },
 
       load(id) {
-        const entries = Object.entries(this.environment.config.photon.entry)
-          .filter(([k, v]) => k !== 'index' && v.type === 'universal-handler')
-          .map(([_, v]) => v.id)
-        if (id === 'photon:node:bundle-entries') {
+        if (id === virtualPhotonNodeId) {
+          const entries = Object.entries(this.environment.config.photon.entry)
+            .filter(([k, v]) => k !== 'index' && v.type === 'universal-handler')
+            .map(([_, v]) => v.id)
           return `export default ${JSON.stringify(entries)};`
         }
       },
@@ -25,7 +27,7 @@ export function node(): Plugin[] {
     ...installPhoton('@photonjs/node', {
       resolveMiddlewares() {
         // TODO also for dev
-        return 'photon:node:bundle-entries'
+        return virtualPhotonNodeId
       },
     }),
   ]
