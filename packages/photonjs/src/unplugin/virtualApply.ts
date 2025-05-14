@@ -24,36 +24,33 @@ function compileApply(id: string) {
 
   //language=ts
   const code = `import { apply as applyAdapter } from '@universal-middleware/${match.server}';
-import getUniversalMiddlewares from 'photon:get-middlewares:${match.condition}:${match.server}${match.rest}';
+import { getUniversalMiddlewares, getUniversalEntries, extractUniversal, errorMessageMiddleware } from 'photon:get-middlewares:${match.condition}:${match.server}${match.rest}';
 import { type RuntimeAdapterTarget, type UniversalMiddleware, getUniversalProp, nameSymbol } from '@universal-middleware/core';
 ${match.condition === 'dev' ? 'import { devServerMiddleware } from "@photonjs/core/dev";' : ''}
 
-function isValidUniversalMiddleware(middleware: unknown): asserts middleware is UniversalMiddleware {
-  if (!getUniversalProp(middleware, nameSymbol)) {
-    throw new TypeError("[photon] All middlewares require a name. Use enhance helper as described in the documentation: https://universal-middleware.dev/helpers/enhance");
-  }
+function errorMessageMiddleware(id, index) {
+  return \`PhotonError: additional middleware at index \${index} default export must respect the following type: UniversalMiddleware | UniversalMiddleware[]. Each individual middleware must be wrapped with enhance helper. See https://universal-middleware.dev/helpers/enhance\`
 }
-
+  
 export ${isAsync ? 'async' : ''} function apply(app: Parameters<typeof applyAdapter>[0], additionalMiddlewares?: UniversalMiddleware[]): ${isAsync ? 'Promise<Parameters<typeof applyAdapter>[0]>' : 'Parameters<typeof applyAdapter>[0]'} {
   const middlewares = getUniversalMiddlewares();
+  const entries = getUniversalEntries();
   ${match.condition === 'dev' ? 'middlewares.unshift(devServerMiddleware());' : ''}
-
-  // sanity check
-  middlewares.forEach(isValidUniversalMiddleware);
   
   // dedupe
   if (additionalMiddlewares) {
-    for (const middleware of additionalMiddlewares) {
-      isValidUniversalMiddleware(middleware);
+    let index = 0;
+    for (const middleware of extractUniversal(additionalMiddlewares, '', errorMessageMiddleware)) {
       const i = middlewares.findIndex(m => getUniversalProp(m, nameSymbol) === getUniversalProp(middleware, nameSymbol));
       if (i !== -1) {
         middlewares.splice(i, 1);
       }
       middlewares.push(middleware);
+      index++;
     }
   }
 
-  ${isAsync ? 'await' : ''} applyAdapter(app, middlewares);
+  ${isAsync ? 'await' : ''} applyAdapter(app, [...middlewares, ...entries]);
 
   return app;
 }

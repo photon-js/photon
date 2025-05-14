@@ -1,5 +1,5 @@
 {
-  "name": "@photonjs/cloudflare",
+  "name": "@photonjs/node",
   "version": "0.0.1",
   "type": "module",
   "main": "./dist/index.js",
@@ -16,15 +16,14 @@
     "release:major": "release-me major",
     "release:commit": "release-me commit"
   },
-  "dependencies": {
-    "@cloudflare/vite-plugin": "^1.0.12"
-  },
   "devDependencies": {
     "@brillout/release-me": "^0.4.3",
     "tsup": "^8.4.0",
     "typescript": "^5.8.3",
-    "@photonjs/core": "workspace:^",
     "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "@photonjs/core": "workspace:^"
   },
   "files": [
     "dist/"

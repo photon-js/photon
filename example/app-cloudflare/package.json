@@ -1,5 +1,5 @@
 {
-  "name": "app-hono-cloudflare",
+  "name": "app-cloudflare",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,13 +12,14 @@
     "preview:cloudflare": "pnpm run build:cloudflare && vite preview --mode cloudflare"
   },
   "devDependencies": {
-    "@photonjs/core": "workspace:",
     "@photonjs/cloudflare": "workspace:",
+    "@photonjs/core": "workspace:",
     "typescript": "^5.8.3",
     "vite": "^6.3.5",
     "wrangler": "^4.13.2"
   },
   "dependencies": {
+    "@universal-middleware/core": "^0.4.7",
     "awesome-framework": "workspace:",
     "hono": "^4.7.8"
   }

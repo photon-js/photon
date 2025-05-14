@@ -1,8 +1,14 @@
 import { type } from 'arktype'
 import type { BuildOptions } from 'esbuild'
+import type { PluginContext } from 'rollup'
 
 // FIXME server should be optional?
-export type GetPhotonCondition = (condition: 'dev' | 'edge' | 'node', server: string) => string
+export type GetPhotonCondition = (
+  this: PluginContext,
+  condition: 'dev' | 'edge' | 'node',
+  server: string,
+  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
+) => string | string[] | undefined | null | void
 
 export const SupportedServers = type("'hono' | 'hattip' | 'elysia' | 'express' | 'fastify' | 'h3'")
 
@@ -32,7 +38,7 @@ export const PhotonEntry = type(PhotonEntryServer).or(PhotonEntryUniversalHandle
 
 export const PhotonConfig = type({
   'entry?': PhotonEntry.or({
-    index: type('string').or(PhotonEntry),
+    'index?': type('string').or(PhotonEntry),
     '[string]': type('string').or(PhotonEntry),
   }).or('string'),
   'hmr?': "boolean | 'prefer-restart'",

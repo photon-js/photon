@@ -19,46 +19,49 @@ function getAllPhotonMiddlewares(pluginContext: PluginContext, id: string) {
   const match = testGetMiddlewares(id)
   if (!match) throw new Error(`Invalid id ${id}`)
 
+  const { index, ...nonIndexEntries } = pluginContext.environment.config.photon.entry
+  // non-index entries are always considered Universal Handlers
+  const universalEntries = Object.values(nonIndexEntries).map((e) => e.id)
+
   const getMiddlewares = pluginContext.environment.config.photon.middlewares ?? []
-  const middlewares = getMiddlewares.map((m) => m(match.condition, match.server))
+  const middlewares = getMiddlewares
+    .map((m) => m.call(pluginContext, match.condition, match.server))
+    .filter((x) => typeof x === 'string' || Array.isArray(x))
+    .flat(1)
 
-  // TODO handle libs returning UniversalMiddleware, UniversalMiddleware[], and (options?) => UniversalMiddleware | UniversalMiddleware[]
-  //language=ts
+  //language=javascript
   return `
+import { getUniversal, nameSymbol } from 'photon:resolve-from-photon:@universal-middleware/core';
 ${middlewares.map((m, i) => `import m${i} from ${JSON.stringify(m)};`).join('\n')}
+${universalEntries.map((m, i) => `import u${i} from ${JSON.stringify(m)};`).join('\n')}
 
-const universalSymbol = Symbol.for("universal");
-const unNameSymbol = Symbol.for("unName");
+function errorMessageMiddleware(id) {
+  return \`PhotonError: "\${id}" default export must respect the following type: UniversalMiddleware | UniversalMiddleware[]. Each individual middleware must be wrapped with enhance helper. See https://universal-middleware.dev/helpers/enhance\`
+}
 
-export default function getUniversalMiddlewares() {
-  return [${middlewares.map((_, i) => `m${i}`).join(', ')}]
+function errorMessageEntry(id) {
+  return \`PhotonError: "\${id}" default export must respect the following type: UniversalHandler. Make sure this entry have a route defined through Photon config or through enhance helper (https://universal-middleware.dev/helpers/enhance)\`
+}
+
+export function extractUniversal(mi, id, errorMessage) {
+  return [mi]
     .flat(Number.POSITIVE_INFINITY)
-    .map(m => {
-      if (typeof m === 'function') {
-        if (universalSymbol in m) {
-          return m[universalSymbol];
-        }
-        if (unNameSymbol in m) {
-          return m;
-        }
-        // Assume it's a UniversalMidleware getter
-        let r;
-        try {
-          r = m();
-        } catch (e) {
-          throw new Error("PhotonError: Ensure that all photon middlewares are wrapped with enhance helper. See https://universal-middleware.dev/helpers/enhance", { cause: e })
-        }
-        if (r instanceof Promise) {
-          r.catch(e => {
-            throw new Error("PhotonError: Ensure that all photon middlewares are wrapped with enhance helper. See https://universal-middleware.dev/helpers/enhance", { cause: e })
-          });
-          throw new Error("PhotonError: Ensure that all photon middlewares are wrapped with enhance helper. See https://universal-middleware.dev/helpers/enhance");
-        }
-        return r;
+    .map(getUniversal)
+    .map((m, i) => {
+      if (typeof m === 'function' && nameSymbol in m) {
+        return m;
       }
-      // TODO else
-    })
-    .flat(Number.POSITIVE_INFINITY);
+      throw new Error(errorMessage(id, i));
+    }
+  );
+}
+
+export function getUniversalMiddlewares() {
+  return [${middlewares.map((m, i) => `extractUniversal(m${i}, ${JSON.stringify(m)}, errorMessageMiddleware)`).join(', ')}].flat(1);
+}
+
+export function getUniversalEntries() {
+  return [${universalEntries.map((m, i) => `extractUniversal(u${i}, ${JSON.stringify(m)}, errorMessageEntry)`).join(', ')}].flat(1);
 }
 `
 }
@@ -78,7 +81,10 @@ export function getMiddlewaresPlugin(): Plugin[] {
       load(id) {
         const match = testGetMiddlewares(id)
         if (match) {
-          return getAllPhotonMiddlewares(this, id)
+          return {
+            code: getAllPhotonMiddlewares(this, id),
+            map: { mappings: '' },
+          }
         }
       },
     },

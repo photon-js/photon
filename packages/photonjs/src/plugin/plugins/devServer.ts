@@ -12,6 +12,7 @@ import { fork } from 'node:child_process'
 import pc from '@brillout/picocolors'
 import { globalStore } from '../../runtime/globalStore.js'
 import { assert, assertUsage } from '../../utils/assert.js'
+import { isPhotonMetaConfig } from '../utils/entry.js'
 import { isBun } from '../utils/isBun.js'
 import { logViteInfo } from '../utils/logVite.js'
 
@@ -21,6 +22,7 @@ const VITE_HMR_PATH = '/__vite_hmr'
 const RESTART_EXIT_CODE = 33
 const IS_RESTARTER_SET_UP = '__PHOTON__IS_RESTARTER_SET_UP'
 
+// Vite's isRunnableDevEnvironment isn't reliable when multiple Vite versions are installed
 export function isRunnableDevEnvironment(environment: Environment): environment is RunnableDevEnvironment {
   return 'runner' in environment
 }
@@ -81,7 +83,7 @@ export function devServer(config?: Photon.Config): Plugin {
     },
 
     async hotUpdate(ctx) {
-      // FIXME: tag modules like +middlewares as meta.photon.importedByType = 'server'
+      // TODO(vike): tag +middleware files with photonConfig.isGlobal: true
       const imported = isImported(ctx.modules)
       if (imported) {
         if (this.environment.config.photon.hmr === 'prefer-restart') {
@@ -115,9 +117,8 @@ export function devServer(config?: Photon.Config): Plugin {
         // Once existing server is closed and invalidated, reimport its updated entry file
         vite.environments.ssr.hot.on('photon:server-closed', () => {
           setupHMRProxyDone = false
-          if (isRunnableDevEnvironment(vite.environments.ssr)) {
-            vite.environments.ssr.runner.import(resolvedEntryId).catch(logRestartMessage)
-          }
+          assertUsage(isRunnableDevEnvironment(vite.environments.ssr), 'SSR environment is not runnable')
+          vite.environments.ssr.runner.import(resolvedEntryId).catch(logRestartMessage)
         })
 
         vite.environments.ssr.hot.on('photon:reloaded', () => {
@@ -192,19 +193,15 @@ export function devServer(config?: Photon.Config): Plugin {
     return url.pathname === VITE_HMR_PATH
   }
 
-  function isImported(
-    modules: EnvironmentModuleNode[],
-  ): { type: 'entry' | '+middleware'; module: EnvironmentModuleNode } | undefined {
+  function isImported(modules: EnvironmentModuleNode[]): { module: EnvironmentModuleNode } | undefined {
     const modulesSet = new Set(modules)
     for (const module of modulesSet.values()) {
       if (module.file === resolvedEntryId)
         return {
-          type: 'entry',
           module,
         }
-      if (module.file?.match(/\+middleware\.[mc]?[jt]sx?$/))
+      if (isPhotonMetaConfig(module.info) && module.info.photonConfig.isGlobal)
         return {
-          type: '+middleware',
           module,
         }
       // biome-ignore lint/complexity/noForEach: <explanation>
@@ -223,9 +220,8 @@ export function devServer(config?: Photon.Config): Plugin {
     )
     resolvedEntryId = indexResolved.id
     const ssr = vite.environments.ssr
-    if (isRunnableDevEnvironment(ssr)) {
-      ssr.runner.import(index.id).catch(logRestartMessage)
-    }
+    assertUsage(isRunnableDevEnvironment(ssr), 'SSR environment is not runnable')
+    ssr.runner.import(index.id).catch(logRestartMessage)
   }
 }
 

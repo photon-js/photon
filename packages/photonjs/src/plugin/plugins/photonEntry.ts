@@ -1,9 +1,8 @@
 import type { ModuleInfo, PluginContext } from 'rollup'
 import type { Plugin } from 'vite'
 import { assert, assertUsage } from '../../utils/assert.js'
-import type { PhotonEntryServer, SupportedServers } from '../../validators/types.js'
-
 import { resolvePhotonConfig } from '../../validators/coerce.js'
+import type { PhotonEntryServer, SupportedServers } from '../../validators/types.js'
 import {
   extractPhotonEntryId,
   includesPhotonEntryId,
@@ -75,9 +74,8 @@ function computePhotonMeta(
   }
 }
 
+const resolvedIdsToServers: Record<string, SupportedServers> = {}
 export function photonEntry(): Plugin[] {
-  const resolvedIdsToServers: Record<string, SupportedServers> = {}
-
   return [
     {
       name: 'photon:set-input',
@@ -91,7 +89,7 @@ export function photonEntry(): Plugin[] {
       config: {
         order: 'post',
         handler(config) {
-          const { entry } = resolvePhotonConfig(config.photon)
+          const { entry } = resolvePhotonConfig(config.photon, true)
 
           return {
             environments: {
@@ -128,11 +126,14 @@ export function photonEntry(): Plugin[] {
         }
       },
 
-      moduleParsed(info) {
-        if (isPhotonMeta(info.meta)) {
-          // Must be kept sync
-          computePhotonMeta(this, resolvedIdsToServers, info)
-        }
+      moduleParsed: {
+        order: 'pre',
+        handler(info) {
+          if (isPhotonMeta(info.meta)) {
+            // Must be kept sync
+            computePhotonMeta(this, resolvedIdsToServers, info)
+          }
+        },
       },
 
       sharedDuringBuild: true,
@@ -183,9 +184,7 @@ export function photonEntry(): Plugin[] {
               return {
                 ...resolved,
                 meta: {
-                  photon: {
-                    type: 'auto',
-                  },
+                  photon: entry.type === 'server' ? entry : { type: 'auto', ...entry },
                 },
                 resolvedBy: 'photon',
               }

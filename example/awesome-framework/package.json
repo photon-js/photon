@@ -14,9 +14,10 @@
   "devDependencies": {
     "@types/node": "^20.17.32",
     "typescript": "^5.8.3",
-    "vite": "^6.3.3"
+    "vite": "^6.3.5"
   },
   "exports": {
+    ".": "./dist/vite/index.js",
     "./entry-client": "./dist/entry-client.js",
     "./render": "./dist/render.js",
     "./vite": "./dist/vite/index.js",
