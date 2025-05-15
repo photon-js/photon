@@ -138,7 +138,7 @@ export function devServer(config?: Photon.Config): Plugin {
       patchViteServer(vite)
       if (
         config?.devServer === undefined ||
-        (typeof config?.devServer === 'object' && config?.devServer?.autoServeIndex !== false)
+        (typeof config?.devServer === 'object' && config?.devServer?.autoServe !== false)
       ) {
         initializeServerEntry(vite)
       }
@@ -210,7 +210,7 @@ export function devServer(config?: Photon.Config): Plugin {
   }
 
   async function initializeServerEntry(vite: ViteDevServer) {
-    const { index } = vite.config.photon.entry
+    const index = vite.config.photon.server
     const indexResolved = await vite.environments.ssr.pluginContainer.resolveId(index.id, undefined, {
       isEntry: true,
     })

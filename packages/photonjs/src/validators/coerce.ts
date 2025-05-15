@@ -1,73 +1,63 @@
 import { match, type } from 'arktype'
 import type { BuildOptions } from 'esbuild'
-import { asPhotonEntryId } from '../plugin/utils/entry.js'
-import type { PhotonConfig, PhotonConfigResolved, PhotonEntry } from './types.js'
+import { asPhotonEntryId } from '../plugin/utils/virtual.js'
+import type {
+  PhotonConfig,
+  PhotonConfigResolved,
+  PhotonEntryBase,
+  PhotonEntryServer,
+  PhotonEntryUniversalHandler,
+} from './types.js'
 import * as Validators from './validators.js'
 
-function entryToPhoton(entry: string | PhotonEntry): PhotonEntry {
+function entryToPhoton<
+  T extends 'handler-entry' | 'server-entry',
+  Entry = T extends 'server-entry' ? PhotonEntryServer : PhotonEntryUniversalHandler,
+>(entry: string | Entry, type: T): Entry {
   if (typeof entry === 'string')
     return {
-      id: asPhotonEntryId(entry),
-      type: 'auto',
-    }
+      id: asPhotonEntryId(entry, type),
+      type: type === 'server-entry' ? 'server' : 'universal-handler',
+    } as Entry
   return {
     ...entry,
-    id: asPhotonEntryId(entry.id),
+    id: asPhotonEntryId((entry as PhotonEntryBase).id, type),
   }
 }
 
-function entriesToPhoton(
-  entry: string | PhotonEntry | Record<string, PhotonEntry | string>,
-): Record<string, PhotonEntry> {
-  if (typeof entry === 'string' || 'id' in entry) {
-    return {
-      index: entryToPhoton(entry as string | PhotonEntry),
-    }
-  }
-
-  const entries = Object.fromEntries(Object.entries(entry).map(([key, value]) => [key, entryToPhoton(value)]))
-
-  if (!entries.index) {
-    entries.index = entryToPhoton({
-      id: 'photon:fallback-entry',
-      type: 'server',
-      server: 'hono',
-    })
-  }
-
-  return entries
+function handlersToPhoton(
+  handlers: string | PhotonEntryUniversalHandler | Record<string, PhotonEntryUniversalHandler | string>,
+): Record<string, PhotonEntryUniversalHandler> {
+  return Object.fromEntries(
+    Object.entries(handlers).map(([key, value]) => [key, entryToPhoton(value, 'handler-entry')]),
+  )
 }
 
-// TODO always fallback? This should allow better DX and error messages
-export function resolvePhotonConfig(config: PhotonConfig | undefined, fallback?: boolean): PhotonConfigResolved {
+export function resolvePhotonConfig(config: PhotonConfig | undefined): PhotonConfigResolved {
   const out = Validators.PhotonConfig.pipe.try((c) => {
-    const toPhotonEntry = match
+    const toPhotonHandlers = match
       .in<PhotonConfig>()
-      .match({
-        string: (v) => entriesToPhoton(v),
-      })
-      .case(
-        { entry: 'unknown' },
-        match
-          .at('entry')
-          .match({
-            string: (v) => entriesToPhoton(v.entry),
-          })
-          .case({ id: 'string' }, (v) => entriesToPhoton(v.entry))
-          .case({ '[string]': 'string' }, (v) => entriesToPhoton(v.entry))
-          .case({ '[string]': Validators.PhotonEntry }, (v) => entriesToPhoton(v.entry))
-          .default('assert'),
-      )
+      .at('handlers')
+      .case({ '[string]': 'string' }, (v) => handlersToPhoton(v.handlers))
+      .case({ '[string]': Validators.PhotonEntryUniversalHandler }, (v) => handlersToPhoton(v.handlers))
+      .default(() => ({}))
+
+    const toPhotonServer = match
+      .in<PhotonConfig>()
+      .at('server')
+      .case('string', (v) => entryToPhoton(v.server, 'server-entry'))
+      .case(Validators.PhotonEntryServer, (v) => entryToPhoton(v.server, 'server-entry'))
       .default(
-        fallback
-          ? // Fallback to a simple Hono server for now for simplicity
-            () =>
-              entriesToPhoton({
-                id: 'photon:fallback-entry',
-                type: 'server',
-                server: 'hono',
-              })
-          : 'assert',
+        // Fallback to a simple Hono server for now for simplicity
+        () =>
+          entryToPhoton(
+            {
+              id: 'photon:fallback-entry',
+              type: 'server',
+              server: 'hono',
+            },
+            'server-entry',
+          ),
       )
 
     const toHmr = match
@@ -94,7 +84,8 @@ export function resolvePhotonConfig(config: PhotonConfig | undefined, fallback?:
       })
       .default(() => ({}))
 
-    const entry = toPhotonEntry(c)
+    const handlers = toPhotonHandlers(c)
+    const server = toPhotonServer(c)
     const hmr = toHmr(c)
     const standalone = toStandalone(c)
     const middlewares = toMiddlewares(c)
@@ -102,7 +93,8 @@ export function resolvePhotonConfig(config: PhotonConfig | undefined, fallback?:
     const rest = toRest(c)
 
     return {
-      entry,
+      handlers,
+      server,
       hmr,
       standalone,
       middlewares,

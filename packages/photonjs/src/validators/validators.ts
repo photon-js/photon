@@ -1,5 +1,4 @@
 import { type } from 'arktype'
-import type { BuildOptions } from 'esbuild'
 import type { PluginContext } from 'rollup'
 
 // FIXME server should be optional?
@@ -21,7 +20,7 @@ export const PhotonEntryBase = type({
 export const PhotonEntryServer = type({
   '...': PhotonEntryBase,
   type: "'server'",
-  server: SupportedServers,
+  'server?': SupportedServers,
 })
 
 export const PhotonEntryUniversalHandler = type({
@@ -29,40 +28,26 @@ export const PhotonEntryUniversalHandler = type({
   type: "'universal-handler'",
 })
 
-export const PhotonEntryAuto = type({
-  '...': PhotonEntryBase,
-  'type?': "'auto'",
-})
-
-export const PhotonEntry = type(PhotonEntryServer).or(PhotonEntryUniversalHandler).or(PhotonEntryAuto)
-
 export const PhotonConfig = type({
-  'entry?': PhotonEntry.or({
-    'index?': type('string').or(PhotonEntry),
-    '[string]': type('string').or(PhotonEntry),
-  }).or('string'),
+  'handlers?': {
+    '[string]': type('string').or(PhotonEntryUniversalHandler),
+  },
+  'server?': type('string').or(PhotonEntryServer),
   'hmr?': "boolean | 'prefer-restart'",
-  // TODO remove
-  'standalone?': type('boolean').or({
-    esbuild: 'object' as type.cast<Omit<BuildOptions, 'manifest'>>,
-  }),
-  'middlewares?': 'object' as type.cast<GetPhotonCondition[]>,
+  'middlewares?': 'Array' as type.cast<GetPhotonCondition[]>,
   'devServer?': type('boolean').or({
-    'autoServeIndex?': 'boolean',
+    'autoServe?': 'boolean',
   }),
 })
 
 export const PhotonConfigResolved = type({
-  entry: {
-    index: PhotonEntry,
-    '[string]': PhotonEntry,
+  handlers: {
+    '[string]': PhotonEntryUniversalHandler,
   },
+  server: PhotonEntryServer,
   hmr: "boolean | 'prefer-restart'",
-  standalone: type('boolean').or({
-    esbuild: 'object' as type.cast<Omit<BuildOptions, 'manifest'>>,
-  }),
-  'middlewares?': 'object' as type.cast<GetPhotonCondition[]>,
+  'middlewares?': 'Array' as type.cast<GetPhotonCondition[]>,
   'devServer?': type('boolean').or({
-    'autoServeIndex?': 'boolean',
+    'autoServe?': 'boolean',
   }),
 })

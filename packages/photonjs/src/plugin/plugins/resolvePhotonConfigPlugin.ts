@@ -7,7 +7,7 @@ export function resolvePhotonConfigPlugin(userConfig?: Photon.Config): Plugin {
     enforce: 'pre',
 
     config() {
-      if (userConfig?.entry) {
+      if (userConfig) {
         return {
           photon: resolvePhotonConfig(userConfig),
         }
@@ -17,7 +17,7 @@ export function resolvePhotonConfigPlugin(userConfig?: Photon.Config): Plugin {
     configResolved: {
       order: 'pre',
       handler(config) {
-        config.photon = resolvePhotonConfig(config.photon, true)
+        config.photon = resolvePhotonConfig(config.photon)
       },
     },
   }

@@ -1,9 +1,9 @@
 import type { PluginContext } from 'rollup'
-import { asPhotonEntryId } from '../plugin/utils/entry.js'
+import { asPhotonEntryId } from '../plugin/utils/virtual.js'
 
-export function setPhotonEntry(pluginContext: PluginContext, fileName: string, entry: Photon.Entry) {
-  pluginContext.environment.config.photon.entry[fileName] = {
+export function setPhotonHandler(pluginContext: PluginContext, fileName: string, entry: Photon.EntryUniversalHandler) {
+  pluginContext.environment.config.photon.handlers[fileName] = {
     ...entry,
-    id: asPhotonEntryId(entry.id),
+    id: asPhotonEntryId(entry.id, 'handler-entry'),
   }
 }

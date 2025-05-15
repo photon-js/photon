@@ -1,31 +1,15 @@
 import type { PluginContext } from 'rollup'
 import type { Plugin } from 'vite'
+import { ifPhotonModule } from '../utils/virtual.js'
 
-// TODO remove rest param?
-const re_getMiddlewares = /^photon:get-middlewares:(?<condition>dev|edge|node):(?<server>[^:]+)(?<rest>.*)/
-interface MatchGroups {
-  condition: 'dev' | 'edge' | 'node'
-  server: string
-  rest: string
-}
-
-function testGetMiddlewares(id: string): MatchGroups | null {
-  const match = id.match(re_getMiddlewares)
-  if (!match) return null
-  return match.groups as unknown as MatchGroups
-}
-
-function getAllPhotonMiddlewares(pluginContext: PluginContext, id: string) {
-  const match = testGetMiddlewares(id)
-  if (!match) throw new Error(`Invalid id ${id}`)
-
-  const { index, ...nonIndexEntries } = pluginContext.environment.config.photon.entry
+function getAllPhotonMiddlewares(pluginContext: PluginContext, condition: 'dev' | 'edge' | 'node', server: string) {
+  const handlers = pluginContext.environment.config.photon.handlers
   // non-index entries are always considered Universal Handlers
-  const universalEntries = Object.values(nonIndexEntries).map((e) => e.id)
+  const universalEntries = Object.values(handlers).map((e) => e.id)
 
   const getMiddlewares = pluginContext.environment.config.photon.middlewares ?? []
   const middlewares = getMiddlewares
-    .map((m) => m.call(pluginContext, match.condition, match.server))
+    .map((m) => m.call(pluginContext, condition, server))
     .filter((x) => typeof x === 'string' || Array.isArray(x))
     .flat(1)
 
@@ -72,20 +56,21 @@ export function getMiddlewaresPlugin(): Plugin[] {
       name: 'photon:get-middlewares',
 
       async resolveId(id) {
-        const match = testGetMiddlewares(id)
-        if (match) {
-          return id
-        }
+        return ifPhotonModule('get-middlewares', id, () => id)
       },
 
       load(id) {
-        const match = testGetMiddlewares(id)
-        if (match) {
-          return {
-            code: getAllPhotonMiddlewares(this, id),
-            map: { mappings: '' },
-          }
-        }
+        return ifPhotonModule(
+          'get-middlewares',
+          id,
+          ({ condition, server }) => {
+            return {
+              code: getAllPhotonMiddlewares(this, condition as 'dev' | 'edge' | 'node', server),
+              map: { mappings: '' } as const,
+            }
+          },
+          new Error(`Invalid id ${id}`),
+        )
       },
     },
   ]
