@@ -1,4 +1,5 @@
 import { type Out, type Type, type } from 'arktype'
+import { assert } from "../../utils/assert.js";
 
 type ToLiteral<T extends string> = T extends `\${${infer _}}` ? string : T
 // biome-ignore lint/complexity/noBannedTypes: <explanation>
@@ -12,11 +13,8 @@ export function literal<const T extends string>(pattern: T) {
   return type(regex)
     .configure({ expected: pattern })
     .pipe.try((x) => {
-      // biome-ignore lint/style/noNonNullAssertion: already validated by type
-      const match = x.match(regex)!
-      if (match === null) {
-        console.log('MATCH', regex, x)
-      }
+      const match = x.match(regex)
+      assert(match)
       return match.groups as Parse<T>
       // biome-ignore lint/complexity/noBannedTypes: <explanation>
     }) as Type<(In: Literal<T>) => Out<Parse<T>>, {}>
