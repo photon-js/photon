@@ -38,24 +38,6 @@ function handlersToPhoton(
 
 export function resolvePhotonConfig(config: PhotonConfig | undefined): PhotonConfigResolved {
   const out = Validators.PhotonConfig.pipe.try((c) => {
-    const toPhotonServer = match
-      .in<PhotonConfig>()
-      .case({ server: type('string').or(Validators.PhotonEntryUniversalHandler) }, (v) =>
-        entryToPhoton(v.server, 'server-entry'),
-      )
-      .default(
-        // Fallback to a simple Hono server for now for simplicity
-        () =>
-          entryToPhoton(
-            {
-              id: 'photon:fallback-entry',
-              type: 'server',
-              server: 'hono',
-            },
-            'server-entry',
-          ),
-      )
-
     const toRest = match
       .in<PhotonConfig>()
       .case({ '[string]': 'unknown' }, (v) => {
@@ -65,7 +47,16 @@ export function resolvePhotonConfig(config: PhotonConfig | undefined): PhotonCon
       .default(() => ({}))
 
     const handlers = handlersToPhoton(c.handlers ?? {})
-    const server = toPhotonServer(c)
+    const server = c.server
+      ? entryToPhoton(c.server, 'server-entry')
+      : entryToPhoton(
+          {
+            id: 'photon:fallback-entry',
+            type: 'server',
+            server: 'hono',
+          },
+          'server-entry',
+        )
     const hmr = c.hmr ?? true
     const middlewares = c.middlewares ?? []
     // Allows Photon targets to add custom options
