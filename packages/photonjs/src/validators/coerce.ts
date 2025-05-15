@@ -1,5 +1,4 @@
 import { match, type } from 'arktype'
-import type { BuildOptions } from 'esbuild'
 import { asPhotonEntryId } from '../plugin/utils/virtual.js'
 import type {
   PhotonConfig,
@@ -21,32 +20,29 @@ function entryToPhoton<
     } as Entry
   return {
     ...entry,
+    type: type === 'server-entry' ? 'server' : 'universal-handler',
     id: asPhotonEntryId((entry as PhotonEntryBase).id, type),
   }
 }
 
 function handlersToPhoton(
-  handlers: string | PhotonEntryUniversalHandler | Record<string, PhotonEntryUniversalHandler | string>,
+  handlers: Record<string, Partial<PhotonEntryUniversalHandler> | string>,
 ): Record<string, PhotonEntryUniversalHandler> {
   return Object.fromEntries(
-    Object.entries(handlers).map(([key, value]) => [key, entryToPhoton(value, 'handler-entry')]),
+    Object.entries(handlers).map(([key, value]) => [
+      key,
+      entryToPhoton(value as PhotonEntryUniversalHandler, 'handler-entry'),
+    ]),
   )
 }
 
 export function resolvePhotonConfig(config: PhotonConfig | undefined): PhotonConfigResolved {
   const out = Validators.PhotonConfig.pipe.try((c) => {
-    const toPhotonHandlers = match
-      .in<PhotonConfig>()
-      .at('handlers')
-      .case({ '[string]': 'string' }, (v) => handlersToPhoton(v.handlers))
-      .case({ '[string]': Validators.PhotonEntryUniversalHandler }, (v) => handlersToPhoton(v.handlers))
-      .default(() => ({}))
-
     const toPhotonServer = match
       .in<PhotonConfig>()
-      .at('server')
-      .case('string', (v) => entryToPhoton(v.server, 'server-entry'))
-      .case(Validators.PhotonEntryServer, (v) => entryToPhoton(v.server, 'server-entry'))
+      .case({ server: type('string').or(Validators.PhotonEntryUniversalHandler) }, (v) =>
+        entryToPhoton(v.server, 'server-entry'),
+      )
       .default(
         // Fallback to a simple Hono server for now for simplicity
         () =>
@@ -60,35 +56,18 @@ export function resolvePhotonConfig(config: PhotonConfig | undefined): PhotonCon
           ),
       )
 
-    const toHmr = match
-      .in<PhotonConfig>()
-      .case({ hmr: 'boolean | "prefer-restart"' }, (v) => v.hmr)
-      .default(() => true)
-
-    const toStandalone = match
-      .in<PhotonConfig>()
-      .case({ standalone: 'boolean' }, (v) => v.standalone)
-      .case({ standalone: 'object' }, (v) => v.standalone as type.cast<Omit<BuildOptions, 'manifest'>>)
-      .default(() => false)
-
-    const toMiddlewares = match
-      .in<PhotonConfig>()
-      .case({ middlewares: 'object' }, (v) => v.middlewares)
-      .default(() => [])
-
     const toRest = match
       .in<PhotonConfig>()
       .case({ '[string]': 'unknown' }, (v) => {
-        const { entry, hmr, standalone, middlewares, ...rest } = v
+        const { handlers, server, hmr, middlewares, ...rest } = v
         return rest
       })
       .default(() => ({}))
 
-    const handlers = toPhotonHandlers(c)
+    const handlers = handlersToPhoton(c.handlers ?? {})
     const server = toPhotonServer(c)
-    const hmr = toHmr(c)
-    const standalone = toStandalone(c)
-    const middlewares = toMiddlewares(c)
+    const hmr = c.hmr ?? true
+    const middlewares = c.middlewares ?? []
     // Allows Photon targets to add custom options
     const rest = toRest(c)
 
@@ -96,7 +75,6 @@ export function resolvePhotonConfig(config: PhotonConfig | undefined): PhotonCon
       handlers,
       server,
       hmr,
-      standalone,
       middlewares,
       ...rest,
     }

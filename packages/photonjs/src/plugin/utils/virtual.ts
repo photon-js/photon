@@ -8,12 +8,15 @@ type Literal<T extends string> = T extends `${infer A}:${infer B}` ? `${ToLitera
 type Parse<T extends string> = T extends `${infer A}:${infer B}` ? ToParse<A> & Parse<B> : ToParse<T>
 
 export function literal<const T extends string>(pattern: T) {
-  const regex = new RegExp(`^${pattern.replace(/\$\{(.*?)}/g, '(?<$1>[^:]*)')}\$`, 'g')
+  const regex = new RegExp(`^${pattern.replace(/\$\{(.*?)}/g, '(?<$1>.*)')}\$`)
   return type(regex)
     .configure({ expected: pattern })
     .pipe.try((x) => {
       // biome-ignore lint/style/noNonNullAssertion: already validated by type
       const match = x.match(regex)!
+      if (match === null) {
+        console.log('MATCH', regex, x)
+      }
       return match.groups as Parse<T>
       // biome-ignore lint/complexity/noBannedTypes: <explanation>
     }) as Type<(In: Literal<T>) => Out<Parse<T>>, {}>
@@ -39,32 +42,45 @@ export function ifPhotonModule<
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   F extends (arg: (typeof virtualModules)[K extends VirtualModuleKeys ? K : K[number]]['infer']) => any,
   R,
->(key: K, value: unknown, callback: F, returnValue: R): R extends Error ? ReturnType<F> : R | ReturnType<F>
+>(
+  key: K,
+  value: unknown,
+  callback: F,
+  next: R,
+): R extends Error
+  ? ReturnType<F>
+  : // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    R extends (...args: any[]) => any
+    ? ReturnType<R> | ReturnType<F>
+    : R | ReturnType<F>
 export function ifPhotonModule<
   K extends VirtualModuleKeys | VirtualModuleKeys[],
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   F extends (arg: (typeof virtualModules)[K extends VirtualModuleKeys ? K : K[number]]['infer']) => any,
->(key: K, value: unknown, callback: F, returnValue?: unknown): unknown | ReturnType<F> {
+>(key: K, value: unknown, callback: F, next: unknown = null): unknown | ReturnType<F> {
+  function returnOrThrow() {
+    if (next instanceof Error) {
+      throw next
+    }
+    if (typeof next === 'function') {
+      return next()
+    }
+
+    return next
+  }
+
   if (Array.isArray(key)) {
     for (const k of key) {
       const r = ifPhotonModule(k as VirtualModuleKeys, value, callback)
       if (r !== null) return r
     }
-    if (returnValue instanceof Error) {
-      throw returnValue
-    }
-
-    return returnValue
+    return returnOrThrow()
   }
 
   const out = virtualModules[key as VirtualModuleKeys](value)
 
   if (out instanceof type.errors) {
-    if (returnValue instanceof Error) {
-      throw returnValue
-    }
-
-    return returnValue
+    return returnOrThrow()
   }
 
   return callback(out)

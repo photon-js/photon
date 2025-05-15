@@ -6,7 +6,7 @@ export const loggerMiddleware = enhance(
   },
   // enhance() adds meta data (a Universal Middleware in itself is just a Request => Response function)
   {
-    name: 'log-request',
+    name: 'awesome-framework:log-request',
     order: MiddlewareOrder.LOGGING,
   },
 )

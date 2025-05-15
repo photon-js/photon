@@ -8,7 +8,9 @@ function fallback(): Plugin {
     name: 'photon:fallback',
 
     resolveId(id) {
-      return ifPhotonModule('fallback-entry', id, () => id)
+      return ifPhotonModule('fallback-entry', id, () => {
+        return id
+      })
     },
 
     load(id) {

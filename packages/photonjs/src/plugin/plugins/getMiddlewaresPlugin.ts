@@ -60,17 +60,12 @@ export function getMiddlewaresPlugin(): Plugin[] {
       },
 
       load(id) {
-        return ifPhotonModule(
-          'get-middlewares',
-          id,
-          ({ condition, server }) => {
-            return {
-              code: getAllPhotonMiddlewares(this, condition as 'dev' | 'edge' | 'node', server),
-              map: { mappings: '' } as const,
-            }
-          },
-          new Error(`Invalid id ${id}`),
-        )
+        return ifPhotonModule('get-middlewares', id, ({ condition, server }) => {
+          return {
+            code: getAllPhotonMiddlewares(this, condition as 'dev' | 'edge' | 'node', server),
+            map: { mappings: '' } as const,
+          }
+        })
       },
     },
   ]

@@ -30,11 +30,11 @@ export const PhotonEntryUniversalHandler = type({
 
 export const PhotonConfig = type({
   'handlers?': {
-    '[string]': type('string').or(PhotonEntryUniversalHandler),
+    '[string]': type('string').or(PhotonEntryUniversalHandler.partial()),
   },
-  'server?': type('string').or(PhotonEntryServer),
+  'server?': type('string').or(PhotonEntryServer.partial()),
   'hmr?': "boolean | 'prefer-restart'",
-  'middlewares?': 'Array' as type.cast<GetPhotonCondition[]>,
+  'middlewares?': 'Array | undefined' as type.cast<GetPhotonCondition[]>,
   'devServer?': type('boolean').or({
     'autoServe?': 'boolean',
   }),
