@@ -1,4 +1,5 @@
 import type { Plugin } from 'vite'
+import { ifPhotonModule } from '../utils/virtual.js'
 
 export { fallback }
 
@@ -7,14 +8,13 @@ function fallback(): Plugin {
     name: 'photon:fallback',
 
     resolveId(id) {
-      if (id === 'photon:fallback-entry') {
-        // FIXME
+      return ifPhotonModule('fallback-entry', id, () => {
         return id
-      }
+      })
     },
 
     load(id) {
-      if (id === 'photon:fallback-entry') {
+      return ifPhotonModule('fallback-entry', id, () => {
         //language=ts
         return {
           code: `import { apply, serve } from '@photonjs/core/hono'
@@ -33,9 +33,9 @@ function startServer() {
 
 export default startServer()
 `,
-          map: { mappings: '' },
+          map: { mappings: '' } as const,
         }
-      }
+      })
     },
   }
 }

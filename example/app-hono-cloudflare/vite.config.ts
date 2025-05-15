@@ -1,16 +1,15 @@
-import { cloudflare } from '@photonjs/cloudflare/vite'
+/// <reference types="@photonjs/core/api" />
 /* The Vite plugin cloudflare() will be replaced by this:
 import cloudflare from '@photonjs/cloudflare'
 */
+import { cloudflare } from '@photonjs/cloudflare/vite'
 import { awesomeFramework } from 'awesome-framework/vite'
 import { defineConfig } from 'vite'
 
 export default defineConfig(({ mode }) => {
   return {
     photon: {
-      entry: {
-        index: 'server.ts',
-      },
+      server: 'server.ts',
       /* The Vite plugin cloudflare() will be replaced by this:
       target: cloudflare, // not needed when using @photonjs/auto
       */

@@ -22,10 +22,5 @@
     "playwright": "^1.52.0",
     "prettier": "^3.2.5"
   },
-  "pnpm": {
-    "patchedDependencies": {
-      "@cloudflare/vite-plugin": "patches/@cloudflare__vite-plugin.patch"
-    }
-  },
   "packageManager": "pnpm@9.15.9"
 }

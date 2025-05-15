@@ -17,10 +17,8 @@ export function node(): Plugin[] {
 
       load(id) {
         if (id === virtualPhotonNodeId) {
-          const entries = Object.entries(this.environment.config.photon.entry)
-            .filter(([k, v]) => k !== 'index' && v.type === 'universal-handler')
-            .map(([_, v]) => v.id)
-          return `export default ${JSON.stringify(entries)};`
+          const handlers = Object.entries(this.environment.config.photon.handlers).map(([_, v]) => v.id)
+          return `export default ${JSON.stringify(handlers)};`
         }
       },
     },

@@ -2,6 +2,7 @@ import type { ResolvedId } from 'rollup'
 import type { Plugin } from 'vite'
 import type { GetPhotonCondition } from '../../validators/types.js'
 import { resolveFirst } from '../utils/resolve.js'
+import { ifPhotonModule } from '../utils/virtual.js'
 
 export interface InstallPhotonBaseOptions {
   resolveMiddlewares?: GetPhotonCondition
@@ -16,10 +17,8 @@ export function installPhotonBase(name: string, options?: InstallPhotonBaseOptio
       enforce: 'pre',
 
       async resolveId(id, importer, opts) {
-        if (id.startsWith('photon:resolve-from-photon:')) {
+        return ifPhotonModule('resolve-from-photon', id, async ({ module: actualId }) => {
           if (opts.custom?.photonScope !== undefined && opts.custom.photonScope !== name) return
-
-          const actualId = id.replace('photon:resolve-from-photon:', '')
 
           resolvedName ??= await resolveFirst(this, [
             { source: name, importer: undefined },
@@ -34,7 +33,7 @@ export function installPhotonBase(name: string, options?: InstallPhotonBaseOptio
           if (foundPhotonCore) {
             return this.resolve(actualId, foundPhotonCore.id, opts)
           }
-        }
+        })
       },
 
       sharedDuringBuild: true,
@@ -44,7 +43,7 @@ export function installPhotonBase(name: string, options?: InstallPhotonBaseOptio
       enforce: 'post',
 
       async resolveId(id, importer, opts) {
-        if (importer === 'photon:fallback-entry' || importer?.startsWith('photon:get-middlewares:')) {
+        return ifPhotonModule(['fallback-entry', 'get-middlewares'], id, async () => {
           // first, try basic resolve
           let resolved = await this.resolve(id, importer, opts)
 
@@ -75,7 +74,7 @@ export function installPhotonBase(name: string, options?: InstallPhotonBaseOptio
               photonScope: name,
             },
           })
-        }
+        })
       },
 
       sharedDuringBuild: true,

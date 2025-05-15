@@ -2,14 +2,9 @@ import type { ModuleInfo, PluginContext } from 'rollup'
 import type { Plugin } from 'vite'
 import { assert, assertUsage } from '../../utils/assert.js'
 import { resolvePhotonConfig } from '../../validators/coerce.js'
-import type { PhotonEntryServer, SupportedServers } from '../../validators/types.js'
-import {
-  extractPhotonEntryId,
-  includesPhotonEntryId,
-  isPhotonEntryId,
-  isPhotonMeta,
-  stripPhotonEntryId,
-} from '../utils/entry.js'
+import type { SupportedServers } from '../../validators/types.js'
+import { isPhotonMeta } from '../utils/entry.js'
+import { ifPhotonModule } from '../utils/virtual.js'
 
 const idsToServers: Record<string, SupportedServers> = {
   '@photonjs/hono': 'hono',
@@ -49,28 +44,22 @@ function computePhotonMeta(
     }
   }
 
-  const entry = Object.values(pluginContext.environment.config.photon.entry).find((e) => e.resolvedId === info.id)
-  assert(entry)
+  const serverEntry = pluginContext.environment.config.photon.server
 
   if (found) {
     if (!info.hasDefaultExport) {
       // TODO better error message with link to documentation
       pluginContext.error(`Entry "${info.id}" seems to use "${found}", but no default export was found`)
     }
-    info.meta ??= {}
-    info.meta.photon ??= {}
-    info.meta.photon.type = 'server'
-    info.meta.photon.server = found
-    entry.type = info.meta.photon.type
-    ;(entry as PhotonEntryServer).server = info.meta.photon.server
-  } else if (info.hasDefaultExport) {
-    info.meta.photon.type = 'universal-handler'
-    entry.type = info.meta.photon.type
+
+    serverEntry.server = found
+
+    assert(isPhotonMeta(info.meta))
+    // Already assigned by ref by photon:resolve-entry-meta
+    assert(info.meta.photon === serverEntry)
   } else {
     // TODO better error message with link to documentation
-    pluginContext.error(
-      `Cannot guess "${info.id}" entry type. Make sure to provide a default export, and if you use a server, use "@photonjs/<server>" package`,
-    )
+    pluginContext.error(`Cannot guess "${info.id}" server type. Make sure to use "@photonjs/<server>" package`)
   }
 }
 
@@ -89,14 +78,18 @@ export function photonEntry(): Plugin[] {
       config: {
         order: 'post',
         handler(config) {
-          const { entry } = resolvePhotonConfig(config.photon, true)
+          const { handlers, server } = resolvePhotonConfig(config.photon)
 
           return {
             environments: {
               ssr: {
                 build: {
                   rollupOptions: {
-                    input: Object.fromEntries(Object.entries(entry).map(([key, value]) => [key, value.id])),
+                    input: Object.assign(
+                      // TODO make sure that handlers do not overwrite server entry name
+                      { index: server.id },
+                      Object.fromEntries(Object.entries(handlers).map(([key, value]) => [key, value.id])),
+                    ),
                   },
                 },
               },
@@ -129,8 +122,8 @@ export function photonEntry(): Plugin[] {
       moduleParsed: {
         order: 'pre',
         handler(info) {
-          if (isPhotonMeta(info.meta)) {
-            // Must be kept sync
+          if (isPhotonMeta(info.meta) && info.meta.photon.type === 'server') {
+            // Must be kept synchronous
             computePhotonMeta(this, resolvedIdsToServers, info)
           }
         },
@@ -139,58 +132,79 @@ export function photonEntry(): Plugin[] {
       sharedDuringBuild: true,
     },
     {
-      // Some plugins, like @cloudflare/vite-plugin try to resolve the entry beforehand,
-      // resulting in photon entries prefixed by cwd() or some other folder
-      name: 'photon:clean-photon-entry',
-      enforce: 'pre',
-
-      resolveId: {
-        order: 'pre',
-        async handler(id, importer, opts) {
-          if (includesPhotonEntryId(id)) {
-            return this.resolve(extractPhotonEntryId(id), importer, opts)
-          }
-        },
-      },
-    },
-    {
       name: 'photon:resolve-entry-meta',
       enforce: 'pre',
 
       resolveId: {
         order: 'post',
-        async handler(id, importer, opts) {
-          const resolved =
-            importer && isPhotonEntryId(importer)
-              ? await this.resolve(id, stripPhotonEntryId(importer), {
-                  ...opts,
-                  skipSelf: false,
-                })
-              : isPhotonEntryId(id)
-                ? await this.resolve(stripPhotonEntryId(id), undefined, {
+        handler(id, importer, opts) {
+          return ifPhotonModule(
+            ['handler-entry', 'server-entry'],
+            importer,
+            ({ entry }) =>
+              this.resolve(id, entry, {
+                ...opts,
+                skipSelf: false,
+              }),
+            () =>
+              ifPhotonModule(
+                'server-entry',
+                id,
+                async ({ entry: actualId }) => {
+                  const resolved = await this.resolve(actualId, undefined, {
                     ...opts,
                     isEntry: true,
                     skipSelf: false,
                   })
-                : null
 
-          if (resolved) {
-            if (isPhotonEntryId(id)) {
-              // FIXME photon:entry:./server.ts and photon:entry:server.ts should point to the same entry
-              const entry = Object.values(this.environment.config.photon.entry).find((e) => e.id === id)
-              assert(entry)
-              entry.resolvedId = resolved.id
+                  assertUsage(resolved, `Cannot resolve ${actualId} to a server entry`)
 
-              return {
-                ...resolved,
-                meta: {
-                  photon: entry.type === 'server' ? entry : { type: 'auto', ...entry },
+                  const entry = this.environment.config.photon.server
+                  entry.resolvedId = resolved.id
+
+                  return {
+                    ...resolved,
+                    meta: {
+                      photon: entry,
+                    },
+                    resolvedBy: 'photon',
+                  }
                 },
-                resolvedBy: 'photon',
-              }
-            }
-            return resolved
-          }
+                () =>
+                  ifPhotonModule('handler-entry', id, async ({ entry: actualId }) => {
+                    let resolved = await this.resolve(actualId, undefined, {
+                      ...opts,
+                      isEntry: true,
+                      skipSelf: false,
+                    })
+
+                    // Try to resolve by handler key
+                    if (!resolved && actualId in this.environment.config.photon.handlers) {
+                      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+                      resolved = await this.resolve(this.environment.config.photon.handlers[actualId]!.id, undefined, {
+                        ...opts,
+                        isEntry: true,
+                        skipSelf: false,
+                      })
+                    }
+
+                    assertUsage(resolved, `Cannot resolve ${actualId} to a handler entry`)
+
+                    const entry = Object.values(this.environment.config.photon.handlers).find((e) => e.id === id)
+
+                    assertUsage(entry, `Cannot find a handler for ${resolved.id}`)
+                    entry.resolvedId = resolved.id
+
+                    return {
+                      ...resolved,
+                      meta: {
+                        photon: entry,
+                      },
+                      resolvedBy: 'photon',
+                    }
+                  }),
+              ),
+          )
         },
       },
       sharedDuringBuild: true,

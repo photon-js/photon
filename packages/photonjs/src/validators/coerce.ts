@@ -1,110 +1,80 @@
 import { match, type } from 'arktype'
-import type { BuildOptions } from 'esbuild'
-import { asPhotonEntryId } from '../plugin/utils/entry.js'
-import type { PhotonConfig, PhotonConfigResolved, PhotonEntry } from './types.js'
+import { asPhotonEntryId } from '../plugin/utils/virtual.js'
+import type {
+  PhotonConfig,
+  PhotonConfigResolved,
+  PhotonEntryBase,
+  PhotonEntryServer,
+  PhotonEntryUniversalHandler,
+} from './types.js'
 import * as Validators from './validators.js'
 
-function entryToPhoton(entry: string | PhotonEntry): PhotonEntry {
+function entryToPhoton<
+  T extends 'handler-entry' | 'server-entry',
+  Entry = T extends 'server-entry' ? PhotonEntryServer : PhotonEntryUniversalHandler,
+>(entry: string | Entry, type: T): Entry {
   if (typeof entry === 'string')
     return {
-      id: asPhotonEntryId(entry),
-      type: 'auto',
-    }
+      id: asPhotonEntryId(entry, type),
+      type: type === 'server-entry' ? 'server' : 'universal-handler',
+    } as Entry
   return {
     ...entry,
-    id: asPhotonEntryId(entry.id),
+    type: type === 'server-entry' ? 'server' : 'universal-handler',
+    id: asPhotonEntryId((entry as PhotonEntryBase).id, type),
   }
 }
 
-function entriesToPhoton(
-  entry: string | PhotonEntry | Record<string, PhotonEntry | string>,
-): Record<string, PhotonEntry> {
-  if (typeof entry === 'string' || 'id' in entry) {
-    return {
-      index: entryToPhoton(entry as string | PhotonEntry),
-    }
-  }
-
-  const entries = Object.fromEntries(Object.entries(entry).map(([key, value]) => [key, entryToPhoton(value)]))
-
-  if (!entries.index) {
-    entries.index = entryToPhoton({
-      id: 'photon:fallback-entry',
-      type: 'server',
-      server: 'hono',
-    })
-  }
-
-  return entries
+function handlersToPhoton(
+  handlers: Record<string, Partial<PhotonEntryUniversalHandler> | string>,
+): Record<string, PhotonEntryUniversalHandler> {
+  return Object.fromEntries(
+    Object.entries(handlers).map(([key, value]) => [
+      key,
+      entryToPhoton(value as PhotonEntryUniversalHandler, 'handler-entry'),
+    ]),
+  )
 }
 
-// TODO always fallback? This should allow better DX and error messages
-export function resolvePhotonConfig(config: PhotonConfig | undefined, fallback?: boolean): PhotonConfigResolved {
+export function resolvePhotonConfig(config: PhotonConfig | undefined): PhotonConfigResolved {
   const out = Validators.PhotonConfig.pipe.try((c) => {
-    const toPhotonEntry = match
+    const toPhotonServer = match
       .in<PhotonConfig>()
-      .match({
-        string: (v) => entriesToPhoton(v),
-      })
-      .case(
-        { entry: 'unknown' },
-        match
-          .at('entry')
-          .match({
-            string: (v) => entriesToPhoton(v.entry),
-          })
-          .case({ id: 'string' }, (v) => entriesToPhoton(v.entry))
-          .case({ '[string]': 'string' }, (v) => entriesToPhoton(v.entry))
-          .case({ '[string]': Validators.PhotonEntry }, (v) => entriesToPhoton(v.entry))
-          .default('assert'),
+      .case({ server: type('string').or(Validators.PhotonEntryUniversalHandler) }, (v) =>
+        entryToPhoton(v.server, 'server-entry'),
       )
       .default(
-        fallback
-          ? // Fallback to a simple Hono server for now for simplicity
-            () =>
-              entriesToPhoton({
-                id: 'photon:fallback-entry',
-                type: 'server',
-                server: 'hono',
-              })
-          : 'assert',
+        // Fallback to a simple Hono server for now for simplicity
+        () =>
+          entryToPhoton(
+            {
+              id: 'photon:fallback-entry',
+              type: 'server',
+              server: 'hono',
+            },
+            'server-entry',
+          ),
       )
-
-    const toHmr = match
-      .in<PhotonConfig>()
-      .case({ hmr: 'boolean | "prefer-restart"' }, (v) => v.hmr)
-      .default(() => true)
-
-    const toStandalone = match
-      .in<PhotonConfig>()
-      .case({ standalone: 'boolean' }, (v) => v.standalone)
-      .case({ standalone: 'object' }, (v) => v.standalone as type.cast<Omit<BuildOptions, 'manifest'>>)
-      .default(() => false)
-
-    const toMiddlewares = match
-      .in<PhotonConfig>()
-      .case({ middlewares: 'object' }, (v) => v.middlewares)
-      .default(() => [])
 
     const toRest = match
       .in<PhotonConfig>()
       .case({ '[string]': 'unknown' }, (v) => {
-        const { entry, hmr, standalone, middlewares, ...rest } = v
+        const { handlers, server, hmr, middlewares, ...rest } = v
         return rest
       })
       .default(() => ({}))
 
-    const entry = toPhotonEntry(c)
-    const hmr = toHmr(c)
-    const standalone = toStandalone(c)
-    const middlewares = toMiddlewares(c)
+    const handlers = handlersToPhoton(c.handlers ?? {})
+    const server = toPhotonServer(c)
+    const hmr = c.hmr ?? true
+    const middlewares = c.middlewares ?? []
     // Allows Photon targets to add custom options
     const rest = toRest(c)
 
     return {
-      entry,
+      handlers,
+      server,
       hmr,
-      standalone,
       middlewares,
       ...rest,
     }
