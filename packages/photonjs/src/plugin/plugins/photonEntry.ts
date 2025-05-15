@@ -128,33 +128,6 @@ export function photonEntry(): Plugin[] {
       sharedDuringBuild: true,
     },
     {
-      // Some plugins, like @cloudflare/vite-plugin try to resolve the entry beforehand,
-      // resulting in photon entries prefixed by cwd() or some other folder
-      name: 'photon:clean-photon-entry',
-      enforce: 'pre',
-
-      resolveId: {
-        order: 'pre',
-        async handler(id, importer, opts) {
-          const re_virtualPhotonEntry = /.*(photon:(server|handler)-entry.*)/
-
-          function includesPhotonEntryId(id: string) {
-            return Boolean(id.match(re_virtualPhotonEntry))
-          }
-
-          function extractPhotonEntryId(id: string) {
-            const match = id.match(re_virtualPhotonEntry)
-            if (match) return match[1] as string
-            return id
-          }
-
-          if (includesPhotonEntryId(id)) {
-            return this.resolve(extractPhotonEntryId(id), importer, opts)
-          }
-        },
-      },
-    },
-    {
       name: 'photon:resolve-entry-meta',
       enforce: 'pre',
 

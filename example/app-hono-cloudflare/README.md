@@ -5,7 +5,8 @@ App using [`awesome-framework`](../awesome-framework) — a demo framework power
 Relevant files:
 - [server.ts](./server.ts): user server entry, can be any server that Photon supports (Hono, Express.js, Fastify, H3, ...)
 - [vite.config.ts](./vite.config.ts): this is where the user tells Photon where his server entry lives, and where the user adds Photon's Cloudflare adapter (if he doesn't use `@photonjs/auto`)
-- [wrangler.toml](./wrangler.toml): required when targetting Cloudflare, contains a `main` property pointing to a Photon virtual file (the "real server entry" wrapping the user server entry)
+- [wrangler.toml](./wrangler.toml): required when targetting Cloudflare, contains a `main` property pointing to the Cloudflare entry
+- [cloudflare-entry.ts](./cloudflare-entry.ts): Imports and use a Photon virtual file (the "real server entry" wrapping the user server entry)
 
 ## scripts
 

@@ -2,4 +2,4 @@ name = "cloudflare-vite-get-started"
 compatibility_date = "2025-04-03"
 # Required during development
 compatibility_flags = [ "nodejs_compat" ]
-main = "photon:entry:server.ts"
+main = "./cloudflare-entry.ts"

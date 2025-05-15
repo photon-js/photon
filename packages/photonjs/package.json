@@ -10,6 +10,9 @@
     "./api": "./dist/api.js",
     "./dev": "./dist/dev.js",
     ".": "./dist/index.js",
+    "./virtual": {
+      "types": "./virtual.d.ts"
+    },
     "./hono": "./dist/hono.js",
     "./express": "./dist/express.js",
     "./hattip": "./dist/hattip.js",
@@ -295,7 +298,8 @@
     "vite": "^6.3.5"
   },
   "files": [
-    "dist/"
+    "dist/",
+    "virtual.d.ts"
   ],
   "repository": "github:photon-js/photon",
   "license": "MIT"
