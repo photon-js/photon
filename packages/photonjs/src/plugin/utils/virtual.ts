@@ -1,5 +1,5 @@
 import { type Out, type Type, type } from 'arktype'
-import { assert } from "../../utils/assert.js";
+import { assert } from '../../utils/assert.js'
 
 type ToLiteral<T extends string> = T extends `\${${infer _}}` ? string : T
 // biome-ignore lint/complexity/noBannedTypes: <explanation>

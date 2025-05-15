@@ -78,14 +78,18 @@ export function photonEntry(): Plugin[] {
       config: {
         order: 'post',
         handler(config) {
-          const { handlers } = resolvePhotonConfig(config.photon)
+          const { handlers, server } = resolvePhotonConfig(config.photon)
 
           return {
             environments: {
               ssr: {
                 build: {
                   rollupOptions: {
-                    input: Object.fromEntries(Object.entries(handlers).map(([key, value]) => [key, value.id])),
+                    input: Object.assign(
+                      // TODO make sure that handlers do not overwrite server entry name
+                      { index: server.id },
+                      Object.fromEntries(Object.entries(handlers).map(([key, value]) => [key, value.id])),
+                    ),
                   },
                 },
               },
