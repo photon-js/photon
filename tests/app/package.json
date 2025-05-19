@@ -1,0 +1,25 @@
+{
+  "name": "tests-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "pnpm run build && node dist/server/index.js",
+    "preview:vite": "pnpm run build && vite preview"
+  },
+  "devDependencies": {
+    "@photonjs/cloudflare": "workspace:",
+    "@photonjs/core": "workspace:",
+    "@types/node": "^20.17.32",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
+    "wrangler": "^4.15.1"
+  },
+  "dependencies": {
+    "awesome-framework": "workspace:",
+    "h3": "^1.15.1",
+    "hono": "^4.7.8"
+  }
+}
