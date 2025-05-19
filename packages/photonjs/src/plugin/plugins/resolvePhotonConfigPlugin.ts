@@ -51,7 +51,6 @@ export function resolvePhotonConfigPlugin(pluginConfig?: Photon.Config): Plugin[
       configResolved: {
         order: 'pre',
         handler(config) {
-          console.log(config.photon, resolvePhotonConfig(config.photon))
           config.photon = resolvePhotonConfig(config.photon)
         },
       },

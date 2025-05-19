@@ -1,6 +1,10 @@
 /// <reference types="@photonjs/core/api" />
 import { cloudflare as cloudflareVitePlugins, type PluginConfig } from '@cloudflare/vite-plugin'
+import { isPhotonMeta } from '@photonjs/core/api'
 import type { Plugin } from 'vite'
+
+const moduleId = 'photon:cloudflare'
+const virtualModuleId = `\0${moduleId}`
 
 // TODO: create actual virtual Target Entries for each server
 export function cloudflare(config?: Omit<PluginConfig, 'viteEnvironment'>): Plugin[] {
@@ -22,22 +26,34 @@ export function cloudflare(config?: Omit<PluginConfig, 'viteEnvironment'>): Plug
     {
       name: 'photon:cloudflare-resolver',
 
-      resolveId(id) {
-        if (id.startsWith('photon:cloudflare')) {
-          return id
+      async resolveId(id, importer, opts) {
+        if (id.startsWith(moduleId)) {
+          const resolved = await this.resolve(id.replace(/^photon:cloudflare:/, ''), importer, opts)
+
+          if (!resolved) {
+            return this.error(`[photon][cloudflare] Cannot resolve ${id}`)
+          }
+
+          return {
+            ...resolved,
+            id: `${virtualModuleId}:${resolved.id}`,
+          }
         }
       },
 
       async load(id) {
-        if (!id.startsWith('photon:cloudflare')) return
+        if (!id.startsWith(virtualModuleId)) return
 
-        // FIXME photon:server-entry should be resolved by @photonjs/core
-        if (id.replace('photon:cloudflare:', '') !== 'photon:server-entry') {
-          throw new Error('Not implemented')
+        const actualId = id.slice(virtualModuleId.length + 1)
+
+        const info = this.getModuleInfo(id)
+
+        if (!isPhotonMeta(info?.meta)) {
+          return this.error(`[photon][cloudflare] ${actualId} is not a Photon entry`)
         }
 
         // `server.server` exists only during build time
-        if (this.environment.config.photon.server.server === 'hono') {
+        if (info.meta.photon.type === 'server' && info.meta.photon.server === 'hono') {
           return {
             // TODO handle all server types
             // language=ts

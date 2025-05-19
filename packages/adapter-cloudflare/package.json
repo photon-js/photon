@@ -20,12 +20,12 @@
     "release:commit": "release-me commit"
   },
   "dependencies": {
-    "@cloudflare/vite-plugin": "^1.0.12"
+    "@cloudflare/vite-plugin": "^1.0.12",
+    "@photonjs/core": "workspace:^"
   },
   "devDependencies": {
     "@brillout/release-me": "^0.4.3",
     "@cloudflare/workers-types": "^4.20250515.0",
-    "@photonjs/core": "workspace:^",
     "@universal-middleware/core": "^0.4.7",
     "tsup": "^8.4.0",
     "typescript": "^5.8.3",
