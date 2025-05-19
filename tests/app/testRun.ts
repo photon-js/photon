@@ -1,6 +1,16 @@
-export { testRun }
+export { testRun, testRunUnsupported }
 
-import { autoRetry, expect, fetchHtml, getServerUrl, page, run, test } from '@brillout/test-e2e'
+import {
+  autoRetry,
+  expect,
+  expectLog,
+  fetchHtml,
+  getServerUrl,
+  page,
+  run,
+  runCommandThatTerminates,
+  test,
+} from '@brillout/test-e2e'
 
 function testRun(cmd: `pnpm run ${string}`) {
   run(cmd, {
@@ -19,6 +29,31 @@ function testRun(cmd: `pnpm run ${string}`) {
     expect(await page.textContent('h1')).toBe('Hello Vite!')
     await testCounter()
   })
+}
+
+async function testRunUnsupported(cmd: `pnpm run ${string}`) {
+  const error = 'is not supported while targetting'
+  const isPreview = cmd.includes('preview')
+
+  if (isPreview) {
+    try {
+      await runCommandThatTerminates(cmd)
+    } catch (err) {
+      expect(() => {
+        throw err
+      }).throw(error)
+    }
+  } else {
+    run(cmd, {
+      // Preview => builds app which takes a long time
+      additionalTimeout: 120 * 1000,
+    })
+
+    test('page crashes with error message', async () => {
+      await fetchHtml('/')
+      expectLog(error)
+    })
+  }
 }
 
 async function testCounter(currentValue = 0) {

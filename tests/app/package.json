@@ -12,6 +12,7 @@
   "devDependencies": {
     "@photonjs/cloudflare": "workspace:",
     "@photonjs/core": "workspace:",
+    "@types/express": "^5.0.2",
     "@types/node": "^20.17.32",
     "typescript": "^5.8.3",
     "vite": "^6.3.5",
@@ -19,6 +20,7 @@
   },
   "dependencies": {
     "awesome-framework": "workspace:",
+    "express": "^5.1.0",
     "h3": "^1.15.1",
     "hono": "^4.7.8"
   }

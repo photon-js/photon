@@ -1,10 +1,10 @@
 // Will be moved to @photonjs/hono
-import { apply, serve } from '@photonjs/core/hono'
+import { apply, serve } from '@photonjs/core/express'
 import awesomeFramework from 'awesome-framework/universal-middleware'
-import { Hono } from 'hono'
+import express, { type Express } from 'express'
 
-async function startServer() {
-  const app = new Hono()
+function startServer(): Express {
+  const app = express()
 
   apply(
     app,
@@ -15,4 +15,4 @@ async function startServer() {
   return serve(app)
 }
 
-export default await startServer()
+export default startServer()
