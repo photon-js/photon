@@ -12,7 +12,7 @@ const server = process.env.SERVER ?? 'hono'
 export default defineConfig(({ mode }) => {
   return {
     photon: {
-      server: `${server}-server.ts`,
+      server: `${server}-entry.ts`,
       /* The Vite plugin cloudflare() will be replaced by this:
       target: cloudflare, // not needed when using @photonjs/auto
       */
