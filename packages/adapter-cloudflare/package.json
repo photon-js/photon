@@ -11,6 +11,7 @@
       "types": "./virtual.d.ts"
     },
     "./hono": "./dist/hono.js",
+    "./h3": "./dist/h3.js",
     "./dev": "./dist/dev.js"
   },
   "scripts": {
@@ -30,10 +31,20 @@
     "@brillout/release-me": "^0.4.3",
     "@cloudflare/workers-types": "^4.20250515.0",
     "@universal-middleware/core": "^0.4.7",
+    "@universal-middleware/h3": "^0.4.9",
     "@universal-middleware/hono": "^0.4.10",
+    "h3": "^1.15.1",
     "tsup": "^8.4.0",
     "typescript": "^5.8.3",
     "vite": "^6.3.5"
+  },
+  "peerDependencies": {
+    "h3": "^1"
+  },
+  "peerDependenciesMeta": {
+    "h3": {
+      "optional": true
+    }
   },
   "files": [
     "dist/"

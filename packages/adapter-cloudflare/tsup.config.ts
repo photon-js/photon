@@ -29,6 +29,7 @@ export default defineConfig([
     platform: 'neutral',
     entry: {
       hono: './src/adapters/hono.ts',
+      h3: './src/adapters/h3.ts',
       dev: './src/adapters/dev.ts',
     },
     // TODO shared Photon plugin?

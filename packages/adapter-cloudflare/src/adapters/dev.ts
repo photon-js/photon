@@ -20,6 +20,14 @@ export function asFetch(app: unknown, id: string): ExportedHandlerFetchHandler {
         // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         return asFetch(app as any)(request, env, ctx)
       }
+    case 'h3':
+      return async (request, env, ctx) => {
+        // @ts-ignore
+        // biome-ignore lint/suspicious/noExplicitAny: self reference
+        const { asFetch } = (await import('@photonjs/cloudflare/h3')) as any
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        return asFetch(app as any)(request, env, ctx)
+      }
   }
 
   throw new Error(
