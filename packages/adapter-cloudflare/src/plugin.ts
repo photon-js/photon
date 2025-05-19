@@ -1,7 +1,7 @@
 /// <reference types="@photonjs/core/api" />
 import { cloudflare as cloudflareVitePlugins, type PluginConfig } from '@cloudflare/vite-plugin'
 import { isPhotonMeta } from '@photonjs/core/api'
-import { unsupportedServers } from '@photonjs/core/vite'
+import { supportedTargetServers } from '@photonjs/core/vite'
 import type { Plugin } from 'vite'
 
 const moduleId = 'photon:cloudflare'
@@ -24,7 +24,7 @@ export function cloudflare(config?: Omit<PluginConfig, 'viteEnvironment'>): Plug
         },
       },
     },
-    unsupportedServers('cloudflare', ['express', 'fastify']),
+    supportedTargetServers('cloudflare', ['hono', 'h3']),
     {
       name: `${moduleId}:resolver`,
 

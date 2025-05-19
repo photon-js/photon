@@ -1,7 +1,7 @@
 import type { Plugin } from 'vite'
 import type { SupportedServers } from '../../validators/types.js'
 
-export { unsupportedServers }
+export { supportedTargetServers }
 
 function getImports(id: string) {
   return [id, `@photonjs/${id}`, `@photonjs/core/${id}`]
@@ -20,7 +20,7 @@ const idsToServers = Object.fromEntries(
   Object.entries(serversToIds).flatMap(([k, v]) => v.map((x) => [x, k])),
 ) as Record<string, SupportedServers>
 
-function unsupportedServers(name: string, servers: SupportedServers[], recommend = 'hono'): Plugin {
+function supportedTargetServers(name: string, servers: SupportedServers[], recommend = 'hono'): Plugin {
   const serversSet = new Set(servers)
 
   return {
@@ -28,7 +28,7 @@ function unsupportedServers(name: string, servers: SupportedServers[], recommend
     enforce: 'pre',
 
     resolveId(id) {
-      if (idsToServers[id] && serversSet.has(idsToServers[id])) {
+      if (idsToServers[id] && !serversSet.has(idsToServers[id])) {
         this.error(
           `[photon][${name}] \`${idsToServers[id]}\` is not supported while targetting \`${name}\`. We recommend using \`${recommend}\` instead.`,
         )
