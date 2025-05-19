@@ -9,7 +9,9 @@
     "./vite": "./dist/vite.js",
     "./virtual": {
       "types": "./virtual.d.ts"
-    }
+    },
+    "./hono": "./dist/hono.js",
+    "./dev": "./dist/dev.js"
   },
   "scripts": {
     "dev": "tsup --watch",
@@ -21,12 +23,14 @@
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.0.12",
-    "@photonjs/core": "workspace:^"
+    "@photonjs/core": "workspace:^",
+    "@universal-middleware/cloudflare": "^0.4.8"
   },
   "devDependencies": {
     "@brillout/release-me": "^0.4.3",
     "@cloudflare/workers-types": "^4.20250515.0",
     "@universal-middleware/core": "^0.4.7",
+    "@universal-middleware/hono": "^0.4.10",
     "tsup": "^8.4.0",
     "typescript": "^5.8.3",
     "vite": "^6.3.5"

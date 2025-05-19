@@ -10,7 +10,7 @@ const virtualModuleId = `\0${moduleId}`
 export function cloudflare(config?: Omit<PluginConfig, 'viteEnvironment'>): Plugin[] {
   return [
     {
-      name: 'photon:cloudflare',
+      name: `${moduleId}:config`,
       enforce: 'pre',
       config: {
         handler() {
@@ -24,7 +24,7 @@ export function cloudflare(config?: Omit<PluginConfig, 'viteEnvironment'>): Plug
       },
     },
     {
-      name: 'photon:cloudflare-resolver',
+      name: `${moduleId}:resolver`,
 
       async resolveId(id, importer, opts) {
         if (id.startsWith(moduleId)) {
@@ -41,9 +41,9 @@ export function cloudflare(config?: Omit<PluginConfig, 'viteEnvironment'>): Plug
         }
       },
 
+      // TODO add tests
       async load(id) {
         if (!id.startsWith(virtualModuleId)) return
-
         const actualId = id.slice(virtualModuleId.length + 1)
 
         const info = this.getModuleInfo(id)
@@ -52,24 +52,51 @@ export function cloudflare(config?: Omit<PluginConfig, 'viteEnvironment'>): Plug
           return this.error(`[photon][cloudflare] ${actualId} is not a Photon entry`)
         }
 
-        // `server.server` exists only during build time
-        if (info.meta.photon.type === 'server' && info.meta.photon.server === 'hono') {
-          return {
-            // TODO handle all server types
-            // language=ts
-            code: `import serverEntry from ${JSON.stringify(this.environment.config.photon.server.id)};
+        const isDev = this.environment.config.command === 'serve'
 
-export const fetch = serverEntry.fetch;
+        if (info.meta.photon.type === 'server') {
+          // `server` usually exists only during build time
+          if (info.meta.photon.server) {
+            return {
+              // language=ts
+              code: `import serverEntry from ${JSON.stringify(actualId)};
+import { asFetch } from "@photonjs/cloudflare/${info.meta.photon.server}";
+
+export const fetch = asFetch(serverEntry);
+export default { fetch };
+`,
+              map: { mappings: '' },
+            }
+          }
+
+          if (isDev) {
+            return {
+              // language=ts
+              code: `import serverEntry from ${JSON.stringify(actualId)};
+import { asFetch } from "@photonjs/cloudflare/dev";
+
+export const fetch = asFetch(serverEntry);
+export default { fetch };
+`,
+              map: { mappings: '' },
+            }
+          }
+        } else {
+          return {
+            // language=ts
+            code: `import handler from ${JSON.stringify(actualId)};
+import { getRuntime } from "@universal-middleware/cloudflare";
+
+export const fetch = (request, env, ctx) => {
+  return handler(request, {}, getRuntime(env, ctx))
+};
 export default { fetch };
 `,
             map: { mappings: '' },
           }
         }
-        // TODO handle other servers
-        // TODO for dev, the server needs to be set by serve or apply during runtime
-        //  this can be achieved via a symbol attached to the app itself
 
-        throw new Error('Not implemented')
+        return this.error(`[photon][cloudflare] Unable to load ${actualId}`)
       },
     },
     ...cloudflareVitePlugins({ ...config, viteEnvironment: { name: 'ssr' } }),

@@ -137,6 +137,9 @@ importers:
       '@photonjs/core':
         specifier: workspace:^
         version: link:../photonjs
+      '@universal-middleware/cloudflare':
+        specifier: ^0.4.8
+        version: 0.4.8(@cloudflare/workers-types@4.20250515.0)(@hattip/core@0.0.49)(elysia@1.3.1(exact-mirror@0.1.2(@sinclair/typebox@0.34.33))(file-type@20.5.0)(typescript@5.8.3))(fastify@5.3.3)(h3@1.15.3)(hono@4.7.9)
     devDependencies:
       '@brillout/release-me':
         specifier: ^0.4.3
@@ -147,6 +150,9 @@ importers:
       '@universal-middleware/core':
         specifier: ^0.4.7
         version: 0.4.7(@cloudflare/workers-types@4.20250515.0)(@hattip/core@0.0.49)(elysia@1.3.1(exact-mirror@0.1.2(@sinclair/typebox@0.34.33))(file-type@20.5.0)(typescript@5.8.3))(fastify@5.3.3)(h3@1.15.3)(hono@4.7.9)
+      '@universal-middleware/hono':
+        specifier: ^0.4.10
+        version: 0.4.10(@cloudflare/workers-types@4.20250515.0)(@hattip/core@0.0.49)(elysia@1.3.1(exact-mirror@0.1.2(@sinclair/typebox@0.34.33))(file-type@20.5.0)(typescript@5.8.3))(fastify@5.3.3)(h3@1.15.3)(hono@4.7.9)
       tsup:
         specifier: ^8.4.0
         version: 8.4.0(@swc/core@1.11.24)(postcss@8.5.3)(typescript@5.8.3)
@@ -1398,6 +1404,9 @@ packages:
 
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
+
+  '@universal-middleware/cloudflare@0.4.8':
+    resolution: {integrity: sha512-d6wDQYFdKPCXt+gnuN3eb3chMuY3K8yYvxRVYTDTxOm5kRH1/sxDBAchvoeFaPTg5j8gps53nBQnVsNW6kBdGA==}
 
   '@universal-middleware/compress@0.2.30':
     resolution: {integrity: sha512-Qk6Yt3DOHxYYlS9QGF+VJQwCLXB4BSKuJZ9/UpDp+x8VOq//j+aJuEg8H2VAo2XEBg/amqPmw+gIesFKTLXEWw==}
@@ -3121,6 +3130,7 @@ packages:
   wrangler@4.15.1:
     resolution: {integrity: sha512-dzCdGWJUqjZAeR6kmAF28iD19VyDfD9nP1JiAw9NNlG1pEVzaY4Pr6egYyQcGj98N7WTv/tXoCk1R/L3eU3iwg==}
     engines: {node: '>=18.0.0'}
+    deprecated: '⚠️ Deprecated: 4.15.1 has a regression with R2 bucket validation with wrangler pages dev. Please downgrade to 4.14.4 or upgrade to 4.15.2 when it is published.'
     hasBin: true
     peerDependencies:
       '@cloudflare/workers-types': ^4.20250508.0
@@ -4092,6 +4102,18 @@ snapshots:
   '@types/unist@3.0.3': {}
 
   '@ungap/structured-clone@1.3.0': {}
+
+  '@universal-middleware/cloudflare@0.4.8(@cloudflare/workers-types@4.20250515.0)(@hattip/core@0.0.49)(elysia@1.3.1(exact-mirror@0.1.2(@sinclair/typebox@0.34.33))(file-type@20.5.0)(typescript@5.8.3))(fastify@5.3.3)(h3@1.15.3)(hono@4.7.9)':
+    dependencies:
+      '@universal-middleware/core': 0.4.7(@cloudflare/workers-types@4.20250515.0)(@hattip/core@0.0.49)(elysia@1.3.1(exact-mirror@0.1.2(@sinclair/typebox@0.34.33))(file-type@20.5.0)(typescript@5.8.3))(fastify@5.3.3)(h3@1.15.3)(hono@4.7.9)
+    transitivePeerDependencies:
+      - '@cloudflare/workers-types'
+      - '@hattip/core'
+      - '@webroute/route'
+      - elysia
+      - fastify
+      - h3
+      - hono
 
   '@universal-middleware/compress@0.2.30': {}
 
