@@ -1,5 +1,5 @@
-import { runCommandThatThrows } from "./utils.js";
-import { autoRetry, expect, expectLog, fetchHtml, getServerUrl, page, run, test, } from '@brillout/test-e2e'
+import { runCommandThatThrows } from './utils.js'
+import { autoRetry, expect, expectLog, fetchHtml, getServerUrl, page, run, test } from '@brillout/test-e2e'
 
 export { testRun, testRunUnsupported }
 

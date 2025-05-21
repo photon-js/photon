@@ -1,4 +1,4 @@
-import { runCommandThatThrows } from "../utils.js";
+import { runCommandThatThrows } from '../utils.js'
 
 process.env.TARGET = 'cloudflare'
 process.env.SERVER = 'tests/no-export-default/hono'

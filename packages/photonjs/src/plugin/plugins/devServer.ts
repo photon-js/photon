@@ -118,7 +118,7 @@ export function devServer(config?: Photon.Config): Plugin {
         vite.environments.ssr.hot.on('photon:server-closed', () => {
           setupHMRProxyDone = false
           assertUsage(isRunnableDevEnvironment(vite.environments.ssr), 'SSR environment is not runnable')
-          vite.environments.ssr.runner.import(resolvedEntryId).catch(logRestartMessage)
+          ssrImportAndCheckDefaultExport(vite.environments.ssr, resolvedEntryId)
         })
 
         vite.environments.ssr.hot.on('photon:reloaded', () => {
@@ -221,8 +221,21 @@ export function devServer(config?: Photon.Config): Plugin {
     resolvedEntryId = indexResolved.id
     const ssr = vite.environments.ssr
     assertUsage(isRunnableDevEnvironment(ssr), 'SSR environment is not runnable')
-    ssr.runner.import(index.id).catch(logRestartMessage)
+    ssrImportAndCheckDefaultExport(ssr, index.id, resolvedEntryId)
   }
+}
+
+function ssrImportAndCheckDefaultExport(ssr: RunnableDevEnvironment, id: string, resolvedId = id) {
+  ssr.runner
+    .import(id)
+    .then((mod) => {
+      assertUsage(mod && 'default' in mod, `Missing export default in ${JSON.stringify(resolvedId)}`)
+      assertUsage(
+        Symbol.for('photon:server') in mod.default,
+        `{ apply } function needs to be called before export in ${JSON.stringify(resolvedId)}`,
+      )
+    })
+    .catch(logRestartMessage)
 }
 
 function logRestartMessage(err?: unknown) {
