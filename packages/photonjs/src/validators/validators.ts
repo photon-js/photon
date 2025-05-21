@@ -46,7 +46,7 @@ export const PhotonConfigResolved = type({
   },
   server: PhotonEntryServer,
   hmr: "boolean | 'prefer-restart'",
-  'middlewares?': 'Array' as type.cast<GetPhotonCondition[]>,
+  middlewares: 'Array' as type.cast<GetPhotonCondition[]>,
   'devServer?': type('boolean').or({
     'autoServe?': 'boolean',
   }),

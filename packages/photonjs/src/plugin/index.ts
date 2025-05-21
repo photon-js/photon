@@ -3,18 +3,19 @@ import { commonConfig } from './plugins/commonConfig.js'
 import { devServer } from './plugins/devServer.js'
 import { fallback } from './plugins/fallback.js'
 import { getMiddlewaresPlugin } from './plugins/getMiddlewaresPlugin.js'
+import { installPhotonBase, type InstallPhotonBaseOptions } from './plugins/installPhoton.js'
 import { mirrorMeta } from './plugins/mirrorMeta.js'
 import { photonEntry } from './plugins/photonEntry.js'
 import { resolvePhotonConfigPlugin } from './plugins/resolvePhotonConfigPlugin.js'
-import { installPhotonBase, type InstallPhotonBaseOptions } from './plugins/installPhoton.js'
+import { supportedTargetServers } from './plugins/supportedServers.js'
 import '../types.js'
 
-export { photon, installPhoton, type InstallPhotonOptions, photon as default }
+export { photon, installPhoton, supportedTargetServers, type InstallPhotonOptions, photon as default }
 
 function photon(config?: Photon.Config): Plugin[] {
   return [
     ...commonConfig(),
-    resolvePhotonConfigPlugin(config),
+    ...resolvePhotonConfigPlugin(config),
     ...photonEntry(),
     ...mirrorMeta(),
     fallback(),

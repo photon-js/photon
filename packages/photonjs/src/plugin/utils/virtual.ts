@@ -2,14 +2,20 @@ import { type Out, type Type, type } from 'arktype'
 import { assert } from '../../utils/assert.js'
 
 type ToLiteral<T extends string> = T extends `\${${infer _}}` ? string : T
-// biome-ignore lint/complexity/noBannedTypes: <explanation>
-type ToParse<T extends string> = T extends `\${${infer X}}` ? { [K in X]: string } : {}
+type ToParse<T extends string> = T extends `\${${infer X}?}`
+  ? { [K in X]?: string }
+  : T extends `\${${infer X}}`
+    ? { [K in X]: string }
+    : // biome-ignore lint/complexity/noBannedTypes: <explanation>
+      {}
 
 type Literal<T extends string> = T extends `${infer A}:${infer B}` ? `${ToLiteral<A>}:${Literal<B>}` : ToLiteral<T>
 type Parse<T extends string> = T extends `${infer A}:${infer B}` ? ToParse<A> & Parse<B> : ToParse<T>
 
 export function literal<const T extends string>(pattern: T) {
-  const regex = new RegExp(`^${pattern.replace(/\$\{(.*?)}/g, '(?<$1>.*)')}\$`)
+  const regex = new RegExp(
+    `^${pattern.replace(/:\$\{(.*?)\?}/g, '(?::(?<$1>.*))?').replace(/\$\{(.*?)}/g, '(?<$1>.*)')}\$`,
+  )
   return type(regex)
     .configure({ expected: pattern })
     .pipe.try((x) => {
@@ -22,7 +28,7 @@ export function literal<const T extends string>(pattern: T) {
 
 export const virtualModules = {
   'handler-entry': literal('photon:handler-entry:${entry}'),
-  'server-entry': literal('photon:server-entry:${entry}'),
+  'server-entry': literal('photon:server-entry:${entry?}'),
   'fallback-entry': literal('photon:fallback-entry'),
   'resolve-from-photon': literal('photon:resolve-from-photon:${module}'),
   'get-middlewares': literal('photon:get-middlewares:${condition}:${server}'),
