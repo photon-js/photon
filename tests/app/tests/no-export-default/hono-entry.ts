@@ -15,4 +15,4 @@ function startServer() {
   return serve(app)
 }
 
-export default startServer()
+startServer()

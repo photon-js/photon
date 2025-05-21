@@ -28,7 +28,12 @@ function computePhotonMeta(
 ) {
   assertUsage(!info.isExternal, `Entry should not be external: ${info.id}`)
   // early return for better performance
-  if (isPhotonMeta(info.meta) && info.meta.photon.type && info.meta.photon.type !== 'auto') return
+  if (
+    isPhotonMeta(info.meta) &&
+    info.meta.photon.type &&
+    (info.meta.photon.type !== 'server' || info.meta.photon.server)
+  )
+    return
   const graph = new Set([...info.importedIdResolutions, ...info.dynamicallyImportedIdResolutions])
 
   let found: SupportedServers | undefined

@@ -1,16 +1,7 @@
-export { testRun, testRunUnsupported }
+import { runCommandThatThrows } from "./utils.js";
+import { autoRetry, expect, expectLog, fetchHtml, getServerUrl, page, run, test, } from '@brillout/test-e2e'
 
-import {
-  autoRetry,
-  expect,
-  expectLog,
-  fetchHtml,
-  getServerUrl,
-  page,
-  run,
-  runCommandThatTerminates,
-  test,
-} from '@brillout/test-e2e'
+export { testRun, testRunUnsupported }
 
 function testRun(cmd: `pnpm run ${string}`) {
   run(cmd, {
@@ -36,13 +27,7 @@ async function testRunUnsupported(cmd: `pnpm run ${string}`) {
   const isPreview = cmd.includes('preview')
 
   if (isPreview) {
-    try {
-      await runCommandThatTerminates(cmd)
-    } catch (err) {
-      expect(() => {
-        throw err
-      }).throw(error)
-    }
+    await runCommandThatThrows(cmd, error)
   } else {
     run(cmd, {
       // Preview => builds app which takes a long time
