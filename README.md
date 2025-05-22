@@ -15,4 +15,5 @@
  - Server code-splitting: each page (and API route) can be deployed to seperate edge workers
  - Official integration/partnering with Netlify, Cloudflare, Vercel, and more
  - Powered by Vite's Environment API
- - Highly polished DX
+ - HMR
+ - Polished DX (e.g. first-class TypeScript support)
