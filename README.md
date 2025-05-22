@@ -6,7 +6,7 @@
 - [example/app-cloudflare](./example/app-cloudflare) - Example of a user app using a framework powered by Photon
 - [example/app-hono-cloudflare](./example/app-hono-cloudflare) - Example of a user app using a framework powered by Photon + Hono
 
-## Goal
+## Goals
 
  - [Nitro](https://nitro.build) alternative that is unopinionated and flexible
  - Like Nitro: works with any deployment target (Netlify, Vercel, Cloudflare, VPS, ...)
