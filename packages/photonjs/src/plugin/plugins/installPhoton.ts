@@ -10,6 +10,7 @@ export interface InstallPhotonBaseOptions {
 
 export function installPhotonBase(name: string, options?: InstallPhotonBaseOptions): Plugin[] {
   let resolvedName: ResolvedId | null | undefined = undefined
+  // TODO add ?importer=... or meta to virtual module could simplify this?
   const plugins: Plugin[] = [
     // Vite node modules resolution is not on par with node, so we have to help it resolve some modules
     {

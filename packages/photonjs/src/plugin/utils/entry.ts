@@ -19,7 +19,7 @@ export interface PhotonMetaUniversalHandler {
   route?: string
 }
 
-export type PhotonMeta = PhotonMetaServer | PhotonMetaUniversalHandler | { type?: 'auto' }
+export type PhotonMeta = PhotonMetaServer | PhotonMetaUniversalHandler
 
 export interface PhotonMetaConfig {
   /**
