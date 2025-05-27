@@ -1,8 +1,9 @@
 import type { App as HattipApp } from '@universal-middleware/hattip'
+import { buildHandler } from "../hattip-utils.js";
 import { bunServe, type ServerOptions } from '../utils.js'
 
 export function serve<App extends HattipApp>(app: App, options: ServerOptions = {}) {
-  const handler = app.buildHandler()
+  const handler = buildHandler(app)
   bunServe(options, (request) => {
     return handler({
       request,

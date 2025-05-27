@@ -1,8 +1,9 @@
 import type { App as HattipApp } from '@universal-middleware/hattip'
+import { buildHandler } from "../hattip-utils.js";
 import { denoServe, type ServerOptions } from '../utils.js'
 
 export function serve<App extends HattipApp>(app: App, options: ServerOptions = {}) {
-  const handler = app.buildHandler()
+  const handler = buildHandler(app)
   denoServe(options, (request) => {
     return handler({
       request,
