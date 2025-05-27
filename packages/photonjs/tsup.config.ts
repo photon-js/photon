@@ -1,6 +1,6 @@
 import { builtinModules } from 'node:module'
 import { defineConfig, type Options as TsupOptions } from 'tsup'
-import virtualApply from './src/unplugin/esbuild.js'
+import virtualApply from './src/apply/esbuild.js'
 
 const externalServers: (string | RegExp)[] = ['elysia', 'fastify', 'h3', 'hono']
 

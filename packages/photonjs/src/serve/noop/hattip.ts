@@ -1,6 +1,7 @@
-import type { apply as applyAdapter } from '@universal-middleware/hattip'
+import type { App as HattipApp } from '@universal-middleware/hattip'
+import { buildHandler } from '../symbol-utils.js'
 import type { ServerOptions } from '../utils.js'
 
-export function serve<App extends Parameters<typeof applyAdapter>[0]>(app: App, _options: ServerOptions = {}) {
-  return app.buildHandler()
+export function serve<App extends HattipApp>(app: App, _options: ServerOptions = {}) {
+  return buildHandler(app)
 }

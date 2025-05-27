@@ -1,11 +1,12 @@
 import { createServer } from 'node:http'
 import { createMiddleware } from '@hattip/adapter-node'
-import type { apply as applyAdapter } from '@universal-middleware/hattip'
+import type { App as HattipApp } from '@universal-middleware/hattip'
+import { buildHandler } from '../symbol-utils.js'
 import { installServerHMR, type NodeHandler, nodeServe, type ServerOptions } from '../utils.js'
 
-export function serve<App extends Parameters<typeof applyAdapter>[0]>(app: App, options: ServerOptions = {}) {
+export function serve<App extends HattipApp>(app: App, options: ServerOptions = {}) {
   if (!options.createServer) options.createServer = createServer
-  const handler = app.buildHandler()
+  const handler = buildHandler(app)
   const listener = createMiddleware(handler)
   const _serve = () => nodeServe(options, listener as NodeHandler)
 

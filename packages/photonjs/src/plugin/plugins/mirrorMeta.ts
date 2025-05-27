@@ -15,6 +15,7 @@ export function mirrorMeta(): Plugin[] {
       apply: 'build',
 
       async moduleParsed(info) {
+        // Import the module in RunnableDevEnvironment during build to extract exports
         if (isPhotonMeta(info.meta) && info.meta.photon.type === 'universal-handler' && !info.meta.photon.route) {
           const ssr = createRunnableDevEnvironment('inline_ssr', this.environment.config, {
             runnerOptions: {
