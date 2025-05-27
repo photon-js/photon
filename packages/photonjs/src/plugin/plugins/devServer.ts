@@ -83,7 +83,6 @@ export function devServer(config?: Photon.Config): Plugin {
     },
 
     async hotUpdate(ctx) {
-      // TODO(vike): tag +middleware files with photonConfig.isGlobal: true
       const imported = isImported(ctx.modules)
       if (imported) {
         if (this.environment.config.photon.hmr === 'prefer-restart') {
@@ -221,15 +220,19 @@ export function devServer(config?: Photon.Config): Plugin {
     resolvedEntryId = indexResolved.id
     const ssr = vite.environments.ssr
     assertUsage(isRunnableDevEnvironment(ssr), 'SSR environment is not runnable')
-    ssrImportAndCheckDefaultExport(ssr, index.id, resolvedEntryId)
+    ssrImportAndCheckDefaultExport(ssr, resolvedEntryId)
   }
 }
 
-function ssrImportAndCheckDefaultExport(ssr: RunnableDevEnvironment, id: string, resolvedId = id) {
+function ssrImportAndCheckDefaultExport(ssr: RunnableDevEnvironment, resolvedId: string) {
   ssr.runner
-    .import(id)
+    .import(resolvedId)
     .then((mod) => {
       assertUsage(mod && 'default' in mod, `Missing export default in ${JSON.stringify(resolvedId)}`)
+      assertUsage(
+        !(mod.default instanceof Promise),
+        `Replace \`export default\` by \`export default await\` in ${JSON.stringify(resolvedId)}`,
+      )
       assertUsage(
         Symbol.for('photon:server') in mod.default,
         `{ apply } function needs to be called before export in ${JSON.stringify(resolvedId)}`,
