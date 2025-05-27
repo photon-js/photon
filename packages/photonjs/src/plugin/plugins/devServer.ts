@@ -199,7 +199,7 @@ export function devServer(config?: Photon.Config): Plugin {
         return {
           module,
         }
-      if (isPhotonMetaConfig(module.info) && module.info.photonConfig.isGlobal)
+      if (isPhotonMetaConfig(module.info?.meta) && module.info.meta.photonConfig.isGlobal)
         return {
           module,
         }
