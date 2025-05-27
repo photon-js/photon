@@ -52,6 +52,8 @@ export ${isAsync ? 'async' : ''} function apply(app: Parameters<typeof applyAdap
 
   ${isAsync ? 'await' : ''} applyAdapter(app, [...middlewares, ...entries]);
 
+  app[Symbol.for('photon:server')] = ${JSON.stringify(match.server)};
+
   return app;
 }
 
