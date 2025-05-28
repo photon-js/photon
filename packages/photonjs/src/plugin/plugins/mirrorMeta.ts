@@ -70,7 +70,8 @@ export function mirrorMeta(): Plugin[] {
               if (
                 !hasEnhanceImport &&
                 node.type === 'ImportDeclaration' &&
-                node.source.value === '@universal-middleware/core'
+                typeof node.source.value === 'string' &&
+                node.source.value.includes('@universal-middleware/core')
               ) {
                 // Check if enhance is among the imported specifiers
                 for (const specifier of node.specifiers) {
@@ -122,7 +123,7 @@ export function mirrorMeta(): Plugin[] {
           assertUsage(hasExportDefault, `Entry ${id} must have a default export`)
 
           if (!hasEnhanceImport) {
-            magicString.prepend(`import { enhance } from '@universal-middleware/core';\n`)
+            magicString.prepend(`import { enhance } from 'photon:resolve-from-photon:@universal-middleware/core';\n`)
           }
 
           return {
