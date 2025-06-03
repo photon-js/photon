@@ -16,15 +16,16 @@ function getAllPhotonMiddlewares(pluginContext: PluginContext, condition: 'dev' 
   //language=javascript
   return `
 import { getUniversal, nameSymbol } from 'photon:resolve-from-photon:@universal-middleware/core';
+import { PhotonConfigError } from 'photon:resolve-from-photon:@photonjs/core/errors';
 ${middlewares.map((m, i) => `import m${i} from ${JSON.stringify(m)};`).join('\n')}
 ${universalEntries.map((m, i) => `import u${i} from ${JSON.stringify(m)};`).join('\n')}
 
 function errorMessageMiddleware(id) {
-  return \`PhotonError: "\${id}" default export must respect the following type: UniversalMiddleware | UniversalMiddleware[]. Each individual middleware must be wrapped with enhance helper. See https://universal-middleware.dev/helpers/enhance\`
+  return \`"\${id}" default export must respect the following type: UniversalMiddleware | UniversalMiddleware[]. Each individual middleware must be wrapped with enhance helper. See https://universal-middleware.dev/helpers/enhance\`
 }
 
 function errorMessageEntry(id) {
-  return \`PhotonError: "\${id}" default export must respect the following type: UniversalHandler. Make sure this entry have a route defined through Photon config or through enhance helper (https://universal-middleware.dev/helpers/enhance)\`
+  return \`"\${id}" default export must respect the following type: UniversalHandler. Make sure this entry have a route defined through Photon config or through enhance helper (https://universal-middleware.dev/helpers/enhance)\`
 }
 
 export function extractUniversal(mi, id, errorMessage) {
@@ -35,7 +36,7 @@ export function extractUniversal(mi, id, errorMessage) {
       if (typeof m === 'function' && nameSymbol in m) {
         return m;
       }
-      throw new Error(errorMessage(id, i));
+      throw new PhotonConfigError(errorMessage(id, i));
     }
   );
 }
