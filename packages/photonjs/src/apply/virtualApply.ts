@@ -1,6 +1,6 @@
 import oxc from 'oxc-transform'
 import type { UnpluginFactory } from 'unplugin'
-import { assert } from '../utils/assert.js'
+import { assert, PhotonConfigError } from '../utils/assert.js'
 
 const re_apply = /^photon:virtual-apply:(?<condition>dev|edge|node):(?<server>[^:]+)(?<rest>.*)/
 const re_index = /^photon:virtual-index:(?<server>[^:]+)(?<rest>.*)/
@@ -18,7 +18,10 @@ function test(id: string, re: RegExp): MatchGroups | null {
 
 function compileApply(id: string) {
   const match = test(id, re_apply)
-  if (!match) throw new Error(`Invalid id ${id}`)
+  if (!match)
+    throw new PhotonConfigError(
+      `Invalid virtual apply ID "${id}". Expected format: photon:virtual-apply:<condition>:<server>`,
+    )
 
   const isAsync = match.server === 'fastify'
 
@@ -29,7 +32,7 @@ import { type RuntimeAdapterTarget, type UniversalMiddleware, getUniversalProp, 
 ${match.condition === 'dev' ? 'import { devServerMiddleware } from "@photonjs/core/dev";' : ''}
 
 function errorMessageMiddleware(id, index) {
-  return \`PhotonError: additional middleware at index \${index} default export must respect the following type: UniversalMiddleware | UniversalMiddleware[]. Each individual middleware must be wrapped with enhance helper. See https://universal-middleware.dev/helpers/enhance\`
+  return \`Additional middleware at index \${index} default export must respect the following type: UniversalMiddleware | UniversalMiddleware[]. Each individual middleware must be wrapped with enhance helper. See https://universal-middleware.dev/helpers/enhance\`
 }
   
 export ${isAsync ? 'async' : ''} function apply(app: Parameters<typeof applyAdapter>[0], additionalMiddlewares?: UniversalMiddleware[]): ${isAsync ? 'Promise<Parameters<typeof applyAdapter>[0]>' : 'Parameters<typeof applyAdapter>[0]'} {
@@ -74,7 +77,8 @@ export type RuntimeAdapter = RuntimeAdapterTarget<${JSON.stringify(match.server)
 
 function compileIndex(id: string) {
   const match = test(id, re_index)
-  if (!match) throw new Error(`Invalid id ${id}`)
+  if (!match)
+    throw new PhotonConfigError(`Invalid virtual index ID "${id}". Expected format: photon:virtual-index:<server>`)
 
   //language=ts
   const code = `export { apply, type RuntimeAdapter } from '@photonjs/core/${match.server}/apply'

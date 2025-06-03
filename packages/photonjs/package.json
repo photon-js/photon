@@ -9,6 +9,7 @@
     "./vite": "./dist/plugin.js",
     "./api": "./dist/api.js",
     "./dev": "./dist/dev.js",
+    "./errors": "./dist/assert.js",
     ".": "./dist/index.js",
     "./virtual": {
       "types": "./virtual.d.ts"

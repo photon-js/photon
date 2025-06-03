@@ -59,6 +59,7 @@ export default defineConfig([
       plugin: './src/plugin/index.ts',
       api: './src/api.ts',
       dev: './src/dev.ts',
+      assert: './src/utils/assert.ts',
       index: './src/index.ts',
     },
   },
