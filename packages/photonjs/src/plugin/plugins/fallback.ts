@@ -1,5 +1,4 @@
 import type { Plugin } from 'vite'
-import { assertUsage } from '../../utils/assert.js'
 import { ifPhotonModule } from '../utils/virtual.js'
 
 export { fallback }
@@ -15,22 +14,11 @@ function fallback(): Plugin {
     },
 
     load(id) {
-      return ifPhotonModule('fallback-entry', id, ({ query }) => {
-        const q = new URLSearchParams(query)
-        const handlerId = q.get('photonHandlerId')
-        const condition = q.get('photonCondition')
-        if (handlerId) {
-          assertUsage(condition, `Missing { photonCondition } query for handler ${handlerId}`)
-        }
+      return ifPhotonModule('fallback-entry', id, () => {
         //language=ts
         return {
           code: `
-${
-  handlerId
-    ? `import { serve } from '@photonjs/core/hono/serve'
-import { apply } from ${JSON.stringify(`photon:virtual-apply-handler:${condition}:hono:${handlerId}`)}`
-    : "import { apply, serve } from '@photonjs/core/hono'"
-}
+import { apply, serve } from '@photonjs/core/hono'
 import { Hono } from 'hono'
 
 function startServer() {

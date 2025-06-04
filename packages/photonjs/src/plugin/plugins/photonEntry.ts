@@ -4,22 +4,10 @@ import { assert, assertUsage } from '../../utils/assert.js'
 import { resolvePhotonConfig } from '../../validators/coerce.js'
 import type { SupportedServers } from '../../validators/types.js'
 import { isPhotonMeta } from '../utils/entry.js'
+import { importsToServer } from '../utils/servers.js'
 import { ifPhotonModule } from '../utils/virtual.js'
 
-const idsToServers: Record<string, SupportedServers> = {
-  '@photonjs/hono': 'hono',
-  '@photonjs/hattip': 'hattip',
-  '@photonjs/express': 'express',
-  '@photonjs/fastify': 'fastify',
-  '@photonjs/h3': 'h3',
-  '@photonjs/elysia': 'elysia',
-  '@photonjs/core/hono': 'hono',
-  '@photonjs/core/hattip': 'hattip',
-  '@photonjs/core/express': 'express',
-  '@photonjs/core/fastify': 'fastify',
-  '@photonjs/core/h3': 'h3',
-  '@photonjs/core/elysia': 'elysia',
-}
+const reVirtualApplyHandler = /photon:virtual-apply-handler:(dev|node|edge):(?<server>[^:]+):.*/
 
 function computePhotonMeta(
   pluginContext: PluginContext,
@@ -38,7 +26,9 @@ function computePhotonMeta(
 
   let found: SupportedServers | undefined
   for (const imported of graph.values()) {
-    found = resolvedIdsToServers[imported.id]
+    found =
+      resolvedIdsToServers[imported.id] ||
+      (imported.id.match(reVirtualApplyHandler)?.groups?.server as SupportedServers | undefined)
     if (found) break
     if (imported.external) continue
     const sub = pluginContext.getModuleInfo(imported.id)
@@ -115,11 +105,11 @@ export function photonEntry(): Plugin[] {
       },
 
       async resolveId(id, importer, opts) {
-        if (id in idsToServers) {
+        if (id in importsToServer) {
           const resolved = await this.resolve(id, importer, opts)
           if (resolved) {
             // biome-ignore lint/style/noNonNullAssertion: <explanation>
-            resolvedIdsToServers[resolved.id] = idsToServers[id]!
+            resolvedIdsToServers[resolved.id] = importsToServer[id]!
           }
         }
       },
@@ -196,7 +186,7 @@ export function photonEntry(): Plugin[] {
 
       resolveId: {
         order: 'post',
-        handler(id, importer, opts) {
+        handler(id, _importer, opts) {
           return ifPhotonModule('handler-entry', id, async ({ entry: actualId }) => {
             let resolved = await this.resolve(actualId, undefined, {
               ...opts,

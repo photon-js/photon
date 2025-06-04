@@ -1,43 +1,51 @@
+import { walk } from 'estree-walker'
+import MagicString from 'magic-string'
 import type { Plugin } from 'vite'
-import { assertUsage } from '../../utils/assert.js'
+import { isPhotonMeta } from '../../api.js'
+import { assert, assertUsage } from '../../utils/assert.js'
+import { importsToServer } from '../utils/servers.js'
 import { ifPhotonModule } from '../utils/virtual.js'
 
 export { virtualApplyHandler }
 
-function virtualApplyHandler(): Plugin {
-  return {
-    name: 'photon:virtual-apply-handler',
+const rePhotonHandlerId = /[?&]photonHandlerId=/
+const serverImports = new Set(Object.keys(importsToServer))
 
-    resolveId(id) {
-      return ifPhotonModule('virtual-apply-handler', id, () => {
-        return id
-      })
-    },
+function virtualApplyHandler(): Plugin[] {
+  return [
+    {
+      name: 'photon:virtual-apply-handler',
 
-    load(id) {
-      return ifPhotonModule('virtual-apply-handler', id, ({ handler: handlerId, condition, server }) => {
-        const handlers = this.environment.config.photon.handlers
-        const handler = handlers[handlerId]
-        assertUsage(handler, `Cannot find handler ${handlerId}`)
+      resolveId(id) {
+        return ifPhotonModule('virtual-apply-handler', id, () => {
+          return id
+        })
+      },
 
-        const isAsync = server === 'fastify'
+      load(id) {
+        return ifPhotonModule('virtual-apply-handler', id, ({ handler: handlerId, condition, server }) => {
+          const handlers = this.environment.config.photon.handlers
+          const handler = handlers[handlerId]
+          assertUsage(handler, `Cannot find handler ${handlerId}`)
 
-        // middlewares
-        const getMiddlewares = this.environment.config.photon.middlewares ?? []
-        const middlewares = handler.standalone
-          ? []
-          : getMiddlewares
-              .map((m) => m.call(this, condition as 'dev' | 'node' | 'edge', server))
-              .filter((x) => typeof x === 'string' || Array.isArray(x))
-              .flat(1)
+          const isAsync = server === 'fastify'
 
-        return {
-          // TODO refactor and share code with get-middlewares and virtual-apply
-          //language=ts
-          code: `
+          // middlewares
+          const getMiddlewares = this.environment.config.photon.middlewares ?? []
+          const middlewares = handler.standalone
+            ? []
+            : getMiddlewares
+                .map((m) => m.call(this, condition as 'dev' | 'node' | 'edge', server))
+                .filter((x) => typeof x === 'string' || Array.isArray(x))
+                .flat(1)
+
+          return {
+            // TODO refactor and share code with get-middlewares and virtual-apply
+            //language=ts
+            code: `
 import { PhotonConfigError } from 'photon:resolve-from-photon:@photonjs/core/errors';
-import { apply as applyAdapter, type App } from 'photon:resolve-from-photon:@universal-middleware/${server}';
-import { type RuntimeAdapterTarget, type UniversalMiddleware, getUniversal, getUniversalProp, nameSymbol } from 'photon:resolve-from-photon:@universal-middleware/core';
+import { apply as applyAdapter } from 'photon:resolve-from-photon:@universal-middleware/${server}';
+import { getUniversal, getUniversalProp, nameSymbol } from 'photon:resolve-from-photon:@universal-middleware/core';
 import handler from ${JSON.stringify(handler.id)};
 ${condition === 'dev' ? 'import { devServerMiddleware } from "photon:resolve-from-photon:@photonjs/core/dev";' : ''}
 ${middlewares.map((m, i) => `import m${i} from ${JSON.stringify(m)};`).join('\n')}
@@ -71,7 +79,7 @@ function getUniversalEntries() {
   return extractUniversal(handler, ${JSON.stringify(handler.id)}, errorMessageEntry);
 }
   
-export ${isAsync ? 'async' : ''} function apply<T extends App>(app: T, additionalMiddlewares?: UniversalMiddleware[]): ${isAsync ? 'Promise<T>' : 'T'} {
+export ${isAsync ? 'async' : ''} function apply(app, additionalMiddlewares) {
   const middlewares = getUniversalMiddlewares();
   const entries = getUniversalEntries();
   ${condition === 'dev' ? 'middlewares.unshift(devServerMiddleware());' : ''}
@@ -96,11 +104,74 @@ export ${isAsync ? 'async' : ''} function apply<T extends App>(app: T, additiona
   return app;
 }
 
-export type RuntimeAdapter = RuntimeAdapterTarget<${JSON.stringify(server)}>;
+export { serve } from 'photon:resolve-from-photon:@photonjs/core/${server}/serve'
 `,
-          map: { mappings: '' } as const,
-        }
-      })
+            map: { mappings: '' } as const,
+          }
+        })
+      },
     },
-  }
+    {
+      name: 'photon:replace-apply-by-virtual-apply-handler',
+
+      transform: {
+        filter: {
+          id: [rePhotonHandlerId],
+        },
+        handler(code, id) {
+          // Support for vite<6.3
+          if (!id.match(rePhotonHandlerId)) return
+          const info = this.getModuleInfo(id)
+
+          // TODO support: { apply } could be called by a submodule
+          if (isPhotonMeta(info?.meta) && info.meta.photon.type === 'server') {
+            const ast = this.parse(code)
+            const magicString = new MagicString(code)
+            const q = new URLSearchParams(id.split('?')[1])
+            const condition = q.get('photonCondition')
+            const handlerId = q.get('photonHandlerId') as string
+            assert(condition)
+
+            walk(ast, {
+              enter(node) {
+                if (
+                  node.type === 'ImportDeclaration' &&
+                  typeof node.source.value === 'string' &&
+                  serverImports.has(node.source.value)
+                ) {
+                  let foundApply = false
+                  // Check if { apply } is among the imported specifiers
+                  for (const specifier of node.specifiers) {
+                    if (
+                      specifier.type === 'ImportSpecifier' &&
+                      specifier.imported &&
+                      'name' in specifier.imported &&
+                      specifier.imported.name === 'apply'
+                    ) {
+                      foundApply = true
+                      break
+                    }
+                  }
+                  if (foundApply) {
+                    const { start, end } = node.source as unknown as { start: number; end: number }
+                    const server = importsToServer[node.source.value] as string
+                    magicString.overwrite(
+                      start,
+                      end,
+                      JSON.stringify(`photon:virtual-apply-handler:${condition}:${server}:${handlerId}`),
+                    )
+                  }
+                }
+              },
+            })
+
+            return {
+              code: magicString.toString(),
+              map: magicString.generateMap(),
+            }
+          }
+        },
+      },
+    },
+  ]
 }
