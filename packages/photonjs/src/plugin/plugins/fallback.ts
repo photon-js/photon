@@ -17,7 +17,8 @@ function fallback(): Plugin {
       return ifPhotonModule('fallback-entry', id, () => {
         //language=ts
         return {
-          code: `import { apply, serve } from '@photonjs/core/hono'
+          code: `
+import { apply, serve } from '@photonjs/core/hono'
 import { Hono } from 'hono'
 
 function startServer() {

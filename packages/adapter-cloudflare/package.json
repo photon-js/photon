@@ -23,13 +23,13 @@
     "release:commit": "release-me commit"
   },
   "dependencies": {
-    "@cloudflare/vite-plugin": "^1.0.12",
+    "@cloudflare/vite-plugin": "^1.5.0",
     "@photonjs/core": "workspace:^",
     "@universal-middleware/cloudflare": "^0.4.8"
   },
   "devDependencies": {
     "@brillout/release-me": "^0.4.3",
-    "@cloudflare/workers-types": "^4.20250515.0",
+    "@cloudflare/workers-types": "^4.20250604.0",
     "@universal-middleware/core": "^0.4.7",
     "@universal-middleware/h3": "^0.4.9",
     "@universal-middleware/hono": "^0.4.10",

@@ -24,6 +24,21 @@ export function cloudflare(config?: Omit<PluginConfig, 'viteEnvironment'>): Plug
         },
       },
     },
+    // TODO Should this be generic for all adapters?
+    {
+      name: `${moduleId}:prefixer`,
+      apply: 'build',
+      enforce: 'post',
+      configEnvironment(name, config) {
+        if (config.consumer === 'server' && config.build?.rollupOptions?.input) {
+          // Ensured by Photon
+          const input = config.build.rollupOptions.input as Record<string, string>
+          for (const key of Object.keys(input)) {
+            input[key] = `${moduleId}:${input[key]}`
+          }
+        }
+      },
+    },
     supportedTargetServers('cloudflare', ['hono', 'h3']),
     {
       name: `${moduleId}:resolver`,
@@ -87,7 +102,7 @@ export default { fetch };
           return {
             // language=ts
             code: `import handler from ${JSON.stringify(actualId)};
-import { getRuntime } from "@universal-middleware/cloudflare";
+import { getRuntime } from "photon:resolve-from-photon:@universal-middleware/cloudflare";
 
 export const fetch = (request, env, ctx) => {
   return handler(request, {}, getRuntime(env, ctx))
@@ -100,7 +115,10 @@ export default { fetch };
 
         return this.error(`[photon][cloudflare] Unable to load ${actualId}`)
       },
+
+      sharedDuringBuild: true,
     },
+    // FIXME do not enforce ssr env
     ...cloudflareVitePlugins({ ...config, viteEnvironment: { name: 'ssr' } }),
   ]
 }

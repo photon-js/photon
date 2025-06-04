@@ -10,11 +10,13 @@ type ToParse<T extends string> = T extends `\${${infer X}?}`
       {}
 
 type Literal<T extends string> = T extends `${infer A}:${infer B}` ? `${ToLiteral<A>}:${Literal<B>}` : ToLiteral<T>
-type Parse<T extends string> = T extends `${infer A}:${infer B}` ? ToParse<A> & Parse<B> : ToParse<T>
+type Parsing<T extends string> = T extends `${infer A}:${infer B}` ? ToParse<A> & Parse<B> : ToParse<T>
+type Parse<T extends string> = Parsing<T> & Query
+type Query = { query: string }
 
 export function literal<const T extends string>(pattern: T) {
   const regex = new RegExp(
-    `^${pattern.replace(/:\$\{(.*?)\?}/g, '(?::(?<$1>.*))?').replace(/\$\{(.*?)}/g, '(?<$1>.*)')}\$`,
+    `^${pattern.replace(/:\$\{(.*?)\?}/g, '(?::(?<$1>.*))?').replace(/\$\{(.*?)}/g, '(?<$1>.*)')}(?<query>\\?.+)?\$`,
   )
   return type(regex)
     .configure({ expected: pattern })
@@ -32,6 +34,7 @@ export const virtualModules = {
   'fallback-entry': literal('photon:fallback-entry'),
   'resolve-from-photon': literal('photon:resolve-from-photon:${module}'),
   'get-middlewares': literal('photon:get-middlewares:${condition}:${server}'),
+  'virtual-apply-handler': literal('photon:virtual-apply-handler:${condition}:${server}:${handler}'),
 }
 
 type VirtualModuleKeys = keyof typeof virtualModules

@@ -1,5 +1,5 @@
 import { type } from 'arktype'
-import type { PluginContext } from 'rollup'
+import type { PluginContext } from '../plugin/utils/rollupTypes.js'
 
 // FIXME server should be optional?
 export type GetPhotonCondition = (
@@ -26,6 +26,11 @@ export const PhotonEntryServer = type({
 export const PhotonEntryUniversalHandler = type({
   '...': PhotonEntryBase,
   type: "'universal-handler'",
+  /**
+   * If false or undefined, the server will wrap this handler.
+   * If true, adapters can choose to deploy it directly (usually on edge platforms).
+   */
+  'standalone?': 'boolean',
 })
 
 export const PhotonConfig = type({
@@ -36,6 +41,7 @@ export const PhotonConfig = type({
   'hmr?': "boolean | 'prefer-restart'",
   'middlewares?': 'Array | undefined' as type.cast<GetPhotonCondition[]>,
   'devServer?': type('boolean').or({
+    'env?': 'string',
     'autoServe?': 'boolean',
   }),
 })
@@ -47,7 +53,8 @@ export const PhotonConfigResolved = type({
   server: PhotonEntryServer,
   hmr: "boolean | 'prefer-restart'",
   middlewares: 'Array' as type.cast<GetPhotonCondition[]>,
-  'devServer?': type('boolean').or({
-    'autoServe?': 'boolean',
+  devServer: type('false').or({
+    env: 'string',
+    autoServe: 'boolean',
   }),
 })

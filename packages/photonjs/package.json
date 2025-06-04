@@ -9,6 +9,7 @@
     "./vite": "./dist/plugin.js",
     "./api": "./dist/api.js",
     "./dev": "./dist/dev.js",
+    "./errors": "./dist/assert.js",
     ".": "./dist/index.js",
     "./virtual": {
       "types": "./virtual.d.ts"
@@ -257,6 +258,7 @@
     "@brillout/picocolors": "^1.0.26",
     "@brillout/vite-plugin-server-entry": "^0.7.5",
     "@universal-middleware/compress": "^0.2.30",
+    "@universal-middleware/cloudflare": "^0.4.8",
     "@universal-middleware/core": "^0.4.7",
     "@universal-middleware/elysia": "^0.5.1",
     "@universal-middleware/express": "^0.4.16",
@@ -291,7 +293,6 @@
     "fastify": "^5.3.0",
     "h3": "^1.15.1",
     "magic-string": "^0.30.17",
-    "rollup": "4.38.0",
     "tsup": "^8.4.0",
     "typescript": "^5.8.3",
     "unplugin": "^2.3.2",

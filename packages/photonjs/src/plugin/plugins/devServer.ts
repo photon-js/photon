@@ -117,7 +117,7 @@ export function devServer(config?: Photon.Config): Plugin {
         vite.environments.ssr.hot.on('photon:server-closed', () => {
           setupHMRProxyDone = false
           assertUsage(isRunnableDevEnvironment(vite.environments.ssr), 'SSR environment is not runnable')
-          ssrImportAndCheckDefaultExport(vite.environments.ssr, resolvedEntryId)
+          envImportAndCheckDefaultExport(vite.environments.ssr, resolvedEntryId)
         })
 
         vite.environments.ssr.hot.on('photon:reloaded', () => {
@@ -135,10 +135,7 @@ export function devServer(config?: Photon.Config): Plugin {
         setupErrorHandlers()
       }
       patchViteServer(vite)
-      if (
-        config?.devServer === undefined ||
-        (typeof config?.devServer === 'object' && config?.devServer?.autoServe !== false)
-      ) {
+      if (vite.config.photon.devServer.autoServe) {
         initializeServerEntry(vite)
       }
     },
@@ -209,8 +206,13 @@ export function devServer(config?: Photon.Config): Plugin {
   }
 
   async function initializeServerEntry(vite: ViteDevServer) {
+    assert(vite.config.photon.devServer)
+    const envName = vite.config.photon.devServer.env
+    const env = vite.environments[envName]
+    assertUsage(env, `Environment ${envName} does not exists`)
+
     const index = vite.config.photon.server
-    const indexResolved = await vite.environments.ssr.pluginContainer.resolveId(index.id, undefined, {
+    const indexResolved = await env.pluginContainer.resolveId(index.id, undefined, {
       isEntry: true,
     })
     assertUsage(
@@ -218,14 +220,13 @@ export function devServer(config?: Photon.Config): Plugin {
       `Cannot find server entry ${pc.cyan(index.id)}. Make sure its path is relative to the root of your project.`,
     )
     resolvedEntryId = indexResolved.id
-    const ssr = vite.environments.ssr
-    assertUsage(isRunnableDevEnvironment(ssr), 'SSR environment is not runnable')
-    ssrImportAndCheckDefaultExport(ssr, resolvedEntryId)
+    assertUsage(isRunnableDevEnvironment(env), `${envName} environment is not runnable`)
+    envImportAndCheckDefaultExport(env, resolvedEntryId)
   }
 }
 
-function ssrImportAndCheckDefaultExport(ssr: RunnableDevEnvironment, resolvedId: string) {
-  ssr.runner
+function envImportAndCheckDefaultExport(env: RunnableDevEnvironment, resolvedId: string) {
+  env.runner
     .import(resolvedId)
     .then((mod) => {
       assertUsage(mod && 'default' in mod, `Missing export default in ${JSON.stringify(resolvedId)}`)

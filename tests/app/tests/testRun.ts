@@ -20,6 +20,11 @@ function testRun(cmd: `pnpm run ${string}`) {
     expect(await page.textContent('h1')).toBe('Hello Vite!')
     await testCounter()
   })
+
+  test('framework standalone handler is rendered', async () => {
+    const text = await fetchHtml('/standalone')
+    expect(text).toContain('standalone')
+  })
 }
 
 async function testRunUnsupported(cmd: `pnpm run ${string}`) {
@@ -36,7 +41,7 @@ async function testRunUnsupported(cmd: `pnpm run ${string}`) {
 
     test('page crashes with error message', async () => {
       await fetchHtml('/')
-      expectLog(error)
+      expectLog(error, { allLogs: true })
     })
   }
 }
