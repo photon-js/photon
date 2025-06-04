@@ -1,12 +1,13 @@
 import { getUniversalProp, pathSymbol } from '@universal-middleware/core'
 import { walk } from 'estree-walker'
 import MagicString from 'magic-string'
-import { createRunnableDevEnvironment, type Plugin } from 'vite'
+import { createRunnableDevEnvironment, type Plugin, type RunnableDevEnvironment } from 'vite'
 import { assert, assertUsage } from '../../utils/assert.js'
 import type { PhotonEntryServer } from '../../validators/types.js'
 import { isPhotonMeta } from '../utils/entry.js'
 
 export function mirrorMeta(): Plugin[] {
+  let lastSsr: RunnableDevEnvironment | undefined
   return [
     // Extract Universal Middleware metadata and add them to Photon meta
     {
@@ -17,15 +18,20 @@ export function mirrorMeta(): Plugin[] {
       async moduleParsed(info) {
         // Import the module in RunnableDevEnvironment during build to extract exports
         if (isPhotonMeta(info.meta) && info.meta.photon.type === 'universal-handler' && !info.meta.photon.route) {
-          const ssr = createRunnableDevEnvironment('inline_ssr', this.environment.config, {
-            runnerOptions: {
-              hmr: {
-                logger: false,
+          const ssr =
+            lastSsr ??
+            createRunnableDevEnvironment('inline_ssr', this.environment.config, {
+              runnerOptions: {
+                hmr: {
+                  logger: false,
+                },
               },
-            },
-            hot: false,
-          })
-          await ssr.init()
+              hot: false,
+            })
+          if (!lastSsr) {
+            lastSsr = ssr
+            await ssr.init()
+          }
 
           try {
             const mod = await ssr.runner.import(info.id)
@@ -39,8 +45,14 @@ export function mirrorMeta(): Plugin[] {
               }
             }
           } finally {
-            await ssr.runner.close()
+            // await ssr.runner.close()
           }
+        }
+      },
+
+      buildEnd() {
+        if (lastSsr && !lastSsr.runner.isClosed()) {
+          return lastSsr.runner.close()
         }
       },
 
@@ -51,7 +63,7 @@ export function mirrorMeta(): Plugin[] {
       name: 'photon:photon-meta-to-runtime',
 
       applyToEnvironment(env) {
-        return env.name !== 'inline_ssr'
+        return !env.name.includes('inline_ssr')
       },
 
       transform(code, id) {

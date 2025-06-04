@@ -175,8 +175,23 @@ export function photonEntry(): Plugin[] {
             assertUsage(resolved, `Cannot resolve ${actualId} to a server entry`)
 
             entry.resolvedId = resolved.id
+
+            await this.resolve(resolved.id, undefined, {
+              ...opts,
+              isEntry: true,
+              custom: {
+                setPhotonMeta: entry,
+              },
+            })
+
             // Ensures early resolution of meta, making that calls to subsequent calls to this.resolve includes photon meta
-            await this.load({ ...resolved, resolveDependencies: true })
+            // FIXME when not awaiting during build, this.resolve behaves eratically:
+            //  it can return proper meta the first time it resolves a module, and nothing the second time for the same module
+            if (this.environment.config.command === 'serve') {
+              this.load({ ...resolved, resolveDependencies: true })
+            } else {
+              await this.load({ ...resolved, resolveDependencies: true })
+            }
 
             return {
               ...resolved,
@@ -227,8 +242,21 @@ export function photonEntry(): Plugin[] {
             assertUsage(entry, `Cannot find a handler for ${resolved.id}`)
             entry.resolvedId = resolved.id
 
+            const asdfsdf = await this.resolve(resolved.id, undefined, {
+              ...opts,
+              isEntry: true,
+              custom: {
+                setPhotonMeta: entry,
+              },
+            })
+            console.log(asdfsdf)
+
             // Ensures early resolution of meta, making that calls to subsequent calls to this.resolve includes photon meta
-            await this.load({ ...resolved, resolveDependencies: true })
+            if (this.environment.config.command === 'serve') {
+              this.load({ ...resolved, resolveDependencies: true })
+            } else {
+              await this.load({ ...resolved, resolveDependencies: true })
+            }
 
             return {
               ...resolved,
