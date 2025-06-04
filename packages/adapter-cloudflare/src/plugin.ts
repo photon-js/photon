@@ -115,6 +115,8 @@ export default { fetch };
 
         return this.error(`[photon][cloudflare] Unable to load ${actualId}`)
       },
+
+      sharedDuringBuild: true,
     },
     // FIXME do not enforce ssr env
     ...cloudflareVitePlugins({ ...config, viteEnvironment: { name: 'ssr' } }),
