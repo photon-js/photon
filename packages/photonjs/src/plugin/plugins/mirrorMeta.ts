@@ -3,7 +3,7 @@ import { walk } from 'estree-walker'
 import MagicString from 'magic-string'
 import { createRunnableDevEnvironment, type Plugin, type RunnableDevEnvironment } from 'vite'
 import { assert, assertUsage } from '../../utils/assert.js'
-import { createDeferred } from "../../utils/deferred.js";
+import { createDeferred } from '../../utils/deferred.js'
 import type { PhotonEntryServer } from '../../validators/types.js'
 import { isPhotonMeta } from '../utils/entry.js'
 
