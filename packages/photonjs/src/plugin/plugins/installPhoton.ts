@@ -1,7 +1,7 @@
 import type { Plugin } from 'vite'
 import type { GetPhotonCondition } from '../../validators/types.js'
 import { resolveFirst } from '../utils/resolve.js'
-import type { PluginContext } from "../utils/rollupTypes.js";
+import type { PluginContext } from '../utils/rollupTypes.js'
 import { ifPhotonModule } from '../utils/virtual.js'
 
 export interface InstallPhotonBaseOptions {
