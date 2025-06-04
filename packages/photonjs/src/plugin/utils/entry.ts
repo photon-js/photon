@@ -1,11 +1,13 @@
-import type { CustomPluginOptions } from 'rollup'
 import type { SupportedServers } from '../../validators/types.js'
 
-export function isPhotonMeta(meta?: CustomPluginOptions): meta is { photon: PhotonMeta } {
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+type AnyRecord = Record<string, any>
+
+export function isPhotonMeta<T extends AnyRecord>(meta?: T): meta is T & { photon: PhotonMeta } {
   return Boolean(meta && 'photon' in meta)
 }
 
-export function isPhotonMetaConfig(meta?: CustomPluginOptions): meta is { photonConfig: PhotonMetaConfig } {
+export function isPhotonMetaConfig<T extends AnyRecord>(meta?: T): meta is T & { photonConfig: PhotonMetaConfig } {
   return Boolean(meta && 'photonConfig' in meta)
 }
 
