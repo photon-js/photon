@@ -3,7 +3,6 @@ import { cloudflare as cloudflareVitePlugins, type PluginConfig } from '@cloudfl
 import { isPhotonMeta } from '@photonjs/core/api'
 import { supportedTargetServers } from '@photonjs/core/vite'
 import type { Plugin } from 'vite'
-import { assert } from './utils/errors.js'
 
 const moduleId = 'photon:cloudflare'
 const virtualModuleId = `\0${moduleId}`
@@ -65,21 +64,6 @@ export function cloudflare(config?: Omit<PluginConfig, 'viteEnvironment'>): Plug
         const actualId = id.slice(virtualModuleId.length + 1)
 
         const info = this.getModuleInfo(id)
-        const actualInfo = this.getModuleInfo(actualId)
-
-        // TODO create a Photon util to retrieve up-to-date meta
-        // Ensures up-to-date meta
-        if (
-          this.environment.config.command === 'build' &&
-          (!isPhotonMeta(info?.meta) ||
-            (info.meta.photon.type === 'server' && !info.meta.photon.server) ||
-            !isPhotonMeta(actualInfo?.meta) ||
-            (actualInfo.meta.photon.type === 'server' && !actualInfo.meta.photon.server))
-        ) {
-          const resolved = await this.resolve(actualId, undefined, { isEntry: true })
-          assert(resolved)
-          await this.load({ id: resolved.id, resolveDependencies: true, meta: (info as any).meta })
-        }
 
         if (!isPhotonMeta(info?.meta)) {
           return this.error(`[photon][cloudflare] ${actualId} is not a Photon entry`)
