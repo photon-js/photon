@@ -175,6 +175,8 @@ export function photonEntry(): Plugin[] {
             assertUsage(resolved, `Cannot resolve ${actualId} to a server entry`)
 
             entry.resolvedId = resolved.id
+            // Ensures early resolution of meta, making that calls to subsequent calls to this.resolve includes photon meta
+            await this.load({ ...resolved, resolveDependencies: true })
 
             return {
               ...resolved,
@@ -225,6 +227,9 @@ export function photonEntry(): Plugin[] {
             assertUsage(entry, `Cannot find a handler for ${resolved.id}`)
             entry.resolvedId = resolved.id
 
+            // Ensures early resolution of meta, making that calls to subsequent calls to this.resolve includes photon meta
+            await this.load({ ...resolved, resolveDependencies: true })
+
             return {
               ...resolved,
               meta: {
@@ -246,6 +251,7 @@ export function photonEntry(): Plugin[] {
           const resolved = await this.resolve(id, imports, opts)
 
           if (!resolved) return
+
           return {
             ...resolved,
             meta: {
