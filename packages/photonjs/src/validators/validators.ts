@@ -26,6 +26,11 @@ export const PhotonEntryServer = type({
 export const PhotonEntryUniversalHandler = type({
   '...': PhotonEntryBase,
   type: "'universal-handler'",
+  /**
+   * If false or undefined, the server will wrap this handler.
+   * If true, adapters can choose to deploy it directly (usually on edge platforms).
+   */
+  'standalone?': 'boolean',
 })
 
 export const PhotonConfig = type({
