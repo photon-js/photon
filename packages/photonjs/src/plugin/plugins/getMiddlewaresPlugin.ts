@@ -2,23 +2,32 @@ import type { PluginContext } from 'rollup'
 import type { Plugin } from 'vite'
 import { ifPhotonModule } from '../utils/virtual.js'
 
-function getAllPhotonMiddlewares(pluginContext: PluginContext, condition: 'dev' | 'edge' | 'node', server: string) {
-  const handlers = pluginContext.environment.config.photon.handlers
-  // non-index entries are always considered Universal Handlers
-  const universalEntries = Object.values(handlers).map((e) => e.id)
+function getAllPhotonMiddlewares(
+  pluginContext: PluginContext,
+  condition: 'dev' | 'edge' | 'node',
+  server: string,
+  query: string,
+) {
+  const q = new URLSearchParams(query)
 
+  // middlewares
   const getMiddlewares = pluginContext.environment.config.photon.middlewares ?? []
   const middlewares = getMiddlewares
     .map((m) => m.call(pluginContext, condition, server))
     .filter((x) => typeof x === 'string' || Array.isArray(x))
     .flat(1)
 
+  // handlers
+  const handlers = pluginContext.environment.config.photon.handlers
+  const universalEntries = Object.values(handlers)
+  const universalEntriesIds = universalEntries.map((e) => e.id)
+
   //language=javascript
   return `
 import { getUniversal, nameSymbol } from 'photon:resolve-from-photon:@universal-middleware/core';
 import { PhotonConfigError } from 'photon:resolve-from-photon:@photonjs/core/errors';
 ${middlewares.map((m, i) => `import m${i} from ${JSON.stringify(m)};`).join('\n')}
-${universalEntries.map((m, i) => `import u${i} from ${JSON.stringify(m)};`).join('\n')}
+${universalEntriesIds.map((m, i) => `import u${i} from ${JSON.stringify(m)};`).join('\n')}
 
 function errorMessageMiddleware(id) {
   return \`"\${id}" default export must respect the following type: UniversalMiddleware | UniversalMiddleware[]. Each individual middleware must be wrapped with enhance helper. See https://universal-middleware.dev/helpers/enhance\`
@@ -46,7 +55,7 @@ export function getUniversalMiddlewares() {
 }
 
 export function getUniversalEntries() {
-  return [${universalEntries.map((m, i) => `extractUniversal(u${i}, ${JSON.stringify(m)}, errorMessageEntry)`).join(', ')}].flat(1);
+  return [${universalEntriesIds.map((m, i) => `extractUniversal(u${i}, ${JSON.stringify(m)}, errorMessageEntry)`).join(', ')}].flat(1);
 }
 `
 }
@@ -61,9 +70,9 @@ export function getMiddlewaresPlugin(): Plugin[] {
       },
 
       load(id) {
-        return ifPhotonModule('get-middlewares', id, ({ condition, server }) => {
+        return ifPhotonModule('get-middlewares', id, ({ condition, server, query }) => {
           return {
-            code: getAllPhotonMiddlewares(this, condition as 'dev' | 'edge' | 'node', server),
+            code: getAllPhotonMiddlewares(this, condition as 'dev' | 'edge' | 'node', server, query),
             map: { mappings: '' } as const,
           }
         })

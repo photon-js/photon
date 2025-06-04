@@ -75,6 +75,8 @@ export type RuntimeAdapter = RuntimeAdapterTarget<${JSON.stringify(match.server)
   }
 }
 
+// TODO replace the context with a virtual import that is resolved by Vite
+//  ALSO create a new virtual module for each handler
 function compileIndex(id: string) {
   const match = test(id, re_index)
   if (!match)
