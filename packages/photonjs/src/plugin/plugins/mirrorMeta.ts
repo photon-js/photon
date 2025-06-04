@@ -3,11 +3,12 @@ import { walk } from 'estree-walker'
 import MagicString from 'magic-string'
 import { createRunnableDevEnvironment, type Plugin, type RunnableDevEnvironment } from 'vite'
 import { assert, assertUsage } from '../../utils/assert.js'
+import { createDeferred } from "../../utils/deferred.js";
 import type { PhotonEntryServer } from '../../validators/types.js'
 import { isPhotonMeta } from '../utils/entry.js'
 
 export function mirrorMeta(): Plugin[] {
-  let lastSsr: RunnableDevEnvironment | undefined
+  let lastSsr: Promise<RunnableDevEnvironment> | undefined
   return [
     // Extract Universal Middleware metadata and add them to Photon meta
     {
@@ -18,19 +19,21 @@ export function mirrorMeta(): Plugin[] {
       async moduleParsed(info) {
         // Import the module in RunnableDevEnvironment during build to extract exports
         if (isPhotonMeta(info.meta) && info.meta.photon.type === 'universal-handler' && !info.meta.photon.route) {
-          const ssr =
-            lastSsr ??
-            createRunnableDevEnvironment('inline_ssr', this.environment.config, {
-              runnerOptions: {
-                hmr: {
-                  logger: false,
+          const ssr = lastSsr
+            ? await lastSsr
+            : createRunnableDevEnvironment('inline_ssr', this.environment.config, {
+                runnerOptions: {
+                  hmr: {
+                    logger: false,
+                  },
                 },
-              },
-              hot: false,
-            })
+                hot: false,
+              })
           if (!lastSsr) {
-            lastSsr = ssr
+            const deferred = createDeferred<RunnableDevEnvironment>()
+            lastSsr = deferred.promise
             await ssr.init()
+            deferred.resolve(ssr)
           }
 
           try {
@@ -50,9 +53,9 @@ export function mirrorMeta(): Plugin[] {
         }
       },
 
-      buildEnd() {
-        if (lastSsr && !lastSsr.runner.isClosed()) {
-          return lastSsr.runner.close()
+      async buildEnd() {
+        if (lastSsr && !(await lastSsr).runner.isClosed()) {
+          return (await lastSsr).runner.close()
         }
       },
 
