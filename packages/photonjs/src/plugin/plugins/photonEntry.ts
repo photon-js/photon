@@ -1,9 +1,9 @@
-import type { ModuleInfo, PluginContext } from 'rollup'
 import type { Plugin } from 'vite'
 import { assert, assertUsage } from '../../utils/assert.js'
 import { resolvePhotonConfig } from '../../validators/coerce.js'
 import type { SupportedServers } from '../../validators/types.js'
 import { isPhotonMeta } from '../utils/entry.js'
+import type { ModuleInfo, PluginContext } from '../utils/rollupTypes.js'
 import { importsToServer } from '../utils/servers.js'
 import { ifPhotonModule } from '../utils/virtual.js'
 

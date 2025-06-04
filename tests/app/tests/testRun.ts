@@ -41,7 +41,7 @@ async function testRunUnsupported(cmd: `pnpm run ${string}`) {
 
     test('page crashes with error message', async () => {
       await fetchHtml('/')
-      expectLog(error)
+      expectLog(error, { allLogs: true })
     })
   }
 }

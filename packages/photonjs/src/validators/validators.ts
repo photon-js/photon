@@ -1,5 +1,5 @@
 import { type } from 'arktype'
-import type { PluginContext } from 'rollup'
+import type { PluginContext } from "../plugin/utils/rollupTypes.js";
 
 // FIXME server should be optional?
 export type GetPhotonCondition = (

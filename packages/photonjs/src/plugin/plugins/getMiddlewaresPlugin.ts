@@ -1,5 +1,5 @@
-import type { PluginContext } from 'rollup'
 import type { Plugin } from 'vite'
+import type { PluginContext } from '../utils/rollupTypes.js'
 import { ifPhotonModule } from '../utils/virtual.js'
 
 function getAllPhotonMiddlewares(

@@ -293,7 +293,6 @@
     "fastify": "^5.3.0",
     "h3": "^1.15.1",
     "magic-string": "^0.30.17",
-    "rollup": "4.38.0",
     "tsup": "^8.4.0",
     "typescript": "^5.8.3",
     "unplugin": "^2.3.2",

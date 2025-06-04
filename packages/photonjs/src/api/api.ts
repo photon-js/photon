@@ -1,5 +1,5 @@
-import type { PluginContext } from 'rollup'
 import { asPhotonEntryId } from '../plugin/utils/virtual.js'
+import type { PluginContext } from "../plugin/utils/rollupTypes.js";
 
 export function setPhotonHandler(pluginContext: PluginContext, fileName: string, entry: Photon.EntryUniversalHandler) {
   pluginContext.environment.config.photon.handlers[fileName] = {
