@@ -1,4 +1,4 @@
-import { PhotonUsageError, PhotonConfigError, PhotonDependencyError } from '@photonjs/core/errors'
+import { PhotonBugError, PhotonConfigError, PhotonDependencyError, PhotonUsageError } from '@photonjs/core/errors'
 
 // Utility functions for common error scenarios
 export function createMissingExportError(id: string): PhotonUsageError {
@@ -20,4 +20,9 @@ export function createMissingDependencyError(dependency: string, cause?: unknown
     `${dependency} is not installed. Please install ${dependency} to use this functionality with Cloudflare.`,
     { cause },
   )
+}
+
+export function assert(condition: unknown): asserts condition {
+  if (condition) return
+  throw new PhotonBugError()
 }

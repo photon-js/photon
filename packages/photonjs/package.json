@@ -258,6 +258,7 @@
     "@brillout/picocolors": "^1.0.26",
     "@brillout/vite-plugin-server-entry": "^0.7.5",
     "@universal-middleware/compress": "^0.2.30",
+    "@universal-middleware/cloudflare": "^0.4.8",
     "@universal-middleware/core": "^0.4.7",
     "@universal-middleware/elysia": "^0.5.1",
     "@universal-middleware/express": "^0.4.16",

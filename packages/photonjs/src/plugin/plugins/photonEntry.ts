@@ -9,7 +9,7 @@ import { ifPhotonModule } from '../utils/virtual.js'
 
 const reVirtualApplyHandler = /photon:virtual-apply-handler:(dev|node|edge):(?<server>[^:]+):.*/
 
-function computePhotonMeta(
+function computePhotonMetaServer(
   pluginContext: PluginContext,
   resolvedIdsToServers: Record<string, SupportedServers>,
   info: ModuleInfo,
@@ -119,7 +119,7 @@ export function photonEntry(): Plugin[] {
         handler(info) {
           if (isPhotonMeta(info.meta) && info.meta.photon.type === 'server') {
             // Must be kept synchronous
-            computePhotonMeta(this, resolvedIdsToServers, info)
+            computePhotonMetaServer(this, resolvedIdsToServers, info)
           }
         },
       },
@@ -153,19 +153,27 @@ export function photonEntry(): Plugin[] {
         order: 'post',
         handler(id, _importer, opts) {
           return ifPhotonModule('server-entry', id, async ({ entry: actualId }) => {
+            const entry = this.environment.config.photon.server
             if (!actualId) {
-              return this.resolve(this.environment.config.photon.server.id, undefined, { isEntry: true })
+              return this.resolve(this.environment.config.photon.server.id, undefined, {
+                isEntry: true,
+                custom: {
+                  setPhotonMeta: entry,
+                },
+              })
             }
 
             const resolved = await this.resolve(actualId, undefined, {
               ...opts,
               isEntry: true,
               skipSelf: false,
+              custom: {
+                setPhotonMeta: entry,
+              },
             })
 
             assertUsage(resolved, `Cannot resolve ${actualId} to a server entry`)
 
-            const entry = this.environment.config.photon.server
             entry.resolvedId = resolved.id
 
             return {
@@ -188,10 +196,15 @@ export function photonEntry(): Plugin[] {
         order: 'post',
         handler(id, _importer, opts) {
           return ifPhotonModule('handler-entry', id, async ({ entry: actualId }) => {
+            const entry = Object.values(this.environment.config.photon.handlers).find((e) => e.id === id)
+
             let resolved = await this.resolve(actualId, undefined, {
               ...opts,
               isEntry: true,
               skipSelf: false,
+              custom: {
+                setPhotonMeta: entry,
+              },
             })
 
             // Try to resolve by handler key
@@ -201,12 +214,13 @@ export function photonEntry(): Plugin[] {
                 ...opts,
                 isEntry: true,
                 skipSelf: false,
+                custom: {
+                  setPhotonMeta: entry,
+                },
               })
             }
 
             assertUsage(resolved, `Cannot resolve ${actualId} to a handler entry`)
-
-            const entry = Object.values(this.environment.config.photon.handlers).find((e) => e.id === id)
 
             assertUsage(entry, `Cannot find a handler for ${resolved.id}`)
             entry.resolvedId = resolved.id
@@ -222,6 +236,25 @@ export function photonEntry(): Plugin[] {
         },
       },
       sharedDuringBuild: true,
+    },
+    {
+      name: 'photon:trickle-meta',
+      enforce: 'pre',
+
+      async resolveId(id, imports, opts) {
+        if (opts.custom?.setPhotonMeta) {
+          const resolved = await this.resolve(id, imports, opts)
+
+          if (!resolved) return
+          return {
+            ...resolved,
+            meta: {
+              ...resolved.meta,
+              photon: opts.custom.setPhotonMeta,
+            },
+          }
+        }
+      },
     },
   ]
 }
