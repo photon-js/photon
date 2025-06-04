@@ -176,14 +176,6 @@ export function photonEntry(): Plugin[] {
 
             entry.resolvedId = resolved.id
 
-            await this.resolve(resolved.id, undefined, {
-              ...opts,
-              isEntry: true,
-              custom: {
-                setPhotonMeta: entry,
-              },
-            })
-
             // Ensures early resolution of meta, making that calls to subsequent calls to this.resolve includes photon meta
             // FIXME when not awaiting during build, this.resolve behaves eratically:
             //  it can return proper meta the first time it resolves a module, and nothing the second time for the same module
@@ -241,15 +233,6 @@ export function photonEntry(): Plugin[] {
 
             assertUsage(entry, `Cannot find a handler for ${resolved.id}`)
             entry.resolvedId = resolved.id
-
-            const asdfsdf = await this.resolve(resolved.id, undefined, {
-              ...opts,
-              isEntry: true,
-              custom: {
-                setPhotonMeta: entry,
-              },
-            })
-            console.log(asdfsdf)
 
             // Ensures early resolution of meta, making that calls to subsequent calls to this.resolve includes photon meta
             if (this.environment.config.command === 'serve') {
