@@ -17,3 +17,7 @@
  - Powered by Vite's Environment API
  - Official integration/partnering with Netlify, Cloudflare, Vercel, and more
  - Polished DX (e.g. first-class TypeScript support)
+
+## See also
+
+ - [Playground trying out PhotonJS - made by TanStack team](https://github.com/SeanCassiere/cautious-giggle)
