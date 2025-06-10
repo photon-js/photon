@@ -16,7 +16,10 @@ import {
   enhance,
   getUniversalProp,
   type HttpMethod,
+  methodSymbol,
   nameSymbol,
+  orderSymbol,
+  pathSymbol,
   type UniversalHandler,
   type UniversalMiddleware,
   UniversalRouter,
@@ -41,15 +44,13 @@ export function isRunnableDevEnvironment(environment: Environment): environment 
   return 'runner' in environment
 }
 
-async function importDevServer(vite: ViteDevServer, middleware: string) {
+async function importMiddleware(vite: ViteDevServer, middleware: string) {
   const envName = vite.config.photon.devServer ? vite.config.photon.devServer.env : 'ssr'
   const env = vite.environments[envName]
   assertUsage(env, `Environment ${envName} not found`)
   assertUsage(isRunnableDevEnvironment(env), `Environment ${envName} is not runnable`)
 
-  return envImportAndCheckDefaultExport<UniversalMiddleware | UniversalMiddleware[]>(env, middleware, false).then(
-    (defaultExport) => defaultExport,
-  )
+  return envImportAndCheckDefaultExport<UniversalMiddleware | UniversalMiddleware[]>(env, middleware, false)
 }
 
 async function importHandler(vite: ViteDevServer, handler: PhotonEntryUniversalHandler) {
@@ -68,18 +69,32 @@ async function importHandler(vite: ViteDevServer, handler: PhotonEntryUniversalH
 
   return envImportAndCheckDefaultExport<UniversalHandler>(env, handlerResolved.id, false).then((defaultExport) => {
     const name = getUniversalProp(defaultExport, nameSymbol)
-    const toEnhance: { path?: string; method?: HttpMethod[] | HttpMethod; name?: string } = {}
+    const path = getUniversalProp(defaultExport, pathSymbol)
+    const order = getUniversalProp(defaultExport, orderSymbol)
+    const method = getUniversalProp(defaultExport, methodSymbol)
+    const toEnhance: { path?: string; method?: HttpMethod[] | HttpMethod; name?: string; order?: number } = {}
     if (handler.route) {
       toEnhance.path = handler.route
       toEnhance.method = ['GET', 'POST']
+    } else if (path) {
+      toEnhance.path = path
     }
     if (!name) {
       toEnhance.name = handlerResolved.id
+    } else {
+      toEnhance.name = name
     }
-    if (Object.keys(toEnhance).length > 0) {
-      return enhance(defaultExport, toEnhance)
+    if (order) {
+      toEnhance.order = order
     }
-    return defaultExport
+    if (method) {
+      toEnhance.method = method
+    }
+    return enhance((request, context, runtime) => {
+      context.photon ??= {}
+      context.photon.handler = handler
+      return defaultExport(request, context, runtime)
+    }, toEnhance)
   })
 }
 
@@ -172,7 +187,7 @@ export function devServer(config?: Photon.Config): Plugin {
           .flat(1)
 
         for (const middleware of middlewares) {
-          waitingForMiddlewares.push(importDevServer(vite, middleware))
+          waitingForMiddlewares.push(importMiddleware(vite, middleware))
         }
 
         for (const handler of Object.values(vite.config.photon.handlers)) {
