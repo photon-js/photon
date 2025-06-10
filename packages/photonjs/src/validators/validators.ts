@@ -1,9 +1,10 @@
 import { type } from 'arktype'
+import type { ViteDevServer } from 'vite'
 import type { PluginContext } from '../plugin/utils/rollupTypes.js'
 
 // FIXME server should be optional?
 export type GetPhotonCondition = (
-  this: PluginContext,
+  this: ViteDevServer | PluginContext,
   condition: 'dev' | 'edge' | 'node',
   server: string,
   // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
@@ -31,6 +32,7 @@ export const PhotonEntryUniversalHandler = type({
    * If true, adapters can choose to deploy it directly (usually on edge platforms).
    */
   'standalone?': 'boolean',
+  'env?': 'string',
 })
 
 export const PhotonConfig = type({
