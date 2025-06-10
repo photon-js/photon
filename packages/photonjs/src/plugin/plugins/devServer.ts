@@ -181,8 +181,6 @@ export function devServer(config?: Photon.Config): Plugin {
 
         const awaitedMiddlewares = await Promise.all(waitingForMiddlewares)
 
-        console.log(awaitedMiddlewares.flat(2))
-
         applyCore(router, awaitedMiddlewares.flat(2), false)
         vite.middlewares.use(createMiddleware(() => router[universalSymbol])() as Connect.NextHandleFunction)
       }
