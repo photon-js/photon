@@ -1,4 +1,4 @@
-import type { Plugin } from 'vite'
+import { defaultServerConditions, type Plugin } from 'vite'
 import { isBun } from '../utils/isBun.js'
 import { isDeno } from '../utils/isDeno.js'
 
@@ -13,13 +13,27 @@ function commonConfig(): Plugin[] {
         if (!config.consumer) {
           config.consumer = name === 'client' ? 'client' : 'server'
         }
+
+        let additionalConditions: { externalConditions?: string[]; conditions?: string[] } = {}
+
+        if (isBun) {
+          additionalConditions = {
+            conditions: ['bun', ...defaultServerConditions],
+            externalConditions: ['bun', ...defaultServerConditions],
+          }
+        }
+
+        if (isDeno) {
+          additionalConditions = {
+            conditions: ['deno', ...defaultServerConditions],
+            externalConditions: ['deno', ...defaultServerConditions],
+          }
+        }
+
         return {
           resolve: {
             noExternal: '@photonjs/core',
-            externalConditions:
-              config.consumer === 'server'
-                ? [...(isBun ? ['bun'] : isDeno ? ['deno'] : []), 'node', 'development|production']
-                : [],
+            ...additionalConditions,
           },
           build: {
             target: 'es2022',
