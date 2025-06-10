@@ -3,7 +3,7 @@ import { autoRetry, expect, expectLog, fetchHtml, getServerUrl, page, run, test 
 
 export { testRun, testRunUnsupported }
 
-function testRun(cmd: `pnpm run ${string}`) {
+function testRun(cmd: `pnpm run ${string}` | `bun --bun --silent run ${string}`) {
   run(cmd, {
     // Preview => builds app which takes a long time
     additionalTimeout: 120 * 1000,
