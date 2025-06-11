@@ -1,5 +1,3 @@
-import type { SupportedServers } from '../../validators/types.js'
-
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 type AnyRecord = Record<string, any>
 
@@ -11,17 +9,7 @@ export function isPhotonMetaConfig<T extends AnyRecord>(meta?: T): meta is T & {
   return Boolean(meta && 'photonConfig' in meta)
 }
 
-export interface PhotonMetaServer {
-  type: 'server'
-  server: SupportedServers
-}
-
-export interface PhotonMetaUniversalHandler {
-  type: 'universal-handler'
-  route?: string
-}
-
-export type PhotonMeta = PhotonMetaServer | PhotonMetaUniversalHandler
+export type PhotonMeta = Photon.EntryServer | Photon.EntryUniversalHandler
 
 export interface PhotonMetaConfig {
   /**
