@@ -7,7 +7,7 @@ import type { SupportedServers } from '../../validators/types.js'
 import { isPhotonMeta } from '../utils/entry.js'
 import type { ModuleInfo, PluginContext } from '../utils/rollupTypes.js'
 import { importsToServer } from '../utils/servers.js'
-import { ifPhotonModule } from '../utils/virtual.js'
+import { asPhotonEntryId, ifPhotonModule } from '../utils/virtual.js'
 
 const reVirtualApplyHandler = /photon:virtual-apply-handler:(dev|node|edge):(?<server>[^:]+):.*/
 const serverImports = new Set(Object.keys(importsToServer))
@@ -301,7 +301,10 @@ export function photonEntry(): Plugin[] {
         order: 'post',
         handler(id, _importer, opts) {
           return ifPhotonModule('handler-entry', id, async ({ entry: actualId }) => {
-            const entry = Object.values(this.environment.config.photon.handlers).find((e) => e.id === id)
+            const idWithPhotonPrefix = asPhotonEntryId(id, 'handler-entry')
+            let entry = Object.values(this.environment.config.photon.handlers).find(
+              (e) => asPhotonEntryId(e.id, 'handler-entry') === idWithPhotonPrefix,
+            )
 
             let resolved = await this.resolve(actualId, undefined, {
               ...opts,
@@ -326,6 +329,13 @@ export function photonEntry(): Plugin[] {
             }
 
             assertUsage(resolved, `Cannot resolve ${actualId} to a handler entry`)
+
+            if (!entry) {
+              const resolvedIdWithPhotonPrefix = asPhotonEntryId(resolved.id, 'handler-entry')
+              entry = Object.values(this.environment.config.photon.handlers).find(
+                (e) => e.id === resolvedIdWithPhotonPrefix,
+              )
+            }
 
             assertUsage(entry, `Cannot find a handler for ${resolved.id}`)
             entry.resolvedId = resolved.id

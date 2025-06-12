@@ -1,41 +1,29 @@
 import { type Out, type Type, type } from 'arktype'
 import { assert } from '../../utils/assert.js'
 
-type ToLiteral<T extends string> = T extends `\${${infer _}}` ? string : T
-type ToParse<T extends string> = T extends `\${${infer X}?}`
-  ? { [K in X]?: string }
-  : T extends `\${${infer X}}`
-    ? { [K in X]: string }
-    : // biome-ignore lint/complexity/noBannedTypes: <explanation>
-      {}
-
-type Literal<T extends string> = T extends `${infer A}:${infer B}` ? `${ToLiteral<A>}:${Literal<B>}` : ToLiteral<T>
-type Parsing<T extends string> = T extends `${infer A}:${infer B}` ? ToParse<A> & Parse<B> : ToParse<T>
-type Parse<T extends string> = Parsing<T> & Query
-type Query = { query: string }
-
-export function literal<const T extends string>(pattern: T) {
-  const regex = new RegExp(
-    `^${pattern.replace(/:\$\{(.*?)\?}/g, '(?::(?<$1>.*))?').replace(/\$\{(.*?)}/g, '(?<$1>.*)')}(?<query>\\?.+)?\$`,
-  )
-  return type(regex)
-    .configure({ expected: pattern })
-    .pipe.try((x) => {
-      const match = x.match(regex)
-      assert(match)
-      return match.groups as Parse<T>
-      // biome-ignore lint/complexity/noBannedTypes: <explanation>
-    }) as Type<(In: Literal<T>) => Out<Parse<T>>, {}>
+export function literal<T extends object>(regex: RegExp) {
+  return type(regex).pipe.try((x) => {
+    const match = x.match(regex)
+    assert(match)
+    return match.groups as T
+    // biome-ignore lint/complexity/noBannedTypes: <explanation>
+  }) as Type<(In: string) => Out<T>, {}>
 }
 
 export const virtualModules = {
-  'handler-entry': literal('photon:handler-entry:${entry}'),
-  'server-entry': literal('photon:server-entry:${entry?}'),
-  'server-entry-with-handler': literal('photon:server-entry-with-handler:${condition}:${handler}'),
-  'fallback-entry': literal('photon:fallback-entry'),
-  'resolve-from-photon': literal('photon:resolve-from-photon:${module}'),
-  'get-middlewares': literal('photon:get-middlewares:${condition}:${server}'),
-  'virtual-apply-handler': literal('photon:virtual-apply-handler:${condition}:${server}:${handler}'),
+  'handler-entry': literal<{ entry: string }>(/^photon:handler-entry:(?<entry>.+)/),
+  'server-entry': literal<{ entry?: string }>(/^photon:server-entry(?:$|:(?<entry>.+))/),
+  'server-entry-with-handler': literal<{ condition: string; handler: string }>(
+    /^photon:server-entry-with-handler:(?<condition>.+?):(?<handler>.+)/,
+  ),
+  'fallback-entry': literal(/^photon:fallback-entry/),
+  'resolve-from-photon': literal<{ module: string }>(/^photon:resolve-from-photon:(?<module>.+)/),
+  'get-middlewares': literal<{ condition: string; server: string }>(
+    /^photon:get-middlewares:(?<condition>.+?):(?<server>.+)/,
+  ),
+  'virtual-apply-handler': literal<{ condition: string; server: string; handler: string }>(
+    /^photon:virtual-apply-handler:(?<condition>.+?):(?<server>.+?):(?<handler>.+)/,
+  ),
 }
 
 type VirtualModuleKeys = keyof typeof virtualModules
