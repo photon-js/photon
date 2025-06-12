@@ -1,6 +1,7 @@
 import type { Plugin } from 'vite'
-import { assertUsage } from '../../utils/assert.js'
-import { ifPhotonModule } from '../utils/virtual.js'
+import { assert, assertUsage } from '../../utils/assert.js'
+import { isPhotonMeta } from '../utils/entry.js'
+import { asPhotonEntryId, ifPhotonModule } from '../utils/virtual.js'
 
 export { virtualApplyHandler }
 
@@ -16,9 +17,13 @@ function virtualApplyHandler(): Plugin[] {
       },
 
       load(id) {
-        return ifPhotonModule('virtual-apply-handler', id, ({ handler: handlerId, condition, server }) => {
-          const handlers = this.environment.config.photon.handlers
-          const handler = handlers[handlerId]
+        return ifPhotonModule('virtual-apply-handler', id, async ({ handler: handlerId, condition, server }) => {
+          // TODO create and export through the api a photonMetaResolve helper
+          const resolved = await this.resolve(asPhotonEntryId(handlerId, 'handler-entry'), undefined, { isEntry: true })
+          assert(resolved)
+          assert(isPhotonMeta(resolved.meta))
+
+          const handler = resolved.meta.photon as Photon.EntryUniversalHandler
           assertUsage(handler, `Cannot find handler ${handlerId}`)
 
           const isAsync = server === 'fastify'
