@@ -1,15 +1,8 @@
-import { walk } from 'estree-walker'
-import MagicString from 'magic-string'
 import type { Plugin } from 'vite'
-import { isPhotonMeta } from '../../api.js'
-import { assert, assertUsage } from '../../utils/assert.js'
-import { importsToServer } from '../utils/servers.js'
+import { assertUsage } from '../../utils/assert.js'
 import { ifPhotonModule } from '../utils/virtual.js'
 
 export { virtualApplyHandler }
-
-const rePhotonHandlerId = /[?&]photonHandlerId=/
-const serverImports = new Set(Object.keys(importsToServer))
 
 function virtualApplyHandler(): Plugin[] {
   return [
@@ -109,68 +102,6 @@ export { serve } from 'photon:resolve-from-photon:@photonjs/core/${server}/serve
             map: { mappings: '' } as const,
           }
         })
-      },
-    },
-    {
-      name: 'photon:replace-apply-by-virtual-apply-handler',
-
-      transform: {
-        filter: {
-          id: [rePhotonHandlerId],
-        },
-        handler(code, id) {
-          // Support for vite<6.3
-          if (!id.match(rePhotonHandlerId)) return
-          const info = this.getModuleInfo(id)
-
-          // TODO support: { apply } could be called by a submodule
-          if (isPhotonMeta(info?.meta) && info.meta.photon.type === 'server') {
-            const ast = this.parse(code)
-            const magicString = new MagicString(code)
-            const q = new URLSearchParams(id.split('?')[1])
-            const condition = q.get('photonCondition')
-            const handlerId = q.get('photonHandlerId') as string
-            assert(condition)
-
-            walk(ast, {
-              enter(node) {
-                if (
-                  node.type === 'ImportDeclaration' &&
-                  typeof node.source.value === 'string' &&
-                  serverImports.has(node.source.value)
-                ) {
-                  let foundApply = false
-                  // Check if { apply } is among the imported specifiers
-                  for (const specifier of node.specifiers) {
-                    if (
-                      specifier.type === 'ImportSpecifier' &&
-                      specifier.imported &&
-                      'name' in specifier.imported &&
-                      specifier.imported.name === 'apply'
-                    ) {
-                      foundApply = true
-                      break
-                    }
-                  }
-                  if (foundApply) {
-                    const { start, end } = node.source as unknown as { start: number; end: number }
-                    const server = importsToServer[node.source.value] as string
-                    magicString.overwrite(
-                      start,
-                      end,
-                      JSON.stringify(`photon:virtual-apply-handler:${condition}:${server}:${handlerId}`),
-                    )
-                  }
-                }
-              },
-            })
-
-            return {
-              code: magicString.toString(),
-              map: magicString.generateMap(),
-            }
-          }
-        },
       },
     },
   ]

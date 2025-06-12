@@ -3,7 +3,7 @@ import './types.js'
 
 export { isPhotonMeta, type PhotonMeta } from './plugin/utils/entry.js'
 export { resolvePhotonConfig } from './validators/coerce.js'
-export { setPhotonHandler, getPhotonServerEntryId } from './api/api.js'
+export { setPhotonHandler, getPhotonServerIdWithHandler } from './api/api.js'
 export {
   PhotonError,
   PhotonBugError,

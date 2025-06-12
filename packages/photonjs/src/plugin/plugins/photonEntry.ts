@@ -1,3 +1,5 @@
+import { walk } from 'estree-walker'
+import MagicString from 'magic-string'
 import type { Plugin } from 'vite'
 import { assert, assertUsage } from '../../utils/assert.js'
 import { resolvePhotonConfig } from '../../validators/coerce.js'
@@ -8,6 +10,7 @@ import { importsToServer } from '../utils/servers.js'
 import { ifPhotonModule } from '../utils/virtual.js'
 
 const reVirtualApplyHandler = /photon:virtual-apply-handler:(dev|node|edge):(?<server>[^:]+):.*/
+const serverImports = new Set(Object.keys(importsToServer))
 
 function computePhotonMetaServer(
   pluginContext: PluginContext,
@@ -146,14 +149,111 @@ export function photonEntry(): Plugin[] {
       sharedDuringBuild: true,
     },
     {
+      name: 'photon:resolve-server-with-handler',
+      enforce: 'pre',
+
+      resolveId: {
+        order: 'post',
+        handler(id, _importer, opts) {
+          return ifPhotonModule('server-entry-with-handler', id, async ({ condition, handler }) => {
+            const server = this.environment.config.photon.server
+
+            // Ensures that the server is resolved before reading Photon meta
+            await this.resolve(server.id, undefined, {
+              ...opts,
+              isEntry: true,
+            })
+
+            const infoServer = this.getModuleInfo(server.id)
+            assert(isPhotonMeta(infoServer?.meta))
+
+            // Ensures that the handler is resolved before reading Photon meta
+            await this.resolve(handler, undefined, {
+              isEntry: true,
+            })
+
+            const infoHandler = this.getModuleInfo(server.id)
+            assert(isPhotonMeta(infoHandler?.meta))
+
+            return {
+              id,
+              meta: {
+                photon: {
+                  ...infoServer.meta.photon,
+                  // Additional handler meta take precedence
+                  ...infoHandler.meta.photon,
+                  id,
+                  resolvedId: id,
+                },
+              },
+              resolvedBy: 'photon',
+            }
+          })
+        },
+      },
+
+      async load(id) {
+        return ifPhotonModule('server-entry-with-handler', id, async ({ condition, handler }) => {
+          const loaded = await this.load({ id: this.environment.config.photon.server.id })
+          assert(loaded.code)
+
+          const code = loaded.code
+
+          const ast = this.parse(code)
+          const magicString = new MagicString(code)
+
+          walk(ast, {
+            enter(node) {
+              if (
+                node.type === 'ImportDeclaration' &&
+                typeof node.source.value === 'string' &&
+                serverImports.has(node.source.value)
+              ) {
+                let foundApply = false
+                // Check if { apply } is among the imported specifiers
+                for (const specifier of node.specifiers) {
+                  if (
+                    specifier.type === 'ImportSpecifier' &&
+                    specifier.imported &&
+                    'name' in specifier.imported &&
+                    specifier.imported.name === 'apply'
+                  ) {
+                    foundApply = true
+                    break
+                  }
+                }
+                if (foundApply) {
+                  const { start, end } = node.source as unknown as { start: number; end: number }
+                  const server = importsToServer[node.source.value] as string
+                  magicString.overwrite(
+                    start,
+                    end,
+                    JSON.stringify(`photon:virtual-apply-handler:${condition}:${server}:${handler}`),
+                  )
+                }
+              }
+            },
+          })
+
+          return {
+            code: magicString.toString(),
+            map: magicString.generateMap(),
+          }
+        })
+      },
+
+      sharedDuringBuild: true,
+    },
+    {
       name: 'photon:resolve-server',
       enforce: 'pre',
 
       resolveId: {
         order: 'post',
         handler(id, _importer, opts) {
-          return ifPhotonModule('server-entry', id, async ({ entry: actualId, query }) => {
+          return ifPhotonModule('server-entry', id, async ({ entry: actualId }) => {
             const entry = this.environment.config.photon.server
+
             if (!actualId) {
               return this.resolve(this.environment.config.photon.server.id, undefined, {
                 isEntry: true,
@@ -174,13 +274,7 @@ export function photonEntry(): Plugin[] {
 
             assertUsage(resolved, `Cannot resolve ${actualId} to a server entry`)
 
-            if (query) {
-              const params = new URLSearchParams(query)
-              if (!params.get('photonHandlerId')) {
-                // Do not override `resolvedId` for wrapped handlers
-                entry.resolvedId = resolved.id
-              }
-            }
+            entry.resolvedId = resolved.id
 
             // Ensure early resolution of photon meta during build
             if (this.environment.config.command === 'build') {
