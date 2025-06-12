@@ -152,7 +152,7 @@ export function photonEntry(): Plugin[] {
       resolveId: {
         order: 'post',
         handler(id, _importer, opts) {
-          return ifPhotonModule('server-entry', id, async ({ entry: actualId }) => {
+          return ifPhotonModule('server-entry', id, async ({ entry: actualId, query }) => {
             const entry = this.environment.config.photon.server
             if (!actualId) {
               return this.resolve(this.environment.config.photon.server.id, undefined, {
@@ -174,7 +174,13 @@ export function photonEntry(): Plugin[] {
 
             assertUsage(resolved, `Cannot resolve ${actualId} to a server entry`)
 
-            entry.resolvedId = resolved.id
+            if (query) {
+              const params = new URLSearchParams(query)
+              if (!params.get('photonHandlerId')) {
+                // Do not override `resolvedId` for wrapped handlers
+                entry.resolvedId = resolved.id
+              }
+            }
 
             // Ensure early resolution of photon meta during build
             if (this.environment.config.command === 'build') {
