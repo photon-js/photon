@@ -9,7 +9,17 @@ function fallback(): Plugin {
 
     resolveId(id) {
       return ifPhotonModule('fallback-entry', id, () => {
-        return id
+        return {
+          id,
+          meta: {
+            photon: {
+              id,
+              resolvedId: id,
+              type: 'server',
+              server: 'hono',
+            },
+          },
+        }
       })
     },
 

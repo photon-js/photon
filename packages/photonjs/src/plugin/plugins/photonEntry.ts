@@ -154,34 +154,25 @@ export function photonEntry(): Plugin[] {
 
       resolveId: {
         order: 'post',
-        handler(id, _importer, opts) {
-          return ifPhotonModule('server-entry-with-handler', id, async ({ condition, handler }) => {
-            const server = this.environment.config.photon.server
-
-            // Ensures that the server is resolved before reading Photon meta
-            await this.resolve(server.id, undefined, {
-              ...opts,
-              isEntry: true,
-            })
-
-            const infoServer = this.getModuleInfo(server.id)
-            assert(isPhotonMeta(infoServer?.meta))
-
+        handler(id) {
+          return ifPhotonModule('server-entry-with-handler', id, async ({ handler }) => {
             // Ensures that the handler is resolved before reading Photon meta
-            await this.resolve(handler, undefined, {
+            const resolved = await this.resolve(handler, undefined, {
               isEntry: true,
             })
+            assert(resolved)
 
-            const infoHandler = this.getModuleInfo(server.id)
+            const infoHandler = this.getModuleInfo(resolved.id)
             assert(isPhotonMeta(infoHandler?.meta))
 
             return {
               id,
               meta: {
                 photon: {
-                  ...infoServer.meta.photon,
+                  ...this.environment.config.photon.server,
                   // Additional handler meta take precedence
                   ...infoHandler.meta.photon,
+                  type: 'server',
                   id,
                   resolvedId: id,
                 },
@@ -194,7 +185,12 @@ export function photonEntry(): Plugin[] {
 
       async load(id) {
         return ifPhotonModule('server-entry-with-handler', id, async ({ condition, handler }) => {
-          const loaded = await this.load({ id: this.environment.config.photon.server.id })
+          const resolved = await this.resolve(this.environment.config.photon.server.id, undefined, {
+            isEntry: true,
+          })
+          assert(resolved)
+
+          const loaded = await this.load({ id: resolved.id })
           assert(loaded.code)
 
           const code = loaded.code
