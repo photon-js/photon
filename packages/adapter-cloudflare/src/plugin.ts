@@ -1,6 +1,5 @@
-/// <reference types="@photonjs/core/api" />
 import { cloudflare as cloudflareVitePlugins, type PluginConfig } from '@cloudflare/vite-plugin'
-import { isPhotonMeta } from '@photonjs/core/api'
+import { getPhotonMeta } from '@photonjs/core/api'
 import { supportedTargetServers } from '@photonjs/core/vite'
 import type { Plugin } from 'vite'
 
@@ -22,6 +21,21 @@ export function cloudflare(config?: Omit<PluginConfig, 'viteEnvironment'>): Plug
             },
           }
         },
+      },
+    },
+    // TODO Should this be generic for all adapters?
+    {
+      name: `${moduleId}:prefixer`,
+      apply: 'build',
+      enforce: 'post',
+      configEnvironment(name, config) {
+        if (config.consumer === 'server' && config.build?.rollupOptions?.input) {
+          // Ensured by Photon
+          const input = config.build.rollupOptions.input as Record<string, string>
+          for (const key of Object.keys(input)) {
+            input[key] = `${moduleId}:${input[key]}`
+          }
+        }
       },
     },
     supportedTargetServers('cloudflare', ['hono', 'h3']),
@@ -47,22 +61,16 @@ export function cloudflare(config?: Omit<PluginConfig, 'viteEnvironment'>): Plug
       async load(id) {
         if (!id.startsWith(virtualModuleId)) return
         const actualId = id.slice(virtualModuleId.length + 1)
-
-        const info = this.getModuleInfo(id)
-
-        if (!isPhotonMeta(info?.meta)) {
-          return this.error(`[photon][cloudflare] ${actualId} is not a Photon entry`)
-        }
-
+        const meta = await getPhotonMeta(this, id)
         const isDev = this.environment.config.command === 'serve'
 
-        if (info.meta.photon.type === 'server') {
+        if (meta.type === 'server') {
           // `server` usually exists only during build time
-          if (info.meta.photon.server) {
+          if (meta.server) {
             return {
               // language=ts
               code: `import serverEntry from ${JSON.stringify(actualId)};
-import { asFetch } from "@photonjs/cloudflare/${info.meta.photon.server}";
+import { asFetch } from "@photonjs/cloudflare/${meta.server}";
 
 export const fetch = asFetch(serverEntry);
 export default { fetch };
@@ -87,7 +95,7 @@ export default { fetch };
           return {
             // language=ts
             code: `import handler from ${JSON.stringify(actualId)};
-import { getRuntime } from "@universal-middleware/cloudflare";
+import { getRuntime } from "photon:resolve-from-photon:@universal-middleware/cloudflare";
 
 export const fetch = (request, env, ctx) => {
   return handler(request, {}, getRuntime(env, ctx))
@@ -100,7 +108,10 @@ export default { fetch };
 
         return this.error(`[photon][cloudflare] Unable to load ${actualId}`)
       },
+
+      sharedDuringBuild: true,
     },
+    // FIXME do not enforce ssr env
     ...cloudflareVitePlugins({ ...config, viteEnvironment: { name: 'ssr' } }),
   ]
 }

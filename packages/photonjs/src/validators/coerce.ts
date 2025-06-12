@@ -1,12 +1,6 @@
 import { match, type } from 'arktype'
 import { asPhotonEntryId } from '../plugin/utils/virtual.js'
-import type {
-  PhotonConfig,
-  PhotonConfigResolved,
-  PhotonEntryBase,
-  PhotonEntryServer,
-  PhotonEntryUniversalHandler,
-} from './types.js'
+import type { PhotonConfig, PhotonEntryBase, PhotonEntryServer, PhotonEntryUniversalHandler } from './types.js'
 import * as Validators from './validators.js'
 
 function entryToPhoton<
@@ -36,12 +30,12 @@ function handlersToPhoton(
   )
 }
 
-export function resolvePhotonConfig(config: PhotonConfig | undefined): PhotonConfigResolved {
+export function resolvePhotonConfig(config: PhotonConfig | undefined): Photon.ConfigResolved {
   const out = Validators.PhotonConfig.pipe.try((c) => {
     const toRest = match
       .in<PhotonConfig>()
       .case({ '[string]': 'unknown' }, (v) => {
-        const { handlers, server, hmr, middlewares, ...rest } = v
+        const { handlers, server, hmr, middlewares, devServer, ...rest } = v
         return rest
       })
       .default(() => ({}))
@@ -57,17 +51,31 @@ export function resolvePhotonConfig(config: PhotonConfig | undefined): PhotonCon
           },
           'server-entry',
         )
+
+    const toDevServer = match
+      .in<PhotonConfig['devServer']>()
+      .case('false', (): false => false)
+      .default((v) => {
+        const value = typeof v === 'boolean' ? {} : v
+        return {
+          env: value?.env ?? 'ssr',
+          autoServe: value?.autoServe ?? true,
+        }
+      })
+
     const hmr = c.hmr ?? true
     const middlewares = c.middlewares ?? []
+    const devServer = toDevServer(c.devServer ?? true)
     // Allows Photon targets to add custom options
     const rest = toRest(c)
 
     return {
+      ...rest,
       handlers,
       server,
       hmr,
       middlewares,
-      ...rest,
+      devServer,
     }
   }, Validators.PhotonConfigResolved)(config)
 

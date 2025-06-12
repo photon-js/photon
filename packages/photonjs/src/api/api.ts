@@ -1,4 +1,4 @@
-import type { PluginContext } from 'rollup'
+import type { PluginContext } from '../plugin/utils/rollupTypes.js'
 import { asPhotonEntryId } from '../plugin/utils/virtual.js'
 
 export function setPhotonHandler(pluginContext: PluginContext, fileName: string, entry: Photon.EntryUniversalHandler) {
@@ -6,4 +6,8 @@ export function setPhotonHandler(pluginContext: PluginContext, fileName: string,
     ...entry,
     id: asPhotonEntryId(entry.id, 'handler-entry'),
   }
+}
+
+export function getPhotonServerIdWithHandler(condition: 'dev' | 'node' | 'edge', handlerId: string) {
+  return `photon:server-entry-with-handler:${condition}:${handlerId}`
 }

@@ -1,7 +1,7 @@
-import type { CustomPluginOptions, PluginContext, ResolvedId } from 'rollup'
 import type { Plugin } from 'vite'
 import type { GetPhotonCondition } from '../../validators/types.js'
 import { resolveFirst } from '../utils/resolve.js'
+import type { PluginContext } from '../utils/rollupTypes.js'
 import { ifPhotonModule } from '../utils/virtual.js'
 
 export interface InstallPhotonBaseOptions {
@@ -9,19 +9,19 @@ export interface InstallPhotonBaseOptions {
 }
 
 export function installPhotonBase(name: string, options?: InstallPhotonBaseOptions): Plugin[] {
-  let resolvedName: ResolvedId | null | undefined = undefined
+  let resolvedName: Awaited<ReturnType<typeof resolveFirst>> = undefined
 
   function photonVirtualModuleResolver(
     id: string,
     importer?: string,
     opts?: {
       attributes?: Record<string, string>
-      custom?: CustomPluginOptions
+      custom?: Record<string, unknown>
       isEntry?: boolean
       skipSelf?: boolean
     },
   ) {
-    return async function resolvePhotonVirtualModule(this: PluginContext) {
+    return async function resolvePhotonVirtualModule(this: Pick<PluginContext, 'resolve'>) {
       // first, try basic resolve
       let resolved = await this.resolve(id, importer, opts)
 
