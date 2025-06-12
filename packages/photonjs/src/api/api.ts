@@ -1,5 +1,5 @@
-import { asPhotonEntryId } from '../plugin/utils/virtual.js'
 import type { PluginContext } from '../plugin/utils/rollupTypes.js'
+import { asPhotonEntryId } from '../plugin/utils/virtual.js'
 
 export function setPhotonHandler(pluginContext: PluginContext, fileName: string, entry: Photon.EntryUniversalHandler) {
   pluginContext.environment.config.photon.handlers[fileName] = {
@@ -8,12 +8,6 @@ export function setPhotonHandler(pluginContext: PluginContext, fileName: string,
   }
 }
 
-export function getPhotonServerEntryId(
-  pluginContext: PluginContext,
-  opts?: { handlerId: string; condition: 'dev' | 'node' | 'edge' },
-) {
-  if (!opts) {
-    return pluginContext.environment.config.photon.server.id
-  }
-  return `${pluginContext.environment.config.photon.server.id}?photonCondition=${opts.condition}&photonHandlerId=${opts.handlerId}`
+export function getPhotonServerIdWithHandler(condition: 'dev' | 'node' | 'edge', handlerId: string) {
+  return `photon:server-entry-with-handler:${condition}:${handlerId}`
 }

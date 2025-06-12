@@ -31,6 +31,7 @@ export function literal<const T extends string>(pattern: T) {
 export const virtualModules = {
   'handler-entry': literal('photon:handler-entry:${entry}'),
   'server-entry': literal('photon:server-entry:${entry?}'),
+  'server-entry-with-handler': literal('photon:server-entry-with-handler:${condition}:${handler}'),
   'fallback-entry': literal('photon:fallback-entry'),
   'resolve-from-photon': literal('photon:resolve-from-photon:${module}'),
   'get-middlewares': literal('photon:get-middlewares:${condition}:${server}'),
