@@ -2,6 +2,7 @@ import { walk } from 'estree-walker'
 import MagicString from 'magic-string'
 import type { Plugin } from 'vite'
 import { assert, assertUsage } from '../../utils/assert.js'
+import { getPhotonMeta } from '../../utils/meta.js'
 import { resolvePhotonConfig } from '../../validators/coerce.js'
 import type { SupportedServers } from '../../validators/types.js'
 import { isPhotonMeta } from '../utils/entry.js'
@@ -156,14 +157,7 @@ export function photonEntry(): Plugin[] {
         order: 'post',
         handler(id) {
           return ifPhotonModule('server-entry-with-handler', id, async ({ handler }) => {
-            // Ensures that the handler is resolved before reading Photon meta
-            const resolved = await this.resolve(handler, undefined, {
-              isEntry: true,
-            })
-            assert(resolved)
-
-            const infoHandler = this.getModuleInfo(resolved.id)
-            assert(isPhotonMeta(infoHandler?.meta))
+            const metaHandler = await getPhotonMeta(this, handler, 'handler-entry')
 
             return {
               id,
@@ -171,7 +165,7 @@ export function photonEntry(): Plugin[] {
                 photon: {
                   ...this.environment.config.photon.server,
                   // Additional handler meta take precedence
-                  ...infoHandler.meta.photon,
+                  ...metaHandler,
                   type: 'server',
                   id,
                   resolvedId: id,

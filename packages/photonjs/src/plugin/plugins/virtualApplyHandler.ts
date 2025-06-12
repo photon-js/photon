@@ -1,7 +1,6 @@
 import type { Plugin } from 'vite'
-import { assert, assertUsage } from '../../utils/assert.js'
-import { isPhotonMeta } from '../utils/entry.js'
-import { asPhotonEntryId, ifPhotonModule } from '../utils/virtual.js'
+import { getPhotonMeta } from '../../utils/meta.js'
+import { ifPhotonModule } from '../utils/virtual.js'
 
 export { virtualApplyHandler }
 
@@ -18,19 +17,13 @@ function virtualApplyHandler(): Plugin[] {
 
       load(id) {
         return ifPhotonModule('virtual-apply-handler', id, async ({ handler: handlerId, condition, server }) => {
-          // TODO create and export through the api a photonMetaResolve helper
-          const resolved = await this.resolve(asPhotonEntryId(handlerId, 'handler-entry'), undefined, { isEntry: true })
-          assert(resolved)
-          assert(isPhotonMeta(resolved.meta))
-
-          const handler = resolved.meta.photon as Photon.EntryUniversalHandler
-          assertUsage(handler, `Cannot find handler ${handlerId}`)
+          const metaHandler = await getPhotonMeta(this, handlerId, 'handler-entry')
 
           const isAsync = server === 'fastify'
 
           // middlewares
           const getMiddlewares = this.environment.config.photon.middlewares ?? []
-          const middlewares = handler.standalone
+          const middlewares = metaHandler.standalone
             ? []
             : getMiddlewares
                 .map((m) => m.call(this, condition as 'dev' | 'node' | 'edge', server))
@@ -44,7 +37,7 @@ function virtualApplyHandler(): Plugin[] {
 import { PhotonConfigError } from 'photon:resolve-from-photon:@photonjs/core/errors';
 import { apply as applyAdapter } from 'photon:resolve-from-photon:@universal-middleware/${server}';
 import { getUniversal, getUniversalProp, nameSymbol } from 'photon:resolve-from-photon:@universal-middleware/core';
-import handler from ${JSON.stringify(handler.id)};
+import handler from ${JSON.stringify(metaHandler.id)};
 ${condition === 'dev' ? 'import { devServerMiddleware } from "photon:resolve-from-photon:@photonjs/core/dev";' : ''}
 ${middlewares.map((m, i) => `import m${i} from ${JSON.stringify(m)};`).join('\n')}
 
@@ -74,7 +67,7 @@ function getUniversalMiddlewares() {
 }
 
 function getUniversalEntries() {
-  return extractUniversal(handler, ${JSON.stringify(handler.id)}, errorMessageEntry);
+  return extractUniversal(handler, ${JSON.stringify(metaHandler.id)}, errorMessageEntry);
 }
   
 export ${isAsync ? 'async' : ''} function apply(app, additionalMiddlewares) {
