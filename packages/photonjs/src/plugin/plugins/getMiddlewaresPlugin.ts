@@ -2,18 +2,12 @@ import type { Plugin } from 'vite'
 import type { PluginContext } from '../utils/rollupTypes.js'
 import { ifPhotonModule } from '../utils/virtual.js'
 
-function getAllPhotonMiddlewares(
-  pluginContext: PluginContext,
-  condition: 'dev' | 'edge' | 'node',
-  server: string,
-  query: string,
-) {
+function getAllPhotonMiddlewares(pluginContext: PluginContext, condition: 'dev' | 'edge' | 'node', server: string) {
   const isDev = condition === 'dev'
   const isDevServer = Boolean(pluginContext.environment.config.photon.devServer)
   // Dev handlers and middlewares can be injected by a dedicated vite devServer middleware.
   // If this is the case, we shouldn't try to inject them into the server's runtime.
   const areMiddlewaresAlreadyInstalledByViteDevServer = isDev && isDevServer
-  const q = new URLSearchParams(query)
 
   // middlewares
   const getMiddlewares = areMiddlewaresAlreadyInstalledByViteDevServer
@@ -77,9 +71,9 @@ export function getMiddlewaresPlugin(): Plugin[] {
       },
 
       load(id) {
-        return ifPhotonModule('get-middlewares', id, ({ condition, server, query }) => {
+        return ifPhotonModule('get-middlewares', id, ({ condition, server }) => {
           return {
-            code: getAllPhotonMiddlewares(this, condition as 'dev' | 'edge' | 'node', server, query),
+            code: getAllPhotonMiddlewares(this, condition as 'dev' | 'edge' | 'node', server),
             map: { mappings: '' } as const,
           }
         })

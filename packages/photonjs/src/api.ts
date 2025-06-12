@@ -12,6 +12,7 @@ export {
   PhotonRuntimeError,
   PhotonDependencyError,
 } from './utils/assert.js'
+export { getPhotonMeta } from './utils/meta.js'
 
 declare module 'vite' {
   interface UserConfig {
