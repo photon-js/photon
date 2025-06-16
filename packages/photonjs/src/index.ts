@@ -7,3 +7,4 @@ export {
   PhotonRuntimeError,
   PhotonDependencyError,
 } from './utils/assert.js'
+import './vite-types.js'
