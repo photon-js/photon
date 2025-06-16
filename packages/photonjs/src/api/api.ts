@@ -2,7 +2,11 @@ import type { PluginContext } from '../plugin/utils/rollupTypes.js'
 import { asPhotonEntryId } from '../plugin/utils/virtual.js'
 import type { Photon } from '../types.js'
 
-export function setPhotonHandler(pluginContext: PluginContext, name: string, entry: Photon.EntryUniversalHandler) {
+export function setPhotonHandler(
+  pluginContext: PluginContext,
+  name: string,
+  entry: Omit<Photon.EntryUniversalHandler, 'name'>,
+) {
   pluginContext.environment.config.photon.handlers[name] = {
     ...entry,
     name,
