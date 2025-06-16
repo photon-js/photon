@@ -1,3 +1,5 @@
+import './vite-types.js'
+
 export { isPhotonMeta, type PhotonMeta } from './plugin/utils/entry.js'
 export { resolvePhotonConfig } from './validators/coerce.js'
 export { setPhotonHandler, getPhotonServerIdWithHandler } from './api/api.js'
@@ -10,4 +12,3 @@ export {
   PhotonDependencyError,
 } from './utils/assert.js'
 export { getPhotonMeta } from './utils/meta.js'
-import './vite-types.js'
