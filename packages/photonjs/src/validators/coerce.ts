@@ -2,7 +2,7 @@ import type { z } from 'zod/v4'
 import { asPhotonEntryId } from '../plugin/utils/virtual.js'
 import type { PhotonConfig, PhotonEntryBase, PhotonEntryServer, PhotonEntryUniversalHandler } from './types.js'
 import * as Validators from './validators.js'
-import type { Photon } from "../types.js";
+import type { Photon } from '../types.js'
 
 function entryToPhoton<
   T extends 'handler-entry' | 'server-entry',
