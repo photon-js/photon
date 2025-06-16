@@ -14,6 +14,7 @@ export const SupportedServers = z.enum(['hono', 'hattip', 'elysia', 'express', '
 
 export const PhotonEntryBase = z.object({
   id: z.string(),
+  name: z.string(),
   route: z.string().optional(),
   resolvedId: z.string().optional(),
 })
