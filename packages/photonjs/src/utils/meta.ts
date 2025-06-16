@@ -1,6 +1,7 @@
 import { isPhotonMeta, type PhotonMeta } from '../plugin/utils/entry.js'
 import type { PluginContext } from '../plugin/utils/rollupTypes.js'
 import { asPhotonEntryId } from '../plugin/utils/virtual.js'
+import type { Photon } from '../types.js'
 import { assertUsage, PhotonUsageError } from './assert.js'
 
 interface HintToMeta {

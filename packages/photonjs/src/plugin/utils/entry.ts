@@ -1,3 +1,5 @@
+import type { Photon } from "../../types.js";
+
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 type AnyRecord = Record<string, any>
 
