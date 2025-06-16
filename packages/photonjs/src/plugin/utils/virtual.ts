@@ -1,42 +1,42 @@
-import { type Out, type Type, type } from 'arktype'
-import { assert } from '../../utils/assert.js'
-
-export function literal<T extends object>(regex: RegExp) {
-  return type(regex).pipe.try((x) => {
+export function regexGroups<T extends object>(regex: RegExp) {
+  return (x?: string) => {
+    if (x === undefined) return null
     const match = x.match(regex)
-    assert(match)
+    if (match === null) return null
     return match.groups as T
-    // biome-ignore lint/complexity/noBannedTypes: <explanation>
-  }) as Type<(In: string) => Out<T>, {}>
+  }
 }
 
-export const virtualModules = {
-  'handler-entry': literal<{ entry: string }>(/^photon:handler-entry:(?<entry>.+)/),
-  'server-entry': literal<{ entry?: string }>(/^photon:server-entry(?:$|:(?<entry>.+))/),
-  'server-entry-with-handler': literal<{ condition: string; handler: string }>(
+const virtualModules = {
+  'handler-entry': regexGroups<{ entry: string }>(/^photon:handler-entry:(?<entry>.+)/),
+  'server-entry': regexGroups<{ entry?: string }>(/^photon:server-entry(?:$|:(?<entry>.+))/),
+  'server-entry-with-handler': regexGroups<{ condition: string; handler: string }>(
     /^photon:server-entry-with-handler:(?<condition>.+?):(?<handler>.+)/,
   ),
-  'fallback-entry': literal(/^photon:fallback-entry/),
-  'resolve-from-photon': literal<{ module: string }>(/^photon:resolve-from-photon:(?<module>.+)/),
-  'get-middlewares': literal<{ condition: string; server: string }>(
+  'fallback-entry': regexGroups(/^photon:fallback-entry/),
+  'resolve-from-photon': regexGroups<{ module: string }>(/^photon:resolve-from-photon:(?<module>.+)/),
+  'get-middlewares': regexGroups<{ condition: string; server: string }>(
     /^photon:get-middlewares:(?<condition>.+?):(?<server>.+)/,
   ),
-  'virtual-apply-handler': literal<{ condition: string; server: string; handler: string }>(
+  'virtual-apply-handler': regexGroups<{ condition: string; server: string; handler: string }>(
     /^photon:virtual-apply-handler:(?<condition>.+?):(?<server>.+?):(?<handler>.+)/,
   ),
 }
 
 type VirtualModuleKeys = keyof typeof virtualModules
+type ExtractArgs<K extends VirtualModuleKeys | VirtualModuleKeys[]> = NonNullable<
+  ReturnType<(typeof virtualModules)[K extends VirtualModuleKeys ? K : K[number]]>
+>
 
 export function ifPhotonModule<
   K extends VirtualModuleKeys | VirtualModuleKeys[],
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  F extends (arg: (typeof virtualModules)[K extends VirtualModuleKeys ? K : K[number]]['infer']) => any,
+  F extends (arg: ExtractArgs<K>) => any,
 >(key: K, value: unknown, callback: F): null | ReturnType<F>
 export function ifPhotonModule<
   K extends VirtualModuleKeys | VirtualModuleKeys[],
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  F extends (arg: (typeof virtualModules)[K extends VirtualModuleKeys ? K : K[number]]['infer']) => any,
+  F extends (arg: ExtractArgs<K>) => any,
   R,
 >(
   key: K,
@@ -52,7 +52,7 @@ export function ifPhotonModule<
 export function ifPhotonModule<
   K extends VirtualModuleKeys | VirtualModuleKeys[],
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  F extends (arg: (typeof virtualModules)[K extends VirtualModuleKeys ? K : K[number]]['infer']) => any,
+  F extends (arg: ExtractArgs<K>) => any,
 >(key: K, value: unknown, callback: F, next: unknown = null): unknown | ReturnType<F> {
   function returnOrThrow() {
     if (next instanceof Error) {
@@ -67,19 +67,22 @@ export function ifPhotonModule<
 
   if (Array.isArray(key)) {
     for (const k of key) {
-      const r = ifPhotonModule(k as VirtualModuleKeys, value, callback)
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+      const r = ifPhotonModule(k as VirtualModuleKeys, value, callback as any)
       if (r !== null) return r
     }
     return returnOrThrow()
   }
 
-  const out = virtualModules[key as VirtualModuleKeys](value)
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  const out = virtualModules[key as VirtualModuleKeys](value as any)
 
-  if (out instanceof type.errors) {
+  if (out === null) {
     return returnOrThrow()
   }
 
-  return callback(out)
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  return callback(out as any)
 }
 
 export function asPhotonEntryId(id: string, type: 'handler-entry' | 'server-entry') {

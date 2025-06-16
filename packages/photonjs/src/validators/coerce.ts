@@ -1,7 +1,8 @@
-import { match, type } from 'arktype'
+import type { z } from 'zod/v4'
 import { asPhotonEntryId } from '../plugin/utils/virtual.js'
 import type { PhotonConfig, PhotonEntryBase, PhotonEntryServer, PhotonEntryUniversalHandler } from './types.js'
 import * as Validators from './validators.js'
+import type { Photon } from "../types.js";
 
 function entryToPhoton<
   T extends 'handler-entry' | 'server-entry',
@@ -20,28 +21,27 @@ function entryToPhoton<
 }
 
 function handlersToPhoton(
-  handlers: Record<string, Partial<PhotonEntryUniversalHandler> | string>,
+  handlers: z.infer<typeof Validators.PhotonConfig>['handlers'],
 ): Record<string, PhotonEntryUniversalHandler> {
   return Object.fromEntries(
-    Object.entries(handlers).map(([key, value]) => [
+    Object.entries(handlers ?? {}).map(([key, value]) => [
       key,
       entryToPhoton(value as PhotonEntryUniversalHandler, 'handler-entry'),
     ]),
   )
 }
 
-export function resolvePhotonConfig(config: PhotonConfig | undefined): Photon.ConfigResolved {
-  const out = Validators.PhotonConfig.pipe.try((c) => {
-    const toRest = match
-      .in<PhotonConfig>()
-      .case({ '[string]': 'unknown' }, (v) => {
-        const { handlers, server, hmr, middlewares, devServer, ...rest } = v
-        return rest
-      })
-      .default(() => ({}))
+function excludeTrue<T>(v: T): Partial<Exclude<T, true>> {
+  if (v === true) return {}
+  return v as Exclude<T, true>
+}
 
-    const handlers = handlersToPhoton(c.handlers ?? {})
-    const server = c.server
+const resolver = Validators.PhotonConfig.transform((c) => {
+  return Validators.PhotonConfigResolved.parse({
+    // Allows Photon targets to add custom options
+    ...c,
+    handlers: handlersToPhoton(c.handlers),
+    server: c.server
       ? entryToPhoton(c.server, 'server-entry')
       : entryToPhoton(
           {
@@ -50,35 +50,19 @@ export function resolvePhotonConfig(config: PhotonConfig | undefined): Photon.Co
             server: 'hono',
           },
           'server-entry',
-        )
+        ),
+    devServer:
+      c.devServer === false
+        ? false
+        : {
+            env: excludeTrue(c.devServer)?.env ?? 'ssr',
+            autoServe: excludeTrue(c.devServer)?.autoServe ?? true,
+          },
+    middlewares: c.middlewares ?? [],
+    hmr: c.hmr ?? true,
+  })
+})
 
-    const toDevServer = match
-      .in<PhotonConfig['devServer']>()
-      .case('false', (): false => false)
-      .default((v) => {
-        const value = typeof v === 'boolean' ? {} : v
-        return {
-          env: value?.env ?? 'ssr',
-          autoServe: value?.autoServe ?? true,
-        }
-      })
-
-    const hmr = c.hmr ?? true
-    const middlewares = c.middlewares ?? []
-    const devServer = toDevServer(c.devServer ?? true)
-    // Allows Photon targets to add custom options
-    const rest = toRest(c)
-
-    return {
-      ...rest,
-      handlers,
-      server,
-      hmr,
-      middlewares,
-      devServer,
-    }
-  }, Validators.PhotonConfigResolved)(config)
-
-  if (out instanceof type.errors) return out.throw()
-  return out
+export function resolvePhotonConfig(config: PhotonConfig | undefined): Photon.ConfigResolved {
+  return resolver.parse(config ?? {})
 }
