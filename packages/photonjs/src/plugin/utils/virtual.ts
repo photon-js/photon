@@ -1,13 +1,19 @@
 export function regexGroups<T extends object>(regex: RegExp) {
-  return (x?: string) => {
-    if (x === undefined) return null
-    const match = x.match(regex)
-    if (match === null) return null
-    return match.groups as T
+  return {
+    regex,
+    match(x?: string) {
+      if (x === undefined) return null
+      const match = x.match(regex)
+      if (match === null) return null
+      return match.groups as T
+    },
   }
 }
 
 const virtualModules = {
+  'virtual-entry': regexGroups<{ uniqueId: string; entry: string }>(
+    /^photon:virtual-entry:(?<uniqueId>.+?):(?<entry>.+)/,
+  ),
   'handler-entry': regexGroups<{ entry: string }>(/^photon:handler-entry:(?<entry>.+)/),
   'server-entry': regexGroups<{ entry?: string }>(/^photon:server-entry(?:$|:(?<entry>.+))/),
   'server-entry-with-handler': regexGroups<{ condition: string; handler: string }>(
@@ -23,9 +29,13 @@ const virtualModules = {
   ),
 }
 
+export const virtualModulesRegex = Object.fromEntries(
+  Object.entries(virtualModules).map(([k, v]) => [k, v.regex]),
+) as Record<keyof typeof virtualModules, RegExp>
+
 type VirtualModuleKeys = keyof typeof virtualModules
 type ExtractArgs<K extends VirtualModuleKeys | VirtualModuleKeys[]> = NonNullable<
-  ReturnType<(typeof virtualModules)[K extends VirtualModuleKeys ? K : K[number]]>
+  ReturnType<(typeof virtualModules)[K extends VirtualModuleKeys ? K : K[number]]['match']>
 >
 
 export function ifPhotonModule<
@@ -75,7 +85,7 @@ export function ifPhotonModule<
   }
 
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  const out = virtualModules[key as VirtualModuleKeys](value as any)
+  const out = virtualModules[key as VirtualModuleKeys].match(value as any)
 
   if (out === null) {
     return returnOrThrow()

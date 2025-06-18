@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto'
 import type { PluginContext } from '../plugin/utils/rollupTypes.js'
 import { asPhotonEntryId } from '../plugin/utils/virtual.js'
 import type { Photon } from '../types.js'
@@ -37,4 +38,11 @@ export function addPhotonServerConfig(
 
 export function getPhotonServerIdWithHandler(condition: 'dev' | 'node' | 'edge', handlerId: string) {
   return `photon:server-entry-with-handler:${condition}:${handlerId}`
+}
+
+export function ensureUniqueEntry(entryId: string) {
+  if (entryId.startsWith('photon:virtual-entry:')) {
+    return entryId
+  }
+  return `photon:virtual-entry:${randomUUID()}:${entryId}`
 }
