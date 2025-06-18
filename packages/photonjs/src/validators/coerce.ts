@@ -40,10 +40,7 @@ function handlersToPhoton(
   handlers: z.infer<typeof Validators.PhotonConfig>['handlers'],
 ): Record<string, Photon.EntryUniversalHandler> {
   return Object.fromEntries(
-    Object.entries(handlers ?? {}).map(([key, value]) => [
-      key,
-      entryToPhoton('handler-entry', value as Photon.EntryUniversalHandler, key),
-    ]),
+    Object.entries(handlers ?? {}).map(([key, value]) => [key, entryToPhoton('handler-entry', value, key)]),
   )
 }
 
