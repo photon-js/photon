@@ -2,22 +2,22 @@ import type { z } from 'zod/v4'
 import { asPhotonEntryId } from '../plugin/utils/virtual.js'
 import type { Photon } from '../types.js'
 import { assert } from '../utils/assert.js'
-import type { PhotonConfig } from './types.js'
+import type { PhotonConfig, PhotonEntryServerPartial, PhotonEntryUniversalHandlerPartial } from './types.js'
 import * as Validators from './validators.js'
 
 function entryToPhoton(
   type: 'server-entry',
-  entry: string | Partial<Photon.EntryServer>,
+  entry: string | PhotonEntryServerPartial,
   name: 'index',
 ): Photon.EntryServer
 function entryToPhoton(
   type: 'handler-entry',
-  entry: string | Partial<Photon.EntryUniversalHandler>,
+  entry: string | PhotonEntryUniversalHandlerPartial,
   name: string,
 ): Photon.EntryUniversalHandler
 function entryToPhoton(
   type: 'server-entry' | 'handler-entry',
-  entry: string | Partial<Photon.Entry>,
+  entry: string | PhotonEntryServerPartial | PhotonEntryUniversalHandlerPartial,
   name: string,
 ): Photon.Entry {
   assert(name)
@@ -26,14 +26,14 @@ function entryToPhoton(
       id: asPhotonEntryId(entry, type),
       name,
       type: type === 'server-entry' ? 'server' : 'universal-handler',
-    } as Photon.Entry
+    }
   }
   return {
     ...entry,
     type: type === 'server-entry' ? 'server' : 'universal-handler',
     name,
-    id: asPhotonEntryId((entry as Photon.EntryBase).id, type),
-  } as Photon.Entry
+    id: asPhotonEntryId(entry.id, type),
+  }
 }
 
 function handlersToPhoton(
@@ -58,7 +58,7 @@ const resolver = Validators.PhotonConfig.transform((c) => {
     ...c,
     handlers: handlersToPhoton(c.handlers),
     server: c.server
-      ? entryToPhoton('server-entry', c.server as Partial<Photon.EntryServer>, 'index')
+      ? entryToPhoton('server-entry', c.server, 'index')
       : entryToPhoton(
           'server-entry',
           {
