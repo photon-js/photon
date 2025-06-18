@@ -68,6 +68,7 @@ const resolver = Validators.PhotonConfig.transform((c) => {
           },
           'index',
         ),
+    additionalServerConfigs: c.additionalServerConfigs ?? [],
     devServer:
       c.devServer === false
         ? false

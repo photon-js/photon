@@ -2,7 +2,7 @@ import type { ViteDevServer } from 'vite'
 import { z } from 'zod/v4'
 import type { PluginContext } from '../plugin/utils/rollupTypes.js'
 
-// FIXME server should be optional?
+// FIXME should server be optional?
 export type GetPhotonCondition = (
   this: ViteDevServer | PluginContext,
   condition: 'dev' | 'edge' | 'node',
@@ -24,8 +24,15 @@ export const PhotonEntryServer = PhotonEntryBase.extend({
   server: SupportedServers.optional(),
 })
 
+export const PhotonEntryServerPartial = PhotonEntryServer.extend({
+  type: PhotonEntryServer.shape.type.optional(),
+}).omit({
+  name: true,
+})
+
 export const PhotonEntryUniversalHandler = PhotonEntryBase.extend({
   type: z.literal('universal-handler'),
+  // TODO should be moved to a new { node: { standalone: ...} } prop
   /**
    * If false or undefined, the server will wrap this handler.
    * If true, adapters can choose to deploy it directly (usually on edge platforms).
@@ -34,9 +41,20 @@ export const PhotonEntryUniversalHandler = PhotonEntryBase.extend({
   env: z.string().optional(),
 })
 
+export const PhotonEntryUniversalHandlerPartial = PhotonEntryUniversalHandler.extend({
+  type: PhotonEntryUniversalHandler.shape.type.optional(),
+}).omit({
+  name: true,
+})
+
 export const PhotonConfig = z.looseObject({
-  handlers: z.record(z.string(), z.union([z.string(), PhotonEntryUniversalHandler.partial()])).optional(),
-  server: z.union([z.string(), PhotonEntryServer.partial()]).optional(),
+  handlers: z.record(z.string(), z.union([z.string(), PhotonEntryUniversalHandlerPartial])).optional(),
+  server: z.union([z.string(), PhotonEntryServerPartial]).optional(),
+  /**
+   * Allows for different deployment environments to generate code according to their specific requirements.
+   * For instance, Vercel can use this information to create separate configurations for each `additionalServerConfigs`.
+   */
+  additionalServerConfigs: z.array(PhotonEntryBase.omit({ id: true, resolvedId: true })).optional(),
   hmr: z.union([z.boolean(), z.literal('prefer-restart')]).optional(),
   middlewares: z
     .array(
@@ -59,6 +77,7 @@ export const PhotonConfig = z.looseObject({
 export const PhotonConfigResolved = z.looseObject({
   handlers: z.record(z.string(), PhotonEntryUniversalHandler),
   server: PhotonEntryServer,
+  additionalServerConfigs: z.array(PhotonEntryBase.omit({ id: true, resolvedId: true })),
   hmr: z.union([z.boolean(), z.literal('prefer-restart')]),
   middlewares: z.array(
     z.custom<GetPhotonCondition>((fn) => {
