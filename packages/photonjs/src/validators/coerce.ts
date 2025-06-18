@@ -1,76 +1,83 @@
-import { match, type } from 'arktype'
+import type { z } from 'zod/v4'
 import { asPhotonEntryId } from '../plugin/utils/virtual.js'
-import type {
-  PhotonConfig,
-  PhotonConfigResolved,
-  PhotonEntryBase,
-  PhotonEntryServer,
-  PhotonEntryUniversalHandler,
-} from './types.js'
+import type { Photon } from '../types.js'
+import { assert } from '../utils/assert.js'
+import type { PhotonConfig, PhotonEntryServerPartial, PhotonEntryUniversalHandlerPartial } from './types.js'
 import * as Validators from './validators.js'
 
-function entryToPhoton<
-  T extends 'handler-entry' | 'server-entry',
-  Entry = T extends 'server-entry' ? PhotonEntryServer : PhotonEntryUniversalHandler,
->(entry: string | Entry, type: T): Entry {
-  if (typeof entry === 'string')
+function entryToPhoton(
+  type: 'server-entry',
+  entry: string | PhotonEntryServerPartial,
+  name: 'index',
+): Photon.EntryServer
+function entryToPhoton(
+  type: 'handler-entry',
+  entry: string | PhotonEntryUniversalHandlerPartial,
+  name: string,
+): Photon.EntryUniversalHandler
+function entryToPhoton(
+  type: 'server-entry' | 'handler-entry',
+  entry: string | PhotonEntryServerPartial | PhotonEntryUniversalHandlerPartial,
+  name: string,
+): Photon.Entry {
+  assert(name)
+  if (typeof entry === 'string') {
     return {
       id: asPhotonEntryId(entry, type),
+      name,
       type: type === 'server-entry' ? 'server' : 'universal-handler',
-    } as Entry
+    }
+  }
   return {
     ...entry,
     type: type === 'server-entry' ? 'server' : 'universal-handler',
-    id: asPhotonEntryId((entry as PhotonEntryBase).id, type),
+    name,
+    id: asPhotonEntryId(entry.id, type),
   }
 }
 
 function handlersToPhoton(
-  handlers: Record<string, Partial<PhotonEntryUniversalHandler> | string>,
-): Record<string, PhotonEntryUniversalHandler> {
+  handlers: z.infer<typeof Validators.PhotonConfig>['handlers'],
+): Record<string, Photon.EntryUniversalHandler> {
   return Object.fromEntries(
-    Object.entries(handlers).map(([key, value]) => [
-      key,
-      entryToPhoton(value as PhotonEntryUniversalHandler, 'handler-entry'),
-    ]),
+    Object.entries(handlers ?? {}).map(([key, value]) => [key, entryToPhoton('handler-entry', value, key)]),
   )
 }
 
-export function resolvePhotonConfig(config: PhotonConfig | undefined): PhotonConfigResolved {
-  const out = Validators.PhotonConfig.pipe.try((c) => {
-    const toRest = match
-      .in<PhotonConfig>()
-      .case({ '[string]': 'unknown' }, (v) => {
-        const { handlers, server, hmr, middlewares, ...rest } = v
-        return rest
-      })
-      .default(() => ({}))
+function excludeTrue<T>(v: T): Partial<Exclude<T, true>> {
+  if (v === true) return {}
+  return v as Exclude<T, true>
+}
 
-    const handlers = handlersToPhoton(c.handlers ?? {})
-    const server = c.server
-      ? entryToPhoton(c.server, 'server-entry')
+const resolver = Validators.PhotonConfig.transform((c) => {
+  return Validators.PhotonConfigResolved.parse({
+    // Allows Photon targets to add custom options
+    ...c,
+    handlers: handlersToPhoton(c.handlers),
+    server: c.server
+      ? entryToPhoton('server-entry', c.server, 'index')
       : entryToPhoton(
+          'server-entry',
           {
             id: 'photon:fallback-entry',
             type: 'server',
             server: 'hono',
           },
-          'server-entry',
-        )
-    const hmr = c.hmr ?? true
-    const middlewares = c.middlewares ?? []
-    // Allows Photon targets to add custom options
-    const rest = toRest(c)
+          'index',
+        ),
+    additionalServerConfigs: c.additionalServerConfigs ?? [],
+    devServer:
+      c.devServer === false
+        ? false
+        : {
+            env: excludeTrue(c.devServer)?.env ?? 'ssr',
+            autoServe: excludeTrue(c.devServer)?.autoServe ?? true,
+          },
+    middlewares: c.middlewares ?? [],
+    hmr: c.hmr ?? true,
+  })
+})
 
-    return {
-      handlers,
-      server,
-      hmr,
-      middlewares,
-      ...rest,
-    }
-  }, Validators.PhotonConfigResolved)(config)
-
-  if (out instanceof type.errors) return out.throw()
-  return out
+export function resolvePhotonConfig(config: PhotonConfig | undefined): Photon.ConfigResolved {
+  return resolver.parse(config ?? {})
 }

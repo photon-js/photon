@@ -1,9 +1,9 @@
 import oxc from 'oxc-transform'
 import type { UnpluginFactory } from 'unplugin'
-import { assert } from '../utils/assert.js'
+import { assert, PhotonConfigError } from '../utils/assert.js'
 
-const re_apply = /^photon:virtual-apply:(?<condition>dev|edge|node):(?<server>[^:]+)(?<rest>.*)/
-const re_index = /^photon:virtual-index:(?<server>[^:]+)(?<rest>.*)/
+const re_apply = /^photon:virtual-apply:(?<condition>dev|edge|node):(?<server>[^?]+)(?<rest>.*)/
+const re_index = /^photon:virtual-index:(?<server>[^?]+)(?<rest>.*)/
 interface MatchGroups {
   condition?: 'dev' | 'edge' | 'node'
   server: string
@@ -18,21 +18,24 @@ function test(id: string, re: RegExp): MatchGroups | null {
 
 function compileApply(id: string) {
   const match = test(id, re_apply)
-  if (!match) throw new Error(`Invalid id ${id}`)
+  if (!match)
+    throw new PhotonConfigError(
+      `Invalid virtual apply ID "${id}". Expected format: photon:virtual-apply:<condition>:<server>`,
+    )
 
   const isAsync = match.server === 'fastify'
 
   //language=ts
-  const code = `import { apply as applyAdapter } from '@universal-middleware/${match.server}';
+  const code = `import { apply as applyAdapter, type App } from '@universal-middleware/${match.server}';
 import { getUniversalMiddlewares, getUniversalEntries, extractUniversal, errorMessageMiddleware } from 'photon:get-middlewares:${match.condition}:${match.server}${match.rest}';
 import { type RuntimeAdapterTarget, type UniversalMiddleware, getUniversalProp, nameSymbol } from '@universal-middleware/core';
 ${match.condition === 'dev' ? 'import { devServerMiddleware } from "@photonjs/core/dev";' : ''}
 
 function errorMessageMiddleware(id, index) {
-  return \`PhotonError: additional middleware at index \${index} default export must respect the following type: UniversalMiddleware | UniversalMiddleware[]. Each individual middleware must be wrapped with enhance helper. See https://universal-middleware.dev/helpers/enhance\`
+  return \`Additional middleware at index \${index} default export must respect the following type: UniversalMiddleware | UniversalMiddleware[]. Each individual middleware must be wrapped with enhance helper. See https://universal-middleware.dev/helpers/enhance\`
 }
   
-export ${isAsync ? 'async' : ''} function apply(app: Parameters<typeof applyAdapter>[0], additionalMiddlewares?: UniversalMiddleware[]): ${isAsync ? 'Promise<Parameters<typeof applyAdapter>[0]>' : 'Parameters<typeof applyAdapter>[0]'} {
+export ${isAsync ? 'async' : ''} function apply<T extends App>(app: T, additionalMiddlewares?: UniversalMiddleware[]): ${isAsync ? 'Promise<T>' : 'T'} {
   const middlewares = getUniversalMiddlewares();
   const entries = getUniversalEntries();
   ${match.condition === 'dev' ? 'middlewares.unshift(devServerMiddleware());' : ''}
@@ -72,9 +75,12 @@ export type RuntimeAdapter = RuntimeAdapterTarget<${JSON.stringify(match.server)
   }
 }
 
+// TODO replace the context with a virtual import that is resolved by Vite
+//  ALSO create a new virtual module for each handler
 function compileIndex(id: string) {
   const match = test(id, re_index)
-  if (!match) throw new Error(`Invalid id ${id}`)
+  if (!match)
+    throw new PhotonConfigError(`Invalid virtual index ID "${id}". Expected format: photon:virtual-index:<server>`)
 
   //language=ts
   const code = `export { apply, type RuntimeAdapter } from '@photonjs/core/${match.server}/apply'
@@ -155,53 +161,54 @@ export const virtualApplyFactory: UnpluginFactory<undefined> = () => {
       }
     },
 
-    loadInclude(id) {
-      return Boolean(test(id, re_apply) || test(id, re_index))
-    },
+    load: {
+      filter: {
+        id: [re_apply, re_index],
+      },
+      handler(id) {
+        {
+          const match = test(id, re_apply)
+          if (match) {
+            const compiled = compileApply(id)
+            const fileName = Object.entries(entries).find(([, v]) => v === id)?.[0]
+            assert(fileName)
 
-    load(id) {
-      {
-        const match = test(id, re_apply)
-        if (match) {
-          const compiled = compileApply(id)
-          const fileName = Object.entries(entries).find(([, v]) => v === id)?.[0]
-          assert(fileName)
+            this.emitFile({
+              type: 'asset',
+              fileName: `${fileName}.d.ts`,
+              // biome-ignore lint/style/noNonNullAssertion: <explanation>
+              source: compiled.declaration!,
+            })
 
-          this.emitFile({
-            type: 'asset',
-            fileName: `${fileName}.d.ts`,
-            // biome-ignore lint/style/noNonNullAssertion: <explanation>
-            source: compiled.declaration!,
-          })
-
-          return {
-            code: compiled.code,
-            // biome-ignore lint/style/noNonNullAssertion: <explanation>
-            map: compiled.map!,
+            return {
+              code: compiled.code,
+              // biome-ignore lint/style/noNonNullAssertion: <explanation>
+              map: compiled.map!,
+            }
           }
         }
-      }
-      {
-        const match = test(id, re_index)
-        if (match) {
-          const compiled = compileIndex(id)
-          const fileName = Object.entries(entries).find(([, v]) => v === id)?.[0]
-          assert(fileName)
+        {
+          const match = test(id, re_index)
+          if (match) {
+            const compiled = compileIndex(id)
+            const fileName = Object.entries(entries).find(([, v]) => v === id)?.[0]
+            assert(fileName)
 
-          this.emitFile({
-            type: 'asset',
-            fileName: `${fileName}.d.ts`,
-            // biome-ignore lint/style/noNonNullAssertion: <explanation>
-            source: compiled.declaration!,
-          })
+            this.emitFile({
+              type: 'asset',
+              fileName: `${fileName}.d.ts`,
+              // biome-ignore lint/style/noNonNullAssertion: <explanation>
+              source: compiled.declaration!,
+            })
 
-          return {
-            code: compiled.code,
-            // biome-ignore lint/style/noNonNullAssertion: <explanation>
-            map: compiled.map!,
+            return {
+              code: compiled.code,
+              // biome-ignore lint/style/noNonNullAssertion: <explanation>
+              map: compiled.map!,
+            }
           }
         }
-      }
+      },
     },
   }
 }

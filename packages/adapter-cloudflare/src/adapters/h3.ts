@@ -1,13 +1,14 @@
 import type { ExportedHandlerFetchHandler, Response } from '@cloudflare/workers-types'
 import type { apply as applyAdapter } from '@universal-middleware/h3'
 import { toWebHandler } from 'h3'
+import { createMissingDependencyError } from '../utils/errors.js'
 
 async function tryImportCrossws() {
   try {
     const { default: wsAdapter } = await import('crossws/adapters/cloudflare')
     return wsAdapter
   } catch (e) {
-    throw new Error('crossws is not installed', { cause: e })
+    throw createMissingDependencyError('crossws', e)
   }
 }
 
