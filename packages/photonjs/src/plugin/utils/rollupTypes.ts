@@ -5,3 +5,6 @@ export type PluginContext = ThisParameterType<Extract<Plugin['resolveId'], (...a
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export type ModuleInfo = Parameters<Extract<Plugin['moduleParsed'], (...args: never) => any>>[0]
+
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+export type LoadResult = Awaited<ReturnType<Extract<Plugin['load'], (...args: never) => any>>>

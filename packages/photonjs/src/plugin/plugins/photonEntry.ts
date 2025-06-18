@@ -6,9 +6,9 @@ import { getPhotonMeta } from '../../utils/meta.js'
 import { resolvePhotonConfig } from '../../validators/coerce.js'
 import type { SupportedServers } from '../../validators/types.js'
 import { isPhotonMeta } from '../utils/entry.js'
-import type { ModuleInfo, PluginContext } from '../utils/rollupTypes.js'
+import type { LoadResult, ModuleInfo, PluginContext } from '../utils/rollupTypes.js'
 import { importsToServer } from '../utils/servers.js'
-import { asPhotonEntryId, ifPhotonModule } from '../utils/virtual.js'
+import { asPhotonEntryId, ifPhotonModule, virtualModulesRegex } from '../utils/virtual.js'
 
 const reVirtualApplyHandler = /photon:virtual-apply-handler:(dev|node|edge):(?<server>[^:]+):.*/
 const serverImports = new Set(Object.keys(importsToServer))
@@ -154,6 +154,9 @@ export function photonEntry(): Plugin[] {
       enforce: 'pre',
 
       resolveId: {
+        filter: {
+          id: virtualModulesRegex['server-entry-with-handler'],
+        },
         order: 'post',
         handler(id) {
           return ifPhotonModule('server-entry-with-handler', id, async ({ handler }) => {
@@ -239,6 +242,9 @@ export function photonEntry(): Plugin[] {
       enforce: 'pre',
 
       resolveId: {
+        filter: {
+          id: virtualModulesRegex['server-entry'],
+        },
         order: 'post',
         handler(id, _importer, opts) {
           return ifPhotonModule('server-entry', id, async ({ entry: actualId }) => {
@@ -288,6 +294,9 @@ export function photonEntry(): Plugin[] {
       enforce: 'pre',
 
       resolveId: {
+        filter: {
+          id: virtualModulesRegex['handler-entry'],
+        },
         order: 'post',
         handler(id, _importer, opts) {
           return ifPhotonModule('handler-entry', id, async ({ entry: actualId }) => {
@@ -345,6 +354,35 @@ export function photonEntry(): Plugin[] {
           })
         },
       },
+      sharedDuringBuild: true,
+    },
+    {
+      // Allows loading the same entry multiple times
+      name: 'photon:resolve-virtual',
+      enforce: 'pre',
+
+      resolveId: {
+        filter: {
+          id: virtualModulesRegex['virtual-entry'],
+        },
+        handler(id) {
+          return ifPhotonModule('virtual-entry', id, async () => {
+            return id
+          })
+        },
+      },
+
+      load: {
+        filter: {
+          id: virtualModulesRegex['virtual-entry'],
+        },
+        handler(id) {
+          return ifPhotonModule('virtual-entry', id, ({ entry }) => {
+            return this.load({ id: entry }) as Promise<LoadResult>
+          })
+        },
+      },
+
       sharedDuringBuild: true,
     },
     {
