@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto'
 import type { PluginContext } from '../plugin/utils/rollupTypes.js'
-import { asPhotonEntryId } from '../plugin/utils/virtual.js'
+import { asPhotonEntryId, ifPhotonModule } from '../plugin/utils/virtual.js'
 import type { Photon } from '../types.js'
 import { PhotonConfigError } from '../utils/assert.js'
 import { PhotonEntryBase, PhotonEntryUniversalHandler } from '../validators/validators.js'
@@ -45,4 +45,12 @@ export function ensureUniqueEntry(entryId: string) {
     return entryId
   }
   return `photon:virtual-entry:${randomUUID()}:${entryId}`
+}
+
+export function stripUniqueEntry(entryId: string) {
+  const ret = ifPhotonModule('virtual-entry', entryId, ({ entry }) => {
+    return entry
+  })
+  if (ret === null) return entryId
+  return ret
 }
