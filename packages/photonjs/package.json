@@ -1,6 +1,6 @@
 {
   "name": "@photonjs/core",
-  "version": "0.0.1",
+  "version": "0.0.1-commit-8b823d9",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
