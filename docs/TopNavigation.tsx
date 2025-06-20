@@ -17,7 +17,7 @@ function TopNavigation() {
       </MenuToggle>
       <a
         className="colorize-on-hover"
-        href="/features"
+        href="/start"
         style={{
           color: 'inherit',
           height: '100%',

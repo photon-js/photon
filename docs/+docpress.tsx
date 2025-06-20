@@ -20,5 +20,5 @@ const config: Config = {
   categories,
 
   topNavigation: <TopNavigation />,
-  navMaxWidth: 1140,
+  navLogoSize: 30
 }
