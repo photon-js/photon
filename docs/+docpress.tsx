@@ -2,6 +2,7 @@ export { config as default }
 
 import type { Config } from '@brillout/docpress'
 import logo from './assets/logo.svg'
+import logoWithText from './assets/logo-with-text.svg'
 import { headings, headingsDetached, categories } from './headings'
 import { TopNavigation } from './TopNavigation'
 import React from 'react'
@@ -20,5 +21,5 @@ const config: Config = {
   categories,
 
   topNavigation: <TopNavigation />,
-  navLogoSize: 30
+  navLogo: <img src={logoWithText} height={60} width={150} />
 }
