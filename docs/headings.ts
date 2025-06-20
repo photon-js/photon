@@ -22,16 +22,7 @@ const headingsDetached: HeadingDetachedDefinition[] = [
   {
     title: 'Orphan Page',
     url: '/orphan',
-    category: 'Guides',
-  },
-  {
-    title: 'Orphan Page Without Headings',
-    url: '/orphan-2',
     category: 'Guides 2',
-  },
-  {
-    title: 'Languages',
-    url: '/languages',
   },
 ]
 
@@ -45,18 +36,13 @@ const headings: HeadingDefinition[] = [
   {
     level: 2,
     title: 'Introduction',
-    titleDocument: 'DocPress Demo',
+    titleDocument: 'Photon',
     url: '/',
   },
   {
     level: 2,
-    title: 'Notes',
-    url: '/notes',
-  },
-  {
-    level: 2,
-    title: 'Features',
-    url: '/features',
+    title: 'Get Started',
+    url: '/start',
   },
   {
     level: 1,
@@ -68,35 +54,6 @@ const headings: HeadingDefinition[] = [
     level: 2,
     title: 'Some Page',
     url: '/some-page',
-  },
-  {
-    level: 4,
-    title: 'Some category',
-  },
-  {
-    level: 2,
-    title: 'Tiny Page',
-    url: '/tiny',
-    pageDesign: {
-      hideTitle: true,
-      hideMenuLeft: true,
-      contentMaxWidth: 4000,
-    },
-  },
-  {
-    level: 2,
-    title: 'June Releases',
-    url: '/releases/2024-06',
-  },
-  {
-    level: 2,
-    title: 'Press Kit',
-    url: '/press',
-  },
-  {
-    level: 2,
-    title: 'Page wiht error',
-    url: '/error',
   },
   {
     level: 1,
@@ -120,21 +77,7 @@ const headings: HeadingDefinition[] = [
   },
   {
     level: 2,
-    title: 'Page 2',
+    title: '`Page 2`',
     url: '/page-2',
-  },
-  {
-    level: 4,
-    title: 'Category 3',
-  },
-  {
-    level: 2,
-    title: 'Page 3',
-    url: '/page-3',
-  },
-  {
-    level: 2,
-    title: 'Page 4',
-    url: '/page-4',
   },
 ]
