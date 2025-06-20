@@ -4,6 +4,8 @@ import type { Config } from '@brillout/docpress'
 import logoUrl from './assets/logo.svg'
 import faviconUrl from './assets/logo.svg'
 import { headings, headingsDetached, categories } from './headings'
+import { TopNavigation } from './TopNavigation'
+import React from 'react'
 
 const config: Config = {
   projectInfo: {
@@ -22,6 +24,7 @@ const config: Config = {
   headings,
   headingsDetached,
   categories,
+  topNavigation: <TopNavigation />,
   websiteUrl: 'photonjs.dev',
   twitterHandle: 'fake-twitter-handle',
   navMaxWidth: 1140,
