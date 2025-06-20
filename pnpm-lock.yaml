@@ -24,8 +24,8 @@ importers:
   docs:
     dependencies:
       '@brillout/docpress':
-        specifier: ^0.12.4
-        version: 0.12.6(@algolia/client-search@5.25.0)(@types/react@18.3.21)(@vitejs/plugin-react-swc@3.9.0(vite@6.3.5(@types/node@20.17.47)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.38.0)(search-insights@2.17.3)(typescript@5.8.3)(vike@0.4.234(vite@6.3.5(@types/node@20.17.47)))(vite@6.3.5(@types/node@20.17.47))
+        specifier: ^0.14.0
+        version: 0.14.0(@algolia/client-search@5.25.0)(@types/react@18.3.21)(@vitejs/plugin-react-swc@3.9.0(vite@6.3.5(@types/node@20.17.47)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.38.0)(search-insights@2.17.3)(typescript@5.8.3)(vike@0.4.234(vite@6.3.5(@types/node@20.17.47)))(vite@6.3.5(@types/node@20.17.47))
       '@types/node':
         specifier: ^20.17.32
         version: 20.17.47
@@ -453,14 +453,14 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@brillout/docpress@0.12.6':
-    resolution: {integrity: sha512-kjXCyKAdkBYaNz+vCRWcAhWeCFYlinUYQMY9pINJaxXb3Kld2yYBERKEP0WYefx+03VtmKIvJiOHFzGYFcN6aQ==}
+  '@brillout/docpress@0.14.0':
+    resolution: {integrity: sha512-vPJlTWhB7Jdx/Me9ZpjMhr7Z+aOEwgvycoZ8dFJVMJHOQ5bRZX4NCB4/p1JvPPWHSxCoXoU+wzqQOMBDVHSzXA==}
     peerDependencies:
       '@vitejs/plugin-react-swc': '>=3.0.0'
       react: '>=18.0.0'
       react-dom: '>=18.0.0'
       typescript: '>=5.0.0'
-      vike: '>=0.4.222'
+      vike: '>=0.4.234'
       vite: '>=5.2.0'
     peerDependenciesMeta:
       '@vitejs/plugin-react-swc':
@@ -3585,7 +3585,7 @@ snapshots:
   '@biomejs/cli-win32-x64@1.9.4':
     optional: true
 
-  '@brillout/docpress@0.12.6(@algolia/client-search@5.25.0)(@types/react@18.3.21)(@vitejs/plugin-react-swc@3.9.0(vite@6.3.5(@types/node@20.17.47)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.38.0)(search-insights@2.17.3)(typescript@5.8.3)(vike@0.4.234(vite@6.3.5(@types/node@20.17.47)))(vite@6.3.5(@types/node@20.17.47))':
+  '@brillout/docpress@0.14.0(@algolia/client-search@5.25.0)(@types/react@18.3.21)(@vitejs/plugin-react-swc@3.9.0(vite@6.3.5(@types/node@20.17.47)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.38.0)(search-insights@2.17.3)(typescript@5.8.3)(vike@0.4.234(vite@6.3.5(@types/node@20.17.47)))(vite@6.3.5(@types/node@20.17.47))':
     dependencies:
       '@brillout/picocolors': 1.0.26
       '@docsearch/css': 3.9.0
