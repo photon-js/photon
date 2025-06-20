@@ -1,107 +1,19 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   width="142.875mm"
-   height="142.875mm"
-   viewBox="0 0 142.875 142.875"
-   version="1.1"
-   id="svg8477"
-   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
-   sodipodi:docname="photon.svg"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <sodipodi:namedview
-     id="namedview8479"
-     pagecolor="#ffffff"
-     bordercolor="#000000"
-     borderopacity="0.25"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     inkscape:document-units="mm"
-     showgrid="false"
-     inkscape:zoom="0.20715275"
-     inkscape:cx="-299.29606"
-     inkscape:cy="144.82067"
-     inkscape:window-width="1366"
-     inkscape:window-height="745"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
-  <defs
-     id="defs8474">
-    <radialGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient15238"
-       id="radialGradient34329-28-5"
-       cx="1250"
-       cy="4000"
-       fx="1250"
-       fy="4000"
-       r="270"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(750.00005,1499.9998)" />
-    <linearGradient
-       inkscape:collect="always"
-       id="linearGradient15238">
-      <stop
-         style="stop-color:#f7df1e;stop-opacity:0.61001807;"
-         offset="0"
-         id="stop15230" />
-      <stop
-         style="stop-color:#f7df1e;stop-opacity:0;"
-         offset="1"
-         id="stop15236" />
-    </linearGradient>
-    <filter
-       inkscape:collect="always"
-       style="color-interpolation-filters:sRGB"
-       id="filter2260-6"
-       x="-0.52597587"
-       y="-0.52597587"
-       width="2.0519517"
-       height="2.0519517">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="15.699229"
-         id="feGaussianBlur2262-1" />
-    </filter>
-  </defs>
-  <g
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer"
-     id="layer1"
-     transform="translate(-15.207561,-90.781316)">
-    <g
-       id="g5654"
-       transform="matrix(0.26458333,0,0,0.26458333,-442.5216,-1292.9895)">
-      <circle
-         cx="2000"
-         cy="5500"
-         fill="#008000"
-         id="circle552-3-5-3-6-5-2-2-6-0-2-8-2-93-6"
-         style="mix-blend-mode:normal;fill:url(#radialGradient34329-28-5);fill-opacity:1;stroke:none;stroke-width:3;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
-         r="270" />
-      <circle
-         style="mix-blend-mode:normal;fill:#ffffff;stroke:none;stroke-width:11.4943;stroke-linecap:square;stroke-dashoffset:60.8;paint-order:markers fill stroke;filter:url(#filter2260-6)"
-         id="path2258-3"
-         cx="1455.543"
-         cy="4834.1064"
-         r="35.817375"
-         transform="matrix(1.7399894,0,0,1.7399894,-532.62933,-2911.294)" />
-      <circle
-         cx="2000"
-         cy="5500"
-         fill="#008000"
-         id="circle552-3-5-6-7-947-2"
-         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:9.99999;stroke-dasharray:none;stroke-opacity:1"
-         r="35" />
-    </g>
-  </g>
+<svg width="110.9mm" height="110.9mm" version="1.1" viewBox="0 0 110.9 110.9" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<linearGradient id="linearGradient2311" x1="2000.1" x2="2000.1" y1="10860" y2="10429" gradientTransform="rotate(45 2000.1 10644)" gradientUnits="userSpaceOnUse">
+<stop stop-color="#f7df1e" offset=".52655"/>
+<stop stop-color="#fabb0d" offset=".83789"/>
+<stop stop-color="#ffa800" offset="1"/>
+</linearGradient>
+</defs>
+<g transform="translate(-51.681 -78.634)">
+<g transform="matrix(.26458 0 0 .26458 -423.31 -2681)">
+<path d="m1853.2 10492a211.75 211.75 0 0 1 299.46 299.46z" fill="url(#linearGradient2311)"/>
+<g fill="#f6e71c" stroke-dashoffset="60.8" stroke-linecap="square">
+<rect transform="rotate(-45)" x="-6288.2" y="8831.8" width="30" height="218.23" ry=".28316" stroke-width="20" style="paint-order:markers fill stroke"/>
+<rect transform="rotate(-45)" x="-6228.2" y="8766.8" width="30" height="348.25" ry=".45187" stroke-width="20" style="paint-order:markers fill stroke"/>
+<rect transform="rotate(-45)" x="-6168.3" y="8737.7" width="30" height="406.49" ry=".52745" stroke-width="20" style="paint-order:markers fill stroke"/>
+</g>
+</g>
+</g>
 </svg>
