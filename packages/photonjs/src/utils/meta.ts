@@ -3,7 +3,6 @@ import type { PluginContext } from '../plugin/utils/rollupTypes.js'
 import { asPhotonEntryId } from '../plugin/utils/virtual.js'
 import type { Photon } from '../types.js'
 import { assertUsage, PhotonUsageError } from './assert.js'
-import { stripUniqueEntry } from "../api/api.js";
 
 interface HintToMeta {
   'handler-entry': Photon.EntryUniversalHandler
@@ -18,8 +17,7 @@ export async function getPhotonMeta<T extends 'handler-entry' | 'server-entry' |
   id: string,
   hint?: T,
 ): Promise<T extends 'handler-entry' | 'server-entry' ? HintToMeta[T] : PhotonMeta> {
-  let actualId = stripUniqueEntry(id)
-  actualId = hint ? asPhotonEntryId(actualId, hint) : actualId
+  const actualId = hint ? asPhotonEntryId(id, hint) : id
 
   {
     const info = pluginContext.getModuleInfo(actualId)

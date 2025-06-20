@@ -6,7 +6,7 @@ import { getPhotonMeta } from '../../utils/meta.js'
 import { resolvePhotonConfig } from '../../validators/coerce.js'
 import type { SupportedServers } from '../../validators/types.js'
 import { isPhotonMeta } from '../utils/entry.js'
-import type { LoadResult, ModuleInfo, PluginContext } from '../utils/rollupTypes.js'
+import type { ModuleInfo, PluginContext } from '../utils/rollupTypes.js'
 import { importsToServer } from '../utils/servers.js'
 import { asPhotonEntryId, ifPhotonModule, virtualModulesRegex } from '../utils/virtual.js'
 
@@ -357,32 +357,39 @@ export function photonEntry(): Plugin[] {
       sharedDuringBuild: true,
     },
     {
-      // Allows loading the same entry multiple times
-      name: 'photon:resolve-virtual',
+      name: 'photon:resolve-server-with-config',
       enforce: 'pre',
 
       resolveId: {
         filter: {
-          id: virtualModulesRegex['virtual-entry'],
+          id: virtualModulesRegex['server-entry-with-config'],
         },
+        order: 'post',
         handler(id) {
-          return ifPhotonModule('virtual-entry', id, async () => {
-            return id
+          return ifPhotonModule('server-entry-with-config', id, async ({ config }) => {
+            const configKey = Number.parseInt(config)
+            assertUsage(!Number.isNaN(configKey), `Config key should be a number, was ${config}`)
+
+            const configValue = this.environment.config.photon.additionalServerConfigs[configKey]
+            assertUsage(configValue, `Unknown config key ${config}`)
+
+            const meta = await getPhotonMeta(this, this.environment.config.photon.server.id)
+
+            return {
+              id,
+              meta: {
+                photon: {
+                  ...meta,
+                  resolvedId: id,
+                  ...configValue,
+                  id,
+                },
+              },
+              resolvedBy: 'photon',
+            }
           })
         },
       },
-
-      load: {
-        filter: {
-          id: virtualModulesRegex['virtual-entry'],
-        },
-        handler(id) {
-          return ifPhotonModule('virtual-entry', id, ({ entry }) => {
-            return this.load({ id: entry }) as Promise<LoadResult>
-          })
-        },
-      },
-
       sharedDuringBuild: true,
     },
     {

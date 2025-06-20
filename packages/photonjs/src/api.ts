@@ -5,8 +5,6 @@ export { resolvePhotonConfig } from './validators/coerce.js'
 export {
   addPhotonHandler,
   addPhotonServerConfig,
-  ensureUniqueEntry,
-  stripUniqueEntry,
   getPhotonServerIdWithHandler,
 } from './api/api.js'
 export {
