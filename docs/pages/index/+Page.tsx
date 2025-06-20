@@ -8,6 +8,7 @@ function Page() {
     <>
       <Block noMargin>
         <Header />
+        <p>Photon is ... TODO</p>
         <LoremIpsum />
       </Block>
       <Block>
