@@ -12,7 +12,7 @@ const config: Config = {
     projectName: 'Photon' as const,
     projectVersion: '0.0.0',
     githubRepository: 'https://github.com/photon-js/photon' as const,
-    githubIssues: 'https://github.com/photon-js/photon' as const,
+    githubIssues: 'https://github.com/photon-js/photon/issues/new' as const,
     twitterProfile: 'https://twitter.com/brillout' as const,
     // discordInvite: 'https://example.org/some-discord-invite',
     // blueskyHandle: 'vike.dev',
