@@ -400,10 +400,14 @@ export function photonEntry(): Plugin[] {
         filter: {
           id: virtualModulesRegex['server-entry-with-config'],
         },
-        order: 'post',
         handler(id) {
           return ifPhotonModule('server-entry-with-config', id, async () => {
-            const loaded = await this.load({ id })
+            const resolved = await this.resolve(this.environment.config.photon.server.id, undefined, {
+              isEntry: true,
+            })
+            assert(resolved)
+
+            const loaded = await this.load({ id: resolved.id })
             assert(loaded.code)
 
             return {

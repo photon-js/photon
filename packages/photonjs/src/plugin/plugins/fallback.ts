@@ -28,8 +28,8 @@ function fallback(): Plugin {
         //language=ts
         return {
           code: `
-import { apply, serve } from '@photonjs/core/hono'
-import { Hono } from 'hono'
+import { apply, serve } from 'photon:resolve-from-photon:@photonjs/core/hono'
+import { Hono } from 'photon:resolve-from-photon:hono'
 
 function startServer() {
   const app = new Hono()
