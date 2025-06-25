@@ -180,59 +180,64 @@ export function photonEntry(): Plugin[] {
         },
       },
 
-      async load(id) {
-        return ifPhotonModule('server-entry-with-handler', id, async ({ condition, handler }) => {
-          const resolved = await this.resolve(this.environment.config.photon.server.id, undefined, {
-            isEntry: true,
-          })
-          assert(resolved)
+      load: {
+        filter: {
+          id: virtualModulesRegex['server-entry-with-handler'],
+        },
+        handler(id) {
+          return ifPhotonModule('server-entry-with-handler', id, async ({ condition, handler }) => {
+            const resolved = await this.resolve(this.environment.config.photon.server.id, undefined, {
+              isEntry: true,
+            })
+            assert(resolved)
 
-          const loaded = await this.load({ id: resolved.id })
-          assert(loaded.code)
+            const loaded = await this.load({ id: resolved.id })
+            assert(loaded.code)
 
-          const code = loaded.code
+            const code = loaded.code
 
-          const ast = this.parse(code)
-          const magicString = new MagicString(code)
+            const ast = this.parse(code)
+            const magicString = new MagicString(code)
 
-          walk(ast, {
-            enter(node) {
-              if (
-                node.type === 'ImportDeclaration' &&
-                typeof node.source.value === 'string' &&
-                serverImports.has(node.source.value)
-              ) {
-                let foundApply = false
-                // Check if { apply } is among the imported specifiers
-                for (const specifier of node.specifiers) {
-                  if (
-                    specifier.type === 'ImportSpecifier' &&
-                    specifier.imported &&
-                    'name' in specifier.imported &&
-                    specifier.imported.name === 'apply'
-                  ) {
-                    foundApply = true
-                    break
+            walk(ast, {
+              enter(node) {
+                if (
+                  node.type === 'ImportDeclaration' &&
+                  typeof node.source.value === 'string' &&
+                  serverImports.has(node.source.value)
+                ) {
+                  let foundApply = false
+                  // Check if { apply } is among the imported specifiers
+                  for (const specifier of node.specifiers) {
+                    if (
+                      specifier.type === 'ImportSpecifier' &&
+                      specifier.imported &&
+                      'name' in specifier.imported &&
+                      specifier.imported.name === 'apply'
+                    ) {
+                      foundApply = true
+                      break
+                    }
+                  }
+                  if (foundApply) {
+                    const { start, end } = node.source as unknown as { start: number; end: number }
+                    const server = importsToServer[node.source.value] as string
+                    magicString.overwrite(
+                      start,
+                      end,
+                      JSON.stringify(`photon:virtual-apply-handler:${condition}:${server}:${handler}`),
+                    )
                   }
                 }
-                if (foundApply) {
-                  const { start, end } = node.source as unknown as { start: number; end: number }
-                  const server = importsToServer[node.source.value] as string
-                  magicString.overwrite(
-                    start,
-                    end,
-                    JSON.stringify(`photon:virtual-apply-handler:${condition}:${server}:${handler}`),
-                  )
-                }
-              }
-            },
-          })
+              },
+            })
 
-          return {
-            code: magicString.toString(),
-            map: magicString.generateMap(),
-          }
-        })
+            return {
+              code: magicString.toString(),
+              map: magicString.generateMap(),
+            }
+          })
+        },
       },
 
       sharedDuringBuild: true,
@@ -390,6 +395,24 @@ export function photonEntry(): Plugin[] {
           })
         },
       },
+
+      load: {
+        filter: {
+          id: virtualModulesRegex['server-entry-with-config'],
+        },
+        order: 'post',
+        handler(id) {
+          return ifPhotonModule('server-entry-with-config', id, async () => {
+            const loaded = await this.load({ id })
+            assert(loaded.code)
+
+            return {
+              code: loaded.code,
+            }
+          })
+        },
+      },
+
       sharedDuringBuild: true,
     },
     {

@@ -27,6 +27,7 @@ import {
 } from '@universal-middleware/core'
 import { createMiddleware } from '@universal-middleware/express'
 import { globalStore } from '../../runtime/globalStore.js'
+import type { Photon } from '../../types.js'
 import { assert, assertUsage } from '../../utils/assert.js'
 import type { PhotonEntryUniversalHandler, SupportedServers } from '../../validators/types.js'
 import { isPhotonMetaConfig } from '../utils/entry.js'
