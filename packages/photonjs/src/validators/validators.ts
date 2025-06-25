@@ -12,7 +12,7 @@ export type GetPhotonCondition = (
 
 export const SupportedServers = z.enum(['hono', 'hattip', 'elysia', 'express', 'fastify', 'h3'])
 
-export const PhotonEntryBase = z.object({
+export const PhotonEntryBase = z.looseObject({
   id: z.string(),
   name: z.string(),
   route: z.string().optional(),
