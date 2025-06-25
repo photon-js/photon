@@ -67,7 +67,10 @@ export function getMiddlewaresPlugin(): Plugin[] {
       name: 'photon:get-middlewares',
 
       async resolveId(id) {
-        return ifPhotonModule('get-middlewares', id, () => id)
+        return ifPhotonModule('get-middlewares', id, () => ({
+          id,
+          moduleSideEffects: false,
+        }))
       },
 
       load(id) {

@@ -11,6 +11,7 @@ function fallback(): Plugin {
       return ifPhotonModule('fallback-entry', id, () => {
         return {
           id,
+          moduleSideEffects: false,
           meta: {
             photon: {
               id,

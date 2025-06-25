@@ -11,7 +11,10 @@ function virtualApplyHandler(): Plugin[] {
 
       resolveId(id) {
         return ifPhotonModule('virtual-apply-handler', id, () => {
-          return id
+          return {
+            id,
+            moduleSideEffects: false,
+          }
         })
       },
 
