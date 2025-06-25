@@ -18,7 +18,7 @@ export function addPhotonHandler(
   pluginContext.environment.config.photon.handlers[name] = PhotonEntryUniversalHandler.parse({
     ...entry,
     name,
-    id: asPhotonEntryId(entry.id, 'handler-entry'),
+    id: asPhotonEntryId((entry as Photon.EntryUniversalHandler).id, 'handler-entry'),
   })
 }
 

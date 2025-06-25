@@ -20,12 +20,12 @@ export namespace Photon {
   export interface Config extends PhotonConfig {
     handlers?: Record<string, string | EntryUniversalHandlerPartial>
     server?: string | EntryServerPartial
-    additionalServerConfigs?: Omit<EntryBase, 'id' | 'resolvedId'>[]
+    additionalServerConfigs?: (Omit<EntryBase, 'id' | 'resolvedId'> & { name: string })[]
   }
 
   export interface ConfigResolved extends PhotonConfigResolved {
     handlers: Record<string, Photon.EntryUniversalHandler>
     server: Photon.EntryServer
-    additionalServerConfigs: Omit<EntryBase, 'id' | 'resolvedId'>[]
+    additionalServerConfigs: (Omit<EntryBase, 'id' | 'resolvedId'> & { name: string })[]
   }
 }
