@@ -8,6 +8,8 @@ function getAllPhotonMiddlewares(pluginContext: PluginContext, condition: 'dev' 
   // Dev handlers and middlewares can be injected by a dedicated vite devServer middleware.
   // If this is the case, we shouldn't try to inject them into the server's runtime.
   const areMiddlewaresAlreadyInstalledByViteDevServer = isDev && isDevServer
+  const defaultBuildEnv = pluginContext.environment.config.photon.defaultBuildEnv || 'ssr'
+  const currentEnv = pluginContext.environment.name
 
   // middlewares
   const getMiddlewares = areMiddlewaresAlreadyInstalledByViteDevServer
@@ -20,7 +22,11 @@ function getAllPhotonMiddlewares(pluginContext: PluginContext, condition: 'dev' 
 
   // handlers
   const handlers = areMiddlewaresAlreadyInstalledByViteDevServer ? {} : pluginContext.environment.config.photon.handlers
-  const universalEntries = Object.values(handlers)
+  let universalEntries = Object.values(handlers)
+  if (!isDev) {
+    // Only inject entries for the current environment
+    universalEntries = universalEntries.filter((h) => (h.env || defaultBuildEnv) === currentEnv)
+  }
   const universalEntriesIds = universalEntries.map((e) => e.id)
 
   //language=javascript
