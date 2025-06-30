@@ -63,6 +63,7 @@ export const PhotonConfig = z.looseObject({
       }),
     )
     .optional(),
+  defaultBuildEnv: z.string().optional(),
   devServer: z
     .union([
       z.boolean(),
@@ -84,6 +85,7 @@ export const PhotonConfigResolved = z.looseObject({
       return typeof fn === 'function'
     }),
   ),
+  defaultBuildEnv: z.string().optional(),
   devServer: z.union([
     z.literal(false),
     z.object({

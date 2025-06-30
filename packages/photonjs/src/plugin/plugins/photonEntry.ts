@@ -65,6 +65,7 @@ function computePhotonMetaServer(
 const resolvedIdsToServers: Record<string, SupportedServers> = {}
 export function photonEntry(): Plugin[] {
   return [
+    // TODO: move in a dedicated node plugin
     {
       name: 'photon:set-input',
       apply: 'build',
@@ -77,7 +78,19 @@ export function photonEntry(): Plugin[] {
       config: {
         order: 'post',
         handler(config) {
-          const { handlers, server } = resolvePhotonConfig(config.photon)
+          const { handlers, server, defaultBuildEnv } = resolvePhotonConfig(config.photon)
+
+          assertUsage(
+            !handlers.index,
+            'photon.handlers cannot contain an `index` key as it is reserved for the server entry',
+          )
+
+          const nodeHandlers = Object.entries(handlers).filter(([, value]) => {
+            return (
+              value.env?.toLowerCase() === 'node' ||
+              (!value.env && (!defaultBuildEnv || defaultBuildEnv.toLowerCase() === 'node'))
+            )
+          })
 
           return {
             environments: {
@@ -85,9 +98,8 @@ export function photonEntry(): Plugin[] {
                 build: {
                   rollupOptions: {
                     input: Object.assign(
-                      // TODO make sure that handlers do not overwrite server entry name
                       { index: server.id },
-                      Object.fromEntries(Object.entries(handlers).map(([key, value]) => [key, value.id])),
+                      Object.fromEntries(nodeHandlers.map(([key, value]) => [key, value.id])),
                     ),
                   },
                 },
