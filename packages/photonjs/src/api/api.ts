@@ -4,6 +4,7 @@ import type { Photon } from '../types.js'
 import { PhotonConfigError } from '../utils/assert.js'
 import { PhotonEntryBase, PhotonEntryUniversalHandler } from '../validators/validators.js'
 
+// FIXME Omit<Photon.EntryUniversalHandler, 'name'> is sometimes not computed at all (defaulting to any)
 /**
  * Registers a new Photon handler.
  * @throws {PhotonConfigError} will throw an error if a handler with this name already exists.
