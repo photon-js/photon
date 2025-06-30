@@ -210,14 +210,19 @@ export function devServer(config?: Photon.Config): Plugin {
       }
 
       if (vite.config.photon.hmr === true) {
+        const envName = vite.config.photon.devServer.env
+        const env = vite.environments[envName]
+        assertUsage(env, `Environment ${envName} does not exists`)
+
         // Once existing server is closed and invalidated, reimport its updated entry file
-        vite.environments.ssr.hot.on('photon:server-closed', () => {
+        env.hot.on('photon:server-closed', () => {
           setupHMRProxyDone = false
-          assertUsage(isRunnableDevEnvironment(vite.environments.ssr), 'SSR environment is not runnable')
-          envImportAndCheckDefaultExport(vite.environments.ssr, resolvedEntryId)
+          assertUsage(isRunnableDevEnvironment(env), `${envName} environment is not runnable`)
+          envImportAndCheckDefaultExport(env, resolvedEntryId)
         })
 
-        vite.environments.ssr.hot.on('photon:reloaded', () => {
+        env.hot.on('photon:reloaded', () => {
+          // TODO do not full reload the client?
           vite.environments.client.hot.send({ type: 'full-reload' })
         })
       }
