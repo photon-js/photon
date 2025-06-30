@@ -119,7 +119,7 @@ export function devServer(config?: Photon.Config): Plugin {
     apply(_config, { command, mode }) {
       return command === 'serve' && mode !== 'test'
     },
-    enforce: 'pre',
+    enforce: 'post',
     config: {
       order: 'post',
       handler(userConfig) {
