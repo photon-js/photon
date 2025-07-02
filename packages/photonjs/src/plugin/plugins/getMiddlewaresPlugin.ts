@@ -4,24 +4,18 @@ import { ifPhotonModule } from '../utils/virtual.js'
 
 function getAllPhotonMiddlewares(pluginContext: PluginContext, condition: 'dev' | 'edge' | 'node', server: string) {
   const isDev = condition === 'dev'
-  const isDevServer = Boolean(pluginContext.environment.config.photon.devServer)
-  // Dev handlers and middlewares can be injected by a dedicated vite devServer middleware.
-  // If this is the case, we shouldn't try to inject them into the server's runtime.
-  const areMiddlewaresAlreadyInstalledByViteDevServer = isDev && isDevServer
   const defaultBuildEnv = pluginContext.environment.config.photon.defaultBuildEnv || 'ssr'
   const currentEnv = pluginContext.environment.name
 
   // middlewares
-  const getMiddlewares = areMiddlewaresAlreadyInstalledByViteDevServer
-    ? []
-    : (pluginContext.environment.config.photon.middlewares ?? [])
+  const getMiddlewares = pluginContext.environment.config.photon.middlewares ?? []
   const middlewares = getMiddlewares
     .map((m) => m.call(pluginContext, condition, server))
     .filter((x) => typeof x === 'string' || Array.isArray(x))
     .flat(1)
 
   // handlers
-  const handlers = areMiddlewaresAlreadyInstalledByViteDevServer ? {} : pluginContext.environment.config.photon.handlers
+  const handlers = pluginContext.environment.config.photon.handlers
   let universalEntries = Object.values(handlers)
   if (!isDev) {
     // Only inject entries for the current environment
