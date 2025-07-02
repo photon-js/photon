@@ -1,6 +1,5 @@
 import { createServer, type IncomingMessage, type Server } from 'node:http'
 import type {
-  Connect,
   DevEnvironment,
   Environment,
   EnvironmentModuleNode,
@@ -12,7 +11,6 @@ import type {
 import { fork } from 'node:child_process'
 import pc from '@brillout/picocolors'
 import {
-  apply as applyCore,
   enhance,
   getUniversalProp,
   type HttpMethod,
@@ -22,10 +20,7 @@ import {
   pathSymbol,
   type UniversalHandler,
   type UniversalMiddleware,
-  UniversalRouter,
-  universalSymbol,
 } from '@universal-middleware/core'
-import { createMiddleware } from '@universal-middleware/express'
 import { globalStore } from '../../runtime/globalStore.js'
 import type { Photon } from '../../types.js'
 import { assert, assertUsage } from '../../utils/assert.js'
@@ -176,31 +171,6 @@ export function devServer(config?: Photon.Config): Plugin {
     },
 
     configureServer(vite) {
-      const devMiddlewares = async () => {
-        const router = new UniversalRouter()
-        const waitingForMiddlewares: Promise<UniversalMiddleware | UniversalMiddleware[]>[] = []
-
-        // TODO refactor: logic in common with virtualApplyHandler and getMiddlewaresPlugin
-        const getMiddlewares = vite.config.photon.middlewares ?? []
-        const middlewares = getMiddlewares
-          .map((m) => m.call(vite, 'dev', 'express'))
-          .filter((x) => typeof x === 'string' || Array.isArray(x))
-          .flat(1)
-
-        for (const middleware of middlewares) {
-          waitingForMiddlewares.push(importMiddleware(vite, middleware))
-        }
-
-        for (const handler of Object.values(vite.config.photon.handlers)) {
-          waitingForMiddlewares.push(importHandler(vite, handler))
-        }
-
-        const awaitedMiddlewares = await Promise.all(waitingForMiddlewares)
-
-        applyCore(router, awaitedMiddlewares.flat(2), false)
-        vite.middlewares.use(createMiddleware(() => router[universalSymbol])() as Connect.NextHandleFunction)
-      }
-
       if (vite.config.photon.devServer === false) return
       if (viteDevServer) {
         if (vite.config.photon.hmr === 'prefer-restart') {
@@ -240,9 +210,6 @@ export function devServer(config?: Photon.Config): Plugin {
       if (vite.config.photon.devServer.autoServe) {
         initializeServerEntry(vite)
       }
-
-      // Inject middlewares that executes AFTER Vite's internals
-      return devMiddlewares
     },
   }
 
