@@ -160,7 +160,6 @@ export function photonEntry(): Plugin[] {
 
             return {
               id,
-              moduleSideEffects: false,
               meta: {
                 photon: {
                   ...this.environment.config.photon.server,
@@ -379,7 +378,6 @@ export function photonEntry(): Plugin[] {
 
             return {
               id,
-              moduleSideEffects: false,
               meta: {
                 photon: {
                   ...meta,
