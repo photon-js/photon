@@ -22,7 +22,9 @@ function Page() {
 function Header() {
   return (
     <>
-      <h1 style={{ textAlign: 'center', fontSize: '3.4em' }}><img src={logoWithText} height={50} /></h1>
+      <h1 style={{ textAlign: 'center', fontSize: '3.4em' }}>
+        <img src={logoWithText} height={50} />
+      </h1>
     </>
   )
 }

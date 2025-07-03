@@ -21,5 +21,5 @@ const config: Config = {
   categories,
 
   topNavigation: <TopNavigation />,
-  navLogo: <img src={logoWithText} height={60} width={150} />
+  navLogo: <img src={logoWithText} height={60} width={150} />,
 }
