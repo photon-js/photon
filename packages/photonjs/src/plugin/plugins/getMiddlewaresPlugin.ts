@@ -1,4 +1,5 @@
 import type { Plugin } from 'vite'
+import { singleton } from '../utils/dedupe.js'
 import type { PluginContext } from '../utils/rollupTypes.js'
 import { ifPhotonModule } from '../utils/virtual.js'
 
@@ -63,7 +64,7 @@ export function getUniversalEntries() {
 
 export function getMiddlewaresPlugin(): Plugin[] {
   return [
-    {
+    singleton({
       name: 'photon:get-middlewares',
 
       async resolveId(id) {
@@ -81,6 +82,6 @@ export function getMiddlewaresPlugin(): Plugin[] {
           }
         })
       },
-    },
+    }),
   ]
 }

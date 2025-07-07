@@ -1,12 +1,13 @@
 import type { Plugin } from 'vite'
 import { getPhotonMeta } from '../../utils/meta.js'
 import { ifPhotonModule } from '../utils/virtual.js'
+import { singleton } from '../utils/dedupe.js'
 
 export { virtualApplyHandler }
 
 function virtualApplyHandler(): Plugin[] {
   return [
-    {
+    singleton({
       name: 'photon:virtual-apply-handler',
 
       resolveId(id) {
@@ -104,6 +105,6 @@ export { serve } from 'photon:resolve-from-photon:@photonjs/core/${server}/serve
           }
         })
       },
-    },
+    }),
   ]
 }

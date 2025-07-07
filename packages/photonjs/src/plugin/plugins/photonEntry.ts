@@ -9,6 +9,7 @@ import { isPhotonMeta } from '../utils/entry.js'
 import type { ModuleInfo, PluginContext } from '../utils/rollupTypes.js'
 import { importsToServer } from '../utils/servers.js'
 import { asPhotonEntryId, ifPhotonModule, virtualModulesRegex } from '../utils/virtual.js'
+import { singleton } from '../utils/dedupe.js'
 
 const reVirtualApplyHandler = /photon:virtual-apply-handler:(dev|node|edge):(?<server>[^:]+):.*/
 const serverImports = new Set(Object.keys(importsToServer))
@@ -65,7 +66,7 @@ function computePhotonMetaServer(
 const resolvedIdsToServers: Record<string, SupportedServers> = {}
 export function photonEntry(): Plugin[] {
   return [
-    {
+    singleton({
       name: 'photon:set-input',
       apply: 'build',
       enforce: 'post',
@@ -94,8 +95,8 @@ export function photonEntry(): Plugin[] {
       },
 
       sharedDuringBuild: true,
-    },
-    {
+    }),
+    singleton({
       name: 'photon:compute-meta',
       apply: 'build',
       enforce: 'pre',
@@ -125,8 +126,8 @@ export function photonEntry(): Plugin[] {
       },
 
       sharedDuringBuild: true,
-    },
-    {
+    }),
+    singleton({
       name: 'photon:resolve-importer',
       enforce: 'pre',
 
@@ -144,8 +145,8 @@ export function photonEntry(): Plugin[] {
         },
       },
       sharedDuringBuild: true,
-    },
-    {
+    }),
+    singleton({
       name: 'photon:resolve-server-with-handler',
       enforce: 'pre',
 
@@ -237,8 +238,8 @@ export function photonEntry(): Plugin[] {
       },
 
       sharedDuringBuild: true,
-    },
-    {
+    }),
+    singleton({
       name: 'photon:resolve-server',
       enforce: 'pre',
 
@@ -289,8 +290,8 @@ export function photonEntry(): Plugin[] {
         },
       },
       sharedDuringBuild: true,
-    },
-    {
+    }),
+    singleton({
       name: 'photon:resolve-handler',
       enforce: 'pre',
 
@@ -356,8 +357,8 @@ export function photonEntry(): Plugin[] {
         },
       },
       sharedDuringBuild: true,
-    },
-    {
+    }),
+    singleton({
       name: 'photon:resolve-server-with-config',
       enforce: 'pre',
 
@@ -414,8 +415,8 @@ export function photonEntry(): Plugin[] {
       },
 
       sharedDuringBuild: true,
-    },
-    {
+    }),
+    singleton({
       name: 'photon:trickle-meta',
       enforce: 'pre',
 
@@ -434,6 +435,6 @@ export function photonEntry(): Plugin[] {
           }
         }
       },
-    },
+    }),
   ]
 }

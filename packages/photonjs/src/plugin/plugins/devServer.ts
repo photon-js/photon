@@ -25,6 +25,7 @@ import { globalStore } from '../../runtime/globalStore.js'
 import type { Photon } from '../../types.js'
 import { assert, assertUsage } from '../../utils/assert.js'
 import type { PhotonEntryUniversalHandler, SupportedServers } from '../../validators/types.js'
+import { singleton } from '../utils/dedupe.js'
 import { isPhotonMetaConfig } from '../utils/entry.js'
 import { isBun } from '../utils/isBun.js'
 import { logViteInfo } from '../utils/logVite.js'
@@ -109,7 +110,7 @@ export function devServer(config?: Photon.Config): Plugin {
     }
   }
 
-  return {
+  return singleton({
     name: 'photon:devserver',
     apply(_config, { command, mode }) {
       return command === 'serve' && mode !== 'test'
@@ -211,7 +212,7 @@ export function devServer(config?: Photon.Config): Plugin {
         initializeServerEntry(vite)
       }
     },
-  }
+  })
 
   // Bypass "vite dev" CLI checks on usage
   function patchViteServer(vite: ViteDevServer) {
