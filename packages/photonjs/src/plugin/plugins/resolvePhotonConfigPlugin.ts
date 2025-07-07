@@ -1,12 +1,13 @@
 import type { Plugin } from 'vite'
 import type { Photon } from '../../types.js'
 import { resolvePhotonConfig } from '../../validators/coerce.js'
+import { singleton } from '../utils/dedupe.js'
 
 export function resolvePhotonConfigPlugin(pluginConfig?: Photon.Config): Plugin[] {
   let resolvedPhotonConfig: Photon.ConfigResolved | null = null
 
   return [
-    {
+    singleton({
       name: 'photon:resolve-config',
       enforce: 'pre',
 
@@ -70,6 +71,6 @@ export function resolvePhotonConfigPlugin(pluginConfig?: Photon.Config): Plugin[
           config.photon = resolvedPhotonConfig
         },
       },
-    },
+    }),
   ]
 }

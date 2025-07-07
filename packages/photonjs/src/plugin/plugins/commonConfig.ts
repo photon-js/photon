@@ -1,4 +1,5 @@
 import { defaultServerConditions, type Plugin } from 'vite'
+import { singleton } from '../utils/dedupe.js'
 import { isBun } from '../utils/isBun.js'
 import { isDeno } from '../utils/isDeno.js'
 
@@ -6,7 +7,7 @@ export { commonConfig }
 
 function commonConfig(): Plugin[] {
   return [
-    {
+    singleton({
       name: 'photon:commonConfig',
 
       configEnvironment(name, config) {
@@ -40,6 +41,6 @@ function commonConfig(): Plugin[] {
           },
         }
       },
-    },
+    }),
   ]
 }

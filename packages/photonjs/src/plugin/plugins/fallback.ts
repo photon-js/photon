@@ -1,10 +1,11 @@
 import type { Plugin } from 'vite'
+import { singleton } from '../utils/dedupe.js'
 import { ifPhotonModule } from '../utils/virtual.js'
 
 export { fallback }
 
 function fallback(): Plugin {
-  return {
+  return singleton({
     name: 'photon:fallback',
 
     resolveId(id) {
@@ -43,5 +44,5 @@ export default startServer()
         }
       })
     },
-  }
+  })
 }

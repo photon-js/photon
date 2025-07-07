@@ -6,12 +6,13 @@ import { assert, assertUsage } from '../../utils/assert.js'
 import { createDeferred } from '../../utils/deferred.js'
 import type { PhotonEntryServer } from '../../validators/types.js'
 import { isPhotonMeta } from '../utils/entry.js'
+import { singleton } from '../utils/dedupe.js'
 
 export function mirrorMeta(): Plugin[] {
   let lastSsr: Promise<RunnableDevEnvironment> | undefined
   return [
     // Extract Universal Middleware metadata and add them to Photon meta
-    {
+    singleton({
       name: 'photon:runtime-meta-to-photon',
       enforce: 'pre',
       apply: 'build',
@@ -60,9 +61,9 @@ export function mirrorMeta(): Plugin[] {
       },
 
       sharedDuringBuild: true,
-    },
+    }),
     // Extract Photon meta of an entry, and apply them to runtime through enhance
-    {
+    singleton({
       name: 'photon:photon-meta-to-runtime',
 
       applyToEnvironment(env) {
@@ -149,6 +150,6 @@ export function mirrorMeta(): Plugin[] {
       },
 
       sharedDuringBuild: true,
-    },
+    }),
   ]
 }
