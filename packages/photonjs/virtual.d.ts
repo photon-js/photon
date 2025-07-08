@@ -3,3 +3,8 @@ declare module 'photon:fallback-entry' {
   const handler: any
   export default handler
 }
+
+declare module 'photon:get-middlewares:*' {
+  export const getUniversalEntries: () => import('@universal-middleware/core').UniversalHandler[]
+  export const getUniversalMiddlewares: () => import('@universal-middleware/core').UniversalMiddleware[]
+}

@@ -1,5 +1,5 @@
 import type { ExportedHandlerFetchHandler } from '@cloudflare/workers-types'
-import { createMissingExportError, createMissingApplyError, createIncompatibleServerError } from '../utils/errors.js'
+import { createIncompatibleServerError, createMissingApplyError, createMissingExportError } from '../utils/errors.js'
 
 export function asFetch(app: unknown, id: string): ExportedHandlerFetchHandler {
   if (!app) {
