@@ -4,9 +4,8 @@ import MagicString from 'magic-string'
 import { createRunnableDevEnvironment, type Plugin, type RunnableDevEnvironment } from 'vite'
 import { assert, assertUsage } from '../../utils/assert.js'
 import { createDeferred } from '../../utils/deferred.js'
-import type { PhotonEntryServer } from '../../validators/types.js'
-import { isPhotonMeta } from '../utils/entry.js'
 import { singleton } from '../utils/dedupe.js'
+import { isPhotonMeta } from '../utils/entry.js'
 
 export function mirrorMeta(): Plugin[] {
   let lastSsr: Promise<RunnableDevEnvironment> | undefined
@@ -74,7 +73,7 @@ export function mirrorMeta(): Plugin[] {
         const info = this.getModuleInfo(id)
         if (!info) return
 
-        if (isPhotonMeta(info.meta) && (info.meta.photon as PhotonEntryServer).route) {
+        if (isPhotonMeta(info.meta) && info.meta.photon.route && info.meta.photon.type === 'universal-handler') {
           const ast = this.parse(code)
 
           const magicString = new MagicString(code)
@@ -141,6 +140,8 @@ export function mirrorMeta(): Plugin[] {
           if (!hasEnhanceImport) {
             magicString.prepend(`import { enhance } from 'photon:resolve-from-photon:@universal-middleware/core';\n`)
           }
+
+          if (!magicString.hasChanged()) return
 
           return {
             code: magicString.toString(),

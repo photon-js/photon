@@ -61,6 +61,11 @@ function computePhotonMetaServer(
   }
 }
 
+function cleanImport(imp: string) {
+  const s = 'photon:resolve-from-photon:'
+  return imp.startsWith(s) ? imp.slice(s.length) : imp
+}
+
 const resolvedIdsToServers: Record<string, SupportedServers> = {}
 export function photonEntry(): Plugin[] {
   return [
@@ -199,7 +204,7 @@ export function photonEntry(): Plugin[] {
                 if (
                   node.type === 'ImportDeclaration' &&
                   typeof node.source.value === 'string' &&
-                  serverImports.has(node.source.value)
+                  serverImports.has(cleanImport(node.source.value))
                 ) {
                   let foundApply = false
                   // Check if { apply } is among the imported specifiers
@@ -223,6 +228,8 @@ export function photonEntry(): Plugin[] {
                 }
               },
             })
+
+            if (!magicString.hasChanged()) return
 
             return {
               code: magicString.toString(),
@@ -268,11 +275,14 @@ export function photonEntry(): Plugin[] {
           const handlerId = new URLSearchParams(query).get('photonHandler')
           assert(handlerId)
 
+          const newCode = loaded.code
+            // Forward query parameters to apply imports
+            .replace(/@photonjs\/core\/([^/]+)\/apply/, `@photonjs/core/$1/apply?${query}`)
+            // Transform get-middleware import
+            .replace(/photon:get-middlewares:(.+?):(\w+)/, `photon:get-middlewares:$1:$2:${handlerId}`)
+
           return {
-            code: loaded.code.replace(
-              virtualModulesRegex['get-middlewares'],
-              `photon:get-middlewares:$<condition>:$<server>:${handlerId}`,
-            ),
+            code: newCode,
             map: { mappings: '' },
           }
         },
