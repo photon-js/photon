@@ -5,14 +5,14 @@ import { assert, assertUsage } from '../../utils/assert.js'
 import { getPhotonMeta } from '../../utils/meta.js'
 import { resolvePhotonConfig } from '../../validators/coerce.js'
 import type { SupportedServers } from '../../validators/types.js'
+import { singleton } from '../utils/dedupe.js'
 import { isPhotonMeta } from '../utils/entry.js'
 import type { ModuleInfo, PluginContext } from '../utils/rollupTypes.js'
 import { importsToServer } from '../utils/servers.js'
 import { asPhotonEntryId, ifPhotonModule, virtualModulesRegex } from '../utils/virtual.js'
-import { singleton } from '../utils/dedupe.js'
 
-const reVirtualApplyHandler = /photon:virtual-apply-handler:(dev|node|edge):(?<server>[^:]+):.*/
 const serverImports = new Set(Object.keys(importsToServer))
+const re_photonHandler = /[?&]photonHandler=/
 
 function computePhotonMetaServer(
   pluginContext: PluginContext,
@@ -31,9 +31,7 @@ function computePhotonMetaServer(
 
   let found: SupportedServers | undefined
   for (const imported of graph.values()) {
-    found =
-      resolvedIdsToServers[imported.id] ||
-      (imported.id.match(reVirtualApplyHandler)?.groups?.server as SupportedServers | undefined)
+    found = resolvedIdsToServers[imported.id]
     if (found) break
     if (imported.external) continue
     const sub = pluginContext.getModuleInfo(imported.id)
@@ -217,13 +215,10 @@ export function photonEntry(): Plugin[] {
                     }
                   }
                   if (foundApply) {
-                    const { start, end } = node.source as unknown as { start: number; end: number }
-                    const server = importsToServer[node.source.value] as string
-                    magicString.overwrite(
-                      start,
-                      end,
-                      JSON.stringify(`photon:virtual-apply-handler:${condition}:${server}:${handler}`),
-                    )
+                    const { end } = node.source as unknown as { start: number; end: number }
+
+                    // Adding a query parameter that will be used to rewrite `photon:get-middlewares` imports
+                    magicString.appendRight(end - 1, `?${new URLSearchParams({ photonHandler: handler }).toString()}`)
                   }
                 }
               },
@@ -238,6 +233,50 @@ export function photonEntry(): Plugin[] {
       },
 
       sharedDuringBuild: true,
+    }),
+    singleton({
+      name: 'photon:transform-get-middlewares-import',
+      enforce: 'pre',
+
+      resolveId: {
+        filter: {
+          id: re_photonHandler,
+        },
+        async handler(id, importer, opts) {
+          const [actualId, query] = id.split('?')
+          // biome-ignore lint/style/noNonNullAssertion: <explanation>
+          const resolved = await this.resolve(actualId!, importer, opts)
+          assert(resolved)
+
+          return {
+            id: `${resolved.id}?${query}`,
+            resolvedBy: 'photon',
+          }
+        },
+      },
+
+      load: {
+        filter: {
+          id: re_photonHandler,
+        },
+        async handler(id) {
+          const [actualId, query] = id.split('?')
+          // biome-ignore lint/style/noNonNullAssertion: <explanation>
+          const loaded = await this.load({ id: actualId! })
+          assert(loaded.code)
+
+          const handlerId = new URLSearchParams(query).get('photonHandler')
+          assert(handlerId)
+
+          return {
+            code: loaded.code.replace(
+              virtualModulesRegex['get-middlewares'],
+              `photon:get-middlewares:$<condition>:$<server>:${handlerId}`,
+            ),
+            map: { mappings: '' },
+          }
+        },
+      },
     }),
     singleton({
       name: 'photon:resolve-server',

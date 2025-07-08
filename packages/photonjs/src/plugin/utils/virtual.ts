@@ -22,11 +22,8 @@ const virtualModules = {
   'server-entry-with-config': regexGroups<{ config: string }>(/^photon:server-entry-with-config:(?<config>.+)/),
   'fallback-entry': regexGroups(/^photon:fallback-entry/),
   'resolve-from-photon': regexGroups<{ module: string }>(/^photon:resolve-from-photon:(?<module>.+)/),
-  'get-middlewares': regexGroups<{ condition: string; server: string }>(
-    /^photon:get-middlewares:(?<condition>.+?):(?<server>.+)/,
-  ),
-  'virtual-apply-handler': regexGroups<{ condition: string; server: string; handler: string }>(
-    /^photon:virtual-apply-handler:(?<condition>.+?):(?<server>.+?):(?<handler>.+)/,
+  'get-middlewares': regexGroups<{ condition: string; server: string; handler?: string }>(
+    /^photon:get-middlewares:(?<condition>.+?):(?<server>[^:]+)(?::(?<handler>.+))?/,
   ),
 }
 
