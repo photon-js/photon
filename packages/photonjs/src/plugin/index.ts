@@ -8,7 +8,6 @@ import { mirrorMeta } from './plugins/mirrorMeta.js'
 import { photonEntry } from './plugins/photonEntry.js'
 import { resolvePhotonConfigPlugin } from './plugins/resolvePhotonConfigPlugin.js'
 import { supportedTargetServers } from './plugins/supportedServers.js'
-import { virtualApplyHandler } from './plugins/virtualApplyHandler.js'
 import '../vite-types.js'
 import type { Photon } from '../types.js'
 
@@ -18,7 +17,6 @@ function photon(config?: Photon.Config): Plugin[] {
   return [
     ...commonConfig(),
     ...resolvePhotonConfigPlugin(config),
-    ...virtualApplyHandler(),
     ...photonEntry(),
     ...mirrorMeta(),
     fallback(),

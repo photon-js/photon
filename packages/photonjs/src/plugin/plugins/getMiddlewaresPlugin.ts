@@ -1,19 +1,29 @@
 import type { Plugin } from 'vite'
+import { getPhotonMeta } from '../../utils/meta.js'
 import { singleton } from '../utils/dedupe.js'
 import type { PluginContext } from '../utils/rollupTypes.js'
 import { ifPhotonModule } from '../utils/virtual.js'
 
-function getAllPhotonMiddlewares(pluginContext: PluginContext, condition: 'dev' | 'edge' | 'node', server: string) {
+async function getAllPhotonMiddlewares(
+  pluginContext: PluginContext,
+  condition: 'dev' | 'edge' | 'node',
+  server: string,
+  handlerId?: string,
+) {
   const isDev = condition === 'dev'
   const defaultBuildEnv = pluginContext.environment.config.photon.defaultBuildEnv || 'ssr'
   const currentEnv = pluginContext.environment.name
 
+  const metaHandler = handlerId ? await getPhotonMeta(pluginContext, handlerId, 'handler-entry') : null
+
   // middlewares
   const getMiddlewares = pluginContext.environment.config.photon.middlewares ?? []
-  const middlewares = getMiddlewares
-    .map((m) => m.call(pluginContext, condition, server))
-    .filter((x) => typeof x === 'string' || Array.isArray(x))
-    .flat(1)
+  const middlewares = metaHandler?.standalone
+    ? []
+    : getMiddlewares
+        .map((m) => m.call(pluginContext, condition as 'dev' | 'node' | 'edge', server))
+        .filter((x) => typeof x === 'string' || Array.isArray(x))
+        .flat(1)
 
   // handlers
   const handlers = pluginContext.environment.config.photon.handlers
@@ -22,7 +32,7 @@ function getAllPhotonMiddlewares(pluginContext: PluginContext, condition: 'dev' 
     // Only inject entries for the current environment
     universalEntries = universalEntries.filter((h) => (h.env || defaultBuildEnv) === currentEnv)
   }
-  const universalEntriesIds = universalEntries.map((e) => e.id)
+  const universalEntriesIds = metaHandler ? [metaHandler.id] : universalEntries.map((e) => e.id)
 
   //language=javascript
   return `
@@ -67,17 +77,20 @@ export function getMiddlewaresPlugin(): Plugin[] {
     singleton({
       name: 'photon:get-middlewares',
 
-      async resolveId(id) {
+      async resolveId(id, _importer, opts) {
         return ifPhotonModule('get-middlewares', id, () => ({
           id,
           moduleSideEffects: false,
+          meta: {
+            photonHandler: opts.attributes.photonHandler,
+          },
         }))
       },
 
       load(id) {
-        return ifPhotonModule('get-middlewares', id, ({ condition, server }) => {
+        return ifPhotonModule('get-middlewares', id, async ({ condition, server, handler }) => {
           return {
-            code: getAllPhotonMiddlewares(this, condition as 'dev' | 'edge' | 'node', server),
+            code: await getAllPhotonMiddlewares(this, condition as 'dev' | 'edge' | 'node', server, handler),
             map: { mappings: '' } as const,
           }
         })
