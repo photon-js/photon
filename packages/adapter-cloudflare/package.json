@@ -25,14 +25,14 @@
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.5.0",
     "@photonjs/core": "workspace:^",
-    "@universal-middleware/cloudflare": "^0.4.9"
+    "@universal-middleware/cloudflare": "^0.4.10"
   },
   "devDependencies": {
     "@brillout/release-me": "^0.4.3",
     "@cloudflare/workers-types": "^4.20250604.0",
-    "@universal-middleware/core": "^0.4.8",
-    "@universal-middleware/h3": "^0.4.11",
-    "@universal-middleware/hono": "^0.4.13",
+    "@universal-middleware/core": "^0.4.9",
+    "@universal-middleware/h3": "^0.4.12",
+    "@universal-middleware/hono": "^0.4.15",
     "crossws": "^0.3.5",
     "h3": "^1.15.1",
     "tsup": "^8.4.0",

@@ -5,7 +5,7 @@ import { createRunnableDevEnvironment, type Plugin, type RunnableDevEnvironment 
 import { assert, assertUsage } from '../../utils/assert.js'
 import { createDeferred } from '../../utils/deferred.js'
 import { singleton } from '../utils/dedupe.js'
-import { isPhotonMeta } from '../utils/entry.js'
+import { isPhotonMeta, type PhotonMeta } from '../utils/entry.js'
 
 export function mirrorMeta(): Plugin[] {
   let lastSsr: Promise<RunnableDevEnvironment> | undefined
@@ -128,6 +128,7 @@ export function mirrorMeta(): Plugin[] {
   name: ${JSON.stringify(id)},
   method: ['GET', 'POST'],
   path: ${JSON.stringify(info.meta.photon.route)},
+  context: ${JSON.stringify({ photon: photonMetaAsContext(info.meta.photon) })},
   immutable: false
 })`,
                 )
@@ -153,4 +154,9 @@ export function mirrorMeta(): Plugin[] {
       sharedDuringBuild: true,
     }),
   ]
+}
+
+function photonMetaAsContext(photonMeta: PhotonMeta) {
+  const { id, resolvedId, ...photonMetaClean } = photonMeta
+  return photonMetaClean
 }
