@@ -41,6 +41,7 @@ export function isRunnableDevEnvironment(environment: Environment): environment 
   return 'runner' in environment
 }
 
+// TODO cleanup or reuse?
 async function importMiddleware(vite: ViteDevServer, middleware: string) {
   const envName = vite.config.photon.devServer ? vite.config.photon.devServer.env : 'ssr'
   const env = vite.environments[envName]

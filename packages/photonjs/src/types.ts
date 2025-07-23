@@ -2,30 +2,30 @@ import type {
   PhotonConfig,
   PhotonConfigResolved,
   PhotonEntryBase,
+  PhotonEntryPartial,
   PhotonEntryServer,
+  PhotonEntryServerConfig,
   PhotonEntryServerPartial,
   PhotonEntryUniversalHandler,
-  PhotonEntryUniversalHandlerPartial,
 } from './validators/types.js'
 
 export namespace Photon {
   export interface EntryBase extends PhotonEntryBase {}
   export interface EntryServer extends EntryBase, PhotonEntryServer {}
   export interface EntryServerPartial extends Omit<EntryBase, 'name'>, PhotonEntryServerPartial {}
+  export interface EntryServerConfig extends Omit<EntryBase, 'id'>, PhotonEntryServerConfig {}
+  export interface EntryPartial extends Omit<EntryBase, 'id'>, PhotonEntryPartial {}
   export interface EntryUniversalHandler extends EntryBase, PhotonEntryUniversalHandler {}
-  export interface EntryUniversalHandlerPartial extends Omit<EntryBase, 'name'>, PhotonEntryUniversalHandlerPartial {}
 
-  export type Entry = EntryServer | EntryUniversalHandler
+  export type Entry = EntryServer | EntryUniversalHandler | EntryServerConfig
 
   export interface Config extends PhotonConfig {
-    handlers?: Record<string, string | EntryUniversalHandlerPartial>
     server?: string | EntryServerPartial
-    additionalServerConfigs?: (Omit<EntryBase, 'id' | 'resolvedId'> & { name: string })[]
+    entries?: Record<string, string | EntryPartial>
   }
 
   export interface ConfigResolved extends PhotonConfigResolved {
-    handlers: Record<string, Photon.EntryUniversalHandler>
-    server: Photon.EntryServer
-    additionalServerConfigs: (Omit<EntryBase, 'id' | 'resolvedId'> & { name: string })[]
+    server: EntryServer
+    entries: (EntryUniversalHandler | EntryServerConfig)[]
   }
 }

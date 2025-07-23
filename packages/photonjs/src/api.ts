@@ -3,8 +3,7 @@ import './vite-types.js'
 export { isPhotonMeta, type PhotonMeta } from './plugin/utils/entry.js'
 export { resolvePhotonConfig } from './validators/coerce.js'
 export {
-  addPhotonHandler,
-  addPhotonServerConfig,
+  addPhotonEntry,
   getPhotonServerIdWithHandler,
 } from './api/api.js'
 export {

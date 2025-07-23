@@ -7,11 +7,10 @@ export function photonPlugin(): Plugin[] {
     resolveMiddlewares() {
       return 'awesome-framework/universal-middleware'
     },
-    handlers: {
-      // declare standalone route
+    entries: {
       standalone: {
         id: 'awesome-framework/standalone',
-        standalone: true,
+        compositionMode: 'isolated',
       },
     },
   })

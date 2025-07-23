@@ -185,7 +185,7 @@ export function photonEntry(): Plugin[] {
           id: virtualModulesRegex['server-entry-with-handler'],
         },
         handler(id) {
-          return ifPhotonModule('server-entry-with-handler', id, async ({ condition, handler }) => {
+          return ifPhotonModule('server-entry-with-handler', id, async ({ handler }) => {
             const resolved = await this.resolve(this.environment.config.photon.server.id, undefined, {
               isEntry: true,
             })
@@ -352,9 +352,8 @@ export function photonEntry(): Plugin[] {
         handler(id, _importer, opts) {
           return ifPhotonModule('handler-entry', id, async ({ entry: actualId }) => {
             const idWithPhotonPrefix = asPhotonEntryId(id, 'handler-entry')
-            let entry = Object.values(this.environment.config.photon.handlers).find(
-              (e) => asPhotonEntryId(e.id, 'handler-entry') === idWithPhotonPrefix,
-            )
+            const handlers = this.environment.config.photon.entries.filter((e) => e.type === 'universal-handler')
+            let entry = handlers.find((e) => asPhotonEntryId(e.id, 'handler-entry') === idWithPhotonPrefix)
 
             let resolved = await this.resolve(actualId, undefined, {
               ...opts,
@@ -365,26 +364,26 @@ export function photonEntry(): Plugin[] {
               },
             })
 
-            // Try to resolve by handler key
-            if (!resolved && actualId in this.environment.config.photon.handlers) {
-              // biome-ignore lint/style/noNonNullAssertion: <explanation>
-              resolved = await this.resolve(this.environment.config.photon.handlers[actualId]!.id, undefined, {
-                ...opts,
-                isEntry: true,
-                skipSelf: false,
-                custom: {
-                  setPhotonMeta: entry,
-                },
-              })
+            // Try to resolve by handler name
+            if (!resolved) {
+              const handler = handlers.find((e) => e.name === actualId)
+              if (handler) {
+                resolved = await this.resolve(handler.id, undefined, {
+                  ...opts,
+                  isEntry: true,
+                  skipSelf: false,
+                  custom: {
+                    setPhotonMeta: entry,
+                  },
+                })
+              }
             }
 
             assertUsage(resolved, `Cannot resolve ${actualId} to a handler entry`)
 
             if (!entry) {
               const resolvedIdWithPhotonPrefix = asPhotonEntryId(resolved.id, 'handler-entry')
-              entry = Object.values(this.environment.config.photon.handlers).find(
-                (e) => e.id === resolvedIdWithPhotonPrefix,
-              )
+              entry = handlers.find((e) => e.id === resolvedIdWithPhotonPrefix)
             }
 
             assertUsage(entry, `Cannot find a handler for ${resolved.id}`)
@@ -418,11 +417,10 @@ export function photonEntry(): Plugin[] {
         order: 'post',
         handler(id) {
           return ifPhotonModule('server-entry-with-config', id, async ({ config }) => {
-            const configKey = Number.parseInt(config)
-            assertUsage(!Number.isNaN(configKey), `Config key should be a number, was ${config}`)
+            const serverConfigs = this.environment.config.photon.entries.filter((e) => e.type === 'server-config')
 
-            const configValue = this.environment.config.photon.additionalServerConfigs[configKey]
-            assertUsage(configValue, `Unknown config key ${config}`)
+            const configValue = serverConfigs.find((e) => e.name === config)
+            assertUsage(configValue, `Unable to find entry with name "${config}"`)
 
             const meta = await getPhotonMeta(this, this.environment.config.photon.server.id)
 
