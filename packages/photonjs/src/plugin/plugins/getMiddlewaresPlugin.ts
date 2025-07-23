@@ -18,16 +18,16 @@ async function getAllPhotonMiddlewares(
 
   // middlewares
   const getMiddlewares = pluginContext.environment.config.photon.middlewares ?? []
-  const middlewares = metaHandler?.standalone
-    ? []
-    : getMiddlewares
-        .map((m) => m.call(pluginContext, condition as 'dev' | 'node' | 'edge', server))
-        .filter((x) => typeof x === 'string' || Array.isArray(x))
-        .flat(1)
+  const middlewares =
+    metaHandler?.compositionMode === 'isolated'
+      ? []
+      : getMiddlewares
+          .map((m) => m.call(pluginContext, condition as 'dev' | 'node' | 'edge', server))
+          .filter((x) => typeof x === 'string' || Array.isArray(x))
+          .flat(1)
 
   // handlers
-  const handlers = pluginContext.environment.config.photon.handlers
-  let universalEntries = Object.values(handlers)
+  let universalEntries = pluginContext.environment.config.photon.entries.filter((e) => e.type === 'universal-handler')
   if (!isDev) {
     // Only inject entries for the current environment
     universalEntries = universalEntries.filter((h) => (h.env || defaultBuildEnv) === currentEnv)

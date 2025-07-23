@@ -1,5 +1,6 @@
 import type { Plugin } from 'vite'
 import type { Photon } from '../../types.js'
+import { PhotonConfigError } from '../../utils/assert.js'
 import { resolvePhotonConfig } from '../../validators/coerce.js'
 import { singleton } from '../utils/dedupe.js'
 
@@ -22,8 +23,17 @@ export function resolvePhotonConfigPlugin(pluginConfig?: Photon.Config): Plugin[
           // server
           userConfig.photon.server = userConfig.photon?.server ? resolvedUserConfig.server : resolvedPluginConfig.server
 
-          // handlers
-          userConfig.photon.handlers = Object.assign({}, resolvedPluginConfig.handlers, resolvedUserConfig.handlers)
+          // entries
+          const names = new Set<string>()
+          userConfig.photon.entries = Object.fromEntries(
+            [...resolvedPluginConfig.entries, ...resolvedUserConfig.entries].map((e) => {
+              if (names.has(e.name)) {
+                throw new PhotonConfigError(`Duplicate entry name: ${e.name}`)
+              }
+              names.add(e.name)
+              return [e.name, e] as const
+            }),
+          )
 
           // middlewares
           userConfig.photon.middlewares = []
@@ -50,14 +60,10 @@ export function resolvePhotonConfigPlugin(pluginConfig?: Photon.Config): Plugin[
           // hmr
           userConfig.photon.hmr = userConfig.photon?.hmr ? resolvedUserConfig.hmr : resolvedPluginConfig.hmr
 
-          // additionalServerConfigs
-          userConfig.photon.additionalServerConfigs = []
-          if (resolvedUserConfig.additionalServerConfigs) {
-            userConfig.photon.additionalServerConfigs.push(...resolvedUserConfig.additionalServerConfigs)
-          }
-          if (resolvedPluginConfig.additionalServerConfigs) {
-            userConfig.photon.additionalServerConfigs.push(...resolvedPluginConfig.additionalServerConfigs)
-          }
+          // codeSplitting
+          userConfig.photon.codeSplitting = userConfig.photon?.codeSplitting
+            ? resolvedUserConfig.codeSplitting
+            : resolvedPluginConfig.codeSplitting
         }
       },
 
@@ -66,7 +72,7 @@ export function resolvePhotonConfigPlugin(pluginConfig?: Photon.Config): Plugin[
         handler(config) {
           // Ensures that a unique photon config exists across all envs
           if (resolvedPhotonConfig === null) {
-            resolvedPhotonConfig = resolvePhotonConfig(config.photon)
+            resolvedPhotonConfig = resolvePhotonConfig(config.photon as unknown as Photon.Config)
           }
           config.photon = resolvedPhotonConfig
         },

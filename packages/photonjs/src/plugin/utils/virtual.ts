@@ -93,7 +93,7 @@ export function ifPhotonModule<
   return callback(out as any)
 }
 
-export function asPhotonEntryId(id: string, type: 'handler-entry' | 'server-entry') {
+export function asPhotonEntryId(id: string, type: 'handler-entry' | 'server-entry' | 'server-config') {
   if (id.startsWith(`photon:${type}`)) {
     return id
   }

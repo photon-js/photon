@@ -32,29 +32,31 @@ export const PhotonEntryServerPartial = PhotonEntryServer.extend({
 
 export const PhotonEntryUniversalHandler = PhotonEntryBase.extend({
   type: z.literal('universal-handler'),
-  // TODO should be moved to a new { node: { standalone: ...} } prop
   /**
-   * If false or undefined, the server will wrap this handler.
-   * If true, adapters can choose to deploy it directly (usually on edge platforms).
+   * If undefined or 'auto', all middlewares will be applied to it.
+   * If 'isolated', no middlewares will be applied.
+   * @alpha
    */
-  standalone: z.boolean().optional(),
+  compositionMode: z.enum(['isolated', 'auto']).optional(),
   env: z.string().optional(),
 })
 
-export const PhotonEntryUniversalHandlerPartial = PhotonEntryUniversalHandler.extend({
-  type: PhotonEntryUniversalHandler.shape.type.optional(),
-}).omit({
-  name: true,
+export const PhotonEntryServerConfig = PhotonEntryBase.extend({
+  id: z.literal('photon:server-entry'),
+  type: z.literal('server-config'),
+  compositionMode: PhotonEntryUniversalHandler.shape.compositionMode,
+  env: PhotonEntryUniversalHandler.shape.env,
 })
 
+export const PhotonEntryPartial = PhotonEntryUniversalHandler.extend({
+  type: z.enum(['universal-handler', 'server-config']).optional(),
+}).partial()
+
 export const PhotonConfig = z.looseObject({
-  handlers: z.record(z.string(), z.union([z.string(), PhotonEntryUniversalHandlerPartial])).optional(),
   server: z.union([z.string(), PhotonEntryServerPartial]).optional(),
-  /**
-   * Allows for different deployment environments to generate code according to their specific requirements.
-   * For instance, Vercel can use this information to create separate configurations for each `additionalServerConfigs`.
-   */
-  additionalServerConfigs: z.array(PhotonEntryBase.omit({ id: true, resolvedId: true })).optional(),
+  // TODO if codeSplitting is false and one entry does not have .id -> throw error
+  // This means that only a framework setting codeSplitting: false can also add entries without .id
+  entries: z.record(z.string(), z.union([z.string(), PhotonEntryPartial])).optional(),
   hmr: z.union([z.boolean(), z.literal('prefer-restart')]).optional(),
   middlewares: z
     .array(
@@ -64,6 +66,10 @@ export const PhotonConfig = z.looseObject({
     )
     .optional(),
   defaultBuildEnv: z.string().optional(),
+  /**
+   * Can be set to false by frameworks or deployment targets if code splitting is not supported
+   */
+  codeSplitting: z.boolean().optional(),
   devServer: z
     .union([
       z.boolean(),
@@ -76,9 +82,8 @@ export const PhotonConfig = z.looseObject({
 })
 
 export const PhotonConfigResolved = z.looseObject({
-  handlers: z.record(z.string(), PhotonEntryUniversalHandler),
   server: PhotonEntryServer,
-  additionalServerConfigs: z.array(PhotonEntryBase.omit({ id: true, resolvedId: true })),
+  entries: z.array(z.union([PhotonEntryUniversalHandler, PhotonEntryServerConfig])),
   hmr: z.union([z.boolean(), z.literal('prefer-restart')]),
   middlewares: z.array(
     z.custom<GetPhotonCondition>((fn) => {
@@ -86,6 +91,7 @@ export const PhotonConfigResolved = z.looseObject({
     }),
   ),
   defaultBuildEnv: z.string().optional(),
+  codeSplitting: z.boolean(),
   devServer: z.union([
     z.literal(false),
     z.object({
