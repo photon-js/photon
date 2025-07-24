@@ -74,6 +74,14 @@ export function resolvePhotonConfigPlugin(pluginConfig?: Photon.Config): Plugin[
           if (resolvedPhotonConfig === null) {
             resolvedPhotonConfig = resolvePhotonConfig(config.photon as unknown as Photon.Config)
           }
+          if (resolvedPhotonConfig.codeSplitting) {
+            const serverConfigEntries = resolvedPhotonConfig.entries.filter((e) => e.type === 'server-config')
+            if (serverConfigEntries.length > 0) {
+              throw new PhotonConfigError(
+                'server-config entries are not supported when code splitting is enabled. Please disable code splitting or remove server-config entries.',
+              )
+            }
+          }
           config.photon = resolvedPhotonConfig
         },
       },
