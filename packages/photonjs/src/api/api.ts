@@ -18,6 +18,12 @@ export function addPhotonEntry(pluginContext: PluginContext, name: string, entry
     .union([PhotonEntryUniversalHandler, PhotonEntryServerConfig])
     .parse(entryToPhoton('handler-entry', entry, name))
 
+  if (pluginContext.environment.config.photon.codeSplitting && parsed.type === 'server-config') {
+    throw new PhotonConfigError(
+      `Photon entry with name "${entry.name}" is of type "server-config" but code splitting is enabled. Please disable code splitting or use "universal-handler" instead.`,
+    )
+  }
+
   pluginContext.environment.config.photon.entries.push(parsed)
 }
 

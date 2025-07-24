@@ -406,6 +406,7 @@ export function photonEntry(): Plugin[] {
       },
       sharedDuringBuild: true,
     }),
+    // TODO add tests
     singleton({
       name: 'photon:resolve-server-with-config',
       enforce: 'pre',
