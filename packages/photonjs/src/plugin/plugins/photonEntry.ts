@@ -3,13 +3,13 @@ import MagicString from 'magic-string'
 import type { Plugin } from 'vite'
 import { assert, assertUsage } from '../../utils/assert.js'
 import { getPhotonMeta } from '../../utils/meta.js'
-import { resolvePhotonConfig } from '../../validators/coerce.js'
 import type { SupportedServers } from '../../validators/types.js'
 import { singleton } from '../utils/dedupe.js'
 import { isPhotonMeta } from '../utils/entry.js'
 import type { ModuleInfo, PluginContext } from '../utils/rollupTypes.js'
 import { importsToServer } from '../utils/servers.js'
 import { asPhotonEntryId, ifPhotonModule, virtualModulesRegex } from '../utils/virtual.js'
+import { resolvePhotonConfig } from '../../validators/coerce.js'
 
 const serverImports = new Set(Object.keys(importsToServer))
 const re_photonHandler = /[?&]photonHandler=/

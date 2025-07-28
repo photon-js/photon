@@ -1,6 +1,6 @@
 import { asPhotonEntryId } from '../plugin/utils/virtual.js'
 import type { Photon } from '../types.js'
-import { assert } from '../utils/assert.js'
+import { assert, PhotonConfigError } from '../utils/assert.js'
 import type { PhotonConfig, PhotonEntryPartial, PhotonEntryServerPartial } from './types.js'
 import * as Validators from './validators.js'
 
@@ -78,11 +78,67 @@ const resolver = Validators.PhotonConfig.transform((c) => {
             autoServe: excludeTrue(c.devServer)?.autoServe ?? true,
           },
     middlewares: c.middlewares ?? [],
-    codeSplitting: c.codeSplitting ?? true,
+    // codeSplitting must explicitely be set to true by targets
+    codeSplitting: c.codeSplitting ?? false,
     hmr: c.hmr ?? true,
   })
 })
 
-export function resolvePhotonConfig(config: PhotonConfig | undefined): Photon.ConfigResolved {
-  return resolver.parse(config ?? {})
+export function mergePhotonConfig(configs: Photon.Config[]): Photon.Config {
+  const resolving: Photon.Config = {}
+  for (const config of configs) {
+    // server
+    if (config.server) {
+      resolving.server = config.server
+    }
+
+    // entries
+    resolving.entries ??= {}
+    // Check for duplicate entries
+    if (config.entries) {
+      const names = new Set<string>()
+      for (const name of [...Object.keys(resolving.entries), ...Object.keys(config.entries)]) {
+        if (names.has(name)) {
+          throw new PhotonConfigError(`Duplicate entry name: ${name}`)
+        }
+        names.add(name)
+      }
+      Object.assign(resolving.entries, config.entries)
+    }
+
+    // middlewares
+    resolving.middlewares ??= []
+    if (config.middlewares) {
+      resolving.middlewares.push(...config.middlewares)
+    }
+
+    // devServer
+    // if devServer has already been set to false, keep it that way
+    if (resolving.devServer !== false) {
+      if (config.devServer === false) {
+        resolving.devServer = false
+      } else if (config.devServer) {
+        resolving.devServer = config.devServer
+      }
+    }
+
+    // hmr
+    if (typeof config.hmr !== 'undefined') {
+      resolving.hmr = config.hmr
+    }
+
+    // codeSplitting
+    // if codeSplitting has already been set to false, keep it that way
+    if (resolving.codeSplitting !== false) {
+      if (typeof config.codeSplitting !== 'undefined') {
+        resolving.codeSplitting = config.codeSplitting
+      }
+    }
+  }
+  return resolving
+}
+
+export function resolvePhotonConfig(config: Photon.Config | Photon.Config[] | undefined): Photon.ConfigResolved {
+  const _config: Photon.Config | undefined = Array.isArray(config) ? mergePhotonConfig(config) : config
+  return resolver.parse(_config ?? {})
 }

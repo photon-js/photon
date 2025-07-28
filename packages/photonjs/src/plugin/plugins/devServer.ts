@@ -24,6 +24,7 @@ import {
 import { globalStore } from '../../runtime/globalStore.js'
 import type { Photon } from '../../types.js'
 import { assert, assertUsage } from '../../utils/assert.js'
+import { resolvePhotonConfig } from '../../validators/coerce.js'
 import type { PhotonEntryUniversalHandler, SupportedServers } from '../../validators/types.js'
 import { singleton } from '../utils/dedupe.js'
 import { isPhotonMetaConfig } from '../utils/entry.js'
@@ -120,7 +121,8 @@ export function devServer(config?: Photon.Config): Plugin {
     config: {
       order: 'post',
       handler(userConfig) {
-        if (userConfig.photon?.devServer === false) return
+        const resolvedPhotonConfig = resolvePhotonConfig(userConfig.photon)
+        if (resolvedPhotonConfig.devServer === false) return
         // FIXME
         if (isBun) {
           return {

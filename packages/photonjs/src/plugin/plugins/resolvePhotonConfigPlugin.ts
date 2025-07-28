@@ -12,59 +12,18 @@ export function resolvePhotonConfigPlugin(pluginConfig?: Photon.Config): Plugin[
       name: 'photon:resolve-config',
       enforce: 'pre',
 
-      config(userConfig) {
-        // Custom config merging
-        // TODO unit tests
-        if (pluginConfig || userConfig.photon) {
-          userConfig.photon ??= {}
-          const resolvedUserConfig = resolvePhotonConfig(userConfig.photon)
-          const resolvedPluginConfig = resolvePhotonConfig(pluginConfig)
-
-          // server
-          userConfig.photon.server = userConfig.photon?.server ? resolvedUserConfig.server : resolvedPluginConfig.server
-
-          // entries
-          const names = new Set<string>()
-          userConfig.photon.entries = Object.fromEntries(
-            [...resolvedPluginConfig.entries, ...resolvedUserConfig.entries].map((e) => {
-              if (names.has(e.name)) {
-                throw new PhotonConfigError(`Duplicate entry name: ${e.name}`)
-              }
-              names.add(e.name)
-              return [e.name, e] as const
-            }),
-          )
-
-          // middlewares
-          userConfig.photon.middlewares = []
-          if (resolvedPluginConfig.middlewares) {
-            userConfig.photon.middlewares.push(...resolvedPluginConfig.middlewares)
+      config: {
+        order: 'pre',
+        handler(c) {
+          if (pluginConfig) {
+            return {
+              photon: [pluginConfig],
+            }
           }
-          if (resolvedUserConfig.middlewares) {
-            userConfig.photon.middlewares.push(...resolvedUserConfig.middlewares)
+          return {
+            photon: [],
           }
-
-          // devServer
-          if (pluginConfig?.devServer) {
-            userConfig.photon.devServer = resolvedPluginConfig.devServer ?? true
-          }
-          if (userConfig.photon.devServer === false) {
-            userConfig.photon.devServer = false
-          } else if (typeof resolvedUserConfig.devServer === 'object') {
-            userConfig.photon.devServer =
-              typeof userConfig.photon.devServer === 'boolean'
-                ? resolvedUserConfig.devServer
-                : { ...userConfig.photon.devServer, ...resolvedUserConfig.devServer }
-          }
-
-          // hmr
-          userConfig.photon.hmr = userConfig.photon?.hmr ? resolvedUserConfig.hmr : resolvedPluginConfig.hmr
-
-          // codeSplitting
-          userConfig.photon.codeSplitting = userConfig.photon?.codeSplitting
-            ? resolvedUserConfig.codeSplitting
-            : resolvedPluginConfig.codeSplitting
-        }
+        },
       },
 
       configResolved: {
@@ -72,7 +31,8 @@ export function resolvePhotonConfigPlugin(pluginConfig?: Photon.Config): Plugin[
         handler(config) {
           // Ensures that a unique photon config exists across all envs
           if (resolvedPhotonConfig === null) {
-            resolvedPhotonConfig = resolvePhotonConfig(config.photon as unknown as Photon.Config)
+            // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+            resolvedPhotonConfig = resolvePhotonConfig(config.photon as any)
           }
           if (resolvedPhotonConfig.codeSplitting) {
             const serverConfigEntries = resolvedPhotonConfig.entries.filter((e) => e.type === 'server-config')
