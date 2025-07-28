@@ -6,20 +6,14 @@ import { singleton } from '../utils/dedupe.js'
 
 export function resolvePhotonConfigPlugin(pluginConfig?: Photon.Config): Plugin[] {
   let resolvedPhotonConfig: Photon.ConfigResolved | null = null
-
-  return [
+  const plugins: Plugin[] = [
     singleton({
       name: 'photon:resolve-config',
       enforce: 'pre',
 
       config: {
         order: 'pre',
-        handler(c) {
-          if (pluginConfig) {
-            return {
-              photon: [pluginConfig],
-            }
-          }
+        handler() {
           return {
             photon: [],
           }
@@ -47,4 +41,22 @@ export function resolvePhotonConfigPlugin(pluginConfig?: Photon.Config): Plugin[
       },
     }),
   ]
+
+  if (pluginConfig) {
+    plugins.push({
+      name: 'photon:manual-config',
+      enforce: 'pre',
+
+      config: {
+        order: 'pre',
+        handler() {
+          return {
+            photon: [pluginConfig],
+          }
+        },
+      },
+    })
+  }
+
+  return plugins
 }
