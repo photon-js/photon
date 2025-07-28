@@ -8,7 +8,7 @@ export { commonConfig }
 function commonConfig(): Plugin[] {
   return [
     singleton({
-      name: 'photon:commonConfig',
+      name: 'photon:common-config',
 
       configEnvironment(name, config) {
         if (!config.consumer) {
@@ -40,6 +40,20 @@ function commonConfig(): Plugin[] {
             target: 'es2022',
           },
         }
+      },
+    }),
+    singleton({
+      name: 'photon:set-after-build-start',
+      enforce: 'post',
+      buildStart: {
+        order: 'post',
+        handler() {
+          Object.defineProperty(this.environment.config, 'afterBuildStart', {
+            get() {
+              return true
+            },
+          })
+        },
       },
     }),
   ]

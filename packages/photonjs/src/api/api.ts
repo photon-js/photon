@@ -1,7 +1,7 @@
 import { z } from 'zod/v4'
 import type { PluginContext } from '../plugin/utils/rollupTypes.js'
 import type { Photon } from '../types.js'
-import { PhotonConfigError } from '../utils/assert.js'
+import { PhotonConfigError, PhotonUsageError } from '../utils/assert.js'
 import { entryToPhoton } from '../validators/coerce.js'
 import { PhotonEntryServerConfig, PhotonEntryUniversalHandler } from '../validators/validators.js'
 
@@ -10,6 +10,9 @@ import { PhotonEntryServerConfig, PhotonEntryUniversalHandler } from '../validat
  * @throws {PhotonConfigError} will throw an error if an entry with this name already exists.
  */
 export function addPhotonEntry(pluginContext: PluginContext, name: string, entry: Photon.EntryPartial) {
+  if (pluginContext.environment.config.afterBuildStart) {
+    throw new PhotonUsageError('Cannot use addPhotonEntry entry after buildStart hook.')
+  }
   if (pluginContext.environment.config.photon.entries.some((e) => e.name === entry.name)) {
     throw new PhotonConfigError(`Photon entry with name "${entry.name}" already exists.`)
   }

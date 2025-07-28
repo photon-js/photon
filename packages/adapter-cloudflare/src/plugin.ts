@@ -18,6 +18,8 @@ export function cloudflare(config?: Omit<PluginConfig, 'viteEnvironment'>): Plug
             photon: {
               // @cloudflare/vite-plugin has its own dev server
               devServer: false,
+              codeSplitting: false,
+              defaultBuildEnv: 'cloudflare',
             },
           }
         },
@@ -39,6 +41,7 @@ export function cloudflare(config?: Omit<PluginConfig, 'viteEnvironment'>): Plug
       },
     },
     supportedTargetServers('cloudflare', ['hono', 'h3']),
+    // TODO: export from "@photonjs/core/vite" -> targetLoader(name, { load() {...} })
     {
       name: `${moduleId}:resolver`,
 
