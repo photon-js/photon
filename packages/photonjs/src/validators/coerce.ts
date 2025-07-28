@@ -86,6 +86,8 @@ const resolver = Validators.PhotonConfig.transform((c) => {
 
 export function mergePhotonConfig(configs: Photon.Config[]): Photon.Config {
   const resolving: Photon.Config = {}
+  resolving.entries = {}
+  resolving.middlewares = []
   for (const config of configs) {
     // server
     if (config.server) {
@@ -93,7 +95,6 @@ export function mergePhotonConfig(configs: Photon.Config[]): Photon.Config {
     }
 
     // entries
-    resolving.entries ??= {}
     // Check for duplicate entries
     if (config.entries) {
       const names = new Set<string>()
@@ -107,7 +108,6 @@ export function mergePhotonConfig(configs: Photon.Config[]): Photon.Config {
     }
 
     // middlewares
-    resolving.middlewares ??= []
     if (config.middlewares) {
       resolving.middlewares.push(...config.middlewares)
     }
