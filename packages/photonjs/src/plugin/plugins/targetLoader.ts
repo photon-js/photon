@@ -1,6 +1,7 @@
 import type { Plugin } from 'vite'
 import { getPhotonMeta } from '../../utils/meta.js'
 import type { PhotonMeta } from '../utils/entry.js'
+import { escapeStringRegexp } from "../utils/escapeStringRegexp.js";
 import type { LoadResult, PluginContext } from '../utils/rollupTypes.js'
 
 type LoadHook = (
@@ -14,7 +15,7 @@ type LoadHook = (
 
 export function targetLoader(name: string, loadPlugin: { load: LoadHook }): Plugin[] {
   const prefix = `photon:${name}`
-  const re_prefix = new RegExp(`^${prefix}:`)
+  const re_prefix = new RegExp(`^${escapeStringRegexp(prefix)}:`)
 
   return [
     {
