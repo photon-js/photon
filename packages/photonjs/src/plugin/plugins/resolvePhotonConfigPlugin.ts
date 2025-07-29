@@ -4,8 +4,8 @@ import { PhotonConfigError } from '../../utils/assert.js'
 import { resolvePhotonConfig } from '../../validators/coerce.js'
 import { singleton } from '../utils/dedupe.js'
 
+let resolvedPhotonConfig: Photon.ConfigResolved | null = null
 export function resolvePhotonConfigPlugin(pluginConfig?: Photon.Config): Plugin[] {
-  let resolvedPhotonConfig: Photon.ConfigResolved | null = null
   const plugins: Plugin[] = [
     singleton({
       name: 'photon:resolve-config',
