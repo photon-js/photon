@@ -2,9 +2,7 @@ import type { Plugin } from 'vite'
 import type { SupportedServers } from '../../validators/types.js'
 import { importsToServer } from '../utils/servers.js'
 
-export { supportedTargetServers }
-
-function supportedTargetServers(name: string, servers: SupportedServers[], recommend = 'hono'): Plugin {
+export function supportedTargetServers(name: string, servers: SupportedServers[], recommend = 'hono'): Plugin {
   const serversSet = new Set(servers)
 
   return {

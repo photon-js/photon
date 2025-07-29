@@ -1,12 +1,9 @@
 import { cloudflare as cloudflareVitePlugins, type PluginConfig } from '@cloudflare/vite-plugin'
-import { getPhotonMeta } from '@photonjs/core/api'
-import { supportedTargetServers } from '@photonjs/core/vite'
+import { supportedTargetServers, targetLoader } from '@photonjs/core/vite'
 import type { Plugin } from 'vite'
 
 const moduleId = 'photon:cloudflare'
-const virtualModuleId = `\0${moduleId}`
 
-// TODO: create actual virtual Target Entries for each server
 export function cloudflare(config?: Omit<PluginConfig, 'viteEnvironment'>): Plugin[] {
   return [
     {
@@ -25,46 +22,8 @@ export function cloudflare(config?: Omit<PluginConfig, 'viteEnvironment'>): Plug
         },
       },
     },
-    // TODO Should this be generic for all adapters?
-    {
-      name: `${moduleId}:prefixer`,
-      apply: 'build',
-      enforce: 'post',
-      configEnvironment(name, config) {
-        if (config.consumer === 'server' && config.build?.rollupOptions?.input) {
-          // Ensured by Photon
-          const input = config.build.rollupOptions.input as Record<string, string>
-          for (const key of Object.keys(input)) {
-            input[key] = `${moduleId}:${input[key]}`
-          }
-        }
-      },
-    },
-    supportedTargetServers('cloudflare', ['hono', 'h3']),
-    // TODO: export from "@photonjs/core/vite" -> targetLoader(name, { load() {...} })
-    {
-      name: `${moduleId}:resolver`,
-
-      async resolveId(id, importer, opts) {
-        if (id.startsWith(moduleId)) {
-          const resolved = await this.resolve(id.replace(/^photon:cloudflare:/, ''), importer, opts)
-
-          if (!resolved) {
-            return this.error(`[photon][cloudflare] Cannot resolve ${id}`)
-          }
-
-          return {
-            ...resolved,
-            id: `${virtualModuleId}:${resolved.id}`,
-          }
-        }
-      },
-
-      // TODO add tests
-      async load(id) {
-        if (!id.startsWith(virtualModuleId)) return
-        const actualId = id.slice(virtualModuleId.length + 1)
-        const meta = await getPhotonMeta(this, id)
+    ...targetLoader('cloudflare', {
+      async load(id, { meta }) {
         const isDev = this.environment.config.command === 'serve'
 
         if (meta.type === 'server') {
@@ -72,7 +31,7 @@ export function cloudflare(config?: Omit<PluginConfig, 'viteEnvironment'>): Plug
           if (meta.server) {
             return {
               // language=ts
-              code: `import serverEntry from ${JSON.stringify(actualId)};
+              code: `import serverEntry from ${JSON.stringify(id)};
 import { asFetch } from "@photonjs/cloudflare/${meta.server}";
 
 export const fetch = asFetch(serverEntry);
@@ -85,10 +44,10 @@ export default { fetch };
           if (isDev) {
             return {
               // language=ts
-              code: `import serverEntry from ${JSON.stringify(actualId)};
+              code: `import serverEntry from ${JSON.stringify(id)};
 import { asFetch } from "@photonjs/cloudflare/dev";
 
-export const fetch = asFetch(serverEntry, ${JSON.stringify(actualId)});
+export const fetch = asFetch(serverEntry, ${JSON.stringify(id)});
 export default { fetch };
 `,
               map: { mappings: '' },
@@ -97,7 +56,7 @@ export default { fetch };
         } else {
           return {
             // language=ts
-            code: `import handler from ${JSON.stringify(actualId)};
+            code: `import handler from ${JSON.stringify(id)};
 import { getRuntime } from "photon:resolve-from-photon:@universal-middleware/cloudflare";
 
 export const fetch = (request, env, ctx) => {
@@ -109,11 +68,10 @@ export default { fetch };
           }
         }
 
-        return this.error(`[photon][cloudflare] Unable to load ${actualId}`)
+        return this.error(`[photon][cloudflare] Unable to load ${id}`)
       },
-
-      sharedDuringBuild: true,
-    },
+    }),
+    supportedTargetServers('cloudflare', ['hono', 'h3']),
     // FIXME do not enforce ssr env
     ...cloudflareVitePlugins({ ...config, viteEnvironment: { name: 'ssr' } }),
   ]
