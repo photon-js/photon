@@ -45,17 +45,21 @@ export function targetLoader(
             })
           }
 
-          if (photon.codeSplitting) {
-            // Emit handlers, each wrapped behind the server entry
-            for (const entry of photon.entries) {
-              if ((entry.env || 'ssr') === envName) {
-                this.emitFile({
-                  type: 'chunk',
-                  fileName: entry.target || entry.name,
-                  // TODO simplify this
-                  id: `${prefix}:${getPhotonServerIdWithEntry(isEdge ? 'edge' : 'node', entry.name)}`,
-                })
-              }
+          // Emit handlers, each wrapped behind the server entry
+          for (const entry of photon.entries) {
+            if (
+              (entry.env || 'ssr') === envName &&
+              // if codeSplitting is enabled or if a target has explicitely been set, emit a new entry
+              (photon.codeSplitting || entry.target)
+            ) {
+              this.emitFile({
+                type: 'chunk',
+                fileName: entry.target || entry.name,
+                id: photon.codeSplitting
+                  ? // TODO simplify this
+                    `${prefix}:${getPhotonServerIdWithEntry(isEdge ? 'edge' : 'node', entry.name)}`
+                  : `${prefix}:${photon.server.id}`,
+              })
             }
           }
         },
