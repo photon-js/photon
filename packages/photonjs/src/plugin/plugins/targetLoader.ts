@@ -34,7 +34,7 @@ export function targetLoader(name: string, options: { load: LoadHook }): Plugin[
             ['edge-light', 'worker', 'workerd', 'edge'].includes(x),
           )
 
-          if ((photon.defaultBuildEnv || 'ssr') === envName) {
+          if (photon.defaultBuildEnv === envName) {
             this.emitFile({
               type: 'chunk',
               fileName: photon.server.target || photon.server.name,

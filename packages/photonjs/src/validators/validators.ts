@@ -91,7 +91,7 @@ export const PhotonConfigResolved = z.looseObject({
       return typeof fn === 'function'
     }),
   ),
-  defaultBuildEnv: z.string().optional(),
+  defaultBuildEnv: z.string(),
   codeSplitting: z.boolean(),
   devServer: z.union([
     z.literal(false),

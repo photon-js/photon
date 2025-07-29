@@ -82,6 +82,7 @@ const resolver = Validators.PhotonConfig.transform((c) => {
     middlewares: c.middlewares ?? [],
     // codeSplitting must explicitely be set to true by targets
     codeSplitting: c.codeSplitting ?? false,
+    defaultBuildEnv: c.defaultBuildEnv ?? 'ssr',
     hmr: c.hmr ?? (isBun || isDeno ? 'prefer-restart' : true),
   })
 })
@@ -135,6 +136,10 @@ export function mergePhotonConfig(configs: Photon.Config[]): Photon.Config {
       if (typeof config.codeSplitting !== 'undefined') {
         resolving.codeSplitting = config.codeSplitting
       }
+    }
+
+    if (config.defaultBuildEnv) {
+      resolving.defaultBuildEnv = config.defaultBuildEnv
     }
   }
   return resolving

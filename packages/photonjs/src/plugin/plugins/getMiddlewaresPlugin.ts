@@ -11,7 +11,7 @@ async function getAllPhotonMiddlewares(
   handlerId?: string,
 ) {
   const isDev = condition === 'dev'
-  const defaultBuildEnv = pluginContext.environment.config.photon.defaultBuildEnv || 'ssr'
+  const defaultBuildEnv = pluginContext.environment.config.photon.defaultBuildEnv
   const currentEnv = pluginContext.environment.name
 
   const metaHandler = handlerId ? await getPhotonMeta(pluginContext, handlerId, 'handler-entry') : null
