@@ -12,7 +12,7 @@ export type GetPhotonCondition = (
 
 export const SupportedServers = z.enum(['hono', 'hattip', 'elysia', 'express', 'fastify', 'h3'])
 
-export const PhotonEntryBase = z.looseObject({
+export const PhotonEntryBase = z.object({
   id: z.string(),
   name: z.string(),
   target: z.string().optional(),
@@ -23,13 +23,15 @@ export const PhotonEntryBase = z.looseObject({
 export const PhotonEntryServer = PhotonEntryBase.extend({
   type: z.literal('server'),
   server: SupportedServers.optional(),
-})
+}).loose()
 
 export const PhotonEntryServerPartial = PhotonEntryServer.extend({
   type: PhotonEntryServer.shape.type.optional(),
-}).omit({
-  name: true,
 })
+  .omit({
+    name: true,
+  })
+  .loose()
 
 export const PhotonEntryUniversalHandler = PhotonEntryBase.extend({
   type: z.literal('universal-handler'),
@@ -40,14 +42,14 @@ export const PhotonEntryUniversalHandler = PhotonEntryBase.extend({
    */
   compositionMode: z.enum(['isolated', 'auto']).optional(),
   env: z.string().optional(),
-})
+}).loose()
 
 export const PhotonEntryServerConfig = PhotonEntryBase.extend({
   id: z.literal('photon:server-entry'),
   type: z.literal('server-config'),
   compositionMode: PhotonEntryUniversalHandler.shape.compositionMode,
   env: PhotonEntryUniversalHandler.shape.env,
-})
+}).loose()
 
 export const PhotonEntryPartial = PhotonEntryUniversalHandler.extend({
   type: z.enum(['universal-handler', 'server-config']).optional(),

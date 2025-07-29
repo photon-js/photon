@@ -77,6 +77,10 @@ export function targetLoader(name: string, options: { load: LoadHook }): Plugin[
 
           return {
             ...resolved,
+            // tag module as target entry for other plugins to use
+            photonConfig: {
+              isTargetEntry: true,
+            },
             id: `${prefix}:${resolved.id}`,
           }
         },
