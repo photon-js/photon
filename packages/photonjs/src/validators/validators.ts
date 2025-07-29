@@ -15,6 +15,7 @@ export const SupportedServers = z.enum(['hono', 'hattip', 'elysia', 'express', '
 export const PhotonEntryBase = z.looseObject({
   id: z.string(),
   name: z.string(),
+  target: z.string().optional(),
   route: z.string().optional(),
   resolvedId: z.string().optional(),
 })

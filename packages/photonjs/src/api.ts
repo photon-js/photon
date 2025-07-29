@@ -4,7 +4,8 @@ export { isPhotonMeta, type PhotonMeta } from './plugin/utils/entry.js'
 export { resolvePhotonConfig } from './validators/coerce.js'
 export {
   addPhotonEntry,
-  getPhotonServerIdWithHandler,
+  updatePhotonEntry,
+  getPhotonServerIdWithEntry,
 } from './api/api.js'
 export {
   PhotonError,

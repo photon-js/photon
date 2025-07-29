@@ -16,7 +16,8 @@ export function cloudflare(config?: Omit<PluginConfig, 'viteEnvironment'>): Plug
               // @cloudflare/vite-plugin has its own dev server
               devServer: false,
               codeSplitting: false,
-              defaultBuildEnv: 'cloudflare',
+              // Should be set to the value of cloudflareVitePlugins -> viteEnvironment.name
+              // defaultBuildEnv: 'cloudflare',
             },
           }
         },
@@ -26,42 +27,27 @@ export function cloudflare(config?: Omit<PluginConfig, 'viteEnvironment'>): Plug
       async load(id, { meta }) {
         const isDev = this.environment.config.command === 'serve'
 
-        if (meta.type === 'server') {
-          // `server` usually exists only during build time
-          if (meta.server) {
-            return {
-              // language=ts
-              code: `import serverEntry from ${JSON.stringify(id)};
-import { asFetch } from "@photonjs/cloudflare/${meta.server}";
+        // `server` usually exists only during build time
+        if (meta.server) {
+          return {
+            // language=ts
+            code: `import serverEntry from ${JSON.stringify(id)};
+            import { asFetch } from "@photonjs/cloudflare/${meta.server}";
 
-export const fetch = asFetch(serverEntry);
-export default { fetch };
-`,
-              map: { mappings: '' },
-            }
+            export const fetch = asFetch(serverEntry);
+            export default { fetch };
+            `,
+            map: { mappings: '' },
           }
+        }
 
-          if (isDev) {
-            return {
-              // language=ts
-              code: `import serverEntry from ${JSON.stringify(id)};
+        if (isDev) {
+          return {
+            // language=ts
+            code: `import serverEntry from ${JSON.stringify(id)};
 import { asFetch } from "@photonjs/cloudflare/dev";
 
 export const fetch = asFetch(serverEntry, ${JSON.stringify(id)});
-export default { fetch };
-`,
-              map: { mappings: '' },
-            }
-          }
-        } else {
-          return {
-            // language=ts
-            code: `import handler from ${JSON.stringify(id)};
-import { getRuntime } from "photon:resolve-from-photon:@universal-middleware/cloudflare";
-
-export const fetch = (request, env, ctx) => {
-  return handler(request, {}, getRuntime(env, ctx))
-};
 export default { fetch };
 `,
             map: { mappings: '' },
@@ -72,7 +58,7 @@ export default { fetch };
       },
     }),
     supportedTargetServers('cloudflare', ['hono', 'h3']),
-    // FIXME do not enforce ssr env
+    // FIXME do not enforce ssr env?
     ...cloudflareVitePlugins({ ...config, viteEnvironment: { name: 'ssr' } }),
   ]
 }

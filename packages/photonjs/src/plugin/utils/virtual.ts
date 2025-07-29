@@ -16,10 +16,9 @@ const virtualModules = {
   ),
   'handler-entry': regexGroups<{ entry: string }>(/^photon:handler-entry:(?<entry>.+)/),
   'server-entry': regexGroups<{ entry?: string }>(/^photon:server-entry(?:$|:(?<entry>.+))/),
-  'server-entry-with-handler': regexGroups<{ condition: string; handler: string }>(
-    /^photon:server-entry-with-handler:(?<condition>.+?):(?<handler>.+)/,
+  'server-entry-with-entry': regexGroups<{ condition: string; entry: string }>(
+    /^photon:server-entry-with-entry:(?<condition>.+?):(?<entry>.+)/,
   ),
-  'server-entry-with-config': regexGroups<{ config: string }>(/^photon:server-entry-with-config:(?<config>.+)/),
   'fallback-entry': regexGroups(/^photon:fallback-entry/),
   'resolve-from-photon': regexGroups<{ module: string }>(/^photon:resolve-from-photon:(?<module>.+)/),
   'get-middlewares': regexGroups<{ condition: string; server: string; handler?: string }>(

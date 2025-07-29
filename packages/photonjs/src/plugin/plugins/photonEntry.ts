@@ -2,14 +2,13 @@ import { walk } from 'estree-walker'
 import MagicString from 'magic-string'
 import type { Plugin } from 'vite'
 import { assert, assertUsage } from '../../utils/assert.js'
-import { getPhotonMeta } from '../../utils/meta.js'
+import { resolvePhotonConfig } from '../../validators/coerce.js'
 import type { SupportedServers } from '../../validators/types.js'
 import { singleton } from '../utils/dedupe.js'
 import { isPhotonMeta } from '../utils/entry.js'
 import type { ModuleInfo, PluginContext } from '../utils/rollupTypes.js'
 import { importsToServer } from '../utils/servers.js'
 import { asPhotonEntryId, ifPhotonModule, virtualModulesRegex } from '../utils/virtual.js'
-import { resolvePhotonConfig } from '../../validators/coerce.js'
 
 const serverImports = new Set(Object.keys(importsToServer))
 const re_photonHandler = /[?&]photonHandler=/
@@ -150,17 +149,18 @@ export function photonEntry(): Plugin[] {
       sharedDuringBuild: true,
     }),
     singleton({
-      name: 'photon:resolve-server-with-handler',
+      name: 'photon:resolve-server-with-entry',
       enforce: 'pre',
 
       resolveId: {
         filter: {
-          id: virtualModulesRegex['server-entry-with-handler'],
+          id: virtualModulesRegex['server-entry-with-entry'],
         },
         order: 'post',
         handler(id) {
-          return ifPhotonModule('server-entry-with-handler', id, async ({ handler }) => {
-            const metaHandler = await getPhotonMeta(this, handler, 'handler-entry')
+          return ifPhotonModule('server-entry-with-entry', id, async ({ entry }) => {
+            const handlerOrConfig = this.environment.config.photon.entries.find((e) => e.name === entry)
+            assertUsage(handlerOrConfig, `Unable to find entry "${entry}"`)
 
             return {
               id,
@@ -168,7 +168,7 @@ export function photonEntry(): Plugin[] {
                 photon: {
                   ...this.environment.config.photon.server,
                   // Additional handler meta take precedence
-                  ...metaHandler,
+                  ...handlerOrConfig,
                   type: 'server',
                   id,
                   resolvedId: id,
@@ -182,10 +182,10 @@ export function photonEntry(): Plugin[] {
 
       load: {
         filter: {
-          id: virtualModulesRegex['server-entry-with-handler'],
+          id: virtualModulesRegex['server-entry-with-entry'],
         },
         handler(id) {
-          return ifPhotonModule('server-entry-with-handler', id, async ({ handler }) => {
+          return ifPhotonModule('server-entry-with-entry', id, async ({ entry }) => {
             const resolved = await this.resolve(this.environment.config.photon.server.id, undefined, {
               isEntry: true,
             })
@@ -194,7 +194,15 @@ export function photonEntry(): Plugin[] {
             const loaded = await this.load({ id: resolved.id })
             assert(loaded.code)
 
+            const handlerOrConfig = this.environment.config.photon.entries.find((e) => e.name === entry)
+            assert(handlerOrConfig)
+
             const code = loaded.code
+
+            // All entries are bundled in server-config entries
+            if (handlerOrConfig.type === 'server-config') {
+              return { code }
+            }
 
             const ast = this.parse(code)
             const magicString = new MagicString(code)
@@ -223,7 +231,7 @@ export function photonEntry(): Plugin[] {
                     const { end } = node.source as unknown as { start: number; end: number }
 
                     // Adding a query parameter that will be used to rewrite `photon:get-middlewares` imports
-                    magicString.appendRight(end - 1, `?${new URLSearchParams({ photonHandler: handler }).toString()}`)
+                    magicString.appendRight(end - 1, `?${new URLSearchParams({ photonHandler: entry }).toString()}`)
                   }
                 }
               },
@@ -404,64 +412,6 @@ export function photonEntry(): Plugin[] {
           })
         },
       },
-      sharedDuringBuild: true,
-    }),
-    // TODO add tests
-    singleton({
-      name: 'photon:resolve-server-with-config',
-      enforce: 'pre',
-
-      resolveId: {
-        filter: {
-          id: virtualModulesRegex['server-entry-with-config'],
-        },
-        order: 'post',
-        handler(id) {
-          return ifPhotonModule('server-entry-with-config', id, async ({ config }) => {
-            const serverConfigs = this.environment.config.photon.entries.filter((e) => e.type === 'server-config')
-
-            const configValue = serverConfigs.find((e) => e.name === config)
-            assertUsage(configValue, `Unable to find entry with name "${config}"`)
-
-            const meta = await getPhotonMeta(this, this.environment.config.photon.server.id)
-
-            return {
-              id,
-              meta: {
-                photon: {
-                  ...meta,
-                  resolvedId: id,
-                  ...configValue,
-                  id,
-                },
-              },
-              resolvedBy: 'photon',
-            }
-          })
-        },
-      },
-
-      load: {
-        filter: {
-          id: virtualModulesRegex['server-entry-with-config'],
-        },
-        handler(id) {
-          return ifPhotonModule('server-entry-with-config', id, async () => {
-            const resolved = await this.resolve(this.environment.config.photon.server.id, undefined, {
-              isEntry: true,
-            })
-            assert(resolved)
-
-            const loaded = await this.load({ id: resolved.id })
-            assert(loaded.code)
-
-            return {
-              code: loaded.code,
-            }
-          })
-        },
-      },
-
       sharedDuringBuild: true,
     }),
     singleton({

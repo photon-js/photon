@@ -15,26 +15,30 @@ function commonConfig(): Plugin[] {
           config.consumer = name === 'client' ? 'client' : 'server'
         }
 
-        let additionalConditions: { externalConditions?: string[]; conditions?: string[] } = {}
+        let additionalResolveConfig: { externalConditions?: string[]; conditions?: string[]; noExternal?: string } = {}
 
         if (isBun) {
-          additionalConditions = {
+          additionalResolveConfig = {
             conditions: ['bun', ...defaultServerConditions],
             externalConditions: ['bun', ...defaultServerConditions],
           }
         }
 
         if (isDeno) {
-          additionalConditions = {
+          additionalResolveConfig = {
             conditions: ['deno', ...defaultServerConditions],
             externalConditions: ['deno', ...defaultServerConditions],
           }
         }
 
+        // do not override `noExternal: true`
+        if (config.resolve?.noExternal !== true) {
+          additionalResolveConfig.noExternal = '@photonjs/core'
+        }
+
         return {
           resolve: {
-            noExternal: '@photonjs/core',
-            ...additionalConditions,
+            ...additionalResolveConfig,
           },
           build: {
             target: 'es2022',
