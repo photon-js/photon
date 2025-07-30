@@ -55,10 +55,7 @@ export function targetLoader(
               this.emitFile({
                 type: 'chunk',
                 fileName: entry.target || entry.name,
-                id: photon.codeSplitting
-                  ? // TODO simplify this
-                    `${prefix}:${getPhotonServerIdWithEntry(isEdge ? 'edge' : 'node', entry.name)}`
-                  : `${prefix}:${photon.server.id}`,
+                id: `${prefix}:${getPhotonServerIdWithEntry(isEdge ? 'edge' : 'node', entry.name)}`,
               })
             }
           }
