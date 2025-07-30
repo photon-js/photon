@@ -57,7 +57,6 @@ export const PhotonEntryPartial = PhotonEntryUniversalHandler.extend({
 
 export const PhotonConfig = z.looseObject({
   server: z.union([z.string(), PhotonEntryServerPartial]).optional(),
-  // TODO if codeSplitting is false and one entry does not have .id -> throw error
   // This means that only a framework setting codeSplitting: false can also add entries without .id
   entries: z.record(z.string(), z.union([z.string(), PhotonEntryPartial])).optional(),
   hmr: z.union([z.boolean(), z.literal('prefer-restart')]).optional(),
@@ -72,7 +71,12 @@ export const PhotonConfig = z.looseObject({
   /**
    * Can be set to false by frameworks or deployment targets if code splitting is not supported
    */
-  codeSplitting: z.boolean().optional(),
+  codeSplitting: z
+    .object({
+      framework: z.boolean().optional(),
+      target: z.boolean().optional(),
+    })
+    .optional(),
   devServer: z
     .union([
       z.boolean(),
@@ -94,7 +98,10 @@ export const PhotonConfigResolved = z.looseObject({
     }),
   ),
   defaultBuildEnv: z.string(),
-  codeSplitting: z.boolean(),
+  codeSplitting: z.object({
+    framework: z.boolean(),
+    target: z.boolean(),
+  }),
   devServer: z.union([
     z.literal(false),
     z.object({

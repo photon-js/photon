@@ -31,6 +31,10 @@ async function getAllPhotonMiddlewares(
   if (!isDev) {
     // Only inject entries for the current environment
     universalEntries = universalEntries.filter((h) => (h.env || defaultBuildEnv) === currentEnv)
+    if (pluginContext.environment.config.photon.codeSplitting.target) {
+      // Do not inject isolated entries when target supports code splitting
+      universalEntries = universalEntries.filter((h) => h.compositionMode !== 'isolated')
+    }
   }
   const universalEntriesIds = metaHandler ? [metaHandler.id] : universalEntries.map((e) => e.id)
 

@@ -49,8 +49,8 @@ export function targetLoader(
           for (const entry of photon.entries) {
             if (
               (entry.env || 'ssr') === envName &&
-              // if codeSplitting is enabled or if a target has explicitely been set, emit a new entry
-              (photon.codeSplitting || entry.target)
+              // if framework codeSplitting is enabled or if a target has explicitely been set, emit a new entry
+              (photon.codeSplitting.framework || entry.target)
             ) {
               this.emitFile({
                 type: 'chunk',

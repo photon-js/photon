@@ -7,7 +7,9 @@ export function photonPlugin(): Plugin[] {
     fullInstall: true,
 
     // Disables code-splitting functionality for testing purposes
-    codeSplitting: false,
+    codeSplitting: {
+      framework: false,
+    },
 
     // Always use those middlewares for all entries defined by Photon
     resolveMiddlewares() {

@@ -15,7 +15,9 @@ export function cloudflare(config?: Omit<PluginConfig, 'viteEnvironment'>): Plug
             photon: {
               // @cloudflare/vite-plugin has its own dev server
               devServer: false,
-              codeSplitting: false,
+              codeSplitting: {
+                target: false,
+              },
               // Should be set to the value of cloudflareVitePlugins -> viteEnvironment.name
               // defaultBuildEnv: 'cloudflare',
             },

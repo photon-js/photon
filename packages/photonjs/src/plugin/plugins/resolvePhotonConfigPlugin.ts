@@ -28,11 +28,11 @@ export function resolvePhotonConfigPlugin(pluginConfig?: Photon.Config): Plugin[
             // biome-ignore lint/suspicious/noExplicitAny: <explanation>
             resolvedPhotonConfig = resolvePhotonConfig(config.photon as any)
           }
-          if (resolvedPhotonConfig.codeSplitting) {
+          if (resolvedPhotonConfig.codeSplitting.framework) {
             const serverConfigEntries = resolvedPhotonConfig.entries.filter((e) => e.type === 'server-config')
             if (serverConfigEntries.length > 0) {
               throw new PhotonConfigError(
-                'server-config entries are not supported when code splitting is enabled. Please disable code splitting or remove server-config entries.',
+                'server-config entries are not supported when codeSplitting.framework is true. Please disable code splitting or remove server-config entries.',
               )
             }
           }

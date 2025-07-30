@@ -22,7 +22,7 @@ export function addPhotonEntry(pluginContext: PluginContext, name: string, entry
     .union([PhotonEntryUniversalHandler, PhotonEntryServerConfig])
     .parse(entryToPhoton('handler-entry', entry, name))
 
-  if (pluginContext.environment.config.photon.codeSplitting && parsed.type === 'server-config') {
+  if (pluginContext.environment.config.photon.codeSplitting.framework && parsed.type === 'server-config') {
     throw new PhotonConfigError(
       `Photon entry with name "${entry.name}" is of type "server-config" but code splitting is enabled. Please disable code splitting or use "universal-handler" instead.`,
     )
@@ -45,7 +45,7 @@ export function updatePhotonEntry(pluginContext: PluginContext, name: string, en
     .union([PhotonEntryUniversalHandler, PhotonEntryServerConfig])
     .parse(entryToPhoton('handler-entry', entry, name))
 
-  if (pluginContext.environment.config.photon.codeSplitting && parsed.type === 'server-config') {
+  if (pluginContext.environment.config.photon.codeSplitting.framework && parsed.type === 'server-config') {
     throw new PhotonConfigError(
       `Photon entry with name "${entry.name}" is of type "server-config" but code splitting is enabled. Please disable code splitting or use "universal-handler" instead.`,
     )

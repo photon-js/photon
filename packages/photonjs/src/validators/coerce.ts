@@ -80,8 +80,10 @@ const resolver = Validators.PhotonConfig.transform((c) => {
             autoServe: excludeTrue(c.devServer)?.autoServe ?? true,
           },
     middlewares: c.middlewares ?? [],
-    // codeSplitting must explicitely be set to true by targets
-    codeSplitting: c.codeSplitting ?? false,
+    codeSplitting: {
+      framework: c.codeSplitting?.framework ?? true,
+      target: c.codeSplitting?.target ?? false,
+    },
     defaultBuildEnv: c.defaultBuildEnv ?? 'ssr',
     hmr: c.hmr ?? (isBun || isDeno ? 'prefer-restart' : true),
   })
@@ -91,6 +93,7 @@ export function mergePhotonConfig(configs: Photon.Config[]): Photon.Config {
   const resolving: Photon.Config = {}
   resolving.entries = {}
   resolving.middlewares = []
+  resolving.codeSplitting = {}
   for (const config of configs) {
     // server
     if (config.server) {
@@ -132,9 +135,14 @@ export function mergePhotonConfig(configs: Photon.Config[]): Photon.Config {
 
     // codeSplitting
     // if codeSplitting has already been set to false, keep it that way
-    if (resolving.codeSplitting !== false) {
-      if (typeof config.codeSplitting !== 'undefined') {
-        resolving.codeSplitting = config.codeSplitting
+    if (resolving.codeSplitting.framework !== false) {
+      if (typeof config.codeSplitting?.framework !== 'undefined') {
+        resolving.codeSplitting.framework = config.codeSplitting.framework
+      }
+    }
+    if (resolving.codeSplitting.target !== false) {
+      if (typeof config.codeSplitting?.target !== 'undefined') {
+        resolving.codeSplitting.target = config.codeSplitting.target
       }
     }
 
