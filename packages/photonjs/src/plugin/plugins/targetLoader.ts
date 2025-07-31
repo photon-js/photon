@@ -84,7 +84,9 @@ export function targetLoader(
             ...resolved,
             // tag module as target entry for other plugins to use
             meta: {
+              ...resolved.meta,
               photonConfig: {
+                ...resolved.meta?.photonConfig,
                 isTargetEntry: true,
               },
             },
