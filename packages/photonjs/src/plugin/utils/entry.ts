@@ -19,4 +19,5 @@ export interface PhotonMetaConfig {
    * a 'full-reload' will occur.
    */
   isGlobal?: boolean
+  isTargetEntry?: boolean
 }

@@ -83,8 +83,10 @@ export function targetLoader(
           return {
             ...resolved,
             // tag module as target entry for other plugins to use
-            photonConfig: {
-              isTargetEntry: true,
+            meta: {
+              photonConfig: {
+                isTargetEntry: true,
+              },
             },
             id: `${prefix}:${resolved.id}`,
           }
