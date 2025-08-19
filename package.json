@@ -29,5 +29,10 @@
     "playwright": "^1.54.2",
     "prettier": "^3.6.2"
   },
+  "pnpm": {
+    "overrides": {
+      "vite": "7.1.2"
+    }
+  },
   "packageManager": "pnpm@10.11.0"
 }
