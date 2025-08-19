@@ -1,21 +1,21 @@
-import { enhance } from '@universal-middleware/core'
-import { renderUrl } from '../../renderUrl.js'
+import { enhance } from "@universal-middleware/core";
+import { renderUrl } from "../../renderUrl.js";
 
 export const ssrMiddleware = enhance(
   async (request: Request) => {
-    const html = renderUrl(request.url)
+    const html = renderUrl(request.url);
 
     return new Response(html, {
       status: 200,
       headers: {
-        'Content-Type': 'text/html',
+        "Content-Type": "text/html",
       },
-    })
+    });
   },
   // enhance() adds meta data (a Universal Middleware in itself is just a Request => Response function)
   {
-    name: 'awesome-framework:ssr',
-    path: '/**',
-    method: 'GET',
+    name: "awesome-framework:ssr",
+    path: "/**",
+    method: "GET",
   },
-)
+);

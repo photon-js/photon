@@ -1,13 +1,13 @@
-import { getUniversalEntries, getUniversalMiddlewares } from 'photon:get-middlewares:edge:elysia'
-import type { RuntimeAdapterTarget, UniversalMiddleware } from '@universal-middleware/core'
-import { type App, apply as applyAdapter } from '@universal-middleware/elysia'
-import { createApply } from '../common.js'
+import { getUniversalEntries, getUniversalMiddlewares } from "photon:get-middlewares:edge:elysia";
+import type { RuntimeAdapterTarget, UniversalMiddleware } from "@universal-middleware/core";
+import { type App, apply as applyAdapter } from "@universal-middleware/elysia";
+import { createApply } from "../common.js";
 
 export const apply: <T extends App>(app: T, additionalMiddlewares?: UniversalMiddleware[]) => T = createApply(
-  'elysia',
+  "elysia",
   applyAdapter,
   getUniversalEntries,
   getUniversalMiddlewares,
-)
+);
 
-export type RuntimeAdapter = RuntimeAdapterTarget<'elysia'>
+export type RuntimeAdapter = RuntimeAdapterTarget<"elysia">;

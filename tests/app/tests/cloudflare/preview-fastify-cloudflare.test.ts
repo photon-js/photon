@@ -1,6 +1,6 @@
-import { testRunUnsupported } from '../testRun.js'
+import { testRunUnsupported } from "../testRun.js";
 
-process.env.TARGET = 'cloudflare'
-process.env.SERVER = 'fastify'
+process.env.TARGET = "cloudflare";
+process.env.SERVER = "fastify";
 
-await testRunUnsupported('pnpm run preview:vite --strictPort --port 3000')
+await testRunUnsupported("pnpm run preview:vite --strictPort --port 3000");

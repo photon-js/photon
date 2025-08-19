@@ -1,1 +1,1 @@
-export { devServerMiddleware } from './middlewares/devServer.js'
+export { devServerMiddleware } from "./middlewares/devServer.js";

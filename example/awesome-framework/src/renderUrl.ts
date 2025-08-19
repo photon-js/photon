@@ -1,8 +1,8 @@
 export function renderUrl(url: string) {
-  const rootComonentHtml = renderRootComponent(url)
-  const indexHtml = getIndexHtml()
-  const html = indexHtml.replace('<!--app-html-->', rootComonentHtml)
-  return html
+  const rootComonentHtml = renderRootComponent(url);
+  const indexHtml = getIndexHtml();
+  const html = indexHtml.replace("<!--app-html-->", rootComonentHtml);
+  return html;
 }
 
 // A real framework would render the user's React/Vue/Solid root component
@@ -27,7 +27,7 @@ function renderRootComponent(_url: string) {
       </a>
       </p>
     </div>
-  `
+  `;
 }
 
 // A real framework would get the user's index.html or render the user's <Layout> component
@@ -45,5 +45,5 @@ function getIndexHtml() {
     <div id="app"><!--app-html--></div>
     <script type="module" src="./src/entry-client.ts"></script>
   </body>
-</html>`
+</html>`;
 }

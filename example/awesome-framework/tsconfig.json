@@ -17,7 +17,8 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
     "verbatimModuleSyntax": true,
-    "outDir": "./dist/"
+    "outDir": "./dist/",
+    "jsx": "preserve"
   },
   "exclude": ["**/*.spec.ts", "./node_modules/", "./dist/"]
 }

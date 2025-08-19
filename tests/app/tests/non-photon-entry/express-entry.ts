@@ -1,11 +1,11 @@
-import express, { type Express } from 'express'
+import express, { type Express } from "express";
 
 function startServer(): Express {
-  const app = express()
+  const app = express();
 
-  app.listen(3000)
+  app.listen(3000);
 
-  return app
+  return app;
 }
 
-export default startServer()
+export default startServer();

@@ -1,6 +1,6 @@
-import { testRun } from '../testRun.js'
+import { testRun } from "../testRun.js";
 
-process.env.TARGET = 'node'
-process.env.SERVER = 'hono'
+process.env.TARGET = "node";
+process.env.SERVER = "hono";
 
-testRun('pnpm run preview')
+testRun("pnpm run preview");

@@ -2,6 +2,8 @@ name: CI
 
 on:
   push:
+    branches:
+      - main
   pull_request:
 
 jobs:
@@ -20,10 +22,21 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node_version }}
-          # TODO/eventually: try using the cache again
-          # The cache breaks playwright installation, see https://github.com/vikejs/vike-vue/pull/119
-          # cache: "pnpm"
       - run: pnpm install
       - run: pnpm exec playwright install chromium
       - run: pnpm run build
       - run: pnpm run test
+
+  lint:
+    name: Biome check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - name: Set Node.js version to 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: pnpm install
+      - run: pnpm run build
+      - run: pnpm run format:check

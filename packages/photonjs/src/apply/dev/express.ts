@@ -1,15 +1,15 @@
-import { getUniversalEntries, getUniversalMiddlewares } from 'photon:get-middlewares:dev:express'
-import type { RuntimeAdapterTarget } from '@universal-middleware/core'
-import { apply as applyAdapter } from '@universal-middleware/express'
-import { createApply } from '../common.js'
-import { devServerMiddleware } from '@photonjs/core/dev'
+import { getUniversalEntries, getUniversalMiddlewares } from "photon:get-middlewares:dev:express";
+import { devServerMiddleware } from "@photonjs/core/dev";
+import type { RuntimeAdapterTarget } from "@universal-middleware/core";
+import { apply as applyAdapter } from "@universal-middleware/express";
+import { createApply } from "../common.js";
 
 export const apply = createApply(
-  'express',
+  "express",
   applyAdapter,
   getUniversalEntries,
   getUniversalMiddlewares,
   devServerMiddleware,
-)
+);
 
-export type RuntimeAdapter = RuntimeAdapterTarget<'express'>
+export type RuntimeAdapter = RuntimeAdapterTarget<"express">;

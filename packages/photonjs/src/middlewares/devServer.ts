@@ -1,43 +1,43 @@
-import type { IncomingMessage } from 'node:http'
-import { enhance, type Get, type UniversalMiddleware } from '@universal-middleware/core'
-import { connectToWeb } from '@universal-middleware/express'
-import { handleViteDevServer } from '../runtime/adapters/handleViteDevServer.js'
-import { globalStore } from '../runtime/globalStore.js'
+import type { IncomingMessage } from "node:http";
+import { enhance, type Get, type UniversalMiddleware } from "@universal-middleware/core";
+import { connectToWeb } from "@universal-middleware/express";
+import { handleViteDevServer } from "../runtime/adapters/handleViteDevServer.js";
+import { globalStore } from "../runtime/globalStore.js";
 
 export const devServerMiddleware = (() =>
   enhance(
     async (request, context, runtime) => {
-      const nodeReq: IncomingMessage | undefined = 'req' in runtime ? runtime.req : undefined
+      const nodeReq: IncomingMessage | undefined = "req" in runtime ? runtime.req : undefined;
 
       if (nodeReq) {
-        const needsUpgrade = globalStore.setupHMRProxy(nodeReq)
+        const needsUpgrade = globalStore.setupHMRProxy(nodeReq);
 
         if (needsUpgrade) {
           // Early response for HTTP connection upgrade
-          return new Response(null)
+          return new Response(null);
         }
       }
 
       // Can be disabled, or can be running on a different environment
-      if (!globalStore.viteDevServer) return
+      if (!globalStore.viteDevServer) return;
 
-      const handled = await connectToWeb(handleViteDevServer)(request, context, runtime)
+      const handled = await connectToWeb(handleViteDevServer)(request, context, runtime);
 
-      if (handled) return handled
+      if (handled) return handled;
 
       return (response) => {
-        if (!response.headers.has('ETag')) {
+        if (!response.headers.has("ETag")) {
           try {
-            response.headers.set('Cache-Control', 'no-store')
+            response.headers.set("Cache-Control", "no-store");
           } catch {
             // Headers already sent
           }
         }
-        return response
-      }
+        return response;
+      };
     },
     {
-      name: 'photon:dev-server',
+      name: "photon:dev-server",
       immutable: false,
     },
-  )) satisfies Get<[], UniversalMiddleware>
+  )) satisfies Get<[], UniversalMiddleware>;

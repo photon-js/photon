@@ -1,10 +1,10 @@
-import type { App as ElysiaApp } from '@universal-middleware/elysia'
-import type { Serve } from 'elysia/universal'
-import { ensurePhotonServer } from '../symbol-utils.js'
-import { getPort, onReady, type ServerOptionsBase } from '../utils.js'
+import type { App as ElysiaApp } from "@universal-middleware/elysia";
+import type { Serve } from "elysia/universal";
+import { ensurePhotonServer } from "../symbol-utils.js";
+import { getPort, onReady, type ServerOptionsBase } from "../utils.js";
 
 export function serve<App extends ElysiaApp>(app: App, options: ServerOptionsBase = {}) {
-  const port = getPort(options)
+  const port = getPort(options);
 
   return ensurePhotonServer(
     app.listen(
@@ -15,5 +15,5 @@ export function serve<App extends ElysiaApp>(app: App, options: ServerOptionsBas
       onReady({ ...options, port }),
     ),
     app,
-  )
+  );
 }

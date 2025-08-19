@@ -1,22 +1,20 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "extends": ["./node_modules/@vikejs/biome-config/config.json"],
   "files": {
-    "ignore": ["dist/", ".vercel/", "package.json", ".wrangler/"]
+    "includes": ["**", "!**/.vercel", "!**/.wrangler"]
   },
-  "formatter": {
-    "indentWidth": 2,
-    "indentStyle": "space"
-  },
-  "javascript": {
-    "formatter": {
-      "semicolons": "asNeeded",
-      "lineWidth": 120,
-      "quoteStyle": "single",
-      "trailingCommas": "all"
+  "overrides": [
+    {
+      "includes": ["example/**", "docs/**"],
+      "linter": {
+        "rules": {
+          "a11y": "off"
+        },
+        "domains": {
+          "react": "recommended"
+        }
+      }
     }
-  },
-  "vcs": {
-    "enabled": true,
-    "clientKind": "git"
-  }
+  ]
 }

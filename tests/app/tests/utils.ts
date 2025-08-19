@@ -1,15 +1,15 @@
-import { expect, runCommandThatTerminates } from '@brillout/test-e2e'
+import { expect, runCommandThatTerminates } from "@brillout/test-e2e";
 
 export async function runCommandThatThrows(cmd: string, ...errors: [string, ...string[]]) {
-  let err: Error | undefined
+  let err: Error | undefined;
   try {
-    await runCommandThatTerminates(cmd)
+    await runCommandThatTerminates(cmd);
   } catch (err_) {
-    err = err_ as Error
+    err = err_ as Error;
   }
 
-  expect(err).toBeTruthy()
+  expect(err).toBeTruthy();
   for (const error of errors) {
-    expect(err?.message).toContain(error)
+    expect(err?.message).toContain(error);
   }
 }

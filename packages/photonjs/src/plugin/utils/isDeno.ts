@@ -1,2 +1,2 @@
-//@ts-ignore
-export const isDeno = typeof Deno !== 'undefined'
+//@ts-expect-error
+export const isDeno = typeof Deno !== "undefined";

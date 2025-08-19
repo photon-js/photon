@@ -1,3 +1,3 @@
-import { testRun } from './testRun.js'
+import { testRun } from "./testRun.js";
 
-testRun('pnpm run preview:cloudflare --strictPort --port 3000')
+testRun("pnpm run preview:cloudflare --strictPort --port 3000");

@@ -1,16 +1,16 @@
-import type { ViteDevServer } from 'vite'
-import { z } from 'zod/v4'
-import type { PluginContext } from '../plugin/utils/rollupTypes.js'
+import type { ViteDevServer } from "vite";
+import { z } from "zod/v4";
+import type { PluginContext } from "../plugin/utils/rollupTypes.js";
 
 // FIXME should server be optional?
 export type GetPhotonCondition = (
   this: ViteDevServer | PluginContext,
-  condition: 'dev' | 'edge' | 'node',
+  condition: "dev" | "edge" | "node",
   server: string,
-  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
-) => string | string[] | undefined | null | void
+  // biome-ignore lint/suspicious/noConfusingVoidType: prefer void
+) => string | string[] | undefined | null | void;
 
-export const SupportedServers = z.enum(['hono', 'hattip', 'elysia', 'express', 'fastify', 'h3'])
+export const SupportedServers = z.enum(["hono", "hattip", "elysia", "express", "fastify", "h3"]);
 
 export const PhotonEntryBase = z.object({
   id: z.string(),
@@ -18,12 +18,12 @@ export const PhotonEntryBase = z.object({
   target: z.string().optional(),
   route: z.string().optional(),
   resolvedId: z.string().optional(),
-})
+});
 
 export const PhotonEntryServer = PhotonEntryBase.extend({
-  type: z.literal('server'),
+  type: z.literal("server"),
   server: SupportedServers.optional(),
-}).loose()
+}).loose();
 
 export const PhotonEntryServerPartial = PhotonEntryServer.extend({
   type: PhotonEntryServer.shape.type.optional(),
@@ -31,39 +31,39 @@ export const PhotonEntryServerPartial = PhotonEntryServer.extend({
   .omit({
     name: true,
   })
-  .loose()
+  .loose();
 
 export const PhotonEntryUniversalHandler = PhotonEntryBase.extend({
-  type: z.literal('universal-handler'),
+  type: z.literal("universal-handler"),
   /**
    * If undefined or 'auto', all middlewares will be applied to it.
    * If 'isolated', no middlewares will be applied.
    * @alpha
    */
-  compositionMode: z.enum(['isolated', 'auto']).optional(),
+  compositionMode: z.enum(["isolated", "auto"]).optional(),
   env: z.string().optional(),
-}).loose()
+}).loose();
 
 export const PhotonEntryServerConfig = PhotonEntryBase.extend({
-  id: z.literal('photon:server-entry'),
-  type: z.literal('server-config'),
+  id: z.literal("photon:server-entry"),
+  type: z.literal("server-config"),
   compositionMode: PhotonEntryUniversalHandler.shape.compositionMode,
   env: PhotonEntryUniversalHandler.shape.env,
-}).loose()
+}).loose();
 
 export const PhotonEntryPartial = PhotonEntryUniversalHandler.extend({
-  type: z.enum(['universal-handler', 'server-config']).optional(),
-}).partial()
+  type: z.enum(["universal-handler", "server-config"]).optional(),
+}).partial();
 
 export const PhotonConfig = z.looseObject({
   server: z.union([z.string(), PhotonEntryServerPartial]).optional(),
   // This means that only a framework setting codeSplitting: false can also add entries without .id
   entries: z.record(z.string(), z.union([z.string(), PhotonEntryPartial])).optional(),
-  hmr: z.union([z.boolean(), z.literal('prefer-restart')]).optional(),
+  hmr: z.union([z.boolean(), z.literal("prefer-restart")]).optional(),
   middlewares: z
     .array(
       z.custom<GetPhotonCondition>((fn) => {
-        return typeof fn === 'function'
+        return typeof fn === "function";
       }),
     )
     .optional(),
@@ -86,15 +86,15 @@ export const PhotonConfig = z.looseObject({
       }),
     ])
     .optional(),
-})
+});
 
 export const PhotonConfigResolved = z.looseObject({
   server: PhotonEntryServer,
   entries: z.array(z.union([PhotonEntryUniversalHandler, PhotonEntryServerConfig])),
-  hmr: z.union([z.boolean(), z.literal('prefer-restart')]),
+  hmr: z.union([z.boolean(), z.literal("prefer-restart")]),
   middlewares: z.array(
     z.custom<GetPhotonCondition>((fn) => {
-      return typeof fn === 'function'
+      return typeof fn === "function";
     }),
   ),
   defaultBuildEnv: z.string(),
@@ -109,4 +109,4 @@ export const PhotonConfigResolved = z.looseObject({
       autoServe: z.boolean(),
     }),
   ]),
-})
+});

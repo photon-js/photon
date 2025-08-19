@@ -1,3 +1,3 @@
 export default function bar() {
-  return new Response('bar')
+  return new Response("bar");
 }

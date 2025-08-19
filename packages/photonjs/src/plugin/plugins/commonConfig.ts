@@ -1,14 +1,14 @@
-import { defaultServerConditions, type Plugin } from 'vite'
-import { singleton } from '../utils/dedupe.js'
-import { isBun } from '../utils/isBun.js'
-import { isDeno } from '../utils/isDeno.js'
+import { defaultServerConditions, type Plugin } from "vite";
+import { singleton } from "../utils/dedupe.js";
+import { isBun } from "../utils/isBun.js";
+import { isDeno } from "../utils/isDeno.js";
 
-export { commonConfig }
+export { commonConfig };
 
 function commonConfig(): Plugin[] {
   return [
     singleton({
-      name: 'photon:common-config',
+      name: "photon:common-config",
 
       config() {
         return {
@@ -18,49 +18,49 @@ function commonConfig(): Plugin[] {
             // > you can exclude it and let the browser load it directly.
             optimizeDeps: {
               exclude: [
-                'hono',
-                'h3',
-                'elysia',
-                '@universal-middleware/cloudflare',
-                '@universal-middleware/compress',
-                '@universal-middleware/core',
-                '@universal-middleware/elysia',
-                '@universal-middleware/express',
-                '@universal-middleware/fastify',
-                '@universal-middleware/h3',
-                '@universal-middleware/hattip',
-                '@universal-middleware/hono',
-                '@universal-middleware/sirv',
+                "hono",
+                "h3",
+                "elysia",
+                "@universal-middleware/cloudflare",
+                "@universal-middleware/compress",
+                "@universal-middleware/core",
+                "@universal-middleware/elysia",
+                "@universal-middleware/express",
+                "@universal-middleware/fastify",
+                "@universal-middleware/h3",
+                "@universal-middleware/hattip",
+                "@universal-middleware/hono",
+                "@universal-middleware/sirv",
               ],
             },
           },
-        }
+        };
       },
 
       configEnvironment(name, config) {
         if (!config.consumer) {
-          config.consumer = name === 'client' ? 'client' : 'server'
+          config.consumer = name === "client" ? "client" : "server";
         }
 
-        let additionalResolveConfig: { externalConditions?: string[]; conditions?: string[]; noExternal?: string } = {}
+        let additionalResolveConfig: { externalConditions?: string[]; conditions?: string[]; noExternal?: string } = {};
 
         if (isBun) {
           additionalResolveConfig = {
-            conditions: ['bun', ...defaultServerConditions],
-            externalConditions: ['bun', ...defaultServerConditions],
-          }
+            conditions: ["bun", ...defaultServerConditions],
+            externalConditions: ["bun", ...defaultServerConditions],
+          };
         }
 
         if (isDeno) {
           additionalResolveConfig = {
-            conditions: ['deno', ...defaultServerConditions],
-            externalConditions: ['deno', ...defaultServerConditions],
-          }
+            conditions: ["deno", ...defaultServerConditions],
+            externalConditions: ["deno", ...defaultServerConditions],
+          };
         }
 
         // do not override `noExternal: true`
         if (config.resolve?.noExternal !== true) {
-          additionalResolveConfig.noExternal = '@photonjs/core'
+          additionalResolveConfig.noExternal = "@photonjs/core";
         }
 
         return {
@@ -68,24 +68,24 @@ function commonConfig(): Plugin[] {
             ...additionalResolveConfig,
           },
           build: {
-            target: 'es2022',
+            target: "es2022",
           },
-        }
+        };
       },
     }),
     singleton({
-      name: 'photon:set-after-build-start',
-      enforce: 'post',
+      name: "photon:set-after-build-start",
+      enforce: "post",
       buildStart: {
-        order: 'post',
+        order: "post",
         handler() {
-          Object.defineProperty(this.environment.config, 'afterBuildStart', {
+          Object.defineProperty(this.environment.config, "afterBuildStart", {
             get() {
-              return true
+              return true;
             },
-          })
+          });
         },
       },
     }),
-  ]
+  ];
 }
