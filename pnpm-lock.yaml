@@ -4,9 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-overrides:
-  vite: 7.1.3
-
 importers:
 
   .:
@@ -54,7 +51,7 @@ importers:
         specifier: ^0.4.237
         version: 0.4.237(vite@7.1.3(@types/node@22.17.2))
       vite:
-        specifier: 7.1.3
+        specifier: ^7.1.3
         version: 7.1.3(@types/node@22.17.2)
 
   example/app-cloudflare:
@@ -79,7 +76,7 @@ importers:
         specifier: ^5.9.2
         version: 5.9.2
       vite:
-        specifier: 7.1.3
+        specifier: ^7.1.3
         version: 7.1.3(@types/node@22.17.2)
       wrangler:
         specifier: ^4.31.0
@@ -104,7 +101,7 @@ importers:
         specifier: ^5.9.2
         version: 5.9.2
       vite:
-        specifier: 7.1.3
+        specifier: ^7.1.3
         version: 7.1.3(@types/node@22.17.2)
       wrangler:
         specifier: ^4.31.0
@@ -129,7 +126,7 @@ importers:
         specifier: ^5.9.2
         version: 5.9.2
       vite:
-        specifier: 7.1.3
+        specifier: ^7.1.3
         version: 7.1.3(@types/node@22.17.2)
 
   packages/adapter-cloudflare:
@@ -172,7 +169,7 @@ importers:
         specifier: ^5.9.2
         version: 5.9.2
       vite:
-        specifier: 7.1.3
+        specifier: ^7.1.3
         version: 7.1.3(@types/node@22.17.2)
 
   packages/photonjs:
@@ -272,7 +269,7 @@ importers:
         specifier: ^2.3.6
         version: 2.3.6
       vite:
-        specifier: 7.1.3
+        specifier: ^7.1.3
         version: 7.1.3(@types/node@22.17.2)
 
   tests/app:
@@ -309,7 +306,7 @@ importers:
         specifier: ^5.9.2
         version: 5.9.2
       vite:
-        specifier: 7.1.3
+        specifier: ^7.1.3
         version: 7.1.3(@types/node@22.17.2)
       wrangler:
         specifier: ^4.31.0
@@ -457,7 +454,7 @@ packages:
       react-dom: '>=18.0.0'
       typescript: '>=5.0.0'
       vike: '>=0.4.234'
-      vite: 7.1.3
+      vite: '>=5.2.0'
     peerDependenciesMeta:
       '@vitejs/plugin-react-swc':
         optional: true
@@ -506,7 +503,7 @@ packages:
   '@cloudflare/vite-plugin@1.11.6':
     resolution: {integrity: sha512-+xvFYZoxqlIUfXALk+T+jUtvXAylGicpYjrGVS2Z8cSEM5mLl+R5CbLG9kmWDLP2AoVAH5yJalpk7SQ3larLqg==}
     peerDependencies:
-      vite: 7.1.3
+      vite: ^6.1.0 || ^7.0.0
       wrangler: ^4.31.0
 
   '@cloudflare/workerd-darwin-64@1.20250816.0':
@@ -1616,7 +1613,7 @@ packages:
     resolution: {integrity: sha512-NQhPjysi5duItyrMd5JWZFf2vNOuSMyw+EoZyTBDzk+DkfYD8WNrsUs09sELV2cr1P15nufsN25hsUBt4CKF9Q==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
-      vite: 7.1.3
+      vite: ^4 || ^5 || ^6 || ^7
 
   '@whatwg-node/fetch@0.9.23':
     resolution: {integrity: sha512-7xlqWel9JsmxahJnYVUj/LLxWcnA93DR4c9xlw3U814jWTiYalryiH1qToik1hOxweKKRLi4haXHM5ycRksPBA==}
@@ -3255,7 +3252,7 @@ packages:
     hasBin: true
     peerDependencies:
       react-streaming: '>=0.3.42'
-      vite: 7.1.3
+      vite: '>=5.1.0'
     peerDependenciesMeta:
       react-streaming:
         optional: true
