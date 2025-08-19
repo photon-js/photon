@@ -14,10 +14,12 @@ type LoadHook = (
   },
 ) => Promise<LoadResult> | LoadResult
 
-export function targetLoader(
+type PluginInterop = Record<string, unknown> & { name: string }
+
+export function targetLoader<T extends { load: LoadHook } & Omit<Plugin, 'load' | 'resolveId' | 'name'>>(
   name: string,
-  options: { load: LoadHook } & Omit<Plugin, 'load' | 'resolveId' | 'name'>,
-): Plugin[] {
+  options: T,
+): PluginInterop[] {
   const prefix = `photon:${name}`
   const re_prefix = new RegExp(`^${escapeStringRegexp(prefix)}:`)
 
@@ -113,5 +115,5 @@ export function targetLoader(
 
       sharedDuringBuild: true,
     },
-  ]
+  ] satisfies Plugin[]
 }
