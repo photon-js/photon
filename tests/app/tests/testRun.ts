@@ -3,7 +3,7 @@ import { autoRetry, expect, expectLog, fetchHtml, getServerUrl, page, run, test 
 
 export { testRun, testRunUnsupported }
 
-function testRun(cmd: `pnpm run ${string}`) {
+function testRun(cmd: `pnpm run ${string}` | `bun --bun --silent run ${string}`) {
   run(cmd, {
     // Preview => builds app which takes a long time
     additionalTimeout: 120 * 1000,
@@ -19,6 +19,11 @@ function testRun(cmd: `pnpm run ${string}`) {
     await page.goto(`${getServerUrl()}/`)
     expect(await page.textContent('h1')).toBe('Hello Vite!')
     await testCounter()
+  })
+
+  test('framework standalone handler is rendered', async () => {
+    const text = await fetchHtml('/standalone')
+    expect(text).toContain('standalone')
   })
 }
 
@@ -36,7 +41,8 @@ async function testRunUnsupported(cmd: `pnpm run ${string}`) {
 
     test('page crashes with error message', async () => {
       await fetchHtml('/')
-      expectLog(error)
+      expectLog('Internal server error', { allLogs: true })
+      expectLog(error, { allLogs: true })
     })
   }
 }

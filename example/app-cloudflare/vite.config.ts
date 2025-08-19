@@ -1,4 +1,4 @@
-/// <reference types="@photonjs/core/api" />
+/// <reference types="@photonjs/core" />
 /* The Vite plugin cloudflare() will be replaced by this:
 import cloudflare from '@photonjs/cloudflare'
 */
@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => {
   return {
     // No photon server entry is defined, it will fallback to a virtual entry
     photon: {
-      handlers: {
+      entries: {
         // foo entry declares its route with `enhance` directly inside the file
         foo: 'src/middlewares/foo.ts',
         // bar entry route is declared here, and `enhance` is not used

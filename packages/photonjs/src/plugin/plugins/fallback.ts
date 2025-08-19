@@ -1,15 +1,26 @@
 import type { Plugin } from 'vite'
+import { singleton } from '../utils/dedupe.js'
 import { ifPhotonModule } from '../utils/virtual.js'
 
 export { fallback }
 
 function fallback(): Plugin {
-  return {
+  return singleton({
     name: 'photon:fallback',
 
     resolveId(id) {
       return ifPhotonModule('fallback-entry', id, () => {
-        return id
+        return {
+          id,
+          meta: {
+            photon: {
+              id,
+              resolvedId: id,
+              type: 'server',
+              server: 'hono',
+            },
+          },
+        }
       })
     },
 
@@ -17,18 +28,14 @@ function fallback(): Plugin {
       return ifPhotonModule('fallback-entry', id, () => {
         //language=ts
         return {
-          code: `import { apply, serve } from '@photonjs/core/hono'
-import { Hono } from 'hono'
+          code: `
+import { apply, serve } from 'photon:resolve-from-photon:@photonjs/core/hono'
+import { Hono } from 'photon:resolve-from-photon:hono'
 
 function startServer() {
   const app = new Hono()
   apply(app)
-
-  const port = process.env.PORT || 3000
-
-  return serve(app, {
-    port: +port
-  })
+  return serve(app)
 }
 
 export default startServer()
@@ -37,5 +44,5 @@ export default startServer()
         }
       })
     },
-  }
+  })
 }

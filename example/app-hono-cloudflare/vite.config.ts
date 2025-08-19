@@ -1,4 +1,3 @@
-/// <reference types="@photonjs/core/api" />
 /* The Vite plugin cloudflare() will be replaced by this:
 import cloudflare from '@photonjs/cloudflare'
 */

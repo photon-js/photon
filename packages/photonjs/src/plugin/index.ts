@@ -8,9 +8,11 @@ import { mirrorMeta } from './plugins/mirrorMeta.js'
 import { photonEntry } from './plugins/photonEntry.js'
 import { resolvePhotonConfigPlugin } from './plugins/resolvePhotonConfigPlugin.js'
 import { supportedTargetServers } from './plugins/supportedServers.js'
-import '../types.js'
+import { targetLoader } from './plugins/targetLoader.js'
+import '../vite-types.js'
+import type { Photon } from '../types.js'
 
-export { photon, installPhoton, supportedTargetServers, type InstallPhotonOptions, photon as default }
+export { photon, installPhoton, supportedTargetServers, targetLoader, type InstallPhotonOptions, photon as default }
 
 function photon(config?: Photon.Config): Plugin[] {
   return [
@@ -39,14 +41,4 @@ function installPhoton(
   plugins.push(...installPhotonBase(name, options))
 
   return plugins
-}
-
-declare module 'vite' {
-  interface UserConfig {
-    photon?: Photon.Config
-  }
-
-  interface ResolvedConfig {
-    photon: Photon.ConfigResolved
-  }
 }

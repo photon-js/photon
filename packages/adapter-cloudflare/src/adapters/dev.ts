@@ -1,14 +1,15 @@
 import type { ExportedHandlerFetchHandler } from '@cloudflare/workers-types'
+import { createIncompatibleServerError, createMissingApplyError, createMissingExportError } from '../utils/errors.js'
 
 export function asFetch(app: unknown, id: string): ExportedHandlerFetchHandler {
   if (!app) {
-    throw new Error(`[photon] Missing export default in ${JSON.stringify(id)}`)
+    throw createMissingExportError(id)
   }
 
   const server = (app as Record<symbol, string | undefined>)[Symbol.for('photon:server')]
 
   if (!server) {
-    throw new Error('[photon] { apply } function needs to be called before export')
+    throw createMissingApplyError()
   }
 
   switch (server) {
@@ -30,7 +31,5 @@ export function asFetch(app: unknown, id: string): ExportedHandlerFetchHandler {
       }
   }
 
-  throw new Error(
-    `[photon] Clouflare target is not compatible with server "${server}". We recommend using "hono" instead.`,
-  )
+  throw createIncompatibleServerError(server)
 }

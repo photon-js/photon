@@ -1,15 +1,17 @@
 import { getUniversalProp, pathSymbol } from '@universal-middleware/core'
 import { walk } from 'estree-walker'
 import MagicString from 'magic-string'
-import { createRunnableDevEnvironment, type Plugin } from 'vite'
+import { createRunnableDevEnvironment, type Plugin, type RunnableDevEnvironment } from 'vite'
 import { assert, assertUsage } from '../../utils/assert.js'
-import type { PhotonEntryServer } from '../../validators/types.js'
-import { isPhotonMeta } from '../utils/entry.js'
+import { createDeferred } from '../../utils/deferred.js'
+import { singleton } from '../utils/dedupe.js'
+import { isPhotonMeta, type PhotonMeta } from '../utils/entry.js'
 
 export function mirrorMeta(): Plugin[] {
+  let lastSsr: Promise<RunnableDevEnvironment> | undefined
   return [
     // Extract Universal Middleware metadata and add them to Photon meta
-    {
+    singleton({
       name: 'photon:runtime-meta-to-photon',
       enforce: 'pre',
       apply: 'build',
@@ -17,15 +19,22 @@ export function mirrorMeta(): Plugin[] {
       async moduleParsed(info) {
         // Import the module in RunnableDevEnvironment during build to extract exports
         if (isPhotonMeta(info.meta) && info.meta.photon.type === 'universal-handler' && !info.meta.photon.route) {
-          const ssr = createRunnableDevEnvironment('inline_ssr', this.environment.config, {
-            runnerOptions: {
-              hmr: {
-                logger: false,
-              },
-            },
-            hot: false,
-          })
-          await ssr.init()
+          const ssr = lastSsr
+            ? await lastSsr
+            : createRunnableDevEnvironment('inline_ssr', this.environment.config, {
+                runnerOptions: {
+                  hmr: {
+                    logger: false,
+                  },
+                },
+                hot: false,
+              })
+          if (!lastSsr) {
+            const deferred = createDeferred<RunnableDevEnvironment>()
+            lastSsr = deferred.promise
+            await ssr.init()
+            deferred.resolve(ssr)
+          }
 
           try {
             const mod = await ssr.runner.import(info.id)
@@ -39,26 +48,32 @@ export function mirrorMeta(): Plugin[] {
               }
             }
           } finally {
-            await ssr.runner.close()
+            // await ssr.runner.close()
           }
         }
       },
 
+      async buildEnd() {
+        if (lastSsr && !(await lastSsr).runner.isClosed()) {
+          return (await lastSsr).runner.close()
+        }
+      },
+
       sharedDuringBuild: true,
-    },
+    }),
     // Extract Photon meta of an entry, and apply them to runtime through enhance
-    {
+    singleton({
       name: 'photon:photon-meta-to-runtime',
 
       applyToEnvironment(env) {
-        return env.name !== 'inline_ssr'
+        return !env.name.includes('inline_ssr')
       },
 
       transform(code, id) {
         const info = this.getModuleInfo(id)
         if (!info) return
 
-        if (isPhotonMeta(info.meta) && (info.meta.photon as PhotonEntryServer).route) {
+        if (isPhotonMeta(info.meta) && info.meta.photon.route && info.meta.photon.type === 'universal-handler') {
           const ast = this.parse(code)
 
           const magicString = new MagicString(code)
@@ -70,7 +85,8 @@ export function mirrorMeta(): Plugin[] {
               if (
                 !hasEnhanceImport &&
                 node.type === 'ImportDeclaration' &&
-                node.source.value === '@universal-middleware/core'
+                typeof node.source.value === 'string' &&
+                node.source.value.includes('@universal-middleware/core')
               ) {
                 // Check if enhance is among the imported specifiers
                 for (const specifier of node.specifiers) {
@@ -112,6 +128,7 @@ export function mirrorMeta(): Plugin[] {
   name: ${JSON.stringify(id)},
   method: ['GET', 'POST'],
   path: ${JSON.stringify(info.meta.photon.route)},
+  context: ${JSON.stringify({ photon: photonMetaAsContext(info.meta.photon) })},
   immutable: false
 })`,
                 )
@@ -122,8 +139,10 @@ export function mirrorMeta(): Plugin[] {
           assertUsage(hasExportDefault, `Entry ${id} must have a default export`)
 
           if (!hasEnhanceImport) {
-            magicString.prepend(`import { enhance } from '@universal-middleware/core';\n`)
+            magicString.prepend(`import { enhance } from 'photon:resolve-from-photon:@universal-middleware/core';\n`)
           }
+
+          if (!magicString.hasChanged()) return
 
           return {
             code: magicString.toString(),
@@ -133,6 +152,11 @@ export function mirrorMeta(): Plugin[] {
       },
 
       sharedDuringBuild: true,
-    },
+    }),
   ]
+}
+
+function photonMetaAsContext(photonMeta: PhotonMeta) {
+  const { id, resolvedId, ...photonMetaClean } = photonMeta
+  return photonMetaClean
 }

@@ -25,6 +25,11 @@ function testRun(cmd: `pnpm run ${string}`) {
     expect(await response.text()).toBe('The API Route')
   })
 
+  test('/standalone', async () => {
+    const response: Response = await fetch(`${getServerUrl()}/standalone`)
+    expect(await response.text()).toBe('The /standalone Route')
+  })
+
   test('/bar', async () => {
     const response: Response = await fetch(`${getServerUrl()}/bar`)
     expect(await response.text()).toBe('bar')

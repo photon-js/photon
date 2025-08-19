@@ -10,8 +10,23 @@ import type {
 
 import { fork } from 'node:child_process'
 import pc from '@brillout/picocolors'
+import {
+  enhance,
+  getUniversalProp,
+  type HttpMethod,
+  methodSymbol,
+  nameSymbol,
+  orderSymbol,
+  pathSymbol,
+  type UniversalHandler,
+  type UniversalMiddleware,
+} from '@universal-middleware/core'
 import { globalStore } from '../../runtime/globalStore.js'
+import type { Photon } from '../../types.js'
 import { assert, assertUsage } from '../../utils/assert.js'
+import { resolvePhotonConfig } from '../../validators/coerce.js'
+import type { PhotonEntryUniversalHandler, SupportedServers } from '../../validators/types.js'
+import { singleton } from '../utils/dedupe.js'
 import { isPhotonMetaConfig } from '../utils/entry.js'
 import { isBun } from '../utils/isBun.js'
 import { logViteInfo } from '../utils/logVite.js'
@@ -25,6 +40,61 @@ const IS_RESTARTER_SET_UP = '__PHOTON__IS_RESTARTER_SET_UP'
 // Vite's isRunnableDevEnvironment isn't reliable when multiple Vite versions are installed
 export function isRunnableDevEnvironment(environment: Environment): environment is RunnableDevEnvironment {
   return 'runner' in environment
+}
+
+// TODO cleanup or reuse?
+async function importMiddleware(vite: ViteDevServer, middleware: string) {
+  const envName = vite.config.photon.devServer ? vite.config.photon.devServer.env : 'ssr'
+  const env = vite.environments[envName]
+  assertUsage(env, `Environment ${envName} not found`)
+  assertUsage(isRunnableDevEnvironment(env), `Environment ${envName} is not runnable`)
+
+  return envImportAndCheckDefaultExport<UniversalMiddleware | UniversalMiddleware[]>(env, middleware, false)
+}
+
+async function importHandler(vite: ViteDevServer, handler: PhotonEntryUniversalHandler) {
+  const envName = handler.env ?? 'ssr'
+  const env = vite.environments[envName]
+  assertUsage(env, `Environment ${envName} not found`)
+  assertUsage(isRunnableDevEnvironment(env), `Environment ${envName} is not runnable`)
+
+  const handlerResolved = await env.pluginContainer.resolveId(handler.id, undefined, {
+    isEntry: true,
+  })
+  assertUsage(
+    handlerResolved?.id,
+    `Cannot find handler ${pc.cyan(handler.id)}. Make sure its path is relative to the root of your project.`,
+  )
+
+  return envImportAndCheckDefaultExport<UniversalHandler>(env, handlerResolved.id, false).then((defaultExport) => {
+    const name = getUniversalProp(defaultExport, nameSymbol)
+    const path = getUniversalProp(defaultExport, pathSymbol)
+    const order = getUniversalProp(defaultExport, orderSymbol)
+    const method = getUniversalProp(defaultExport, methodSymbol)
+    const toEnhance: { path?: string; method?: HttpMethod[] | HttpMethod; name?: string; order?: number } = {}
+    if (handler.route) {
+      toEnhance.path = handler.route
+      toEnhance.method = ['GET', 'POST']
+    } else if (path) {
+      toEnhance.path = path
+    }
+    if (!name) {
+      toEnhance.name = handlerResolved.id
+    } else {
+      toEnhance.name = name
+    }
+    if (order) {
+      toEnhance.order = order
+    }
+    if (method) {
+      toEnhance.method = method
+    }
+    return enhance((request, context, runtime) => {
+      context.photon ??= {}
+      context.photon.handler = handler
+      return defaultExport(request, context, runtime)
+    }, toEnhance)
+  })
 }
 
 export function devServer(config?: Photon.Config): Plugin {
@@ -42,16 +112,17 @@ export function devServer(config?: Photon.Config): Plugin {
     }
   }
 
-  return {
+  return singleton({
     name: 'photon:devserver',
     apply(_config, { command, mode }) {
       return command === 'serve' && mode !== 'test'
     },
-    enforce: 'pre',
+    enforce: 'post',
     config: {
       order: 'post',
       handler(userConfig) {
-        if (userConfig.photon?.devServer === false) return
+        const resolvedPhotonConfig = resolvePhotonConfig(userConfig.photon)
+        if (resolvedPhotonConfig.devServer === false) return
         // FIXME
         if (isBun) {
           return {
@@ -113,14 +184,19 @@ export function devServer(config?: Photon.Config): Plugin {
       }
 
       if (vite.config.photon.hmr === true) {
+        const envName = vite.config.photon.devServer.env
+        const env = vite.environments[envName]
+        assertUsage(env, `Environment ${envName} does not exists`)
+
         // Once existing server is closed and invalidated, reimport its updated entry file
-        vite.environments.ssr.hot.on('photon:server-closed', () => {
+        env.hot.on('photon:server-closed', () => {
           setupHMRProxyDone = false
-          assertUsage(isRunnableDevEnvironment(vite.environments.ssr), 'SSR environment is not runnable')
-          ssrImportAndCheckDefaultExport(vite.environments.ssr, resolvedEntryId)
+          assertUsage(isRunnableDevEnvironment(env), `${envName} environment is not runnable`)
+          envImportAndCheckDefaultExport(env, resolvedEntryId)
         })
 
-        vite.environments.ssr.hot.on('photon:reloaded', () => {
+        env.hot.on('photon:reloaded', () => {
+          // TODO do not full reload the client?
           vite.environments.client.hot.send({ type: 'full-reload' })
         })
       }
@@ -135,14 +211,11 @@ export function devServer(config?: Photon.Config): Plugin {
         setupErrorHandlers()
       }
       patchViteServer(vite)
-      if (
-        config?.devServer === undefined ||
-        (typeof config?.devServer === 'object' && config?.devServer?.autoServe !== false)
-      ) {
+      if (vite.config.photon.devServer.autoServe) {
         initializeServerEntry(vite)
       }
     },
-  }
+  })
 
   // Bypass "vite dev" CLI checks on usage
   function patchViteServer(vite: ViteDevServer) {
@@ -209,8 +282,13 @@ export function devServer(config?: Photon.Config): Plugin {
   }
 
   async function initializeServerEntry(vite: ViteDevServer) {
+    assert(vite.config.photon.devServer)
+    const envName = vite.config.photon.devServer.env
+    const env = vite.environments[envName]
+    assertUsage(env, `Environment ${envName} does not exists`)
+
     const index = vite.config.photon.server
-    const indexResolved = await vite.environments.ssr.pluginContainer.resolveId(index.id, undefined, {
+    const indexResolved = await env.pluginContainer.resolveId(index.id, undefined, {
       isEntry: true,
     })
     assertUsage(
@@ -218,14 +296,20 @@ export function devServer(config?: Photon.Config): Plugin {
       `Cannot find server entry ${pc.cyan(index.id)}. Make sure its path is relative to the root of your project.`,
     )
     resolvedEntryId = indexResolved.id
-    const ssr = vite.environments.ssr
-    assertUsage(isRunnableDevEnvironment(ssr), 'SSR environment is not runnable')
-    ssrImportAndCheckDefaultExport(ssr, resolvedEntryId)
+    assertUsage(isRunnableDevEnvironment(env), `${envName} environment is not runnable`)
+    return envImportAndCheckDefaultExport(env, resolvedEntryId)
   }
 }
 
-function ssrImportAndCheckDefaultExport(ssr: RunnableDevEnvironment, resolvedId: string) {
-  ssr.runner
+const photonServerSymbol = Symbol.for('photon:server')
+
+function envImportAndCheckDefaultExport(
+  env: RunnableDevEnvironment,
+  resolvedId: string,
+): Promise<{ [photonServerSymbol]: SupportedServers }>
+function envImportAndCheckDefaultExport<T>(env: RunnableDevEnvironment, resolvedId: string, isServer: false): Promise<T>
+function envImportAndCheckDefaultExport(env: RunnableDevEnvironment, resolvedId: string, isServer = true) {
+  return env.runner
     .import(resolvedId)
     .then((mod) => {
       assertUsage(mod && 'default' in mod, `Missing export default in ${JSON.stringify(resolvedId)}`)
@@ -233,10 +317,13 @@ function ssrImportAndCheckDefaultExport(ssr: RunnableDevEnvironment, resolvedId:
         !(mod.default instanceof Promise),
         `Replace \`export default\` by \`export default await\` in ${JSON.stringify(resolvedId)}`,
       )
-      assertUsage(
-        Symbol.for('photon:server') in mod.default,
-        `{ apply } function needs to be called before export in ${JSON.stringify(resolvedId)}`,
-      )
+      if (isServer) {
+        assertUsage(
+          photonServerSymbol in mod.default,
+          `{ apply } function needs to be called before export in ${JSON.stringify(resolvedId)}`,
+        )
+      }
+      return mod.default
     })
     .catch(logRestartMessage)
 }

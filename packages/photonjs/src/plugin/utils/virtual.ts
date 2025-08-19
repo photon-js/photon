@@ -1,50 +1,49 @@
-import { type Out, type Type, type } from 'arktype'
-import { assert } from '../../utils/assert.js'
-
-type ToLiteral<T extends string> = T extends `\${${infer _}}` ? string : T
-type ToParse<T extends string> = T extends `\${${infer X}?}`
-  ? { [K in X]?: string }
-  : T extends `\${${infer X}}`
-    ? { [K in X]: string }
-    : // biome-ignore lint/complexity/noBannedTypes: <explanation>
-      {}
-
-type Literal<T extends string> = T extends `${infer A}:${infer B}` ? `${ToLiteral<A>}:${Literal<B>}` : ToLiteral<T>
-type Parse<T extends string> = T extends `${infer A}:${infer B}` ? ToParse<A> & Parse<B> : ToParse<T>
-
-export function literal<const T extends string>(pattern: T) {
-  const regex = new RegExp(
-    `^${pattern.replace(/:\$\{(.*?)\?}/g, '(?::(?<$1>.*))?').replace(/\$\{(.*?)}/g, '(?<$1>.*)')}\$`,
-  )
-  return type(regex)
-    .configure({ expected: pattern })
-    .pipe.try((x) => {
+export function regexGroups<T extends object>(regex: RegExp) {
+  return {
+    regex,
+    match(x?: string) {
+      if (x === undefined) return null
       const match = x.match(regex)
-      assert(match)
-      return match.groups as Parse<T>
-      // biome-ignore lint/complexity/noBannedTypes: <explanation>
-    }) as Type<(In: Literal<T>) => Out<Parse<T>>, {}>
+      if (match === null) return null
+      return match.groups as T
+    },
+  }
 }
 
-export const virtualModules = {
-  'handler-entry': literal('photon:handler-entry:${entry}'),
-  'server-entry': literal('photon:server-entry:${entry?}'),
-  'fallback-entry': literal('photon:fallback-entry'),
-  'resolve-from-photon': literal('photon:resolve-from-photon:${module}'),
-  'get-middlewares': literal('photon:get-middlewares:${condition}:${server}'),
+const virtualModules = {
+  'virtual-entry': regexGroups<{ uniqueId: string; entry: string }>(
+    /^photon:virtual-entry:(?<uniqueId>.+?):(?<entry>.+)/,
+  ),
+  'handler-entry': regexGroups<{ entry: string }>(/^photon:handler-entry:(?<entry>.+)/),
+  'server-entry': regexGroups<{ entry?: string }>(/^photon:server-entry(?:$|:(?<entry>.+))/),
+  'server-entry-with-entry': regexGroups<{ condition: string; entry: string }>(
+    /^photon:server-entry-with-entry:(?<condition>.+?):(?<entry>.+)/,
+  ),
+  'fallback-entry': regexGroups(/^photon:fallback-entry/),
+  'resolve-from-photon': regexGroups<{ module: string }>(/^photon:resolve-from-photon:(?<module>.+)/),
+  'get-middlewares': regexGroups<{ condition: string; server: string; handler?: string }>(
+    /^photon:get-middlewares:(?<condition>.+?):(?<server>[^:]+)(?::(?<handler>.+))?/,
+  ),
 }
+
+export const virtualModulesRegex = Object.fromEntries(
+  Object.entries(virtualModules).map(([k, v]) => [k, v.regex]),
+) as Record<keyof typeof virtualModules, RegExp>
 
 type VirtualModuleKeys = keyof typeof virtualModules
+type ExtractArgs<K extends VirtualModuleKeys | VirtualModuleKeys[]> = NonNullable<
+  ReturnType<(typeof virtualModules)[K extends VirtualModuleKeys ? K : K[number]]['match']>
+>
 
 export function ifPhotonModule<
   K extends VirtualModuleKeys | VirtualModuleKeys[],
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  F extends (arg: (typeof virtualModules)[K extends VirtualModuleKeys ? K : K[number]]['infer']) => any,
+  F extends (arg: ExtractArgs<K>) => any,
 >(key: K, value: unknown, callback: F): null | ReturnType<F>
 export function ifPhotonModule<
   K extends VirtualModuleKeys | VirtualModuleKeys[],
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  F extends (arg: (typeof virtualModules)[K extends VirtualModuleKeys ? K : K[number]]['infer']) => any,
+  F extends (arg: ExtractArgs<K>) => any,
   R,
 >(
   key: K,
@@ -60,7 +59,7 @@ export function ifPhotonModule<
 export function ifPhotonModule<
   K extends VirtualModuleKeys | VirtualModuleKeys[],
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  F extends (arg: (typeof virtualModules)[K extends VirtualModuleKeys ? K : K[number]]['infer']) => any,
+  F extends (arg: ExtractArgs<K>) => any,
 >(key: K, value: unknown, callback: F, next: unknown = null): unknown | ReturnType<F> {
   function returnOrThrow() {
     if (next instanceof Error) {
@@ -75,22 +74,25 @@ export function ifPhotonModule<
 
   if (Array.isArray(key)) {
     for (const k of key) {
-      const r = ifPhotonModule(k as VirtualModuleKeys, value, callback)
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+      const r = ifPhotonModule(k as VirtualModuleKeys, value, callback as any)
       if (r !== null) return r
     }
     return returnOrThrow()
   }
 
-  const out = virtualModules[key as VirtualModuleKeys](value)
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  const out = virtualModules[key as VirtualModuleKeys].match(value as any)
 
-  if (out instanceof type.errors) {
+  if (out === null) {
     return returnOrThrow()
   }
 
-  return callback(out)
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  return callback(out as any)
 }
 
-export function asPhotonEntryId(id: string, type: 'handler-entry' | 'server-entry') {
+export function asPhotonEntryId(id: string, type: 'handler-entry' | 'server-entry' | 'server-config') {
   if (id.startsWith(`photon:${type}`)) {
     return id
   }

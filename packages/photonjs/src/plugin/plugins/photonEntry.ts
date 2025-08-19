@@ -1,27 +1,19 @@
-import type { ModuleInfo, PluginContext } from 'rollup'
+import { walk } from 'estree-walker'
+import MagicString from 'magic-string'
 import type { Plugin } from 'vite'
 import { assert, assertUsage } from '../../utils/assert.js'
 import { resolvePhotonConfig } from '../../validators/coerce.js'
 import type { SupportedServers } from '../../validators/types.js'
+import { singleton } from '../utils/dedupe.js'
 import { isPhotonMeta } from '../utils/entry.js'
-import { ifPhotonModule } from '../utils/virtual.js'
+import type { ModuleInfo, PluginContext } from '../utils/rollupTypes.js'
+import { importsToServer } from '../utils/servers.js'
+import { asPhotonEntryId, ifPhotonModule, virtualModulesRegex } from '../utils/virtual.js'
 
-const idsToServers: Record<string, SupportedServers> = {
-  '@photonjs/hono': 'hono',
-  '@photonjs/hattip': 'hattip',
-  '@photonjs/express': 'express',
-  '@photonjs/fastify': 'fastify',
-  '@photonjs/h3': 'h3',
-  '@photonjs/elysia': 'elysia',
-  '@photonjs/core/hono': 'hono',
-  '@photonjs/core/hattip': 'hattip',
-  '@photonjs/core/express': 'express',
-  '@photonjs/core/fastify': 'fastify',
-  '@photonjs/core/h3': 'h3',
-  '@photonjs/core/elysia': 'elysia',
-}
+const serverImports = new Set(Object.keys(importsToServer))
+const re_photonHandler = /[?&]photonHandler=/
 
-function computePhotonMeta(
+function computePhotonMetaServer(
   pluginContext: PluginContext,
   resolvedIdsToServers: Record<string, SupportedServers>,
   info: ModuleInfo,
@@ -68,10 +60,15 @@ function computePhotonMeta(
   }
 }
 
+function cleanImport(imp: string) {
+  const s = 'photon:resolve-from-photon:'
+  return imp.startsWith(s) ? imp.slice(s.length) : imp
+}
+
 const resolvedIdsToServers: Record<string, SupportedServers> = {}
 export function photonEntry(): Plugin[] {
   return [
-    {
+    singleton({
       name: 'photon:set-input',
       apply: 'build',
       enforce: 'post',
@@ -83,18 +80,14 @@ export function photonEntry(): Plugin[] {
       config: {
         order: 'post',
         handler(config) {
-          const { handlers, server } = resolvePhotonConfig(config.photon)
+          const { server } = resolvePhotonConfig(config.photon)
 
           return {
             environments: {
               ssr: {
                 build: {
                   rollupOptions: {
-                    input: Object.assign(
-                      // TODO make sure that handlers do not overwrite server entry name
-                      { index: server.id },
-                      Object.fromEntries(Object.entries(handlers).map(([key, value]) => [key, value.id])),
-                    ),
+                    input: { index: server.id },
                   },
                 },
               },
@@ -104,8 +97,8 @@ export function photonEntry(): Plugin[] {
       },
 
       sharedDuringBuild: true,
-    },
-    {
+    }),
+    singleton({
       name: 'photon:compute-meta',
       apply: 'build',
       enforce: 'pre',
@@ -115,11 +108,11 @@ export function photonEntry(): Plugin[] {
       },
 
       async resolveId(id, importer, opts) {
-        if (id in idsToServers) {
+        if (id in importsToServer) {
           const resolved = await this.resolve(id, importer, opts)
           if (resolved) {
             // biome-ignore lint/style/noNonNullAssertion: <explanation>
-            resolvedIdsToServers[resolved.id] = idsToServers[id]!
+            resolvedIdsToServers[resolved.id] = importsToServer[id]!
           }
         }
       },
@@ -129,14 +122,14 @@ export function photonEntry(): Plugin[] {
         handler(info) {
           if (isPhotonMeta(info.meta) && info.meta.photon.type === 'server') {
             // Must be kept synchronous
-            computePhotonMeta(this, resolvedIdsToServers, info)
+            computePhotonMetaServer(this, resolvedIdsToServers, info)
           }
         },
       },
 
       sharedDuringBuild: true,
-    },
-    {
+    }),
+    singleton({
       name: 'photon:resolve-importer',
       enforce: 'pre',
 
@@ -154,29 +147,194 @@ export function photonEntry(): Plugin[] {
         },
       },
       sharedDuringBuild: true,
-    },
-    {
+    }),
+    singleton({
+      name: 'photon:resolve-server-with-entry',
+      enforce: 'pre',
+
+      resolveId: {
+        filter: {
+          id: virtualModulesRegex['server-entry-with-entry'],
+        },
+        order: 'post',
+        handler(id) {
+          return ifPhotonModule('server-entry-with-entry', id, async ({ entry }) => {
+            const handlerOrConfig = this.environment.config.photon.entries.find((e) => e.name === entry)
+            assertUsage(handlerOrConfig, `Unable to find entry "${entry}"`)
+
+            return {
+              id,
+              meta: {
+                photon: {
+                  ...this.environment.config.photon.server,
+                  // Additional handler meta take precedence
+                  ...handlerOrConfig,
+                  type: 'server',
+                  id,
+                  resolvedId: id,
+                },
+              },
+              resolvedBy: 'photon',
+            }
+          })
+        },
+      },
+
+      load: {
+        filter: {
+          id: virtualModulesRegex['server-entry-with-entry'],
+        },
+        handler(id) {
+          return ifPhotonModule('server-entry-with-entry', id, async ({ entry }) => {
+            const resolved = await this.resolve(this.environment.config.photon.server.id, undefined, {
+              isEntry: true,
+            })
+            assert(resolved)
+
+            const loaded = await this.load({ id: resolved.id })
+            assert(loaded.code)
+
+            const handlerOrConfig = this.environment.config.photon.entries.find((e) => e.name === entry)
+            assert(handlerOrConfig)
+
+            const code = loaded.code
+
+            // All entries are bundled in server-config entries
+            if (handlerOrConfig.type === 'server-config') {
+              return { code }
+            }
+
+            const ast = this.parse(code)
+            const magicString = new MagicString(code)
+
+            walk(ast, {
+              enter(node) {
+                if (
+                  node.type === 'ImportDeclaration' &&
+                  typeof node.source.value === 'string' &&
+                  serverImports.has(cleanImport(node.source.value))
+                ) {
+                  let foundApply = false
+                  // Check if { apply } is among the imported specifiers
+                  for (const specifier of node.specifiers) {
+                    if (
+                      specifier.type === 'ImportSpecifier' &&
+                      specifier.imported &&
+                      'name' in specifier.imported &&
+                      specifier.imported.name === 'apply'
+                    ) {
+                      foundApply = true
+                      break
+                    }
+                  }
+                  if (foundApply) {
+                    const { end } = node.source as unknown as { start: number; end: number }
+
+                    // Adding a query parameter that will be used to rewrite `photon:get-middlewares` imports
+                    magicString.appendRight(end - 1, `?${new URLSearchParams({ photonHandler: entry }).toString()}`)
+                  }
+                }
+              },
+            })
+
+            if (!magicString.hasChanged()) return
+
+            return {
+              code: magicString.toString(),
+              map: magicString.generateMap(),
+            }
+          })
+        },
+      },
+
+      sharedDuringBuild: true,
+    }),
+    singleton({
+      name: 'photon:transform-get-middlewares-import',
+      enforce: 'pre',
+
+      resolveId: {
+        filter: {
+          id: re_photonHandler,
+        },
+        async handler(id, importer, opts) {
+          const [actualId, query] = id.split('?')
+          // biome-ignore lint/style/noNonNullAssertion: <explanation>
+          const resolved = await this.resolve(actualId!, importer, opts)
+          assert(resolved)
+
+          return {
+            id: `${resolved.id}?${query}`,
+            resolvedBy: 'photon',
+          }
+        },
+      },
+
+      load: {
+        filter: {
+          id: re_photonHandler,
+        },
+        async handler(id) {
+          const [actualId, query] = id.split('?')
+          // biome-ignore lint/style/noNonNullAssertion: <explanation>
+          const loaded = await this.load({ id: actualId! })
+          assert(loaded.code)
+
+          const handlerId = new URLSearchParams(query).get('photonHandler')
+          assert(handlerId)
+
+          const newCode = loaded.code
+            // Forward query parameters to apply imports
+            .replace(/@photonjs\/core\/([^/]+)\/apply/, `@photonjs/core/$1/apply?${query}`)
+            // Transform get-middleware import
+            .replace(/photon:get-middlewares:(.+?):(\w+)/, `photon:get-middlewares:$1:$2:${handlerId}`)
+
+          return {
+            code: newCode,
+            map: { mappings: '' },
+          }
+        },
+      },
+    }),
+    singleton({
       name: 'photon:resolve-server',
       enforce: 'pre',
 
       resolveId: {
+        filter: {
+          id: virtualModulesRegex['server-entry'],
+        },
         order: 'post',
         handler(id, _importer, opts) {
           return ifPhotonModule('server-entry', id, async ({ entry: actualId }) => {
+            const entry = this.environment.config.photon.server
+
             if (!actualId) {
-              return this.resolve(this.environment.config.photon.server.id, undefined, { isEntry: true })
+              return this.resolve(this.environment.config.photon.server.id, undefined, {
+                isEntry: true,
+                custom: {
+                  setPhotonMeta: entry,
+                },
+              })
             }
 
             const resolved = await this.resolve(actualId, undefined, {
               ...opts,
               isEntry: true,
               skipSelf: false,
+              custom: {
+                setPhotonMeta: entry,
+              },
             })
 
             assertUsage(resolved, `Cannot resolve ${actualId} to a server entry`)
 
-            const entry = this.environment.config.photon.server
             entry.resolvedId = resolved.id
+
+            // Ensure early resolution of photon meta during build
+            if (this.environment.config.command === 'build') {
+              await this.load({ ...resolved, resolveDependencies: true })
+            }
 
             return {
               ...resolved,
@@ -189,37 +347,60 @@ export function photonEntry(): Plugin[] {
         },
       },
       sharedDuringBuild: true,
-    },
-    {
+    }),
+    singleton({
       name: 'photon:resolve-handler',
       enforce: 'pre',
 
       resolveId: {
+        filter: {
+          id: virtualModulesRegex['handler-entry'],
+        },
         order: 'post',
-        handler(id, importer, opts) {
+        handler(id, _importer, opts) {
           return ifPhotonModule('handler-entry', id, async ({ entry: actualId }) => {
+            const idWithPhotonPrefix = asPhotonEntryId(id, 'handler-entry')
+            const handlers = this.environment.config.photon.entries.filter((e) => e.type === 'universal-handler')
+            let entry = handlers.find((e) => asPhotonEntryId(e.id, 'handler-entry') === idWithPhotonPrefix)
+
             let resolved = await this.resolve(actualId, undefined, {
               ...opts,
               isEntry: true,
               skipSelf: false,
+              custom: {
+                setPhotonMeta: entry,
+              },
             })
 
-            // Try to resolve by handler key
-            if (!resolved && actualId in this.environment.config.photon.handlers) {
-              // biome-ignore lint/style/noNonNullAssertion: <explanation>
-              resolved = await this.resolve(this.environment.config.photon.handlers[actualId]!.id, undefined, {
-                ...opts,
-                isEntry: true,
-                skipSelf: false,
-              })
+            // Try to resolve by handler name
+            if (!resolved) {
+              const handler = handlers.find((e) => e.name === actualId)
+              if (handler) {
+                resolved = await this.resolve(handler.id, undefined, {
+                  ...opts,
+                  isEntry: true,
+                  skipSelf: false,
+                  custom: {
+                    setPhotonMeta: entry,
+                  },
+                })
+              }
             }
 
             assertUsage(resolved, `Cannot resolve ${actualId} to a handler entry`)
 
-            const entry = Object.values(this.environment.config.photon.handlers).find((e) => e.id === id)
+            if (!entry) {
+              const resolvedIdWithPhotonPrefix = asPhotonEntryId(resolved.id, 'handler-entry')
+              entry = handlers.find((e) => e.id === resolvedIdWithPhotonPrefix)
+            }
 
             assertUsage(entry, `Cannot find a handler for ${resolved.id}`)
             entry.resolvedId = resolved.id
+
+            // Ensure early resolution of photon meta during build
+            if (this.environment.config.command === 'build') {
+              await this.load({ ...resolved, resolveDependencies: true })
+            }
 
             return {
               ...resolved,
@@ -232,6 +413,26 @@ export function photonEntry(): Plugin[] {
         },
       },
       sharedDuringBuild: true,
-    },
+    }),
+    singleton({
+      name: 'photon:trickle-meta',
+      enforce: 'pre',
+
+      async resolveId(id, imports, opts) {
+        if (opts.custom?.setPhotonMeta) {
+          const resolved = await this.resolve(id, imports, opts)
+
+          if (!resolved) return
+
+          return {
+            ...resolved,
+            meta: {
+              ...resolved.meta,
+              photon: opts.custom.setPhotonMeta,
+            },
+          }
+        }
+      },
+    }),
   ]
 }

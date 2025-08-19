@@ -1,76 +1,159 @@
-import { match, type } from 'arktype'
+import { isBun } from '../plugin/utils/isBun.js'
+import { isDeno } from '../plugin/utils/isDeno.js'
 import { asPhotonEntryId } from '../plugin/utils/virtual.js'
-import type {
-  PhotonConfig,
-  PhotonConfigResolved,
-  PhotonEntryBase,
-  PhotonEntryServer,
-  PhotonEntryUniversalHandler,
-} from './types.js'
+import type { Photon } from '../types.js'
+import { assert, PhotonConfigError } from '../utils/assert.js'
+import type { PhotonConfig, PhotonEntryPartial, PhotonEntryServerPartial } from './types.js'
 import * as Validators from './validators.js'
 
-function entryToPhoton<
-  T extends 'handler-entry' | 'server-entry',
-  Entry = T extends 'server-entry' ? PhotonEntryServer : PhotonEntryUniversalHandler,
->(entry: string | Entry, type: T): Entry {
-  if (typeof entry === 'string')
+export function entryToPhoton(
+  defaultType: 'server-entry',
+  entry: string | PhotonEntryServerPartial,
+  name: 'index',
+): Photon.EntryServer
+export function entryToPhoton(
+  defaultType: 'handler-entry',
+  entry: string | PhotonEntryPartial,
+  name: string,
+): Photon.EntryUniversalHandler | Photon.EntryServerConfig
+export function entryToPhoton(
+  defaultType: 'server-entry' | 'handler-entry',
+  entry: string | PhotonEntryServerPartial | PhotonEntryPartial,
+  name: string,
+): Photon.Entry {
+  assert(name)
+  if (typeof entry === 'string') {
     return {
-      id: asPhotonEntryId(entry, type),
-      type: type === 'server-entry' ? 'server' : 'universal-handler',
-    } as Entry
+      id: asPhotonEntryId(entry, defaultType),
+      name,
+      type: defaultType === 'server-entry' ? 'server' : 'universal-handler',
+    }
+  }
+  if (entry.type === 'server-config' || entry.id === 'photon:server-entry' || !entry.id) {
+    return {
+      ...entry,
+      id: 'photon:server-entry',
+      type: 'server-config',
+      name,
+    }
+  }
   return {
     ...entry,
-    type: type === 'server-entry' ? 'server' : 'universal-handler',
-    id: asPhotonEntryId((entry as PhotonEntryBase).id, type),
+    id: asPhotonEntryId(entry.id, defaultType),
+    type: defaultType === 'server-entry' ? 'server' : 'universal-handler',
+    name,
   }
 }
 
-function handlersToPhoton(
-  handlers: Record<string, Partial<PhotonEntryUniversalHandler> | string>,
-): Record<string, PhotonEntryUniversalHandler> {
-  return Object.fromEntries(
-    Object.entries(handlers).map(([key, value]) => [
-      key,
-      entryToPhoton(value as PhotonEntryUniversalHandler, 'handler-entry'),
-    ]),
-  )
+function entriesToPhoton(
+  entries: PhotonConfig['entries'],
+): (Photon.EntryUniversalHandler | Photon.EntryServerConfig)[] {
+  return Object.entries(entries ?? {}).map(([key, value]) => entryToPhoton('handler-entry', value, key))
 }
 
-export function resolvePhotonConfig(config: PhotonConfig | undefined): PhotonConfigResolved {
-  const out = Validators.PhotonConfig.pipe.try((c) => {
-    const toRest = match
-      .in<PhotonConfig>()
-      .case({ '[string]': 'unknown' }, (v) => {
-        const { handlers, server, hmr, middlewares, ...rest } = v
-        return rest
-      })
-      .default(() => ({}))
+function excludeTrue<T>(v: T): Partial<Exclude<T, true>> {
+  if (v === true) return {}
+  return v as Exclude<T, true>
+}
 
-    const handlers = handlersToPhoton(c.handlers ?? {})
-    const server = c.server
-      ? entryToPhoton(c.server, 'server-entry')
+const resolver = Validators.PhotonConfig.transform((c) => {
+  return Validators.PhotonConfigResolved.parse({
+    // Allows Photon targets to add custom options
+    ...c,
+    entries: entriesToPhoton(c.entries),
+    server: c.server
+      ? entryToPhoton('server-entry', c.server, 'index')
       : entryToPhoton(
+          'server-entry',
           {
             id: 'photon:fallback-entry',
             type: 'server',
             server: 'hono',
           },
-          'server-entry',
-        )
-    const hmr = c.hmr ?? true
-    const middlewares = c.middlewares ?? []
-    // Allows Photon targets to add custom options
-    const rest = toRest(c)
+          'index',
+        ),
+    devServer:
+      c.devServer === false
+        ? false
+        : {
+            env: excludeTrue(c.devServer)?.env ?? 'ssr',
+            autoServe: excludeTrue(c.devServer)?.autoServe ?? true,
+          },
+    middlewares: c.middlewares ?? [],
+    codeSplitting: {
+      framework: c.codeSplitting?.framework ?? true,
+      target: c.codeSplitting?.target ?? false,
+    },
+    defaultBuildEnv: c.defaultBuildEnv ?? 'ssr',
+    hmr: c.hmr ?? (isBun || isDeno ? 'prefer-restart' : true),
+  })
+})
 
-    return {
-      handlers,
-      server,
-      hmr,
-      middlewares,
-      ...rest,
+export function mergePhotonConfig(configs: Photon.Config[]): Photon.Config {
+  const resolving: Photon.Config = {}
+  resolving.entries = {}
+  resolving.middlewares = []
+  resolving.codeSplitting = {}
+  for (const config of configs) {
+    // server
+    if (config.server) {
+      resolving.server = config.server
     }
-  }, Validators.PhotonConfigResolved)(config)
 
-  if (out instanceof type.errors) return out.throw()
-  return out
+    // entries
+    // Check for duplicate entries
+    if (config.entries) {
+      const names = new Set<string>()
+      for (const name of [...Object.keys(resolving.entries), ...Object.keys(config.entries)]) {
+        if (names.has(name)) {
+          throw new PhotonConfigError(`Duplicate entry name: ${name}`)
+        }
+        names.add(name)
+      }
+      Object.assign(resolving.entries, config.entries)
+    }
+
+    // middlewares
+    if (config.middlewares) {
+      resolving.middlewares.push(...config.middlewares)
+    }
+
+    // devServer
+    // if devServer has already been set to false, keep it that way
+    if (resolving.devServer !== false) {
+      if (config.devServer === false) {
+        resolving.devServer = false
+      } else if (config.devServer) {
+        resolving.devServer = config.devServer
+      }
+    }
+
+    // hmr
+    if (typeof config.hmr !== 'undefined') {
+      resolving.hmr = config.hmr
+    }
+
+    // codeSplitting
+    // if codeSplitting has already been set to false, keep it that way
+    if (resolving.codeSplitting.framework !== false) {
+      if (typeof config.codeSplitting?.framework !== 'undefined') {
+        resolving.codeSplitting.framework = config.codeSplitting.framework
+      }
+    }
+    if (resolving.codeSplitting.target !== false) {
+      if (typeof config.codeSplitting?.target !== 'undefined') {
+        resolving.codeSplitting.target = config.codeSplitting.target
+      }
+    }
+
+    if (config.defaultBuildEnv) {
+      resolving.defaultBuildEnv = config.defaultBuildEnv
+    }
+  }
+  return resolving
+}
+
+export function resolvePhotonConfig(config: Photon.Config | Photon.Config[] | undefined): Photon.ConfigResolved {
+  const _config: Photon.Config | undefined = Array.isArray(config) ? mergePhotonConfig(config) : config
+  return resolver.parse(_config ?? {})
 }
