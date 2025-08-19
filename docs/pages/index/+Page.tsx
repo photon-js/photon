@@ -1,6 +1,6 @@
 export { Page };
 
-import React from "react";
+import type React from "react";
 import logoWithText from "../../assets/logo-with-text.svg";
 
 function Page() {

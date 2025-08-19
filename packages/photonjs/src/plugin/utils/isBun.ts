@@ -1,2 +1,2 @@
-//@ts-ignore
+//@ts-expect-error
 export const isBun = typeof Bun !== "undefined";

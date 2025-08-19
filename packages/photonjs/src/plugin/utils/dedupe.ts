@@ -11,7 +11,7 @@ export function singleton(originalPlugin: Plugin): Plugin {
         const keysToDelete = Object.keys(p).filter((k) => k !== "name");
         p.name += ":disabled";
         for (const key of keysToDelete) {
-          // @ts-ignore
+          // @ts-expect-error
           delete p[key];
         }
       }

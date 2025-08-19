@@ -75,7 +75,7 @@ export function onReady(options: { port: number; isHttps?: boolean; onReady?: Ca
   return () => {
     if (import.meta.hot) {
       if (import.meta.hot.data.vikeServerStarted) {
-        // @ts-ignore conflict between bun and vite types
+        // @ts-expect-error conflict between bun and vite types
         import.meta.hot.send("photon:reloaded");
         return;
       }
@@ -169,7 +169,7 @@ function _installServerHMR(server: Server | Http2Server | Http2SecureServer) {
         destroy(() => {
           resolve();
           // Signal that the server is properly closed, so that we can continue the hot-reload process
-          // @ts-ignore conflict between bun and vite types
+          // @ts-expect-error conflict between bun and vite types
           import.meta.hot?.send("photon:server-closed");
         });
       };

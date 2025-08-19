@@ -9,7 +9,7 @@ export function serve<App extends ElysiaApp>(app: App, options: ServerOptionsBas
   // TODO HMR
   const port = getPort(options);
   return ensurePhotonServer(
-    // @ts-ignore https://github.com/elysiajs/node/issues/46
+    // @ts-expect-error https://github.com/elysiajs/node/issues/46
     new Elysia({ adapter: node() })
       .mount(app)
       .listen(

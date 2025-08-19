@@ -219,9 +219,9 @@ export function devServer(config?: Photon.Config): Plugin {
 
   // Bypass "vite dev" CLI checks on usage
   function patchViteServer(vite: ViteDevServer) {
-    // @ts-ignore
+    // @ts-expect-error
     vite.httpServer = { on: () => {} };
-    // @ts-ignore
+    // @ts-expect-error
     vite.listen = () => {};
     vite.printUrls = () => {};
   }

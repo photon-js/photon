@@ -9,7 +9,7 @@ export interface InstallPhotonBaseOptions {
 }
 
 export function installPhotonBase(name: string, options?: InstallPhotonBaseOptions): Plugin[] {
-  let resolvedName: Awaited<ReturnType<typeof resolveFirst>> = undefined;
+  let resolvedName: Awaited<ReturnType<typeof resolveFirst>> ;
 
   function photonVirtualModuleResolver(
     id: string,
