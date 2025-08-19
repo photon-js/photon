@@ -1,12 +1,12 @@
-import './vite-types.js'
+import "./vite-types.js";
 
-export { isPhotonMeta, type PhotonMeta } from './plugin/utils/entry.js'
-export { resolvePhotonConfig } from './validators/coerce.js'
+export { isPhotonMeta, type PhotonMeta } from "./plugin/utils/entry.js";
+export { resolvePhotonConfig } from "./validators/coerce.js";
 export {
   addPhotonEntry,
   updatePhotonEntry,
   getPhotonServerIdWithEntry,
-} from './api/api.js'
+} from "./api/api.js";
 export {
   PhotonError,
   PhotonBugError,
@@ -14,5 +14,5 @@ export {
   PhotonConfigError,
   PhotonRuntimeError,
   PhotonDependencyError,
-} from './utils/assert.js'
-export { getPhotonMeta } from './utils/meta.js'
+} from "./utils/assert.js";
+export { getPhotonMeta } from "./utils/meta.js";

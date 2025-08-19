@@ -1,4 +1,4 @@
-import './style.css'
-import { setupCounter } from './counter.js'
+import "./style.css";
+import { setupCounter } from "./counter.js";
 
-setupCounter(document.querySelector('#counter') as HTMLButtonElement)
+setupCounter(document.querySelector("#counter") as HTMLButtonElement);

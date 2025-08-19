@@ -1,6 +1,6 @@
-import { testRun } from '../testRun.js'
+import { testRun } from "../testRun.js";
 
-process.env.TARGET = 'cloudflare'
-process.env.SERVER = 'h3'
+process.env.TARGET = "cloudflare";
+process.env.SERVER = "h3";
 
-testRun('pnpm run dev --strictPort --port 3000')
+testRun("pnpm run dev --strictPort --port 3000");

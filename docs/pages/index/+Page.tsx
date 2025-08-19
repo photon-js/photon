@@ -1,7 +1,7 @@
-export { Page }
+export { Page };
 
-import React from 'react'
-import logoWithText from '../../assets/logo-with-text.svg'
+import React from "react";
+import logoWithText from "../../assets/logo-with-text.svg";
 
 function Page() {
   return (
@@ -16,33 +16,33 @@ function Page() {
         <div style={{ height: 30 }} />
       </Block>
     </>
-  )
+  );
 }
 
 function Header() {
   return (
     <>
-      <h1 style={{ textAlign: 'center', fontSize: '3.4em' }}>
+      <h1 style={{ textAlign: "center", fontSize: "3.4em" }}>
         <img src={logoWithText} height={50} />
       </h1>
     </>
-  )
+  );
 }
 
 function Block({ children, noMargin }: { children: React.ReactNode; noMargin?: true }) {
   return (
     <div
       style={{
-        backgroundColor: 'var(--bg-color)',
-        display: 'flex',
-        justifyContent: 'center',
+        backgroundColor: "var(--bg-color)",
+        display: "flex",
+        justifyContent: "center",
         paddingBottom: 20,
-        marginTop: noMargin ? 0 : 'var(--block-margin)',
+        marginTop: noMargin ? 0 : "var(--block-margin)",
       }}
     >
       <div style={{ maxWidth: 1000 }}>{children}</div>
     </div>
-  )
+  );
 }
 
 function LoremIpsum() {
@@ -66,5 +66,5 @@ function LoremIpsum() {
         Sed molestie tempus &mdash; <b>elementum</b>.
       </p>
     </div>
-  )
+  );
 }

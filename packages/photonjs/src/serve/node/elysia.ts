@@ -1,13 +1,13 @@
-import { node } from '@elysiajs/node'
-import type { App as ElysiaApp } from '@universal-middleware/elysia'
-import { Elysia } from 'elysia'
-import type { Serve } from 'elysia/universal'
-import { ensurePhotonServer } from '../symbol-utils.js'
-import { getPort, onReady, type ServerOptionsBase } from '../utils.js'
+import { node } from "@elysiajs/node";
+import type { App as ElysiaApp } from "@universal-middleware/elysia";
+import { Elysia } from "elysia";
+import type { Serve } from "elysia/universal";
+import { ensurePhotonServer } from "../symbol-utils.js";
+import { getPort, onReady, type ServerOptionsBase } from "../utils.js";
 
 export function serve<App extends ElysiaApp>(app: App, options: ServerOptionsBase = {}) {
   // TODO HMR
-  const port = getPort(options)
+  const port = getPort(options);
   return ensurePhotonServer(
     // @ts-ignore https://github.com/elysiajs/node/issues/46
     new Elysia({ adapter: node() })
@@ -20,5 +20,5 @@ export function serve<App extends ElysiaApp>(app: App, options: ServerOptionsBas
         onReady({ ...options, port }),
       ),
     app,
-  )
+  );
 }

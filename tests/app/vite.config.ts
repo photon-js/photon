@@ -1,12 +1,12 @@
 /* The Vite plugin cloudflare() will be replaced by this:
 import cloudflare from '@photonjs/cloudflare'
 */
-import { cloudflare } from '@photonjs/cloudflare/vite'
-import { awesomeFramework } from 'awesome-framework/vite'
-import { defineConfig } from 'vite'
+import { cloudflare } from "@photonjs/cloudflare/vite";
+import { awesomeFramework } from "awesome-framework/vite";
+import { defineConfig } from "vite";
 
-const target = process.env.TARGET ?? 'node'
-const server = process.env.SERVER ?? 'hono'
+const target = process.env.TARGET ?? "node";
+const server = process.env.SERVER ?? "hono";
 
 export default defineConfig(({ mode }) => {
   return {
@@ -18,11 +18,11 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
       // Will be replaced with a photon.target setting
-      target === 'cloudflare' &&
+      target === "cloudflare" &&
         cloudflare({
           inspectorPort: false,
         }), // not needed when using @photonjs/auto
       awesomeFramework(),
     ],
-  }
-})
+  };
+});

@@ -1,46 +1,46 @@
-import type { Plugin } from 'vite'
-import type { GetPhotonCondition } from '../../validators/types.js'
-import { resolveFirst } from '../utils/resolve.js'
-import type { PluginContext } from '../utils/rollupTypes.js'
-import { ifPhotonModule } from '../utils/virtual.js'
+import type { Plugin } from "vite";
+import type { GetPhotonCondition } from "../../validators/types.js";
+import { resolveFirst } from "../utils/resolve.js";
+import type { PluginContext } from "../utils/rollupTypes.js";
+import { ifPhotonModule } from "../utils/virtual.js";
 
 export interface InstallPhotonBaseOptions {
-  resolveMiddlewares?: GetPhotonCondition
+  resolveMiddlewares?: GetPhotonCondition;
 }
 
 export function installPhotonBase(name: string, options?: InstallPhotonBaseOptions): Plugin[] {
-  let resolvedName: Awaited<ReturnType<typeof resolveFirst>> = undefined
+  let resolvedName: Awaited<ReturnType<typeof resolveFirst>> = undefined;
 
   function photonVirtualModuleResolver(
     id: string,
     importer?: string,
     opts?: {
-      attributes?: Record<string, string>
-      custom?: Record<string, unknown>
-      isEntry?: boolean
-      skipSelf?: boolean
+      attributes?: Record<string, string>;
+      custom?: Record<string, unknown>;
+      isEntry?: boolean;
+      skipSelf?: boolean;
     },
   ) {
-    return async function resolvePhotonVirtualModule(this: Pick<PluginContext, 'resolve'>) {
+    return async function resolvePhotonVirtualModule(this: Pick<PluginContext, "resolve">) {
       // first, try basic resolve
-      let resolved = await this.resolve(id, importer, opts)
+      let resolved = await this.resolve(id, importer, opts);
 
       if (resolved) {
-        return resolved
+        return resolved;
       }
 
       resolvedName ??= await resolveFirst(this, [
         { source: name, importer: undefined },
         { source: name, importer },
-      ])
+      ]);
 
       // Multiple libs can try to resolve this
       if (resolvedName) {
         // next, try to resolve from `name`
-        resolved = await this.resolve(id, resolvedName.id, opts)
+        resolved = await this.resolve(id, resolvedName.id, opts);
 
         if (resolved) {
-          return resolved
+          return resolved;
         }
       }
 
@@ -51,34 +51,34 @@ export function installPhotonBase(name: string, options?: InstallPhotonBaseOptio
           ...opts?.custom,
           photonScope: name,
         },
-      })
-    }
+      });
+    };
   }
 
   const plugins: Plugin[] = [
     // Vite node modules resolution is not on par with node, so we have to help it resolve some modules
     {
       name: `photon:resolve-from-photon:${name}`,
-      enforce: 'pre',
+      enforce: "pre",
 
       async resolveId(id, importer, opts) {
-        return ifPhotonModule('resolve-from-photon', id, async ({ module: actualId }) => {
-          if (opts.custom?.photonScope !== undefined && opts.custom.photonScope !== name) return
+        return ifPhotonModule("resolve-from-photon", id, async ({ module: actualId }) => {
+          if (opts.custom?.photonScope !== undefined && opts.custom.photonScope !== name) return;
 
           resolvedName ??= await resolveFirst(this, [
             { source: name, importer: undefined },
             { source: name, importer },
-          ])
+          ]);
 
           const foundPhotonCore = await resolveFirst(this, [
-            { source: '@photonjs/core', importer: undefined, opts },
-            resolvedName ? { source: '@photonjs/core', importer: resolvedName.id, opts } : undefined,
-          ])
+            { source: "@photonjs/core", importer: undefined, opts },
+            resolvedName ? { source: "@photonjs/core", importer: resolvedName.id, opts } : undefined,
+          ]);
 
           if (foundPhotonCore) {
-            return this.resolve(actualId, foundPhotonCore.id, opts)
+            return this.resolve(actualId, foundPhotonCore.id, opts);
           }
-        })
+        });
       },
 
       sharedDuringBuild: true,
@@ -88,10 +88,10 @@ export function installPhotonBase(name: string, options?: InstallPhotonBaseOptio
 
       async resolveId(id, importer, opts) {
         return ifPhotonModule(
-          ['fallback-entry', 'get-middlewares'],
+          ["fallback-entry", "get-middlewares"],
           id,
           photonVirtualModuleResolver(id, importer, opts).bind(this),
-        )
+        );
       },
 
       sharedDuringBuild: true,
@@ -101,15 +101,15 @@ export function installPhotonBase(name: string, options?: InstallPhotonBaseOptio
 
       async resolveId(id, importer, opts) {
         return ifPhotonModule(
-          ['fallback-entry', 'get-middlewares'],
+          ["fallback-entry", "get-middlewares"],
           importer,
           photonVirtualModuleResolver(id, importer, opts).bind(this),
-        )
+        );
       },
 
       sharedDuringBuild: true,
     },
-  ]
+  ];
 
   if (options?.resolveMiddlewares) {
     plugins.push({
@@ -120,11 +120,11 @@ export function installPhotonBase(name: string, options?: InstallPhotonBaseOptio
             photon: {
               middlewares: [options.resolveMiddlewares],
             },
-          }
+          };
         }
       },
-    })
+    });
   }
 
-  return plugins
+  return plugins;
 }

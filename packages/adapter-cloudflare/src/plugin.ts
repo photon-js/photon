@@ -1,14 +1,14 @@
-import { cloudflare as cloudflareVitePlugins, type PluginConfig } from '@cloudflare/vite-plugin'
-import { supportedTargetServers, targetLoader } from '@photonjs/core/vite'
-import type { Plugin } from 'vite'
+import { cloudflare as cloudflareVitePlugins, type PluginConfig } from "@cloudflare/vite-plugin";
+import { supportedTargetServers, targetLoader } from "@photonjs/core/vite";
+import type { Plugin } from "vite";
 
-const moduleId = 'photon:cloudflare'
+const moduleId = "photon:cloudflare";
 
-export function cloudflare(config?: Omit<PluginConfig, 'viteEnvironment'>): Plugin[] {
+export function cloudflare(config?: Omit<PluginConfig, "viteEnvironment">): Plugin[] {
   return [
     {
       name: `${moduleId}:config`,
-      enforce: 'pre',
+      enforce: "pre",
       config: {
         handler() {
           return {
@@ -21,13 +21,13 @@ export function cloudflare(config?: Omit<PluginConfig, 'viteEnvironment'>): Plug
               // Should be set to the value of cloudflareVitePlugins -> viteEnvironment.name
               // defaultBuildEnv: 'cloudflare',
             },
-          }
+          };
         },
       },
     },
-    ...targetLoader('cloudflare', {
+    ...targetLoader("cloudflare", {
       async load(id, { meta }) {
-        const isDev = this.environment.config.command === 'serve'
+        const isDev = this.environment.config.command === "serve";
 
         // `server` usually exists only during build time
         if (meta.server) {
@@ -39,8 +39,8 @@ export function cloudflare(config?: Omit<PluginConfig, 'viteEnvironment'>): Plug
             export const fetch = asFetch(serverEntry);
             export default { fetch };
             `,
-            map: { mappings: '' },
-          }
+            map: { mappings: "" },
+          };
         }
 
         if (isDev) {
@@ -52,15 +52,15 @@ import { asFetch } from "@photonjs/cloudflare/dev";
 export const fetch = asFetch(serverEntry, ${JSON.stringify(id)});
 export default { fetch };
 `,
-            map: { mappings: '' },
-          }
+            map: { mappings: "" },
+          };
         }
 
-        return this.error(`[photon][cloudflare] Unable to load ${id}`)
+        return this.error(`[photon][cloudflare] Unable to load ${id}`);
       },
     }),
-    supportedTargetServers('cloudflare', ['hono', 'h3']),
+    supportedTargetServers("cloudflare", ["hono", "h3"]),
     // FIXME do not enforce ssr env?
-    ...cloudflareVitePlugins({ ...config, viteEnvironment: { name: 'ssr' } }),
-  ]
+    ...cloudflareVitePlugins({ ...config, viteEnvironment: { name: "ssr" } }),
+  ];
 }

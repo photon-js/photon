@@ -1,3 +1,3 @@
-import { testRun } from './testRun.js'
+import { testRun } from "./testRun.js";
 
-testRun('pnpm run dev')
+testRun("pnpm run dev");

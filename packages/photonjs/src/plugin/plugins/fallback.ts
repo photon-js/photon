@@ -1,31 +1,31 @@
-import type { Plugin } from 'vite'
-import { singleton } from '../utils/dedupe.js'
-import { ifPhotonModule } from '../utils/virtual.js'
+import type { Plugin } from "vite";
+import { singleton } from "../utils/dedupe.js";
+import { ifPhotonModule } from "../utils/virtual.js";
 
-export { fallback }
+export { fallback };
 
 function fallback(): Plugin {
   return singleton({
-    name: 'photon:fallback',
+    name: "photon:fallback",
 
     resolveId(id) {
-      return ifPhotonModule('fallback-entry', id, () => {
+      return ifPhotonModule("fallback-entry", id, () => {
         return {
           id,
           meta: {
             photon: {
               id,
               resolvedId: id,
-              type: 'server',
-              server: 'hono',
+              type: "server",
+              server: "hono",
             },
           },
-        }
-      })
+        };
+      });
     },
 
     load(id) {
-      return ifPhotonModule('fallback-entry', id, () => {
+      return ifPhotonModule("fallback-entry", id, () => {
         //language=ts
         return {
           code: `
@@ -40,9 +40,9 @@ function startServer() {
 
 export default startServer()
 `,
-          map: { mappings: '' } as const,
-        }
-      })
+          map: { mappings: "" } as const,
+        };
+      });
     },
-  })
+  });
 }

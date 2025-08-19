@@ -7,17 +7,17 @@ export {
   PhotonConfigError,
   PhotonRuntimeError,
   PhotonDependencyError,
-}
+};
 
-import pc from '@brillout/picocolors'
+import pc from "@brillout/picocolors";
 
 /**
  * Base class for all PhotonJS errors
  */
 abstract class PhotonError extends Error {
   protected constructor(category: string, message: string, options?: ErrorOptions) {
-    super(`${red(`[photon][${category}]`)} ${message}`, options)
-    this.name = this.constructor.name
+    super(`${red(`[photon][${category}]`)} ${message}`, options);
+    this.name = this.constructor.name;
   }
 }
 
@@ -27,8 +27,8 @@ abstract class PhotonError extends Error {
 class PhotonBugError extends PhotonError {
   constructor(message?: string, options?: ErrorOptions) {
     const defaultMessage =
-      'You stumbled upon a PhotonJS bug. Reach out on GitHub and copy-paste this error — a maintainer will fix the bug.'
-    super('Bug', `${message || defaultMessage}`, options)
+      "You stumbled upon a PhotonJS bug. Reach out on GitHub and copy-paste this error — a maintainer will fix the bug.";
+    super("Bug", `${message || defaultMessage}`, options);
   }
 }
 
@@ -37,7 +37,7 @@ class PhotonBugError extends PhotonError {
  */
 class PhotonUsageError extends PhotonError {
   constructor(message: string, options?: ErrorOptions) {
-    super('Wrong Usage', message, options)
+    super("Wrong Usage", message, options);
   }
 }
 
@@ -46,7 +46,7 @@ class PhotonUsageError extends PhotonError {
  */
 class PhotonConfigError extends PhotonError {
   constructor(message: string, options?: ErrorOptions) {
-    super('Config Error', message, options)
+    super("Config Error", message, options);
   }
 }
 
@@ -55,7 +55,7 @@ class PhotonConfigError extends PhotonError {
  */
 class PhotonRuntimeError extends PhotonError {
   constructor(message: string, options?: ErrorOptions) {
-    super('Runtime Error', message, options)
+    super("Runtime Error", message, options);
   }
 }
 
@@ -64,20 +64,20 @@ class PhotonRuntimeError extends PhotonError {
  */
 class PhotonDependencyError extends PhotonError {
   constructor(message: string, options?: ErrorOptions) {
-    super('Dependency Error', message, options)
+    super("Dependency Error", message, options);
   }
 }
 
 function assert(condition: unknown): asserts condition {
-  if (condition) return
-  throw new PhotonBugError()
+  if (condition) return;
+  throw new PhotonBugError();
 }
 
 function assertUsage(condition: unknown, message: string): asserts condition {
-  if (condition) return
-  throw new PhotonUsageError(message)
+  if (condition) return;
+  throw new PhotonUsageError(message);
 }
 
 function red(str: string) {
-  return pc.red(pc.bold(str))
+  return pc.red(pc.bold(str));
 }

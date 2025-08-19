@@ -1,2 +1,2 @@
 //@ts-ignore
-export const isDeno = typeof Deno !== 'undefined'
+export const isDeno = typeof Deno !== "undefined";

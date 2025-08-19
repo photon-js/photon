@@ -1,6 +1,6 @@
-import './vite-types.js'
+import "./vite-types.js";
 
-export * as api from './api.js'
+export * as api from "./api.js";
 export {
   PhotonError,
   PhotonBugError,
@@ -8,5 +8,5 @@ export {
   PhotonConfigError,
   PhotonRuntimeError,
   PhotonDependencyError,
-} from './utils/assert.js'
-export type { Photon } from './types.js'
+} from "./utils/assert.js";
+export type { Photon } from "./types.js";

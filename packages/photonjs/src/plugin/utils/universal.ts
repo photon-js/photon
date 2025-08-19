@@ -1,7 +1,7 @@
-import { type EnhancedMiddleware, getUniversal, nameSymbol } from '@universal-middleware/core'
-import { PhotonConfigError } from '../../utils/assert.js'
+import { type EnhancedMiddleware, getUniversal, nameSymbol } from "@universal-middleware/core";
+import { PhotonConfigError } from "../../utils/assert.js";
 
-type ErrorMessage = (id: string, i: number) => string
+type ErrorMessage = (id: string, i: number) => string;
 
 export function extractUniversal(
   mi: EnhancedMiddleware | EnhancedMiddleware[],
@@ -12,9 +12,9 @@ export function extractUniversal(
     .flat(Number.POSITIVE_INFINITY)
     .map((x) => getUniversal(x as EnhancedMiddleware))
     .map((m, i) => {
-      if (typeof m === 'function' && nameSymbol in m) {
-        return m
+      if (typeof m === "function" && nameSymbol in m) {
+        return m;
       }
-      throw new PhotonConfigError(errorMessage(id, i))
-    })
+      throw new PhotonConfigError(errorMessage(id, i));
+    });
 }

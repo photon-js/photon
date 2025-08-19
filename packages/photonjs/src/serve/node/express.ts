@@ -1,17 +1,17 @@
-import type { App as ExpressApp } from '@universal-middleware/express'
-import { installServerHMR, nodeServe, type ServerOptions } from '../utils.js'
-import { createServer } from 'node:http'
+import type { App as ExpressApp } from "@universal-middleware/express";
+import { installServerHMR, nodeServe, type ServerOptions } from "../utils.js";
+import { createServer } from "node:http";
 
 export function serve<App extends ExpressApp>(app: App, options: ServerOptions = {}) {
-  if (!options.createServer) options.createServer = createServer
+  if (!options.createServer) options.createServer = createServer;
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  const _serve = () => nodeServe(options, app as any)
+  const _serve = () => nodeServe(options, app as any);
 
   if (import.meta.hot) {
-    installServerHMR(_serve)
+    installServerHMR(_serve);
   } else {
-    _serve()
+    _serve();
   }
 
-  return app
+  return app;
 }

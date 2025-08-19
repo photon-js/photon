@@ -1,64 +1,64 @@
-import type { Plugin } from 'vite'
-import { getPhotonServerIdWithEntry } from '../../api/api.js'
-import type { Photon } from '../../types.js'
-import { getPhotonMeta } from '../../utils/meta.js'
-import { escapeStringRegexp } from '../utils/escapeStringRegexp.js'
-import type { LoadResult, PluginContext } from '../utils/rollupTypes.js'
+import type { Plugin } from "vite";
+import { getPhotonServerIdWithEntry } from "../../api/api.js";
+import type { Photon } from "../../types.js";
+import { getPhotonMeta } from "../../utils/meta.js";
+import { escapeStringRegexp } from "../utils/escapeStringRegexp.js";
+import type { LoadResult, PluginContext } from "../utils/rollupTypes.js";
 
 type LoadHook = (
   this: PluginContext,
   id: string,
   options: {
-    meta: Photon.EntryServer
-    ssr?: boolean
+    meta: Photon.EntryServer;
+    ssr?: boolean;
   },
-) => Promise<LoadResult> | LoadResult
+) => Promise<LoadResult> | LoadResult;
 
-type PluginInterop = Record<string, unknown> & { name: string }
+type PluginInterop = Record<string, unknown> & { name: string };
 
-export function targetLoader<T extends { load: LoadHook } & Omit<Plugin, 'load' | 'resolveId' | 'name'>>(
+export function targetLoader<T extends { load: LoadHook } & Omit<Plugin, "load" | "resolveId" | "name">>(
   name: string,
   options: T,
 ): PluginInterop[] {
-  const prefix = `photon:${name}`
-  const re_prefix = new RegExp(`^${escapeStringRegexp(prefix)}:`)
+  const prefix = `photon:${name}`;
+  const re_prefix = new RegExp(`^${escapeStringRegexp(prefix)}:`);
 
   return [
     {
       name: `photon:target-loader:${name}:emit`,
 
-      apply: 'build',
-      enforce: 'post',
+      apply: "build",
+      enforce: "post",
 
       buildStart: {
-        order: 'post',
+        order: "post",
         handler() {
-          const envName = this.environment.name
-          const photon = this.environment.config.photon
+          const envName = this.environment.name;
+          const photon = this.environment.config.photon;
           const isEdge = this.environment.config.resolve.conditions.some((x) =>
-            ['edge-light', 'worker', 'workerd', 'edge'].includes(x),
-          )
+            ["edge-light", "worker", "workerd", "edge"].includes(x),
+          );
 
           if (photon.defaultBuildEnv === envName) {
             this.emitFile({
-              type: 'chunk',
+              type: "chunk",
               fileName: photon.server.target || photon.server.name,
               id: `${prefix}:${photon.server.id}`,
-            })
+            });
           }
 
           // Emit handlers, each wrapped behind the server entry
           for (const entry of photon.entries) {
             if (
-              (entry.env || 'ssr') === envName &&
+              (entry.env || "ssr") === envName &&
               // if framework codeSplitting is enabled or if a target has explicitely been set, emit a new entry
               (photon.codeSplitting.framework || entry.target)
             ) {
               this.emitFile({
-                type: 'chunk',
+                type: "chunk",
                 fileName: entry.target || entry.name,
-                id: `${prefix}:${getPhotonServerIdWithEntry(isEdge ? 'edge' : 'node', entry.name)}`,
-              })
+                id: `${prefix}:${getPhotonServerIdWithEntry(isEdge ? "edge" : "node", entry.name)}`,
+              });
             }
           }
         },
@@ -76,10 +76,10 @@ export function targetLoader<T extends { load: LoadHook } & Omit<Plugin, 'load' 
         },
 
         async handler(id, importer, opts) {
-          const resolved = await this.resolve(id.replace(re_prefix, ''), importer, opts)
+          const resolved = await this.resolve(id.replace(re_prefix, ""), importer, opts);
 
           if (!resolved) {
-            return this.error(`[photon][${name}] Cannot resolve ${id}`)
+            return this.error(`[photon][${name}] Cannot resolve ${id}`);
           }
 
           return {
@@ -93,7 +93,7 @@ export function targetLoader<T extends { load: LoadHook } & Omit<Plugin, 'load' 
               },
             },
             id: `${prefix}:${resolved.id}`,
-          }
+          };
         },
       },
 
@@ -103,17 +103,17 @@ export function targetLoader<T extends { load: LoadHook } & Omit<Plugin, 'load' 
         },
 
         async handler(id, opts) {
-          const actualId = id.slice(prefix.length + 1)
+          const actualId = id.slice(prefix.length + 1);
           // At this point, all handlers are wrapped with the server entry, so the entry type is always "server"
-          const meta = (await getPhotonMeta(this, id)) as Photon.EntryServer
+          const meta = (await getPhotonMeta(this, id)) as Photon.EntryServer;
           return options.load.call(this, actualId, {
             ...opts,
             meta,
-          })
+          });
         },
       },
 
       sharedDuringBuild: true,
     },
-  ] satisfies Plugin[]
+  ] satisfies Plugin[];
 }
