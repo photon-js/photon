@@ -39,4 +39,4 @@ jobs:
           node-version: 20
       - run: pnpm install
       - run: pnpm run build
-      - run: pnpm run format
+      - run: pnpm run format:check
