@@ -1,5 +1,5 @@
 import type { ExportedHandlerFetchHandler, Response } from '@cloudflare/workers-types'
-import type { apply as applyAdapter } from '@universal-middleware/h3'
+import type { App } from '@universal-middleware/h3'
 import { toWebHandler } from 'h3'
 import { createMissingDependencyError } from '../utils/errors.js'
 
@@ -12,7 +12,7 @@ async function tryImportCrossws() {
   }
 }
 
-export function asFetch<App extends Parameters<typeof applyAdapter>[0]>(app: App): ExportedHandlerFetchHandler {
+export function asFetch(app: App): ExportedHandlerFetchHandler {
   const handler = toWebHandler(app)
 
   return async (request, env, ctx): Promise<Response> => {
