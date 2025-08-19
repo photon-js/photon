@@ -1,6 +1,6 @@
 export { testRun };
 
-import { test, run, fetchHtml, page, getServerUrl, expect } from "@brillout/test-e2e";
+import { expect, fetchHtml, getServerUrl, page, run, test } from "@brillout/test-e2e";
 
 function testRun(cmd: "pnpm run dev" | "pnpm run preview") {
   run(cmd, { additionalTimeout: 120 * 1000 });

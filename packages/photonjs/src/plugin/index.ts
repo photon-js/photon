@@ -3,7 +3,7 @@ import { commonConfig } from "./plugins/commonConfig.js";
 import { devServer } from "./plugins/devServer.js";
 import { fallback } from "./plugins/fallback.js";
 import { getMiddlewaresPlugin } from "./plugins/getMiddlewaresPlugin.js";
-import { installPhotonBase, type InstallPhotonBaseOptions } from "./plugins/installPhoton.js";
+import { type InstallPhotonBaseOptions, installPhotonBase } from "./plugins/installPhoton.js";
 import { mirrorMeta } from "./plugins/mirrorMeta.js";
 import { photonEntry } from "./plugins/photonEntry.js";
 import { resolvePhotonConfigPlugin } from "./plugins/resolvePhotonConfigPlugin.js";

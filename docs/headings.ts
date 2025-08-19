@@ -3,12 +3,12 @@ export { headingsDetached };
 export { categories };
 
 import {
-  iconScroll,
-  iconCompass,
-  iconGear,
+  type Config,
   type HeadingDefinition,
   type HeadingDetachedDefinition,
-  type Config,
+  iconCompass,
+  iconGear,
+  iconScroll,
 } from "@brillout/docpress";
 
 const categories: Config["categories"] = [

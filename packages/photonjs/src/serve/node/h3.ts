@@ -1,5 +1,5 @@
-import type { App as H3App } from "@universal-middleware/h3";
 import { createServer } from "node:http";
+import type { App as H3App } from "@universal-middleware/h3";
 import { toNodeListener } from "h3";
 import { installServerHMR, type NodeHandler, nodeServe, type ServerOptions } from "../utils.js";
 

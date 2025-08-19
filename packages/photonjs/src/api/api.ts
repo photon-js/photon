@@ -1,10 +1,10 @@
+import { merge } from "ts-deepmerge";
 import { z } from "zod/v4";
 import type { PluginContext } from "../plugin/utils/rollupTypes.js";
 import type { Photon } from "../types.js";
 import { PhotonConfigError, PhotonUsageError } from "../utils/assert.js";
 import { entryToPhoton } from "../validators/coerce.js";
 import { PhotonEntryServerConfig, PhotonEntryUniversalHandler } from "../validators/validators.js";
-import { merge } from "ts-deepmerge";
 
 /**
  * Registers a new Photon entry.
