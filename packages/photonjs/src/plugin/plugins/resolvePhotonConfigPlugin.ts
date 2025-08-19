@@ -25,7 +25,7 @@ export function resolvePhotonConfigPlugin(pluginConfig?: Photon.Config): Plugin[
         handler(config) {
           // Ensures that a unique photon config exists across all envs
           if (resolvedPhotonConfig === null) {
-            // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+            // biome-ignore lint/suspicious/noExplicitAny: any
             resolvedPhotonConfig = resolvePhotonConfig(config.photon as any);
           }
           if (resolvedPhotonConfig.codeSplitting.framework) {

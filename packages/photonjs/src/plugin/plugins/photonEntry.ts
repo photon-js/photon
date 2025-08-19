@@ -111,7 +111,7 @@ export function photonEntry(): Plugin[] {
         if (id in importsToServer) {
           const resolved = await this.resolve(id, importer, opts);
           if (resolved) {
-            // biome-ignore lint/style/noNonNullAssertion: <explanation>
+            // biome-ignore lint/style/noNonNullAssertion: in check
             resolvedIdsToServers[resolved.id] = importsToServer[id]!;
           }
         }
@@ -259,7 +259,7 @@ export function photonEntry(): Plugin[] {
         },
         async handler(id, importer, opts) {
           const [actualId, query] = id.split("?");
-          // biome-ignore lint/style/noNonNullAssertion: <explanation>
+          // biome-ignore lint/style/noNonNullAssertion: ensured by regex
           const resolved = await this.resolve(actualId!, importer, opts);
           assert(resolved);
 
@@ -276,7 +276,7 @@ export function photonEntry(): Plugin[] {
         },
         async handler(id) {
           const [actualId, query] = id.split("?");
-          // biome-ignore lint/style/noNonNullAssertion: <explanation>
+          // biome-ignore lint/style/noNonNullAssertion: ensured by regex
           const loaded = await this.load({ id: actualId! });
           assert(loaded.code);
 

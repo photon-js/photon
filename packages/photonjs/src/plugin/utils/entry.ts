@@ -1,6 +1,6 @@
 import type { Photon } from "../../types.js";
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+// biome-ignore lint/suspicious/noExplicitAny: any
 type AnyRecord = Record<string, any>;
 
 export function isPhotonMeta<T extends AnyRecord>(meta?: T): meta is T & { photon: PhotonMeta } {

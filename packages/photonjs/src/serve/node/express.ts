@@ -4,7 +4,7 @@ import { createServer } from "node:http";
 
 export function serve<App extends ExpressApp>(app: App, options: ServerOptions = {}) {
   if (!options.createServer) options.createServer = createServer;
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: any
   const _serve = () => nodeServe(options, app as any);
 
   if (import.meta.hot) {

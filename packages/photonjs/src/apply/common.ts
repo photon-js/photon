@@ -30,7 +30,6 @@ export function createApply<App>(
 
     // dedupe
     if (additionalMiddlewares) {
-      let index = 0;
       for (const middleware of extractUniversal(additionalMiddlewares, "", errorMessageMiddleware)) {
         const i = middlewares.findIndex(
           (m) => getUniversalProp(m, nameSymbol) === getUniversalProp(middleware, nameSymbol),
@@ -39,13 +38,12 @@ export function createApply<App>(
           middlewares.splice(i, 1);
         }
         middlewares.push(middleware);
-        index++;
       }
     }
 
     applyAdapter(app, [...middlewares, ...entries]);
 
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    // biome-ignore lint/suspicious/noExplicitAny: any
     (app as any)[Symbol.for("photon:server")] = server;
 
     return app;
@@ -68,7 +66,6 @@ export function createAsyncApply<App>(
 
     // dedupe
     if (additionalMiddlewares) {
-      let index = 0;
       for (const middleware of extractUniversal(additionalMiddlewares, "", errorMessageMiddleware)) {
         const i = middlewares.findIndex(
           (m) => getUniversalProp(m, nameSymbol) === getUniversalProp(middleware, nameSymbol),
@@ -77,13 +74,12 @@ export function createAsyncApply<App>(
           middlewares.splice(i, 1);
         }
         middlewares.push(middleware);
-        index++;
       }
     }
 
     await applyAdapter(app, [...middlewares, ...entries]);
 
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    // biome-ignore lint/suspicious/noExplicitAny: any
     (app as any)[Symbol.for("photon:server")] = server;
 
     return app;

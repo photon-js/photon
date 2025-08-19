@@ -3,5 +3,18 @@
   "extends": ["./node_modules/@vikejs/biome-config/config.json"],
   "files": {
     "includes": ["**", "!**/.vercel", "!**/.wrangler"]
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["example/**", "docs/**"],
+      "linter": {
+        "rules": {
+          "a11y": "off"
+        },
+        "domains": {
+          "react": "recommended"
+        }
+      }
+    }
+  ]
 }

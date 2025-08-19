@@ -1,7 +1,6 @@
 export { TopNavigation };
 
 import { iconGear, iconSeedling, MenuToggle } from "@brillout/docpress";
-import React from "react";
 
 function TopNavigation() {
   return (

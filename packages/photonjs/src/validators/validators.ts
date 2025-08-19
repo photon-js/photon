@@ -7,7 +7,7 @@ export type GetPhotonCondition = (
   this: ViteDevServer | PluginContext,
   condition: "dev" | "edge" | "node",
   server: string,
-  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
+  // biome-ignore lint/suspicious/noConfusingVoidType: prefer void
 ) => string | string[] | undefined | null | void;
 
 export const SupportedServers = z.enum(["hono", "hattip", "elysia", "express", "fastify", "h3"]);

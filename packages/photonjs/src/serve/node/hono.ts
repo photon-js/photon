@@ -11,7 +11,7 @@ export function serve<App extends HonoApp>(app: App, options: MergedHonoServerOp
     const server = honoServe(
       {
         overrideGlobalObjects: options?.overrideGlobalObjects ?? false,
-        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        // biome-ignore lint/suspicious/noExplicitAny: any
         ...(options as any),
         port,
         hostname: options?.hostname,

@@ -43,6 +43,7 @@ export function isRunnableDevEnvironment(environment: Environment): environment 
 }
 
 // TODO cleanup or reuse?
+// biome-ignore lint/correctness/noUnusedVariables: TODO
 async function importMiddleware(vite: ViteDevServer, middleware: string) {
   const envName = vite.config.photon.devServer ? vite.config.photon.devServer.env : "ssr";
   const env = vite.environments[envName];
@@ -52,6 +53,7 @@ async function importMiddleware(vite: ViteDevServer, middleware: string) {
   return envImportAndCheckDefaultExport<UniversalMiddleware | UniversalMiddleware[]>(env, middleware, false);
 }
 
+// biome-ignore lint/correctness/noUnusedVariables: TODO
 async function importHandler(vite: ViteDevServer, handler: PhotonEntryUniversalHandler) {
   const envName = handler.env ?? "ssr";
   const env = vite.environments[envName];
@@ -245,7 +247,7 @@ export function devServer(config?: Photon.Config): Plugin {
     }
 
     setupHMRProxyDone = true;
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    // biome-ignore lint/suspicious/noExplicitAny: any
     const server = (req.socket as any).server as Server;
     server.on("upgrade", (clientReq, clientSocket, wsHead) => {
       if (isHMRProxyRequest(clientReq)) {
@@ -276,8 +278,9 @@ export function devServer(config?: Photon.Config): Plugin {
         return {
           module,
         };
-      // biome-ignore lint/complexity/noForEach: <explanation>
-      module.importers.forEach((importer) => modulesSet.add(importer));
+      module.importers.forEach((importer) => {
+        modulesSet.add(importer);
+      });
     }
   }
 
@@ -339,6 +342,7 @@ function logRestartMessage(err?: unknown) {
   logViteInfo('Server crash: Update a server file or type "r+enter" to restart the server.');
 }
 
+// biome-ignore lint/correctness/noUnusedVariables: needed once usage uncommented
 function setupErrorStackRewrite(vite: ViteDevServer) {
   const rewroteStacktraces = new WeakSet();
 
@@ -379,8 +383,11 @@ async function setupProcessRestarter() {
   process.env[IS_RESTARTER_SET_UP] = "true";
 
   function start() {
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
-    const cliEntry = process.argv[1]!;
+    const cliEntry = process.argv[1];
+    if (!cliEntry) {
+      throw new Error("Unable to read argv[1]");
+    }
+
     const cliArgs = process.argv.slice(2);
     // Re-run the exact same CLI
     const clone = fork(cliEntry, cliArgs, { stdio: "inherit" });

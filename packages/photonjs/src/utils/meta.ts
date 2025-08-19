@@ -22,7 +22,7 @@ export async function getPhotonMeta<T extends "handler-entry" | "server-entry" |
   {
     const info = pluginContext.getModuleInfo(actualId);
     if (isPhotonMeta(info?.meta)) {
-      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+      // biome-ignore lint/suspicious/noExplicitAny: any
       return info.meta.photon as any;
     }
   }
@@ -31,14 +31,14 @@ export async function getPhotonMeta<T extends "handler-entry" | "server-entry" |
   assertUsage(resolved, `Could not resolve ${actualId}`);
 
   if (isPhotonMeta(resolved.meta)) {
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    // biome-ignore lint/suspicious/noExplicitAny: any
     return resolved.meta.photon as any;
   }
 
   {
     const info = pluginContext.getModuleInfo(resolved.id);
     if (isPhotonMeta(info?.meta)) {
-      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+      // biome-ignore lint/suspicious/noExplicitAny: any
       return info.meta.photon as any;
     }
   }

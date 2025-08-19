@@ -3,9 +3,8 @@ export { config as default };
 import type { Config } from "@brillout/docpress";
 import logo from "./assets/logo.svg";
 import logoWithText from "./assets/logo-with-text.svg";
-import { headings, headingsDetached, categories } from "./headings";
+import { categories, headings, headingsDetached } from "./headings";
 import { TopNavigation } from "./TopNavigation";
-import React from "react";
 
 const config: Config = {
   name: "Photon",

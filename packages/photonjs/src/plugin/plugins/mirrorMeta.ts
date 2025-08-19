@@ -120,9 +120,9 @@ export function mirrorMeta(): Plugin[] {
               if (node.type === "ExportDefaultDeclaration") {
                 hasExportDefault = true;
 
-                // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+                // biome-ignore lint/suspicious/noExplicitAny: any
                 const declarationStart: number = (node.declaration as any).start;
-                // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+                // biome-ignore lint/suspicious/noExplicitAny: any
                 const declarationEnd: number = (node.declaration as any).end;
 
                 assert(declarationStart);
@@ -165,6 +165,6 @@ export function mirrorMeta(): Plugin[] {
 }
 
 function photonMetaAsContext(photonMeta: PhotonMeta) {
-  const { id, resolvedId, ...photonMetaClean } = photonMeta;
+  const { id: _, resolvedId: __, ...photonMetaClean } = photonMeta;
   return photonMetaClean;
 }

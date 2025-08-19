@@ -11,9 +11,9 @@ export function awesomeFrameworkPlugin(): Plugin {
         ssr: {},
         builder: {
           async buildApp(builder) {
-            // biome-ignore lint/style/noNonNullAssertion: <explanation>
+            // biome-ignore lint/style/noNonNullAssertion: exists
             await builder.build(builder.environments.client!);
-            // biome-ignore lint/style/noNonNullAssertion: <explanation>
+            // biome-ignore lint/style/noNonNullAssertion: exists
             await builder.build(builder.environments.ssr!);
           },
         },

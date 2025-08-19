@@ -9,7 +9,7 @@ img.src = "/logo.svg";
 img.alt = "Photon logo";
 img.className = "logo";
 
-// biome-ignore lint/style/noNonNullAssertion: <explanation>
+// biome-ignore lint/style/noNonNullAssertion: exists
 const h1 = document.querySelector("h1")!;
 
 h1.parentNode?.insertBefore(img, h1);

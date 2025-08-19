@@ -63,7 +63,7 @@ export interface ServerOptionsBase {
 
 type Handler = (req: Request) => Response | Promise<Response>;
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+// biome-ignore lint/suspicious/noExplicitAny: any
 export type Callback = boolean | (() => any);
 
 export interface NodeHandler {
@@ -92,7 +92,7 @@ export function onReady(options: { port: number; isHttps?: boolean; onReady?: Ca
 export function nodeServe(options: ServerOptions, handler: NodeHandler): ServerType {
   assert(options.createServer);
   const serverOptions = options.serverOptions ?? {};
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: any
   const createServer: any = options.createServer;
   const server: ServerType = createServer(serverOptions, handler);
   // onCreate hook
@@ -151,8 +151,10 @@ function onServerClose(server: Server | Http2Server | Http2SecureServer) {
     });
   });
 
-  // biome-ignore lint/complexity/noForEach: <explanation>
-  const closeAllConnections = () => connections.forEach((c) => c.destroy());
+  const closeAllConnections = () =>
+    connections.forEach((c) => {
+      c.destroy();
+    });
 
   return function destroy(cb: () => void) {
     server.close(cb);
@@ -174,11 +176,11 @@ function _installServerHMR(server: Server | Http2Server | Http2SecureServer) {
         });
       };
 
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      // biome-ignore lint/style/noNonNullAssertion: checked above
       import.meta.hot!.on("vite:beforeFullReload", callback);
 
       // Sent when vite server restarts
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      // biome-ignore lint/style/noNonNullAssertion: checked above
       import.meta.hot!.on("photon:close-server", callback);
     });
   }

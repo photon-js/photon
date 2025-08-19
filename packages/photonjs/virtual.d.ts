@@ -1,5 +1,5 @@
 declare module "photon:fallback-entry" {
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: any
   const handler: any;
   export default handler;
 }

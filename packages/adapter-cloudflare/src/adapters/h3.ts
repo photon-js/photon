@@ -25,7 +25,7 @@ export function asFetch(app: App): ExportedHandlerFetchHandler {
 
     return (await handler(request as unknown as Request, {
       cloudflare: { env, ctx },
-      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+      // biome-ignore lint/suspicious/noExplicitAny: any
     })) as any;
   };
 }

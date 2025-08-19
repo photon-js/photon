@@ -37,12 +37,12 @@ type ExtractArgs<K extends VirtualModuleKeys | VirtualModuleKeys[]> = NonNullabl
 
 export function ifPhotonModule<
   K extends VirtualModuleKeys | VirtualModuleKeys[],
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: any
   F extends (arg: ExtractArgs<K>) => any,
 >(key: K, value: unknown, callback: F): null | ReturnType<F>;
 export function ifPhotonModule<
   K extends VirtualModuleKeys | VirtualModuleKeys[],
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: any
   F extends (arg: ExtractArgs<K>) => any,
   R,
 >(
@@ -52,13 +52,13 @@ export function ifPhotonModule<
   next: R,
 ): R extends Error
   ? ReturnType<F>
-  : // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  : // biome-ignore lint/suspicious/noExplicitAny: any
     R extends (...args: any[]) => any
     ? ReturnType<R> | ReturnType<F>
     : R | ReturnType<F>;
 export function ifPhotonModule<
   K extends VirtualModuleKeys | VirtualModuleKeys[],
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: any
   F extends (arg: ExtractArgs<K>) => any,
 >(key: K, value: unknown, callback: F, next: unknown = null): unknown | ReturnType<F> {
   function returnOrThrow() {
@@ -74,21 +74,21 @@ export function ifPhotonModule<
 
   if (Array.isArray(key)) {
     for (const k of key) {
-      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+      // biome-ignore lint/suspicious/noExplicitAny: any
       const r = ifPhotonModule(k as VirtualModuleKeys, value, callback as any);
       if (r !== null) return r;
     }
     return returnOrThrow();
   }
 
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: any
   const out = virtualModules[key as VirtualModuleKeys].match(value as any);
 
   if (out === null) {
     return returnOrThrow();
   }
 
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: any
   return callback(out as any);
 }
 
