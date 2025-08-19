@@ -1,0 +1,22 @@
+## 0.0.1 (2025-08-19)
+
+
+### Bug Fixes
+
+* always add fallback ([b82a35f](https://github.com/photon-js/photon/commit/b82a35f2bcacab59e9eb0b7e4a389c4db87e6d92))
+* better virtual module resolution fix ([9ec0fa0](https://github.com/photon-js/photon/commit/9ec0fa06cbd9e72858fc173aec0905865cef32ff))
+* better virtual module resolution fix ([1d77f1b](https://github.com/photon-js/photon/commit/1d77f1b66b818b5df9feae231ec4472f8e52e084))
+* ensure fallback ([54dbf6e](https://github.com/photon-js/photon/commit/54dbf6ec406eeb46267c3e4ec09ae451d58895a3))
+* generic module config for hotUpdate full-reload ([f396fdc](https://github.com/photon-js/photon/commit/f396fdc6c6afb21c2bd3760798816cfed82c4762))
+
+
+### Features
+
+* auto enhance handler with a route ([8e97aca](https://github.com/photon-js/photon/commit/8e97aca9534d41ea858772940987be9375de16ae))
+* cloudflare adapter ([47c8653](https://github.com/photon-js/photon/commit/47c8653f5283cf57a6c5d95e877eedb0ecb7108a))
+* improve core to support vercel ([d561ca3](https://github.com/photon-js/photon/commit/d561ca3894de6e54cceb38d523c0fa86725615ea))
+* photon ([ef5acfe](https://github.com/photon-js/photon/commit/ef5acfe0557352088f551c714232ed1537077b7f))
+* use non-index entries in dev and build ([a49037f](https://github.com/photon-js/photon/commit/a49037ff4409761300933be87a77e590cdd5394c))
+
+
+
