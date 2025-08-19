@@ -10,6 +10,33 @@ function commonConfig(): Plugin[] {
     singleton({
       name: 'photon:common-config',
 
+      config() {
+        return {
+          ssr: {
+            // From Vite doc:
+            // > If the dependency is small and is already valid ESM,
+            // > you can exclude it and let the browser load it directly.
+            optimizeDeps: {
+              exclude: [
+                'hono',
+                'h3',
+                'elysia',
+                '@universal-middleware/cloudflare',
+                '@universal-middleware/compress',
+                '@universal-middleware/core',
+                '@universal-middleware/elysia',
+                '@universal-middleware/express',
+                '@universal-middleware/fastify',
+                '@universal-middleware/h3',
+                '@universal-middleware/hattip',
+                '@universal-middleware/hono',
+                '@universal-middleware/sirv',
+              ],
+            },
+          },
+        }
+      },
+
       configEnvironment(name, config) {
         if (!config.consumer) {
           config.consumer = name === 'client' ? 'client' : 'server'
