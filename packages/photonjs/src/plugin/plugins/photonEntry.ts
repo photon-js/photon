@@ -6,6 +6,7 @@ import { resolvePhotonConfig } from "../../validators/coerce.js";
 import type { SupportedServers } from "../../validators/types.js";
 import { singleton } from "../utils/dedupe.js";
 import { isPhotonMeta } from "../utils/entry.js";
+import { isBun } from "../utils/isBun.js";
 import type { ModuleInfo, PluginContext } from "../utils/rollupTypes.js";
 import { importsToServer } from "../utils/servers.js";
 import { asPhotonEntryId, ifPhotonModule, virtualModulesRegex } from "../utils/virtual.js";
@@ -66,6 +67,7 @@ function cleanImport(imp: string) {
 }
 
 const resolvedIdsToServers: Record<string, SupportedServers> = {};
+
 export function photonEntry(): Plugin[] {
   return [
     singleton({
@@ -81,18 +83,50 @@ export function photonEntry(): Plugin[] {
         order: "post",
         handler(config) {
           const { server } = resolvePhotonConfig(config.photon);
+          const input: Record<string, string> = { index: server.id };
+
+          if (isBun) {
+            // If an entry contains an `export default`, Bun will attempt to run `Bun.serve`.
+            // This causes a conflict since the server is already listening for connections.
+            // To avoid that, we import the entry into a separate file without a default export.
+            // The import is done dynamically to prevent unintended side effects.
+            input["bun-index"] = `photon:dynamic-entry:${server.id}`;
+          }
 
           return {
             environments: {
               ssr: {
                 build: {
                   rollupOptions: {
-                    input: { index: server.id },
+                    input,
                   },
                 },
               },
             },
           };
+        },
+      },
+
+      resolveId: {
+        filter: {
+          id: [virtualModulesRegex["dynamic-entry"]],
+        },
+        handler(id) {
+          return {
+            id,
+            moduleSideEffects: "no-treeshake",
+          };
+        },
+      },
+
+      load: {
+        filter: {
+          id: [virtualModulesRegex["dynamic-entry"]],
+        },
+        handler(id) {
+          return ifPhotonModule("dynamic-entry", id, async ({ entry }) => {
+            return `await import(${JSON.stringify(entry)});`;
+          });
         },
       },
 

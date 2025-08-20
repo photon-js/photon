@@ -19,6 +19,7 @@ const virtualModules = {
   "server-entry-with-entry": regexGroups<{ condition: string; entry: string }>(
     /^photon:server-entry-with-entry:(?<condition>.+?):(?<entry>.+)/,
   ),
+  "dynamic-entry": regexGroups<{ entry: string }>(/^photon:dynamic-entry:(?<entry>.+)/),
   "fallback-entry": regexGroups(/^photon:fallback-entry/),
   "resolve-from-photon": regexGroups<{ module: string }>(/^photon:resolve-from-photon:(?<module>.+)/),
   "get-middlewares": regexGroups<{ condition: string; server: string; handler?: string }>(
