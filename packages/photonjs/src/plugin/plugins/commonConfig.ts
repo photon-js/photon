@@ -1,4 +1,4 @@
-import { defaultServerConditions, type Plugin } from "vite";
+import { defaultClientConditions, defaultExternalConditions, defaultServerConditions, type Plugin } from "vite";
 import { singleton } from "../utils/dedupe.js";
 import { isBun } from "../utils/isBun.js";
 import { isDeno } from "../utils/isDeno.js";
@@ -42,19 +42,21 @@ function commonConfig(): Plugin[] {
           config.consumer = name === "client" ? "client" : "server";
         }
 
+        const defaultCondition = config.consumer === "client" ? defaultClientConditions : defaultServerConditions;
+
         let additionalResolveConfig: { externalConditions?: string[]; conditions?: string[]; noExternal?: string } = {};
 
         if (isBun) {
           additionalResolveConfig = {
-            conditions: ["bun", ...defaultServerConditions],
-            externalConditions: ["bun", ...defaultServerConditions],
+            conditions: ["bun", ...defaultCondition],
+            externalConditions: ["bun", ...defaultExternalConditions],
           };
         }
 
         if (isDeno) {
           additionalResolveConfig = {
-            conditions: ["deno", ...defaultServerConditions],
-            externalConditions: ["deno", ...defaultServerConditions],
+            conditions: ["deno", ...defaultCondition],
+            externalConditions: ["deno", ...defaultExternalConditions],
           };
         }
 
