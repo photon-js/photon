@@ -1,3 +1,12 @@
+## [0.0.2](https://github.com/photon-js/photon/compare/@photonjs/core@0.0.1...@photonjs/core@0.0.2) (2025-08-20)
+
+
+### Bug Fixes
+
+* bun and deno conditions ([fb12d4d](https://github.com/photon-js/photon/commit/fb12d4d04ec09f88405b60c17ce34d448379d6f9))
+
+
+
 ## 0.0.1 (2025-08-19)
 
 
