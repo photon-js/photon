@@ -1,4 +1,4 @@
-import { installPhoton } from "@photonjs/core/vite";
+import { installPhoton } from "@photonjs/runtime/vite";
 import type { Plugin } from "vite";
 
 export function photonPlugin(): Plugin[] {

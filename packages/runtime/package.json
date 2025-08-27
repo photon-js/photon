@@ -21,9 +21,11 @@
   },
   "dependencies": {
     "@photonjs/core": "workspace:^",
-    "@photonjs/hono": "workspace:^"
+    "@photonjs/hono": "workspace:^",
+    "hono": "^4.9.2"
   },
   "peerDependencies": {
+    "hono": "^4.9.2",
     "vite": ">=7.1"
   },
   "peerDependenciesMeta": {

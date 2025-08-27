@@ -1,5 +1,6 @@
 import type { Plugin } from "vite";
-import { photon as corePhoton } from "@photonjs/core/vite";
+import { installPhoton as coreInstallPhoton, photon as corePhoton } from "@photonjs/core/vite";
+import type { Photon } from "@photonjs/core";
 
 function fallback(): Plugin {
   return {
@@ -41,13 +42,14 @@ export default startServer()
 }
 
 // Export photon function that includes core plugins + fallback
-export function photon(config?: any): Plugin[] {
+export function photon(config?: Photon.Config): Plugin[] {
   const plugins = corePhoton(config);
 
-  plugins.push(fallback());
-
-  return plugins;
+  return [fallback(), ...plugins];
 }
 
-// Make photon the default export as well
-export { photon as default };
+export function installPhoton(...args: Parameters<typeof coreInstallPhoton>): Plugin[] {
+  const plugins = coreInstallPhoton(...args);
+
+  return [fallback(), ...plugins];
+}
