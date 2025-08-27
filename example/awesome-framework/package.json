@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@photonjs/core": "workspace:",
+    "@photonjs/runtime": "workspace:",
     "@universal-middleware/core": "^0.4.9",
     "@universal-middleware/sirv": "^0.1.20"
   },

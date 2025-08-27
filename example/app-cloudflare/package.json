@@ -1,7 +1,4 @@
 {
-  "name": "app-cloudflare",
-  "private": true,
-  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -14,6 +11,7 @@
   "devDependencies": {
     "@photonjs/cloudflare": "workspace:",
     "@photonjs/core": "workspace:",
+    "@photonjs/runtime": "workspace:",
     "typescript": "^5.9.2",
     "vite": "^7.1.3",
     "wrangler": "^4.31.0"
