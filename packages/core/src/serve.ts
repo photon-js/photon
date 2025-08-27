@@ -202,4 +202,3 @@ export function installServerHMR(serve: () => Server | Http2Server | Http2Secure
     import.meta.hot!.data.previousServerClosing = _installServerHMR(server);
   });
 }
-
