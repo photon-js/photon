@@ -1,4 +1,6 @@
 {
+  "name": "app-hono-cloudflare",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",

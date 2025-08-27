@@ -1,4 +1,6 @@
 {
+  "name": "photonjs-docs",
+  "private": true,
   "scripts": {
     "dev": "vike dev",
     "build": "vike build",

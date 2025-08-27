@@ -1,4 +1,6 @@
 {
+  "name": "tests-app",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",

@@ -1,4 +1,6 @@
 {
+  "name": "app-cloudflare",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
