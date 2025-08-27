@@ -1,5 +1,12 @@
 # @photonjs/h3
 
+## 0.0.3
+
+### Patch Changes
+
+- Updated dependencies [3792886]
+  - @photonjs/core@0.0.6
+
 ## 0.0.2
 
 ### Patch Changes
