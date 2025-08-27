@@ -36,5 +36,13 @@ export default defineConfig([
       // apply (node)
       "apply": "./src/apply-node.ts",
     },
-  }
+  },
+  {
+    ...commonOptions,
+    platform: "neutral",
+    entry: {
+      // index
+      "index": "./src/index.ts",
+    }
+  },
 ]);
