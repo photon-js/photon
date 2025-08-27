@@ -1,9 +1,9 @@
 import { node } from "@elysiajs/node";
+import { getPort, onReady, type ServerOptionsBase } from "@photonjs/core/serve";
 import type { App as ElysiaApp } from "@universal-middleware/elysia";
 import { Elysia } from "elysia";
 import type { Serve } from "elysia/universal";
 import { ensurePhotonServer } from "./symbol-utils.js";
-import { getPort, onReady, type ServerOptionsBase } from "@photonjs/core/serve";
 
 export function serve<App extends ElysiaApp>(app: App, options: ServerOptionsBase = {}) {
   // TODO HMR

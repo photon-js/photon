@@ -1,7 +1,7 @@
 import pc from "@brillout/picocolors";
+import { getPort, installServerHMR, onReady, type ServerOptionsBase } from "@photonjs/core/serve";
 import type { App as FastifyApp } from "@universal-middleware/fastify";
 import type { FastifyListenOptions } from "fastify";
-import { getPort, installServerHMR, onReady, type ServerOptionsBase } from "@photonjs/core/serve";
 
 export function serve<App extends FastifyApp>(app: App, options: ServerOptionsBase = {}) {
   const _serve = () => {

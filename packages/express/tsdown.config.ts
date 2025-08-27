@@ -16,8 +16,8 @@ export default defineConfig([
     platform: "neutral",
     entry: {
       // serve (noop)
-      "serve": "./src/serve-noop.ts",
-    }
+      serve: "./src/serve-noop.ts",
+    },
   },
   {
     ...commonOptions,
@@ -28,7 +28,7 @@ export default defineConfig([
       // apply (dev)
       "apply.dev": "./src/apply-dev.ts",
       // apply (node)
-      "apply": "./src/apply-node.ts",
+      apply: "./src/apply-node.ts",
     },
   },
   {
@@ -36,7 +36,7 @@ export default defineConfig([
     platform: "neutral",
     entry: {
       // index
-      "index": "./src/index.ts",
-    }
+      index: "./src/index.ts",
+    },
   },
 ]);

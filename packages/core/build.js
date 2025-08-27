@@ -36,8 +36,8 @@ await build({
   platform: "neutral",
   entry: {
     // utils
-    "apply": "./src/apply/common.ts",
-    "serve": "./src/serve/utils.ts",
+    apply: "./src/apply/common.ts",
+    serve: "./src/serve/utils.ts",
     // serve (noop)
     "elysia/serve": "./src/serve/noop/elysia.ts",
     "express/serve": "./src/serve/noop/express.ts",

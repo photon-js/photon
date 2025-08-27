@@ -1,6 +1,6 @@
+import { denoServe, type ServerOptions } from "@photonjs/core/serve";
 import type { App as HattipApp } from "@universal-middleware/hattip";
 import { buildHandler } from "./utils.js";
-import { denoServe, type ServerOptions } from "@photonjs/core/serve";
 
 export function serve<App extends HattipApp>(app: App, options: ServerOptions = {}) {
   const handler = buildHandler(app);

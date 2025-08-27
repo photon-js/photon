@@ -1,6 +1,6 @@
 import { createServer } from "node:http";
-import type { App as ExpressApp } from "@universal-middleware/express";
 import { installServerHMR, nodeServe, type ServerOptions } from "@photonjs/core/serve";
+import type { App as ExpressApp } from "@universal-middleware/express";
 
 export function serve<App extends ExpressApp>(app: App, options: ServerOptions = {}) {
   if (!options.createServer) options.createServer = createServer;
