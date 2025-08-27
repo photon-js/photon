@@ -7,7 +7,7 @@ const commonOptions: TsupOptions = {
   outDir: "dist",
   treeshake: true,
   nodeProtocol: true,
-  external: ["hono", /^photon:get-middlewares:/, /^@photonjs\/core/, /^@photonjs\/hono/],
+  external: ["h3", /^photon:get-middlewares:/, /^@photonjs\/core/, /^@photonjs\/h3/],
 };
 
 export default defineConfig([
