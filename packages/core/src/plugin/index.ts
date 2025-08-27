@@ -1,5 +1,3 @@
-import "../vite-types.d.ts";
-
 import type { Plugin } from "vite";
 import type { Photon } from "../types.js";
 import { commonConfig } from "./plugins/commonConfig.js";
@@ -42,4 +40,15 @@ function installPhoton(
   plugins.push(...installPhotonBase(name, options));
 
   return plugins;
+}
+
+declare module "vite" {
+  interface UserConfig {
+    photon?: Photon.Config | Photon.Config[];
+    afterBuildStart?: boolean;
+  }
+
+  interface ResolvedConfig {
+    photon: Photon.ConfigResolved;
+  }
 }
