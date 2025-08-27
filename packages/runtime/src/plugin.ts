@@ -1,6 +1,6 @@
-import type { Plugin } from "vite";
-import { installPhoton as coreInstallPhoton, photon as corePhoton } from "@photonjs/core/vite";
 import type { Photon } from "@photonjs/core";
+import { installPhoton as coreInstallPhoton, photon as corePhoton } from "@photonjs/core/vite";
+import type { Plugin } from "vite";
 
 function fallback(): Plugin {
   return {
@@ -25,8 +25,8 @@ function fallback(): Plugin {
     load(id) {
       if (id === "photon:fallback-entry") {
         //language=ts
-        return `import { apply, serve } from '@photonjs/hono'
-import { Hono } from 'hono'
+        return `import { apply, serve } from 'photon:resolve-from-photon:@photonjs/hono'
+import { Hono } from 'photon:resolve-from-photon:hono'
 
 function startServer() {
   const app = new Hono()

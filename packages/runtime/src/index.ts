@@ -1,2 +1,2 @@
 // Re-export only the vite plugins with fallback
-export { photon, installPhoton, photon as default } from "./plugin.js";
+export { installPhoton, photon, photon as default } from "./plugin.js";

@@ -61,7 +61,7 @@ export function installPhotonBase(name: string, options?: InstallPhotonBaseOptio
       name: `photon:resolve-from-photon:${name}`,
       enforce: "pre",
 
-      async resolveId(id, importer, opts) {
+      resolveId(id, importer, opts) {
         return ifPhotonModule("resolve-from-photon", id, async ({ module: actualId }) => {
           if (opts.custom?.photonScope !== undefined && opts.custom.photonScope !== name) return;
 
@@ -69,6 +69,18 @@ export function installPhotonBase(name: string, options?: InstallPhotonBaseOptio
             { source: name, importer: undefined },
             { source: name, importer },
           ]);
+
+          const foundPhotonRuntime = await resolveFirst(this, [
+            { source: "@photonjs/runtime", importer: undefined, opts },
+            resolvedName ? { source: "@photonjs/runtime", importer: resolvedName.id, opts } : undefined,
+          ]);
+
+          if (foundPhotonRuntime) {
+            const resolved = await this.resolve(actualId, foundPhotonRuntime.id, opts);
+            if (resolved) {
+              return resolved;
+            }
+          }
 
           const foundPhotonCore = await resolveFirst(this, [
             { source: "@photonjs/core", importer: undefined, opts },
