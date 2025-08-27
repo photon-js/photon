@@ -7,7 +7,7 @@ const commonOptions: TsupOptions = {
   outDir: "dist",
   treeshake: true,
   nodeProtocol: true,
-  external: ["fastify", /^photon:get-middlewares:/, /^@photonjs\/core/, /^@photonjs\/fastify/],
+  external: [/^photon:get-middlewares:/, /^@photonjs\/core/, /^@photonjs\/hattip/]
 };
 
 export default defineConfig([
@@ -17,12 +17,18 @@ export default defineConfig([
     entry: {
       // serve (noop)
       "serve": "./src/serve-noop.ts",
+      // apply (edge)
+      "apply.edge": "./src/apply-edge.ts",
     }
   },
   {
     ...commonOptions,
     platform: "node",
     entry: {
+      // serve (bun)
+      "serve.bun": "./src/serve-bun.ts",
+      // serve (deno)
+      "serve.deno": "./src/serve-deno.ts",
       // serve (node)
       "serve.node": "./src/serve-node.ts",
       // apply (dev)

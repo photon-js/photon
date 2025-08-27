@@ -7,7 +7,7 @@ const commonOptions: TsupOptions = {
   outDir: "dist",
   treeshake: true,
   nodeProtocol: true,
-  external: ["express", /^photon:get-middlewares:/, /^@photonjs\/core/],
+  external: ["express", /^photon:get-middlewares:/, /^@photonjs\/core/, /^@photonjs\/express/],
 };
 
 export default defineConfig([
