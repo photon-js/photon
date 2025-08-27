@@ -320,6 +320,7 @@ export function photonEntry(): Plugin[] {
           const newCode = loaded.code
             // Forward query parameters to apply imports
             .replace(/@photonjs\/core\/([^/]+)\/apply/, `@photonjs/core/$1/apply?${query}`)
+            .replace(/@photonjs\/([^/]+)\/apply/, `@photonjs/$1/apply?${query}`)
             // Transform get-middleware import
             .replace(/photon:get-middlewares:(.+?):(\w+)/, `photon:get-middlewares:$1:$2:${handlerId}`);
 

@@ -1,5 +1,4 @@
-// Will be moved to @photonjs/hono
-import { apply, serve } from "@photonjs/core/hono";
+import { apply, serve } from "@photonjs/hono";
 import awesomeFramework from "awesome-framework/universal-middleware";
 import { Hono } from "hono";
 

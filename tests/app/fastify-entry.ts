@@ -1,5 +1,4 @@
-// Will be moved to @photonjs/fastify
-import { apply, serve } from "@photonjs/core/fastify";
+import { apply, serve } from "@photonjs/fastify";
 import awesomeFramework from "awesome-framework/universal-middleware";
 import fastify, { type FastifyInstance } from "fastify";
 

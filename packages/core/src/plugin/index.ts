@@ -1,7 +1,7 @@
 import type { Plugin } from "vite";
 import { commonConfig } from "./plugins/commonConfig.js";
 import { devServer } from "./plugins/devServer.js";
-import { fallback } from "./plugins/fallback.js";
+
 import { getMiddlewaresPlugin } from "./plugins/getMiddlewaresPlugin.js";
 import { type InstallPhotonBaseOptions, installPhotonBase } from "./plugins/installPhoton.js";
 import { mirrorMeta } from "./plugins/mirrorMeta.js";
@@ -20,7 +20,7 @@ function photon(config?: Photon.Config): Plugin[] {
     ...resolvePhotonConfigPlugin(config),
     ...photonEntry(),
     ...mirrorMeta(),
-    fallback(),
+
     devServer(config),
     ...getMiddlewaresPlugin(),
   ];
