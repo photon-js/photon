@@ -17,7 +17,7 @@ import type { createServer as createServerHTTPS, ServerOptions as ServerOptionsH
 import type { Socket } from "node:net";
 import { assert } from "../utils/assert.js";
 
-export type ServerType = Server | Http2Server | Http2SecureServer;
+export type ServerType = import("node:http").Server | Http2Server | Http2SecureServer;
 
 export type ServerOptions = ServerOptionsBase &
   (ServerOptionsHTTPBase | ServerOptionsHTTPSBase | ServerOptionsHTTP2Base);
@@ -63,13 +63,13 @@ export interface ServerOptionsBase {
 
 type Handler = (req: Request) => Response | Promise<Response>;
 
-// biome-ignore lint/suspicious/noExplicitAny: any
-export type Callback = boolean | (() => any);
-
 export interface NodeHandler {
   (req: IncomingMessage, res: ServerResponse, next?: (err?: unknown) => void): void;
   (req: Http2ServerRequest, res: Http2ServerResponse, next?: (err?: unknown) => void): void;
 }
+
+// biome-ignore lint/suspicious/noExplicitAny: any
+export type Callback = boolean | (() => any);
 
 export function onReady(options: { port: number; isHttps?: boolean; onReady?: Callback }) {
   return () => {
@@ -87,25 +87,6 @@ export function onReady(options: { port: number; isHttps?: boolean; onReady?: Ca
       options.onReady();
     }
   };
-}
-
-export function nodeServe(options: ServerOptions, handler: NodeHandler): ServerType {
-  assert(options.createServer);
-  const serverOptions = options.serverOptions ?? {};
-  // biome-ignore lint/suspicious/noExplicitAny: any
-  const createServer: any = options.createServer;
-  const server: ServerType = createServer(serverOptions, handler);
-  // onCreate hook
-  options.onCreate?.(server);
-  const isHttps = Boolean("cert" in serverOptions && serverOptions.cert);
-  const port = getPort(options);
-  if (options?.hostname) {
-    server.listen(port, options.hostname, onReady({ isHttps, ...options, port }));
-  } else {
-    server.listen(port, onReady({ isHttps, ...options, port }));
-  }
-
-  return server;
 }
 
 export function denoServe(options: ServerOptions, handler: Handler) {
@@ -133,8 +114,33 @@ export function bunServe(options: ServerOptions, handler: Handler) {
   onReady({ isHttps, ...options, port })();
 }
 
+export function nodeServe(options: ServerOptions, handler: NodeHandler): ServerType {
+  assert(options.createServer);
+  const serverOptions = options.serverOptions ?? {};
+  // biome-ignore lint/suspicious/noExplicitAny: any
+  const createServer: any = options.createServer;
+  const server: ServerType = createServer(serverOptions, handler);
+  // onCreate hook
+  options.onCreate?.(server);
+  const isHttps = Boolean("cert" in serverOptions && serverOptions.cert);
+  const port = getPort(options);
+  if (options?.hostname) {
+    server.listen(port, options.hostname, onReady({ isHttps, ...options, port }));
+  } else {
+    server.listen(port, onReady({ isHttps, ...options, port }));
+  }
+
+  return server;
+}
+
 export function getPort(options?: ServerOptions) {
   return options?.port ?? 3000;
+}
+
+export function ensurePhotonServer<T>(newApp: T, app: T): T {
+  // biome-ignore lint/suspicious/noExplicitAny: any
+  (newApp as any)[Symbol.for("photon:server")] = (app as any)[Symbol.for("photon:server")];
+  return newApp;
 }
 
 /**
@@ -196,3 +202,4 @@ export function installServerHMR(serve: () => Server | Http2Server | Http2Secure
     import.meta.hot!.data.previousServerClosing = _installServerHMR(server);
   });
 }
+
