@@ -1,4 +1,4 @@
-import "./vite-types.js";
+import "./vite-types.d.ts";
 
 export * as api from "./api.js";
 export type { Photon } from "./types.js";

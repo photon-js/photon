@@ -1,4 +1,4 @@
-import "./vite-types.js";
+import "./vite-types.d.ts";
 
 export {
   addPhotonEntry,

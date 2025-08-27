@@ -1,7 +1,9 @@
+import "../vite-types.d.ts";
+
 import type { Plugin } from "vite";
+import type { Photon } from "../types.js";
 import { commonConfig } from "./plugins/commonConfig.js";
 import { devServer } from "./plugins/devServer.js";
-
 import { getMiddlewaresPlugin } from "./plugins/getMiddlewaresPlugin.js";
 import { type InstallPhotonBaseOptions, installPhotonBase } from "./plugins/installPhoton.js";
 import { mirrorMeta } from "./plugins/mirrorMeta.js";
@@ -9,8 +11,6 @@ import { photonEntry } from "./plugins/photonEntry.js";
 import { resolvePhotonConfigPlugin } from "./plugins/resolvePhotonConfigPlugin.js";
 import { supportedTargetServers } from "./plugins/supportedServers.js";
 import { targetLoader } from "./plugins/targetLoader.js";
-import "../vite-types.js";
-import type { Photon } from "../types.js";
 
 export { photon, installPhoton, supportedTargetServers, targetLoader, type InstallPhotonOptions, photon as default };
 
