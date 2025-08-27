@@ -44,7 +44,11 @@ function commonConfig(): Plugin[] {
 
         const defaultCondition = config.consumer === "client" ? defaultClientConditions : defaultServerConditions;
 
-        let additionalResolveConfig: { externalConditions?: string[]; conditions?: string[]; noExternal?: string } = {};
+        let additionalResolveConfig: {
+          externalConditions?: string[];
+          conditions?: string[];
+          noExternal?: string[];
+        } = {};
 
         if (isBun) {
           additionalResolveConfig = {
@@ -62,7 +66,15 @@ function commonConfig(): Plugin[] {
 
         // do not override `noExternal: true`
         if (config.resolve?.noExternal !== true) {
-          additionalResolveConfig.noExternal = "@photonjs/core";
+          additionalResolveConfig.noExternal = [
+            "@photonjs/core",
+            "@photonjs/h3",
+            "@photonjs/elysia",
+            "@photonjs/hono",
+            "@photonjs/express",
+            "@photonjs/fastify",
+            "@photonjs/hattip",
+          ];
         }
 
         return {
