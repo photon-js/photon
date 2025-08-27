@@ -1,5 +1,11 @@
 ## [0.0.3](https://github.com/photon-js/photon/compare/@photonjs/core@0.0.2...@photonjs/core@0.0.3) (2025-08-20)
 
+## 0.0.7
+
+### Patch Changes
+
+- 33c4dfe: fix: do not import types files from compiled js
+
 ## 0.0.6
 
 ### Patch Changes

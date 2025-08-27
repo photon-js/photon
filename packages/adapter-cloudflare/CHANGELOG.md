@@ -1,5 +1,12 @@
 ## 0.0.1 (2025-08-19)
 
+## 0.0.5
+
+### Patch Changes
+
+- Updated dependencies [33c4dfe]
+  - @photonjs/core@0.0.7
+
 ## 0.0.4
 
 ### Patch Changes
