@@ -9,6 +9,8 @@
     "./vite": "./dist/plugin.js",
     "./api": "./dist/api.js",
     "./dev": "./dist/dev.js",
+    "./apply": "./dist/apply.js",
+    "./serve": "./dist/serve.js",
     "./errors": "./dist/assert.js",
     ".": "./dist/index.js",
     "./virtual": {
