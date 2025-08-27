@@ -1,15 +1,12 @@
-import { defineConfig, type Options as TsupOptions } from "tsup";
+import { defineConfig, type Options as TsupOptions } from "tsdown";
 
 const commonOptions: TsupOptions = {
   format: ["esm"],
   target: "es2022",
-  esbuildOptions(opts) {
-    opts.outbase = "src";
-  },
   dts: true,
   outDir: "dist",
   treeshake: true,
-  removeNodeProtocol: false,
+  nodeProtocol: true,
   external: ["hono", /^photon:get-middlewares:/, /^@photonjs\/core/],
 };
 
