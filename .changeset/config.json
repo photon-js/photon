@@ -6,5 +6,6 @@
   "linked": [],
   "access": "public",
   "baseBranch": "main",
-  "updateInternalDependencies": "patch"
+  "updateInternalDependencies": "patch",
+  "ignore": ["awesome-framework", "app-hono-cloudflare", "app-cloudflare", "tests-app", "photonjs-docs"]
 }
