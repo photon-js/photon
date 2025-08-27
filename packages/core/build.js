@@ -36,7 +36,7 @@ await build({
   platform: "neutral",
   entry: {
     // utils
-    apply: "./src/apply/common.ts",
-    serve: "./src/serve/utils.ts",
+    apply: "./src/apply.ts",
+    serve: "./src/serve.ts",
   },
 });

@@ -15,7 +15,7 @@ import type {
 } from "node:http2";
 import type { createServer as createServerHTTPS, ServerOptions as ServerOptionsHTTPS } from "node:https";
 import type { Socket } from "node:net";
-import { assert } from "../utils/assert.js";
+import { assert } from "./utils/assert.js";
 
 export type ServerType = import("node:http").Server | Http2Server | Http2SecureServer;
 
