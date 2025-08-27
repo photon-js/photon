@@ -1,5 +1,11 @@
 ## [0.0.3](https://github.com/photon-js/photon/compare/@photonjs/core@0.0.2...@photonjs/core@0.0.3) (2025-08-20)
 
+## 0.0.5
+
+### Patch Changes
+
+- 12e246a: fix: add all servers packages to noExternal
+
 ## 0.0.4
 
 ### Patch Changes
