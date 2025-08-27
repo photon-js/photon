@@ -18,11 +18,7 @@
   },
   "scripts": {
     "dev": "tsdown --watch",
-    "build": "tsdown",
-    "release": "release-me patch",
-    "release:minor": "release-me minor",
-    "release:major": "release-me major",
-    "release:commit": "release-me commit"
+    "build": "tsdown"
   },
   "dependencies": {
     "@brillout/picocolors": "^1.0.28",
@@ -45,7 +41,6 @@
     }
   },
   "devDependencies": {
-    "@brillout/release-me": "^0.4.8",
     "@types/bun": "^1.2.20",
     "@types/deno": "^2.3.0",
     "@types/node": "^22.17.2",

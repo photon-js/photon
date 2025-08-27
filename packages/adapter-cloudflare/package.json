@@ -16,11 +16,7 @@
   },
   "scripts": {
     "dev": "tsup --watch",
-    "build": "rm -rf dist && tsup",
-    "release": "release-me patch",
-    "release:minor": "release-me minor",
-    "release:major": "release-me major",
-    "release:commit": "release-me commit"
+    "build": "rm -rf dist && tsup"
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.11.6",
@@ -28,7 +24,6 @@
     "@universal-middleware/cloudflare": "^0.4.10"
   },
   "devDependencies": {
-    "@brillout/release-me": "^0.4.8",
     "@cloudflare/workers-types": "^4.20250819.0",
     "@universal-middleware/core": "^0.4.9",
     "@universal-middleware/h3": "^0.4.12",
