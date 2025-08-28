@@ -60,8 +60,8 @@ Configure Wrangler to use your Cloudflare entry:
 ```toml
 # wrangler.toml
 name = "my-photon-app"
-main = "dist/cloudflare-entry.js"
-compatibility_date = "2024-01-01"
+main = "cloudflare-entry.ts"
+compatibility_date = "2025-08-28"
 
 [build]
 command = "npm run build"
