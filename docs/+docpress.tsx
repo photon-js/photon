@@ -21,19 +21,4 @@ const config: Config = {
 
   topNavigation: <TopNavigation />,
   navLogo: <img src={logoWithText} height={60} width={150} />,
-
-  socialLinks: [
-    {
-      name: "GitHub",
-      url: "https://github.com/photon-js/photon",
-      icon: "github"
-    }
-  ],
-
-  search: {
-    provider: "algolia",
-    appId: "your-app-id",
-    apiKey: "your-api-key",
-    indexName: "photon-docs"
-  }
 };

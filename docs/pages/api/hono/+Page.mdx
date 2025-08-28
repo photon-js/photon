@@ -1,12 +1,15 @@
-> ⚠️ **Alpha Stage**: This API is in alpha and may change before stable release.
+import { PackageInfo, InstallCommand, ApiReference, NextSteps } from '../../../components'
 
-Hono adapter for Photon, enabling ultrafast edge applications.
+<PackageInfo
+  name="@photonjs/hono"
+  description="Hono adapter for Photon, enabling ultrafast edge applications."
+  version="0.0.7"
+  status="alpha"
+  npmUrl="https://www.npmjs.com/package/@photonjs/hono"
+  githubUrl="https://github.com/photon-js/photon/tree/main/packages/hono"
+/>
 
-## Installation
-
-```bash
-npm install @photonjs/hono hono
-```
+<InstallCommand packages={["@photonjs/hono", "hono"]} />
 
 ## Basic Usage
 
@@ -359,8 +362,21 @@ Apply Photon middlewares after Hono-specific middleware.
 **Type errors:**
 Make sure TypeScript types are properly imported and configured.
 
-## Next Steps
-
-- [Deploy to Cloudflare](/guide/deploy/cloudflare)
-- [Learn about universal middleware](/guide/middleware)
-- [Explore Hono documentation](https://hono.dev)
+<NextSteps steps={[
+  {
+    title: "Deploy to Cloudflare",
+    description: "Deploy Hono apps to Cloudflare Workers",
+    url: "/guide/deploy/cloudflare"
+  },
+  {
+    title: "Universal Middleware",
+    description: "Learn about framework-agnostic middleware",
+    url: "/guide/middleware"
+  },
+  {
+    title: "Hono Documentation",
+    description: "Explore the official Hono documentation",
+    url: "https://hono.dev",
+    external: true
+  }
+]} />

@@ -11,11 +11,7 @@ import {
   iconScroll,
 } from "@brillout/docpress";
 
-const categories: Config["categories"] = [
-  "Overview",
-  "Guide",
-  "API",
-];
+const categories: Config["categories"] = ["Overview", "Guide", "API"];
 
 const headingsDetached: HeadingDetachedDefinition[] = [];
 

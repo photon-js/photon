@@ -1,4 +1,6 @@
-> ⚠️ **Alpha Stage**: Deployment adapters are in alpha. Some features may be incomplete.
+import { AlphaWarning, NextSteps } from '../../../components'
+
+<AlphaWarning message="Deployment adapters are in alpha. Some features may be incomplete." />
 
 Deploy your Photon application to any platform.
 
@@ -252,8 +254,10 @@ app.use('*', (c, next) => {
 - Check for memory leaks
 - Monitor server metrics
 
-## Next Steps
-
-- [Choose your deployment platform](/guide/deploy/cloudflare)
-- [Configure environment variables](/guide/env)
-- [Set up monitoring](/guide/advanced/performance)
+<NextSteps steps={[
+  {
+    title: "Cloudflare Deployment",
+    description: "Deploy to Cloudflare Workers and Pages",
+    url: "/guide/deploy/cloudflare"
+  }
+]} />

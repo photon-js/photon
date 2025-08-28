@@ -1,4 +1,6 @@
-> ⚠️ **Alpha Stage**: Photon is currently in alpha. APIs may change before stable release.
+import { AlphaWarning, NextSteps } from '../../components'
+
+<AlphaWarning />
 
 Complete API documentation for all Photon packages.
 
@@ -139,8 +141,20 @@ Photon respects standard environment variables:
 - `PORT` - Server port (development)
 - `HOST` - Server hostname (development)
 
-## Next Steps
-
-- [Explore core API](/api/core)
-- [Learn server adapters](/api/hono)
-- [Check deployment options](/api/cloudflare)
+<NextSteps steps={[
+  {
+    title: "Core API",
+    description: "Explore the foundation API",
+    url: "/api/core"
+  },
+  {
+    title: "Server Adapters",
+    description: "Learn about server framework integration",
+    url: "/api/hono"
+  },
+  {
+    title: "Deployment Options",
+    description: "Check deployment adapter APIs",
+    url: "/api/cloudflare"
+  }
+]} />

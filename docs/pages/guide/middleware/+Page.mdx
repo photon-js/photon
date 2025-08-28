@@ -1,4 +1,6 @@
-> ⚠️ **Alpha Stage**: Universal middleware APIs are in alpha and may change.
+import { AlphaWarning, CodeBlock, NextSteps } from '../../../components'
+
+<AlphaWarning message="Universal middleware APIs are in alpha and may change." />
 
 Universal middleware enables code that works across all server frameworks and runtimes. Photon uses [Universal Middleware](https://universal-middleware.dev) to provide framework-agnostic middleware capabilities.
 
@@ -99,8 +101,21 @@ For comprehensive documentation on universal middleware:
 - **[API Reference](https://universal-middleware.dev/api)** - Detailed API documentation
 - **[Examples](https://universal-middleware.dev/examples)** - Real-world middleware examples
 
-## Next Steps
-
-- Learn about [framework integration](/guide/framework-integration)
-- Explore [server frameworks](/guide/server-frameworks)
-- Check out the [awesome-framework example](https://github.com/photon-js/photon/tree/main/example/awesome-framework)
+<NextSteps steps={[
+  {
+    title: "Framework Integration",
+    description: "Learn how to integrate Photon into your framework",
+    url: "/guide/framework-integration"
+  },
+  {
+    title: "Server Frameworks",
+    description: "Explore different server framework options",
+    url: "/guide/server-frameworks"
+  },
+  {
+    title: "Example Integration",
+    description: "Study the awesome-framework example",
+    url: "https://github.com/photon-js/photon/tree/main/example/awesome-framework",
+    external: true
+  }
+]} />

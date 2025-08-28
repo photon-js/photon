@@ -1,12 +1,15 @@
-> ⚠️ **Alpha Stage**: This API is in alpha and may change before stable release.
+import { PackageInfo, InstallCommand, NextSteps } from '../../../components'
 
-Cloudflare Workers and Pages adapter for Photon applications.
+<PackageInfo
+  name="@photonjs/cloudflare"
+  description="Cloudflare Workers and Pages adapter for Photon applications."
+  version="0.0.7"
+  status="alpha"
+  npmUrl="https://www.npmjs.com/package/@photonjs/cloudflare"
+  githubUrl="https://github.com/photon-js/photon/tree/main/packages/cloudflare"
+/>
 
-## Installation
-
-```bash
-npm install @photonjs/cloudflare
-```
+<InstallCommand packages="@photonjs/cloudflare" />
 
 ## Exports
 
@@ -490,8 +493,21 @@ export default {
 }
 ```
 
-## Next Steps
-
-- Learn about [Cloudflare deployment](/guide/deploy/cloudflare)
-- Explore [Hono integration](/api/hono)
-- Check [Cloudflare Workers documentation](https://developers.cloudflare.com/workers/)
+<NextSteps steps={[
+  {
+    title: "Cloudflare Deployment",
+    description: "Learn about deploying to Cloudflare",
+    url: "/guide/deploy/cloudflare"
+  },
+  {
+    title: "Hono Integration",
+    description: "Explore Hono server framework integration",
+    url: "/api/hono"
+  },
+  {
+    title: "Cloudflare Workers Docs",
+    description: "Check official Cloudflare Workers documentation",
+    url: "https://developers.cloudflare.com/workers/",
+    external: true
+  }
+]} />

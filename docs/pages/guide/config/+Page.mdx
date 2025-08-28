@@ -1,4 +1,6 @@
-> ⚠️ **Alpha Stage**: Configuration APIs are in alpha and may change.
+import { AlphaWarning, CodeBlock, NextSteps } from '../../../components'
+
+<AlphaWarning message="Configuration APIs are in alpha and may change." />
 
 Configure Photon for your framework's needs.
 
@@ -437,8 +439,20 @@ export function validatePhotonConfig(config: RuntimeConfig): void {
 }
 ```
 
-## Next Steps
-
-- Learn about [framework integration](/guide/framework-integration)
-- Explore [universal middleware](/guide/middleware)
-- Check the [API reference](/api/core) for detailed options
+<NextSteps steps={[
+  {
+    title: "Framework Integration",
+    description: "Learn how to integrate Photon into your framework",
+    url: "/guide/framework-integration"
+  },
+  {
+    title: "Universal Middleware",
+    description: "Understand framework-agnostic middleware",
+    url: "/guide/middleware"
+  },
+  {
+    title: "API Reference",
+    description: "Check detailed configuration options",
+    url: "/api/core"
+  }
+]} />

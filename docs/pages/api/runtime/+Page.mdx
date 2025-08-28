@@ -1,12 +1,15 @@
-> ⚠️ **Alpha Stage**: This API is in alpha and may change before stable release.
+import { PackageInfo, InstallCommand, ApiReference, NextSteps } from '../../../components'
 
-The runtime package provides convenience functions for framework developers to integrate Photon.
+<PackageInfo
+  name="@photonjs/runtime"
+  description="The runtime package provides convenience functions for framework developers to integrate Photon."
+  version="0.0.7"
+  status="alpha"
+  npmUrl="https://www.npmjs.com/package/@photonjs/runtime"
+  githubUrl="https://github.com/photon-js/photon/tree/main/packages/runtime"
+/>
 
-## Installation
-
-```bash
-npm install @photonjs/runtime
-```
+<InstallCommand packages="@photonjs/runtime" />
 
 ## Exports
 
@@ -433,8 +436,20 @@ export default {
 }
 ```
 
-## Next Steps
-
-- Learn about [framework integration](/guide/framework-integration)
-- Explore [universal middleware](/guide/middleware)
-- Check the [core API](/api/core) for lower-level functions
+<NextSteps steps={[
+  {
+    title: "Framework Integration",
+    description: "Learn how to integrate Photon into your framework",
+    url: "/guide/framework-integration"
+  },
+  {
+    title: "Universal Middleware",
+    description: "Understand framework-agnostic middleware",
+    url: "/guide/middleware"
+  },
+  {
+    title: "Core API",
+    description: "Check lower-level functions and utilities",
+    url: "/api/core"
+  }
+]} />

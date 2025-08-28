@@ -1,4 +1,6 @@
-> ⚠️ **Alpha Stage**: Server adapters are in alpha. Some features may be incomplete.
+import { AlphaWarning, FrameworkComparison } from '../../../components'
+
+<AlphaWarning message="Server adapters are in alpha. Some features may be incomplete." />
 
 Photon works with any server framework. Choose the one that fits your needs or the needs of your framework's users.
 
@@ -163,32 +165,9 @@ export default {
 }
 ```
 
-## Choosing a Framework
+## Framework Comparison
 
-Consider these factors:
-
-### Performance
-1. **Hono** - Fastest, especially on edge runtimes
-2. **Fastify** - High performance on Node.js
-3. **Elysia** - Optimized for Bun
-4. **Express** - Good performance, mature optimizations
-
-### Ecosystem
-1. **Express** - Largest ecosystem
-2. **Fastify** - Rich plugin system
-3. **Hono** - Growing ecosystem
-4. **H3** - Nuxt ecosystem integration
-
-### Runtime Support
-- **Universal**: Hono, H3, HatTip
-- **Node.js focused**: Express, Fastify
-- **Bun optimized**: Elysia
-- **Edge optimized**: Hono, H3
-
-### Learning Curve
-- **Easiest**: Express (familiar), H3 (simple)
-- **Moderate**: Fastify, Hono
-- **Advanced**: Elysia (type system), HatTip (Web Standards)
+<FrameworkComparison />
 
 ## Migration
 

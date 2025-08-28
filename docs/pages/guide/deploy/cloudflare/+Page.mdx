@@ -1,4 +1,6 @@
-> ⚠️ **Alpha Stage**: Cloudflare adapter is in alpha. Some features may be incomplete.
+import { AlphaWarning, InstallCommand, NextSteps } from '../../../../components'
+
+<AlphaWarning message="Cloudflare adapter is in alpha. Some features may be incomplete." />
 
 Deploy your Photon application to Cloudflare Workers and Pages.
 
@@ -14,11 +16,7 @@ wrangler login
 
 ## Installation
 
-Install the Cloudflare adapter:
-
-```bash
-npm install @photonjs/cloudflare
-```
+<InstallCommand packages="@photonjs/cloudflare" title="Install the Cloudflare adapter:" />
 
 ## Configuration
 

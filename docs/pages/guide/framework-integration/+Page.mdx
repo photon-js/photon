@@ -1,4 +1,6 @@
-> ⚠️ **Alpha Stage**: Framework integration APIs are in alpha and may change.
+import { AlphaWarning, InstallCommand, CodeBlock, ExampleCard, NextSteps } from '../../../components'
+
+<AlphaWarning message="Framework integration APIs are in alpha and may change." />
 
 Learn how to integrate Photon into your Vite-based framework to enable universal server capabilities.
 
@@ -10,9 +12,7 @@ Photon enables frameworks to work universally across server runtimes and deploym
 
 ### 1. Install Dependencies
 
-```bash
-npm install @photonjs/runtime @universal-middleware/core
-```
+<InstallCommand packages={["@photonjs/runtime", "@universal-middleware/core"]} />
 
 ### 2. Create Photon Plugin
 
@@ -324,8 +324,23 @@ async function testMiddleware(serverAdapter: string) {
 - Check Vite configuration for proper bundling
 - Verify TypeScript configuration includes all source files
 
-## Next Steps
-
-- Study the [awesome-framework example](https://github.com/photon-js/photon/tree/main/example/awesome-framework)
-- Explore [Vike's integration](https://github.com/vikejs/vike-server/tree/magne4000/dev) for advanced patterns
-- Ask questions in [GitHub Discussions](https://github.com/photon-js/photon/discussions) for integration support
+<NextSteps steps={[
+  {
+    title: "Awesome Framework Example",
+    description: "Study the minimal integration example",
+    url: "https://github.com/photon-js/photon/tree/main/example/awesome-framework",
+    external: true
+  },
+  {
+    title: "Vike Integration",
+    description: "Explore advanced integration patterns",
+    url: "https://github.com/vikejs/vike-server/tree/magne4000/dev",
+    external: true
+  },
+  {
+    title: "Get Support",
+    description: "Ask questions and get integration help",
+    url: "https://github.com/photon-js/photon/discussions",
+    external: true
+  }
+]} />

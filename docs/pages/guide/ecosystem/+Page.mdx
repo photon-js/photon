@@ -1,4 +1,6 @@
-> ⚠️ **Alpha Stage**: The Photon ecosystem is growing as the project matures.
+import { AlphaWarning, InstallCommand, NextSteps } from '../../../components'
+
+<AlphaWarning message="The Photon ecosystem is growing as the project matures." />
 
 Discover frameworks and tools built with Photon.
 
@@ -116,8 +118,22 @@ Built a framework with Photon? We'd love to feature it!
 
 TODO
 
-## Next Steps
-
-- [Try Vike](https://vike.dev) - Experience Photon through a complete framework
-- [Build your own framework](/guide/concepts) - Learn how to create frameworks with Photon
-- [Join the community](https://github.com/photon-js/photon/discussions) - Connect with other developers
+<NextSteps steps={[
+  {
+    title: "Try Vike",
+    description: "Experience Photon through a complete framework",
+    url: "https://vike.dev",
+    external: true
+  },
+  {
+    title: "Build Your Framework",
+    description: "Learn how to create frameworks with Photon",
+    url: "/guide/concepts"
+  },
+  {
+    title: "Join Community",
+    description: "Connect with other developers",
+    url: "https://github.com/photon-js/photon/discussions",
+    external: true
+  }
+]} />

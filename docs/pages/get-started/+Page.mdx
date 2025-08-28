@@ -1,4 +1,6 @@
-> ⚠️ **Alpha Stage**: Photon is currently in alpha. APIs may change before stable release.
+import { AlphaWarning, InstallCommand, NextSteps, Tabs } from '../../components'
+
+<AlphaWarning />
 
 Photon is a next-generation server toolkit designed for **library and framework developers** who need universal server capabilities.
 
@@ -15,17 +17,27 @@ If you're looking to build a simple web app, consider using frameworks built wit
 
 ## Installation
 
-Install Photon core and choose a server adapter:
+<InstallCommand packages="@photonjs/core" title="Install Photon core:" />
 
-```bash
-# Core package
-npm install @photonjs/core
+Choose a server adapter:
 
-# Choose a server adapter
-npm install @photonjs/hono        # Recommended for edge runtimes
-npm install @photonjs/express     # For Node.js applications
-npm install @photonjs/fastify     # For high-performance apps
-```
+<Tabs tabs={[
+  {
+    id: 'hono',
+    label: 'Hono (Recommended)',
+    content: <InstallCommand packages="@photonjs/hono" />
+  },
+  {
+    id: 'express',
+    label: 'Express',
+    content: <InstallCommand packages="@photonjs/express" />
+  },
+  {
+    id: 'fastify',
+    label: 'Fastify',
+    content: <InstallCommand packages="@photonjs/fastify" />
+  }
+]} />
 
 ### Basic Configuration
 
@@ -122,16 +134,39 @@ If you're building a framework with Photon, consider:
 3. **Type safety** - Leverage Photon's TypeScript support
 4. **Documentation** - Help your users understand deployment options
 
-## What's Next?
-
-- [Learn the core concepts](/guide/concepts)
-- [Understand server frameworks](/guide/server-frameworks)
-- [Explore deployment options](/guide/deploy)
-- [Check out examples](https://github.com/photon-js/photon/tree/main/example)
-
-## Need Help?
-
-- [Common Issues](/guide/troubleshooting)
-- [GitHub Discussions](https://github.com/photon-js/photon/discussions)
+<NextSteps steps={[
+  {
+    title: "Learn Core Concepts",
+    description: "Understand Photon's philosophy and architecture",
+    url: "/guide/concepts"
+  },
+  {
+    title: "Framework Integration",
+    description: "Learn how to integrate Photon into your framework",
+    url: "/guide/framework-integration"
+  },
+  {
+    title: "Server Frameworks",
+    description: "Choose the right server framework for your needs",
+    url: "/guide/server-frameworks"
+  },
+  {
+    title: "Deployment Options",
+    description: "Deploy your framework users' apps anywhere",
+    url: "/guide/deploy"
+  },
+  {
+    title: "Examples",
+    description: "Study real-world integration examples",
+    url: "https://github.com/photon-js/photon/tree/main/example",
+    external: true
+  },
+  {
+    title: "Get Help",
+    description: "Ask questions and get support from the community",
+    url: "https://github.com/photon-js/photon/discussions",
+    external: true
+  }
+]} />
 
 > **Note**: As Photon is in alpha, expect API changes and potential breaking updates. Follow the GitHub repository for the latest developments.

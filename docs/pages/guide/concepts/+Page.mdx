@@ -1,4 +1,6 @@
-> ⚠️ **Alpha Stage**: Photon is currently in alpha. APIs may change before stable release.
+import { AlphaWarning, FeatureGrid, ExampleCard, NextSteps } from '../../../components'
+
+<AlphaWarning />
 
 Photon is a next-generation server toolkit designed primarily for **library and framework developers** who need universal server capabilities.
 
@@ -157,8 +159,20 @@ Frameworks using Photon benefit from:
 - **Server flexibility** - Choose the best server framework for each use case
 - **Future-proof architecture** - Adapt to new runtimes and platforms easily
 
-## Next Steps
-
-- [Choose your server framework](/guide/server-frameworks)
-- [Learn about universal middleware](/guide/middleware)
-- [Explore deployment options](/guide/deploy)
+<NextSteps steps={[
+  {
+    title: "Server Frameworks",
+    description: "Choose the right server framework for your needs",
+    url: "/guide/server-frameworks"
+  },
+  {
+    title: "Universal Middleware",
+    description: "Learn about framework-agnostic middleware",
+    url: "/guide/middleware"
+  },
+  {
+    title: "Deployment Options",
+    description: "Explore universal deployment capabilities",
+    url: "/guide/deploy"
+  }
+]} />
