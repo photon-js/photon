@@ -74,12 +74,12 @@ const headings: HeadingDefinition[] = [
     title: "Deployment",
   },
   {
-    level: 3,
+    level: 2,
     title: "Overview",
     url: "/guide/deploy",
   },
   {
-    level: 3,
+    level: 2,
     title: "Cloudflare",
     url: "/guide/deploy/cloudflare",
   },

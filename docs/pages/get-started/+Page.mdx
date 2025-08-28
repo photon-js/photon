@@ -24,7 +24,7 @@ Choose a server adapter:
 <Tabs tabs={[
   {
     id: 'hono',
-    label: 'Hono (Recommended)',
+    label: 'Hono',
     content: <InstallCommand packages="@photonjs/hono" />
   },
   {
@@ -33,9 +33,24 @@ Choose a server adapter:
     content: <InstallCommand packages="@photonjs/express" />
   },
   {
+    id: 'h3',
+    label: 'H3',
+    content: <InstallCommand packages="@photonjs/h3" />
+  },
+  {
     id: 'fastify',
     label: 'Fastify',
     content: <InstallCommand packages="@photonjs/fastify" />
+  },
+  {
+    id: 'elysia',
+    label: 'Elysia',
+    content: <InstallCommand packages="@photonjs/elysia" />
+  },
+  {
+    id: 'hattip',
+    label: 'HatTip',
+    content: <InstallCommand packages="@photonjs/hattip" />
   }
 ]} />
 
@@ -58,7 +73,7 @@ export default {
 
 Choose your preferred server framework. This example shows how to create a universal server that works across runtimes:
 
-#### With Hono (Recommended)
+#### With Hono
 
 ```ts
 // src/server.ts

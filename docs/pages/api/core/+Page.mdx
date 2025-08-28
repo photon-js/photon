@@ -27,19 +27,21 @@ export default {
 
 ### `./api`
 
+TODO
+
 Core API functions for managing entries and configuration.
 
 ```ts
-import { api } from '@photonjs/core'
+import { addPhotonEntry, updatePhotonEntry, getPhotonServerIdWithEntry } from '@photonjs/core/api'
 
 // Add a new entry
-api.addPhotonEntry(entry)
+addPhotonEntry(entry)
 
 // Update an existing entry
-api.updatePhotonEntry(id, updates)
+updatePhotonEntry(id, updates)
 
 // Get server ID with entry
-api.getPhotonServerIdWithEntry(entryId)
+getPhotonServerIdWithEntry(entryId)
 ```
 
 ### `./errors`

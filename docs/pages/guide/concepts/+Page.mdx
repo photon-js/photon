@@ -1,4 +1,4 @@
-import { AlphaWarning, FeatureGrid, ExampleCard, NextSteps } from '../../../components'
+import { AlphaWarning, NextSteps } from '../../../components'
 
 <AlphaWarning />
 
@@ -91,30 +91,16 @@ const authMiddleware = createUniversalMiddleware((context) => {
 })
 ```
 
-### Type Safety
-
-Full TypeScript support with intelligent inference:
-
-```ts
-// Automatic type inference across the stack
-const config = photon({
-  server: './src/server.ts', // Types inferred
-  entries: {
-    'api/users': './src/api/users.ts' // Route types generated
-  }
-})
-```
-
 ## Comparison
 
-| Feature | Photon | Nitro | Next.js |
-|---------|--------|-------|---------|
-| Server Framework | Any | H3 only | Built-in |
-| Deployment Targets | Universal | Universal | Vercel-focused |
-| Architecture | Modular | Monolithic | Monolithic |
-| Framework Lock-in | None | Minimal | High |
-| Edge Runtime | ✅ | ✅ | ✅ |
-| Code Splitting | ✅ | ❌ | ✅ |
+| Feature            | Photon    | Nitro      | Next.js        |
+|--------------------|-----------|------------|----------------|
+| Server Framework   | Any       | H3 only    | Built-in       |
+| Deployment Targets | Universal | Universal  | Vercel-focused |
+| Architecture       | Modular   | Monolithic | Monolithic     |
+| Framework Lock-in  | None      | Minimal    | High           |
+| Edge Runtime       | ✅         | ✅          | ✅              |
+| Code Splitting     | ✅         | ✅          | ✅              |
 
 ## When to Use Photon
 
