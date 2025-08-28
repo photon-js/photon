@@ -1,0 +1,382 @@
+import { PackageInfo, InstallCommand, ApiReference, NextSteps } from '../../../components'
+
+<PackageInfo
+  name="@photonjs/hono"
+  description="Hono adapter for Photon, enabling ultrafast edge applications."
+  version="0.0.7"
+  status="alpha"
+  npmUrl="https://www.npmjs.com/package/@photonjs/hono"
+  githubUrl="https://github.com/photon-js/photon/tree/main/packages/hono"
+/>
+
+<InstallCommand packages={["@photonjs/hono", "hono"]} />
+
+## Basic Usage
+
+```ts
+import { Hono } from 'hono'
+import { apply, serve } from '@photonjs/hono'
+
+const app = new Hono()
+
+app.get('/', (c) => c.text('Hello Hono!'))
+app.get('/api/users', (c) => c.json({ users: ['Alice', 'Bob'] }))
+
+apply(app)
+export default serve(app)
+```
+
+## API Reference
+
+### `apply(app, middlewares?)`
+
+Apply Photon middlewares to a Hono app.
+
+```ts
+function apply<T extends Hono>(
+  app: T, 
+  middlewares?: UniversalMiddleware[]
+): T
+```
+
+**Parameters:**
+- `app` - Hono application instance
+- `middlewares` - Optional additional universal middlewares
+
+**Returns:** The same Hono app instance
+
+**Example:**
+```ts
+import { apply } from '@photonjs/hono'
+import customMiddleware from './middleware'
+
+apply(app, [customMiddleware])
+```
+
+### `serve(app, options?)`
+
+Start the Hono server with HMR support.
+
+```ts
+function serve<T extends Hono>(
+  app: T,
+  options?: ServerOptions
+): T
+```
+
+**Parameters:**
+- `app` - Hono application instance  
+- `options` - Optional server configuration
+
+**Returns:** The Hono app instance
+
+**Example:**
+```ts
+import { serve } from '@photonjs/hono'
+
+serve(app, {
+  port: 3000,
+  hostname: 'localhost'
+})
+```
+
+## Server Options
+
+```ts
+interface ServerOptions {
+  port?: number
+  hostname?: string
+  serverOptions?: ServeOptions
+  overrideGlobalObjects?: boolean
+  onCreate?: (server: Server) => void
+}
+```
+
+**Properties:**
+- `port` - Server port (default: 3000)
+- `hostname` - Server hostname (default: 'localhost')
+- `serverOptions` - Hono-specific serve options
+- `overrideGlobalObjects` - Override global objects for Node.js compatibility
+- `onCreate` - Callback when server is created
+
+## Multi-Runtime Support
+
+Hono works across all JavaScript runtimes:
+
+### Node.js
+
+```ts
+// Works out of the box
+export default serve(app)
+```
+
+### Cloudflare Workers
+
+```ts
+// Same code works on Cloudflare
+import { Hono } from 'hono'
+import { apply, serve } from '@photonjs/hono'
+
+const app = new Hono()
+apply(app)
+export default serve(app)
+```
+
+### Deno
+
+```ts
+// Compatible with Deno runtime
+import { Hono } from 'hono'
+import { apply, serve } from '@photonjs/hono'
+
+const app = new Hono()
+apply(app)
+export default serve(app)
+```
+
+### Bun
+
+```ts
+// Optimized for Bun
+import { Hono } from 'hono'
+import { apply, serve } from '@photonjs/hono'
+
+const app = new Hono()
+apply(app)
+export default serve(app)
+```
+
+## Middleware Integration
+
+### Hono Middleware
+
+Use Hono's built-in middleware:
+
+```ts
+import { Hono } from 'hono'
+import { cors } from 'hono/cors'
+import { logger } from 'hono/logger'
+
+const app = new Hono()
+
+app.use('*', logger())
+app.use('*', cors())
+
+// Apply Photon middlewares after Hono middleware
+apply(app)
+```
+
+### Universal Middleware
+
+Combine with universal middleware:
+
+```ts
+import { apply } from '@photonjs/hono'
+import authMiddleware from './auth'
+
+apply(app, [authMiddleware])
+```
+
+## Advanced Usage
+
+### Custom Context
+
+Extend Hono's context:
+
+```ts
+type Env = {
+  Variables: {
+    user: { id: string; name: string }
+  }
+}
+
+const app = new Hono<Env>()
+
+app.use('*', async (c, next) => {
+  c.set('user', { id: '1', name: 'Alice' })
+  await next()
+})
+
+app.get('/profile', (c) => {
+  const user = c.get('user') // Fully typed
+  return c.json(user)
+})
+```
+
+### Error Handling
+
+Handle errors globally:
+
+```ts
+app.onError((err, c) => {
+  console.error(err)
+  return c.text('Internal Server Error', 500)
+})
+
+// Apply Photon middlewares after error handlers
+apply(app)
+```
+
+### WebSocket Support
+
+Add WebSocket support:
+
+```ts
+import { upgradeWebSocket } from 'hono/ws'
+
+app.get('/ws', upgradeWebSocket((c) => {
+  return {
+    onMessage: (event, ws) => {
+      ws.send(`Echo: ${event.data}`)
+    }
+  }
+}))
+```
+
+## Performance
+
+Hono is designed for maximum performance:
+
+- **Zero dependencies** in core
+- **Tree-shakable** - only bundle what you use
+- **Fast routing** with optimized trie-based router
+- **Minimal overhead** for edge runtimes
+
+## Examples
+
+### API Server
+
+```ts
+import { Hono } from 'hono'
+import { apply, serve } from '@photonjs/hono'
+
+const app = new Hono()
+
+app.get('/api/users', (c) => {
+  return c.json([
+    { id: 1, name: 'Alice' },
+    { id: 2, name: 'Bob' }
+  ])
+})
+
+app.post('/api/users', async (c) => {
+  const user = await c.req.json()
+  // Save user logic
+  return c.json({ id: 3, ...user }, 201)
+})
+
+apply(app)
+export default serve(app)
+```
+
+### Static Files
+
+```ts
+import { serveStatic } from 'hono/serve-static'
+
+app.use('/static/*', serveStatic({ root: './public' }))
+```
+
+### Authentication
+
+```ts
+import { jwt } from 'hono/jwt'
+
+app.use('/api/protected/*', jwt({
+  secret: 'your-secret-key'
+}))
+
+app.get('/api/protected/profile', (c) => {
+  const payload = c.get('jwtPayload')
+  return c.json({ user: payload.sub })
+})
+```
+
+## TypeScript
+
+Full TypeScript support with type inference:
+
+```ts
+import type { Context } from 'hono'
+
+// Type-safe route handlers
+app.get('/api/users/:id', (c: Context) => {
+  const id = c.req.param('id') // string
+  return c.json({ id: parseInt(id) })
+})
+
+// Custom types
+type User = {
+  id: number
+  name: string
+}
+
+app.get('/api/users', (c): Promise<Response> => {
+  const users: User[] = [
+    { id: 1, name: 'Alice' }
+  ]
+  return c.json(users)
+})
+```
+
+## Migration
+
+### From Express
+
+```ts
+// Before (Express)
+app.get('/users/:id', (req, res) => {
+  res.json({ id: req.params.id })
+})
+
+// After (Hono)
+app.get('/users/:id', (c) => {
+  return c.json({ id: c.req.param('id') })
+})
+```
+
+### From Fastify
+
+```ts
+// Before (Fastify)
+app.get('/users/:id', async (request, reply) => {
+  return { id: request.params.id }
+})
+
+// After (Hono)
+app.get('/users/:id', (c) => {
+  return c.json({ id: c.req.param('id') })
+})
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**Runtime compatibility:**
+Ensure you're using compatible APIs for your target runtime.
+
+**Middleware order:**
+Apply Photon middlewares after Hono-specific middleware.
+
+**Type errors:**
+Make sure TypeScript types are properly imported and configured.
+
+<NextSteps steps={[
+  {
+    title: "Deploy to Cloudflare",
+    description: "Deploy Hono apps to Cloudflare Workers",
+    url: "/guide/deploy/cloudflare"
+  },
+  {
+    title: "Universal Middleware",
+    description: "Learn about framework-agnostic middleware",
+    url: "/guide/middleware"
+  },
+  {
+    title: "Hono Documentation",
+    description: "Explore the official Hono documentation",
+    url: "https://hono.dev",
+    external: true
+  }
+]} />

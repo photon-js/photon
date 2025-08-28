@@ -1,0 +1,192 @@
+import { AlphaWarning, FrameworkComparison } from '../../../components'
+
+<AlphaWarning message="Server adapters are in alpha. Some features may be incomplete." />
+
+Photon works with any server framework. Choose the one that fits your needs or the needs of your framework's users.
+
+## Hono (Recommended)
+
+Ultrafast web framework designed for edge runtimes.
+
+```bash
+npm install @photonjs/hono hono
+```
+
+```ts
+import { Hono } from 'hono'
+import { apply, serve } from '@photonjs/hono'
+
+const app = new Hono()
+app.get('/', (c) => c.text('Hello!'))
+
+apply(app)
+export default serve(app)
+```
+
+**Best for:**
+- Edge deployments (Cloudflare, Deno, Bun)
+- High performance applications
+- Modern TypeScript projects
+
+## Express
+
+The most popular Node.js web framework.
+
+```bash
+npm install @photonjs/express express
+```
+
+```ts
+import express from 'express'
+import { apply, serve } from '@photonjs/express'
+
+const app = express()
+app.get('/', (req, res) => res.send('Hello!'))
+
+apply(app)
+export default serve(app)
+```
+
+**Best for:**
+- Existing Express applications
+- Large ecosystem of middleware
+- Traditional Node.js deployments
+
+## Fastify
+
+High-performance web framework with schema validation.
+
+```bash
+npm install @photonjs/fastify fastify
+```
+
+```ts
+import Fastify from 'fastify'
+import { apply, serve } from '@photonjs/fastify'
+
+const app = Fastify()
+app.get('/', async () => ({ message: 'Hello!' }))
+
+apply(app)
+export default serve(app)
+```
+
+**Best for:**
+- Performance-critical applications
+- Schema validation requirements
+- Plugin-based architecture
+
+## Elysia
+
+Bun-optimized framework with end-to-end type safety.
+
+```bash
+bun add @photonjs/elysia elysia
+```
+
+```ts
+import { Elysia } from 'elysia'
+import { apply, serve } from '@photonjs/elysia'
+
+const app = new Elysia()
+app.get('/', () => 'Hello!')
+
+apply(app)
+export default serve(app)
+```
+
+**Best for:**
+- Bun runtime
+- Type-safe APIs
+- Modern development experience
+
+## H3
+
+Minimal and modern web framework.
+
+```bash
+npm install @photonjs/h3 h3
+```
+
+```ts
+import { createApp, defineEventHandler } from 'h3'
+import { apply, serve } from '@photonjs/h3'
+
+const app = createApp()
+app.use('/', defineEventHandler(() => 'Hello!'))
+
+apply(app)
+export default serve(app)
+```
+
+**Best for:**
+- Serverless deployments
+- Minimal overhead
+- Universal compatibility
+
+## HatTip
+
+Universal web framework built on Web Standards.
+
+```bash
+npm install @photonjs/hattip @hattip/core
+```
+
+```ts
+import { createRouter } from '@hattip/router'
+import { apply, serve } from '@photonjs/hattip'
+
+const router = createRouter()
+router.get('/', () => new Response('Hello!'))
+
+apply(router)
+export default serve(router)
+```
+
+**Best for:**
+- Web Standards compliance
+- Multi-runtime compatibility
+- Future-proof applications
+
+## Runtime Package
+
+For quick prototyping, use the runtime package with automatic fallback:
+
+```bash
+npm install @photonjs/runtime
+```
+
+```ts
+// vite.config.ts
+import { photon } from '@photonjs/runtime/vite'
+
+export default {
+  plugins: [photon()] // Automatically creates Hono server
+}
+```
+
+## Framework Comparison
+
+<FrameworkComparison />
+
+## Migration
+
+Photon makes it easy to migrate between frameworks:
+
+```ts
+// Before: Express
+import express from 'express'
+import { apply, serve } from '@photonjs/express'
+
+// After: Hono
+import { Hono } from 'hono'
+import { apply, serve } from '@photonjs/hono'
+```
+
+The `apply()` and `serve()` functions work the same way across all frameworks.
+
+## Next Steps
+
+- [Learn about universal middleware](/guide/middleware)
+- [Configure your project](/guide/config)
+- [Deploy your application](/guide/deploy)

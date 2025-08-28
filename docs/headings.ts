@@ -11,27 +11,16 @@ import {
   iconScroll,
 } from "@brillout/docpress";
 
-const categories: Config["categories"] = [
-  //
-  "Guides",
-  "Overview",
-  { name: "Guides 2", hide: true },
-];
+const categories: Config["categories"] = ["Overview", "Guide", "API"];
 
-const headingsDetached: HeadingDetachedDefinition[] = [
-  {
-    title: "Orphan Page",
-    url: "/orphan",
-    category: "Guides 2",
-  },
-];
+const headingsDetached: HeadingDetachedDefinition[] = [];
 
 const headings: HeadingDefinition[] = [
   {
     level: 1,
     title: "Overview",
     titleIcon: iconCompass,
-    color: "#dfa727",
+    color: "#646cff",
   },
   {
     level: 2,
@@ -42,42 +31,95 @@ const headings: HeadingDefinition[] = [
   {
     level: 2,
     title: "Get Started",
-    url: "/start",
+    url: "/get-started",
   },
   {
     level: 1,
-    title: "Guides",
+    title: "Guide",
     titleIcon: iconScroll,
-    color: "#fbe046",
+    color: "#42b883",
   },
   {
     level: 2,
-    title: "Some Page",
-    url: "/some-page",
+    title: "What is Photon?",
+    url: "/guide/concepts",
+  },
+  {
+    level: 2,
+    title: "Framework Integration",
+    url: "/guide/framework-integration",
+  },
+  {
+    level: 2,
+    title: "Server Frameworks",
+    url: "/guide/server-frameworks",
+  },
+  {
+    level: 2,
+    title: "Universal Middleware",
+    url: "/guide/middleware",
+  },
+  {
+    level: 2,
+    title: "Configuration",
+    url: "/guide/config",
+  },
+  {
+    level: 2,
+    title: "Ecosystem",
+    url: "/guide/ecosystem",
+  },
+  {
+    level: 4,
+    title: "Deployment",
+  },
+  {
+    level: 2,
+    title: "Overview",
+    url: "/guide/deploy",
+  },
+  {
+    level: 2,
+    title: "Cloudflare",
+    url: "/guide/deploy/cloudflare",
   },
   {
     level: 1,
     title: "API",
     titleIcon: iconGear,
-    color: "#80c1db",
+    color: "#f59e0b",
     menuModalFullWidth: true,
   },
   {
     level: 4,
-    title: "Category 1",
+    title: "Core",
   },
   {
     level: 2,
-    title: "`Page 1`",
-    url: "/page-1",
+    title: "@photonjs/core",
+    url: "/api/core",
+  },
+  {
+    level: 2,
+    title: "@photonjs/runtime",
+    url: "/api/runtime",
   },
   {
     level: 4,
-    title: "Category 2",
+    title: "Server Adapters",
   },
   {
     level: 2,
-    title: "`Page 2`",
-    url: "/page-2",
+    title: "@photonjs/hono",
+    url: "/api/hono",
+  },
+  {
+    level: 4,
+    title: "Deployment Adapters",
+  },
+  {
+    level: 2,
+    title: "@photonjs/cloudflare",
+    url: "/api/cloudflare",
   },
 ];

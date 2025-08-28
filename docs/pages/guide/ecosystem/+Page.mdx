@@ -1,0 +1,120 @@
+import { AlphaWarning, NextSteps } from '../../../components'
+
+<AlphaWarning message="The Photon ecosystem is growing as the project matures." />
+
+Discover frameworks and tools built with Photon.
+
+## Frameworks
+
+### Vike
+
+**[Vike](https://vike.dev)** is a fast Vite-based framework that uses Photon under the hood.
+
+**Features:**
+- **Flexible architecture** - Choose your own view library (React, Vue, Solid, etc.)
+- **Universal deployment** - Deploy to any platform thanks to Photon
+- **Fast development** - Vite-powered with instant HMR
+- **Server flexibility** - Works with any server framework
+
+**Getting Started:**
+```bash
+npm create vike@latest my-app
+cd my-app
+npm run dev
+```
+
+**Why Vike uses Photon:**
+- Universal deployment without vendor lock-in
+- Server framework flexibility for different use cases
+- Future-proof architecture that adapts to new runtimes
+
+### More Frameworks Coming Soon
+
+The Photon ecosystem is growing. Framework developers are building on Photon to provide:
+- **Universal deployment** capabilities
+- **Server framework flexibility**
+- **Multi-runtime support**
+- **Future-proof architecture**
+
+## Tools and Libraries
+
+### Deployment Adapters
+
+Running on Node/Bun/Deno is supported out-of-the-box. Additional deployment targets require platform-specific adapters:
+
+- **@photonjs/cloudflare** - Deploy to Cloudflare Workers and Pages
+- **@photonjs/vercel** *(Coming Soon)* - Deploy to Vercel
+- **@photonjs/netlify** *(Coming Soon)* - Deploy to Netlify
+
+### Server Adapters
+
+- **@photonjs/hono** - Hono framework integration
+- **@photonjs/express** - Express.js integration
+- **@photonjs/fastify** - Fastify integration
+- **@photonjs/elysia** - Elysia integration
+- **@photonjs/h3** - H3 integration
+- **@photonjs/hattip** - HatTip integration
+
+## Community
+
+### Contributing to the Ecosystem
+
+Help grow the Photon ecosystem:
+
+**For Framework Developers:**
+- Build frameworks that leverage Photon's universal capabilities
+- Share your framework with the community
+- Contribute to Photon's core development
+
+**For Library Authors:**
+- Create universal middleware that works across all server frameworks
+- Build deployment adapters for new platforms
+- Develop developer tools and utilities
+
+**For Users:**
+- Try frameworks built with Photon like Vike
+- Provide feedback to framework and library authors
+- Share your experience with the community
+
+### Getting Involved
+
+- **[GitHub](https://github.com/photon-js/photon)** - Contribute to Photon core
+- **[GitHub Discussions](https://github.com/photon-js/photon/discussions)** - Ask questions and share ideas
+
+## Showcase Your Framework
+
+Built a framework with Photon? We'd love to feature it!
+
+**Requirements:**
+- Uses Photon for universal server capabilities
+- Provides clear documentation and examples
+- Actively maintained and stable
+
+**How to Submit:**
+1. Open an issue on the [Photon GitHub repository](https://github.com/photon-js/photon)
+2. Include framework details, features, and links
+3. Provide examples of Photon integration
+
+## Roadmap
+
+TODO
+
+<NextSteps steps={[
+  {
+    title: "Try Vike",
+    description: "Experience Photon through a complete framework",
+    url: "https://vike.dev",
+    external: true
+  },
+  {
+    title: "Build Your Framework",
+    description: "Learn how to create frameworks with Photon",
+    url: "/guide/concepts"
+  },
+  {
+    title: "Join Community",
+    description: "Connect with other developers",
+    url: "https://github.com/photon-js/photon/discussions",
+    external: true
+  }
+]} />

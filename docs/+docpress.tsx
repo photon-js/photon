@@ -8,9 +8,9 @@ import { TopNavigation } from "./TopNavigation";
 
 const config: Config = {
   name: "Photon",
-  version: "0.0.0",
+  version: "0.0.7",
   url: "photonjs.dev",
-  tagline: "Any server, deployed anywhere.",
+  tagline: "Next generation server toolkit",
   logo,
 
   github: "https://github.com/photon-js/photon",

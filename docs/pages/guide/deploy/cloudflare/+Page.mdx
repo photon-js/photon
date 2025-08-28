@@ -1,0 +1,133 @@
+import { AlphaWarning, InstallCommand } from '../../../../components'
+
+<AlphaWarning message="Cloudflare adapter is in alpha. Some features may be incomplete." />
+
+Deploy your Photon application to Cloudflare Workers and Pages.
+
+## Prerequisites
+
+- [Cloudflare account](https://dash.cloudflare.com/sign-up)
+- [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/install-and-update/)
+
+```bash
+npm install -g wrangler
+wrangler login
+```
+
+## Installation
+
+<InstallCommand packages="@photonjs/cloudflare" title="Install the Cloudflare adapter:" />
+
+## Configuration
+
+### Vite Configuration
+
+Add the Cloudflare adapter to your Vite config:
+
+```ts
+// vite.config.ts
+import { photon } from '@photonjs/core/vite'
+import { cloudflare } from '@photonjs/cloudflare/vite'
+
+export default {
+  plugins: [
+    photon({
+      server: './src/server.ts'
+    }),
+    cloudflare()
+  ]
+}
+```
+
+### Wrangler Configuration
+
+Create a `wrangler.toml` file:
+
+```toml
+name = "my-photon-app"
+main = "cloudflare-entry.ts"
+compatibility_date = "2025-08-28"
+
+[build]
+command = "npm run build"
+
+[[kv_namespaces]]
+binding = "MY_KV"
+id = "your-kv-namespace-id"
+
+[vars]
+ENVIRONMENT = "production"
+```
+
+### Cloudflare Entry
+
+Create a Cloudflare entry file:
+
+```ts
+// cloudflare-entry.ts
+import handler from 'photon:cloudflare-entry'
+
+export default handler
+```
+
+## Server Setup
+
+### With Hono (Recommended)
+
+```ts
+// src/server.ts
+import { Hono } from 'hono'
+import { apply, serve } from '@photonjs/hono'
+
+const app = new Hono()
+// Apply Photon middlewares
+apply(app)
+
+app.get('/', (c) => c.text('Hello from Cloudflare!'))
+
+app.get('/api/env', (c) => {
+  // Access Cloudflare environment
+  return c.json({
+    environment: c.env.ENVIRONMENT,
+    cf: c.req.cf
+  })
+})
+
+export default serve(app)
+```
+
+### With H3
+
+```ts
+// src/server.ts
+import { createApp, defineEventHandler } from 'h3'
+import { apply, serve } from '@photonjs/h3'
+
+const app = createApp()
+// Apply Photon middlewares
+apply(app)
+
+app.use('/', defineEventHandler(() => 'Hello from Cloudflare!'))
+
+export default serve(app)
+```
+
+## Deployment
+
+### Development
+
+Test locally with Wrangler:
+
+```bash
+npm run build
+wrangler dev
+```
+
+### Production
+
+Deploy to Cloudflare:
+
+```bash
+npm run build
+wrangler deploy
+```

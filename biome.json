@@ -9,7 +9,10 @@
       "includes": ["example/**", "docs/**"],
       "linter": {
         "rules": {
-          "a11y": "off"
+          "a11y": "off",
+          "suspicious": {
+            "noArrayIndexKey": "off"
+          }
         },
         "domains": {
           "react": "recommended"

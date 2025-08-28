@@ -1,0 +1,121 @@
+import { AlphaWarning, CodeBlock, NextSteps } from '../../../components'
+
+<AlphaWarning message="Universal middleware APIs are in alpha and may change." />
+
+Universal middleware enables code that works across all server frameworks and runtimes. Photon uses [Universal Middleware](https://universal-middleware.dev) to provide framework-agnostic middleware capabilities.
+
+## What is Universal Middleware?
+
+Universal middleware is framework-agnostic middleware that works with any server framework (Hono, Express, Fastify, etc.) and any runtime (Node.js, Cloudflare Workers, Deno, Bun).
+
+For complete documentation on creating and using universal middleware, see the [official Universal Middleware documentation](https://universal-middleware.dev).
+
+## Quick Example
+
+```ts
+import { enhance } from "@universal-middleware/core";
+
+export const myMiddleware = enhance(
+  async (request: Request) => {
+    return new Response('Hello from universal middleware');
+  },
+  {
+    name: "my-framework:handler",
+    path: "/api/**",
+    method: ["GET", "POST"],
+  }
+);
+```
+
+## Photon Integration
+
+Photon uses universal middleware to enable framework-agnostic capabilities. Here's how to integrate universal middleware with Photon:
+
+### Exporting Middleware
+
+```ts
+// src/photon/entries/universal-middleware.ts
+export { ssrMiddleware } from "../middlewares/ssr.js";
+export { apiMiddleware } from "../middlewares/api.js";
+```
+
+### Package.json Exports
+
+```json
+{
+  "exports": {
+    "./universal-middleware": {
+      "types": "./dist/photon/entries/universal-middleware.d.ts",
+      "default": "./dist/photon/entries/universal-middleware.js"
+    }
+  }
+}
+```
+
+### Photon Plugin Configuration
+
+```ts
+// src/vite/photonPlugin.ts
+export function photonPlugin(): Plugin[] {
+  return installPhoton("my-framework", {
+    resolveMiddlewares() {
+      return "my-framework/universal-middleware";
+    },
+  });
+}
+```
+
+## Framework Example
+
+Here's how the [awesome-framework example](https://github.com/photon-js/photon/tree/main/example/awesome-framework) uses universal middleware:
+
+```ts
+// src/photon/middlewares/ssr.ts
+import { enhance } from "@universal-middleware/core";
+import { renderUrl } from "../../renderUrl.js";
+
+export const ssrMiddleware = enhance(
+  async (request: Request) => {
+    const html = renderUrl(request.url);
+
+    return new Response(html, {
+      status: 200,
+      headers: {
+        "Content-Type": "text/html",
+      },
+    });
+  },
+  {
+    name: "awesome-framework:ssr",
+    path: "/**",
+    method: "GET",
+  },
+);
+```
+
+## Learn More
+
+For comprehensive documentation on universal middleware:
+
+- **[Universal Middleware Documentation](https://universal-middleware.dev)** - Complete guide to creating and using universal middleware
+- **[API Reference](https://universal-middleware.dev/api)** - Detailed API documentation
+- **[Examples](https://universal-middleware.dev/examples)** - Real-world middleware examples
+
+<NextSteps steps={[
+  {
+    title: "Framework Integration",
+    description: "Learn how to integrate Photon into your framework",
+    url: "/guide/framework-integration"
+  },
+  {
+    title: "Server Frameworks",
+    description: "Explore different server framework options",
+    url: "/guide/server-frameworks"
+  },
+  {
+    title: "Example Integration",
+    description: "Study the awesome-framework example",
+    url: "https://github.com/photon-js/photon/tree/main/example/awesome-framework",
+    external: true
+  }
+]} />
