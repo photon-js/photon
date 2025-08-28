@@ -1,22 +1,57 @@
 # Photon
 
-- [packages/photonjs](packages/core) - Photon core
-- [packages/adapter-cloudflare](./packages/adapter-cloudflare) - Photon cloudflare adapter
+> ⚠️ **Alpha Stage**: Photon is currently in alpha. APIs may change before stable release.
+
+Next-generation server toolkit designed for **library and framework developers** who need universal server capabilities.
+
+## Packages
+
+### Core
+- [packages/core](./packages/core) - Photon core with Vite integration
+- [packages/runtime](./packages/runtime) - Convenience functions for framework developers
+
+### Server Adapters
+- [packages/hono](./packages/hono) - Hono framework adapter
+- [packages/express](./packages/express) - Express.js adapter
+- [packages/fastify](./packages/fastify) - Fastify adapter
+- [packages/elysia](./packages/elysia) - Elysia adapter
+- [packages/h3](./packages/h3) - H3 adapter
+- [packages/hattip](./packages/hattip) - HatTip adapter
+
+### Deployment Adapters
+- [packages/adapter-cloudflare](./packages/adapter-cloudflare) - Cloudflare Workers/Pages adapter
+
+## Examples
 - [example/awesome-framework](./example/awesome-framework) - Example of integrating Photon into a Vite-based framework
-- [example/app-cloudflare](./example/app-cloudflare) - Example of a user app using a framework powered by Photon
-- [example/app-hono-cloudflare](./example/app-hono-cloudflare) - Example of a user app using a framework powered by Photon + Hono
+- [example/app-cloudflare](./example/app-cloudflare) - Example app using a framework powered by Photon
+- [example/app-hono-cloudflare](./example/app-hono-cloudflare) - Example app using Photon + Hono on Cloudflare
 
-## Goals
+## Philosophy
 
- - [Nitro](https://nitro.build) alternative that is unopinionated and flexible
- - Like Nitro: works with any deployment target (Netlify, Vercel, Cloudflare, VPS, ...)
- - Unlike Nitro: works with any server (Hono, Express, Fastify, Elysia, ...)
- - Easy integration for Vite-based frameworks
- - Server code-splitting: each page (and API route) can be deployed to a seperate edge worker
- - HMR
- - Powered by Vite's Environment API
- - Official integration/partnering with Netlify, Cloudflare, Vercel, and more
- - Polished DX (e.g. first-class TypeScript support)
+Photon is designed as an **unopinionated and flexible alternative to Nitro**, specifically for framework developers who need:
+
+### Universal Server Support
+- **Any server framework**: Hono, Express, Fastify, Elysia, H3, HatTip
+- **Any deployment target**: Cloudflare, Vercel, Netlify, Node.js, VPS
+- **Any runtime**: Node.js, Cloudflare Workers, Deno, Bun
+
+### Framework Developer Focus
+- **Easy integration** for Vite-based frameworks
+- **Universal middleware** that works across all server frameworks
+- **Server code-splitting**: Deploy each route to separate edge workers
+- **Hot Module Replacement** for server code
+- **TypeScript-first** with excellent developer experience
+
+### Powered by Modern Standards
+- Built on **Vite's Environment API**
+- Uses **Web Standard APIs** for universal compatibility
+- Leverages **Universal Middleware** for framework-agnostic capabilities
+
+## Documentation
+
+- **[Getting Started](https://photonjs.dev/get-started)** - Learn how to use Photon
+- **[Framework Integration](https://photonjs.dev/guide/framework-integration)** - Integrate Photon into your framework
+- **[Examples](./example)** - Real-world integration examples
 
 ## See also
 
