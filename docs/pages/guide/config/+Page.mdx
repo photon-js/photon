@@ -1,0 +1,444 @@
+> ⚠️ **Alpha Stage**: Configuration APIs are in alpha and may change.
+
+Configure Photon for your framework's needs.
+
+## Basic Configuration
+
+### Vite Plugin Setup
+
+```ts
+// vite.config.ts
+import { photon } from '@photonjs/core/vite'
+
+export default {
+  plugins: [
+    photon({
+      server: './src/server.ts',
+      entries: {
+        'api/users': './src/api/users.ts'
+      }
+    })
+  ]
+}
+```
+
+### Runtime Plugin Setup
+
+For framework developers using the runtime package:
+
+```ts
+// src/vite/photonPlugin.ts
+import { installPhoton } from "@photonjs/runtime/vite";
+
+export function photonPlugin(): Plugin[] {
+  return installPhoton("my-framework", {
+    fullInstall: true,
+    resolveMiddlewares() {
+      return "my-framework/universal-middleware";
+    }
+  });
+}
+```
+
+## Configuration Options
+
+### Core Configuration
+
+```ts
+interface PhotonConfig {
+  server?: string | EntryServerPartial
+  entries?: Record<string, string | EntryPartial>
+}
+```
+
+#### Server Entry
+
+```ts
+// String path
+server: './src/server.ts'
+
+// Detailed configuration
+server: {
+  file: './src/server.ts',
+  server: 'hono', // Server framework hint
+  id: 'main-server'
+}
+```
+
+#### Additional Entries
+
+```ts
+entries: {
+  // Simple entry
+  'api/users': './src/api/users.ts',
+  
+  // Detailed entry
+  'middleware/auth': {
+    file: './src/middleware/auth.ts',
+    type: 'universal-handler'
+  }
+}
+```
+
+### Runtime Configuration
+
+For framework developers using `installPhoton`:
+
+```ts
+interface RuntimeConfig {
+  fullInstall?: boolean
+  codeSplitting?: CodeSplittingConfig
+  resolveMiddlewares?: () => string
+  entries?: Record<string, EntryConfig>
+}
+```
+
+#### Full Install
+
+```ts
+// Enable all Photon features
+fullInstall: true
+
+// Minimal installation
+fullInstall: false
+```
+
+#### Code Splitting
+
+```ts
+codeSplitting: {
+  // Disable framework-level splitting
+  framework: false,
+  
+  // Enable per-route splitting
+  routes: true
+}
+```
+
+#### Middleware Resolution
+
+```ts
+// Static middleware path
+resolveMiddlewares() {
+  return "my-framework/universal-middleware";
+}
+
+// Dynamic middleware resolution
+resolveMiddlewares(context) {
+  if (context.isDevelopment) {
+    return "my-framework/dev-middleware";
+  }
+  return "my-framework/prod-middleware";
+}
+```
+
+#### Entry Configuration
+
+```ts
+entries: {
+  standalone: {
+    id: "my-framework/standalone",
+    compositionMode: "isolated", // Don't compose with other middleware
+  },
+  
+  api: {
+    id: "my-framework/api",
+    compositionMode: "compose", // Compose with framework middleware
+    order: 100 // Higher order runs first
+  }
+}
+```
+
+## Environment-Specific Configuration
+
+### Development vs Production
+
+```ts
+// vite.config.ts
+export default defineConfig(({ mode }) => ({
+  plugins: [
+    photon({
+      server: './src/server.ts',
+      entries: mode === 'development' ? {
+        'dev/debug': './src/dev/debug.ts'
+      } : {}
+    })
+  ]
+}))
+```
+
+### Conditional Middleware
+
+```ts
+// Framework plugin
+export function photonPlugin(options: FrameworkOptions): Plugin[] {
+  return installPhoton("my-framework", {
+    resolveMiddlewares() {
+      if (options.enableLogging) {
+        return "my-framework/middleware-with-logging";
+      }
+      return "my-framework/middleware-basic";
+    }
+  });
+}
+```
+
+## Advanced Configuration
+
+### Custom Entry Types
+
+```ts
+// Define custom entry types
+entries: {
+  'worker/background': {
+    file: './src/workers/background.ts',
+    type: 'background-worker',
+    runtime: 'cloudflare-workers'
+  }
+}
+```
+
+### Build Configuration
+
+```ts
+// vite.config.ts
+export default {
+  plugins: [
+    photon({
+      server: './src/server.ts',
+      build: {
+        target: 'node18',
+        minify: true,
+        sourcemap: false,
+        rollupOptions: {
+          external: ['some-external-dep']
+        }
+      }
+    })
+  ]
+}
+```
+
+### Platform-Specific Configuration
+
+```ts
+// Different config per platform
+export function photonPlugin(): Plugin[] {
+  return installPhoton("my-framework", {
+    entries: {
+      // Cloudflare-specific entry
+      'cloudflare-worker': {
+        id: "my-framework/cloudflare",
+        platform: 'cloudflare-workers'
+      },
+      
+      // Node.js-specific entry
+      'node-server': {
+        id: "my-framework/node",
+        platform: 'node'
+      }
+    }
+  });
+}
+```
+
+## Configuration Validation
+
+### TypeScript Support
+
+```ts
+import type { PhotonConfig } from '@photonjs/core'
+
+const config: PhotonConfig = {
+  server: './src/server.ts', // Type-checked
+  entries: {
+    'api/users': './src/api/users.ts' // Type-checked
+  }
+}
+```
+
+### Runtime Validation
+
+```ts
+import { validateConfig } from '@photonjs/core'
+
+try {
+  const validatedConfig = validateConfig(userConfig);
+} catch (error) {
+  console.error('Invalid Photon configuration:', error.message);
+}
+```
+
+## Configuration Patterns
+
+### Framework Defaults
+
+```ts
+// Provide sensible defaults for your framework
+export function createFrameworkConfig(
+  userConfig: Partial<FrameworkConfig> = {}
+): PhotonConfig {
+  return {
+    server: userConfig.server || './src/server.ts',
+    entries: {
+      // Framework defaults
+      'framework/ssr': './framework/ssr.ts',
+      'framework/api': './framework/api.ts',
+      
+      // User overrides
+      ...userConfig.entries
+    }
+  }
+}
+```
+
+### Plugin Composition
+
+```ts
+// Compose multiple Photon configurations
+export function createPlugins(options: Options): Plugin[] {
+  const basePlugins = installPhoton("base-framework", {
+    resolveMiddlewares: () => "base-framework/middleware"
+  });
+  
+  const extensionPlugins = installPhoton("extension", {
+    resolveMiddlewares: () => "extension/middleware"
+  });
+  
+  return [...basePlugins, ...extensionPlugins];
+}
+```
+
+### Conditional Features
+
+```ts
+export function photonPlugin(options: FrameworkOptions): Plugin[] {
+  const config: RuntimeConfig = {
+    fullInstall: true,
+    resolveMiddlewares: () => "my-framework/core-middleware"
+  };
+  
+  // Add optional features
+  if (options.enableSSR) {
+    config.entries = {
+      ...config.entries,
+      'ssr': { id: "my-framework/ssr" }
+    };
+  }
+  
+  if (options.enableAPI) {
+    config.entries = {
+      ...config.entries,
+      'api': { id: "my-framework/api" }
+    };
+  }
+  
+  return installPhoton("my-framework", config);
+}
+```
+
+## Configuration Examples
+
+### Minimal Framework
+
+```ts
+// Simplest possible configuration
+export function minimalFramework(): Plugin[] {
+  return installPhoton("minimal", {
+    resolveMiddlewares: () => "minimal/middleware"
+  });
+}
+```
+
+### Full-Featured Framework
+
+```ts
+export function fullFramework(options: FullOptions): Plugin[] {
+  return installPhoton("full-framework", {
+    fullInstall: true,
+    
+    codeSplitting: {
+      framework: options.codeSplitting ?? true,
+      routes: options.routeSplitting ?? false
+    },
+    
+    resolveMiddlewares() {
+      const middlewares = ["full-framework/core"];
+      
+      if (options.enableAuth) middlewares.push("full-framework/auth");
+      if (options.enableLogging) middlewares.push("full-framework/logging");
+      
+      return middlewares.join(",");
+    },
+    
+    entries: {
+      ssr: {
+        id: "full-framework/ssr",
+        compositionMode: "compose"
+      },
+      
+      api: {
+        id: "full-framework/api", 
+        compositionMode: "isolated"
+      },
+      
+      ...(options.enableWorkers && {
+        worker: {
+          id: "full-framework/worker",
+          compositionMode: "isolated"
+        }
+      })
+    }
+  });
+}
+```
+
+## Debugging Configuration
+
+### Enable Debug Logging
+
+```ts
+// Enable Photon debug logs
+process.env.DEBUG = "photon:*"
+
+// Or specific debug categories
+process.env.DEBUG = "photon:config,photon:middleware"
+```
+
+### Configuration Inspection
+
+```ts
+// Log resolved configuration
+export function debugPhotonPlugin(): Plugin[] {
+  const plugins = installPhoton("my-framework", config);
+  
+  console.log('Photon configuration:', JSON.stringify(config, null, 2));
+  
+  return plugins;
+}
+```
+
+### Validation Helpers
+
+```ts
+// Validate configuration at build time
+export function validatePhotonConfig(config: RuntimeConfig): void {
+  if (!config.resolveMiddlewares) {
+    throw new Error('resolveMiddlewares is required');
+  }
+  
+  if (config.entries) {
+    for (const [key, entry] of Object.entries(config.entries)) {
+      if (!entry.id) {
+        throw new Error(`Entry ${key} missing required id`);
+      }
+    }
+  }
+}
+```
+
+## Next Steps
+
+- Learn about [framework integration](/guide/framework-integration)
+- Explore [universal middleware](/guide/middleware)
+- Check the [API reference](/api/core) for detailed options

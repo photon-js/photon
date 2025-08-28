@@ -1,0 +1,164 @@
+> ⚠️ **Alpha Stage**: Photon is currently in alpha. APIs may change before stable release.
+
+Photon is a next-generation server toolkit designed primarily for **library and framework developers** who need universal server capabilities.
+
+## Philosophy
+
+Photon follows these core principles:
+
+### Universal Server Support
+
+Unlike other solutions that lock you into specific frameworks, Photon works with **any** server framework:
+
+- **Hono** - Ultrafast web framework for edge runtimes
+- **Express** - The most popular Node.js web framework
+- **Fastify** - High-performance web framework
+- **Elysia** - Bun-optimized framework with end-to-end type safety
+- **H3** - Minimal and modern web framework
+- **HatTip** - Universal web framework built on Web Standards
+
+### Deploy Anywhere
+
+Write once, deploy anywhere. Photon applications can be deployed to:
+
+- **Edge Runtimes**: Cloudflare Workers, Vercel Edge, Netlify Edge
+- **Serverless**: AWS Lambda, Vercel Functions, Netlify Functions
+- **Traditional Servers**: Node.js, Docker, VPS
+- **Static Hosting**: GitHub Pages, Netlify, Vercel (for SSG)
+
+### Vite-Powered
+
+Built on top of Vite's Environment API, Photon provides:
+
+- **Hot Module Replacement** for server code
+- **Fast builds** with Vite's optimized bundling
+- **Rich ecosystem** compatibility with Vite plugins
+- **TypeScript** support out of the box
+
+## Architecture
+
+Photon's architecture consists of three main components:
+
+### Core (`@photonjs/core`)
+
+The foundation that provides:
+- Vite plugin integration
+- Configuration management
+- Virtual module system
+- Build orchestration
+
+### Server Adapters
+
+Framework-specific adapters that handle:
+- Universal middleware application
+- Server lifecycle management
+- Runtime-specific optimizations
+
+### Deployment Adapters
+
+Platform-specific adapters for:
+- Build output optimization
+- Runtime environment setup
+- Platform-specific features
+
+## Key Features
+
+### Server Code Splitting
+
+Each page and API route can be deployed as a separate function:
+
+```ts
+// Each route becomes its own deployable unit
+export default {
+  entries: {
+    'api/users': './src/api/users.ts',
+    'api/posts': './src/api/posts.ts',
+    'pages/dashboard': './src/pages/dashboard.ts'
+  }
+}
+```
+
+### Universal Middleware
+
+Write middleware once, use everywhere:
+
+```ts
+// Works across all server frameworks
+const authMiddleware = createUniversalMiddleware((context) => {
+  // Universal middleware logic
+})
+```
+
+### Type Safety
+
+Full TypeScript support with intelligent inference:
+
+```ts
+// Automatic type inference across the stack
+const config = photon({
+  server: './src/server.ts', // Types inferred
+  entries: {
+    'api/users': './src/api/users.ts' // Route types generated
+  }
+})
+```
+
+## Comparison
+
+| Feature | Photon | Nitro | Next.js |
+|---------|--------|-------|---------|
+| Server Framework | Any | H3 only | Built-in |
+| Deployment Targets | Universal | Universal | Vercel-focused |
+| Architecture | Modular | Monolithic | Monolithic |
+| Framework Lock-in | None | Minimal | High |
+| Edge Runtime | ✅ | ✅ | ✅ |
+| Code Splitting | ✅ | ❌ | ✅ |
+
+## When to Use Photon
+
+### For Framework Developers
+
+Photon is ideal when building:
+
+- **Universal web frameworks** that work across runtimes
+- **Server-agnostic libraries** and tools
+- **Platform-agnostic solutions** for diverse deployment needs
+- **Developer tools** that need maximum compatibility
+
+### For Advanced Users
+
+Direct usage is suitable when you need:
+
+- **Maximum flexibility** in architectural decisions
+- **Multi-runtime support** without framework lock-in
+- **Custom deployment strategies** across platforms
+- **Integration** with existing complex systems
+
+### For End Users
+
+If you're building applications rather than frameworks, consider using frameworks built with Photon:
+
+- **[Vike](https://vike.dev)** - Fast Vite-based framework with Photon under the hood
+- **Other Photon-powered frameworks** - Check the ecosystem for more options
+
+These frameworks provide the benefits of Photon's universal deployment while offering the developer experience optimized for application development.
+
+## Photon Ecosystem
+
+### Frameworks Built with Photon
+
+- **[Vike](https://vike.dev)** - Fast Vite-based framework with flexible architecture
+- **More coming soon** - The ecosystem is growing as Photon matures
+
+### Success Stories
+
+Frameworks using Photon benefit from:
+- **Universal deployment** - Deploy to any platform without framework changes
+- **Server flexibility** - Choose the best server framework for each use case
+- **Future-proof architecture** - Adapt to new runtimes and platforms easily
+
+## Next Steps
+
+- [Choose your server framework](/guide/server-frameworks)
+- [Learn about universal middleware](/guide/middleware)
+- [Explore deployment options](/guide/deploy)

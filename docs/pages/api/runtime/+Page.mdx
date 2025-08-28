@@ -1,0 +1,440 @@
+> ⚠️ **Alpha Stage**: This API is in alpha and may change before stable release.
+
+The runtime package provides convenience functions for framework developers to integrate Photon.
+
+## Installation
+
+```bash
+npm install @photonjs/runtime
+```
+
+## Exports
+
+### `./vite`
+
+Vite integration functions for framework developers.
+
+```ts
+import { installPhoton } from '@photonjs/runtime/vite'
+```
+
+## Functions
+
+### `installPhoton(frameworkName, config?)`
+
+Install Photon with framework-specific configuration.
+
+```ts
+function installPhoton(
+  frameworkName: string,
+  config?: RuntimeConfig
+): Plugin[]
+```
+
+**Parameters:**
+- `frameworkName` - Unique identifier for your framework
+- `config` - Optional runtime configuration
+
+**Returns:** Array of Vite plugins
+
+**Example:**
+```ts
+import { installPhoton } from '@photonjs/runtime/vite'
+
+export function myFrameworkPlugin(): Plugin[] {
+  return installPhoton('my-framework', {
+    fullInstall: true,
+    resolveMiddlewares: () => 'my-framework/universal-middleware'
+  })
+}
+```
+
+## Configuration
+
+### `RuntimeConfig`
+
+Configuration interface for framework integration.
+
+```ts
+interface RuntimeConfig {
+  fullInstall?: boolean
+  codeSplitting?: CodeSplittingConfig
+  resolveMiddlewares?: () => string
+  entries?: Record<string, EntryConfig>
+}
+```
+
+### `fullInstall`
+
+Enable all Photon features.
+
+```ts
+// Enable all features (recommended)
+fullInstall: true
+
+// Minimal installation
+fullInstall: false
+```
+
+### `codeSplitting`
+
+Configure code splitting behavior.
+
+```ts
+interface CodeSplittingConfig {
+  framework?: boolean
+  routes?: boolean
+}
+```
+
+**Example:**
+```ts
+codeSplitting: {
+  framework: false, // Disable framework-level splitting
+  routes: true      // Enable per-route splitting
+}
+```
+
+### `resolveMiddlewares`
+
+Function that returns the middleware module path.
+
+```ts
+// Static middleware path
+resolveMiddlewares: () => 'my-framework/universal-middleware'
+
+// Dynamic resolution
+resolveMiddlewares: (context) => {
+  return context.isDevelopment 
+    ? 'my-framework/dev-middleware'
+    : 'my-framework/prod-middleware'
+}
+```
+
+### `entries`
+
+Define framework-specific entry points.
+
+```ts
+interface EntryConfig {
+  id: string
+  compositionMode?: 'compose' | 'isolated'
+  order?: number
+}
+```
+
+**Example:**
+```ts
+entries: {
+  standalone: {
+    id: 'my-framework/standalone',
+    compositionMode: 'isolated'
+  },
+  
+  api: {
+    id: 'my-framework/api',
+    compositionMode: 'compose',
+    order: 100
+  }
+}
+```
+
+## Entry Configuration
+
+### Composition Modes
+
+**`compose` (default):**
+Entry is composed with framework middleware from `resolveMiddlewares()`.
+
+**`isolated`:**
+Entry runs independently without framework middleware composition.
+
+```ts
+entries: {
+  // Composed with framework middleware
+  main: {
+    id: 'framework/main',
+    compositionMode: 'compose'
+  },
+  
+  // Runs independently
+  worker: {
+    id: 'framework/worker', 
+    compositionMode: 'isolated'
+  }
+}
+```
+
+### Entry Order
+
+Control the order of entry execution:
+
+```ts
+entries: {
+  early: {
+    id: 'framework/early',
+    order: 100  // Higher numbers run first
+  },
+  
+  late: {
+    id: 'framework/late',
+    order: -100 // Lower numbers run later
+  }
+}
+```
+
+## Advanced Usage
+
+### Conditional Configuration
+
+```ts
+export function frameworkPlugin(options: FrameworkOptions): Plugin[] {
+  const config: RuntimeConfig = {
+    fullInstall: true,
+    resolveMiddlewares: () => 'framework/core-middleware'
+  }
+  
+  // Add conditional entries
+  if (options.enableSSR) {
+    config.entries = {
+      ...config.entries,
+      ssr: { id: 'framework/ssr' }
+    }
+  }
+  
+  if (options.enableAPI) {
+    config.entries = {
+      ...config.entries,
+      api: { id: 'framework/api' }
+    }
+  }
+  
+  return installPhoton('framework', config)
+}
+```
+
+### Multiple Framework Integration
+
+```ts
+export function compositeFramework(): Plugin[] {
+  // Base framework
+  const basePlugins = installPhoton('base-framework', {
+    resolveMiddlewares: () => 'base/middleware'
+  })
+  
+  // Extension framework
+  const extensionPlugins = installPhoton('extension', {
+    resolveMiddlewares: () => 'extension/middleware',
+    entries: {
+      extension: { id: 'extension/handler' }
+    }
+  })
+  
+  return [...basePlugins, ...extensionPlugins]
+}
+```
+
+### Development vs Production
+
+```ts
+export function frameworkPlugin(): Plugin[] {
+  return installPhoton('framework', {
+    resolveMiddlewares: () => {
+      return process.env.NODE_ENV === 'development'
+        ? 'framework/dev-middleware'
+        : 'framework/prod-middleware'
+    },
+    
+    codeSplitting: {
+      framework: process.env.NODE_ENV === 'production'
+    }
+  })
+}
+```
+
+## Integration Patterns
+
+### Simple Framework
+
+Minimal integration for basic frameworks:
+
+```ts
+export function simpleFramework(): Plugin[] {
+  return installPhoton('simple', {
+    resolveMiddlewares: () => 'simple/middleware'
+  })
+}
+```
+
+### Full-Featured Framework
+
+Complete integration with all features:
+
+```ts
+export function fullFramework(options: FullOptions): Plugin[] {
+  return installPhoton('full-framework', {
+    fullInstall: true,
+    
+    codeSplitting: {
+      framework: options.codeSplitting ?? true,
+      routes: options.routeSplitting ?? false
+    },
+    
+    resolveMiddlewares: () => {
+      const middleware = ['full-framework/core']
+      
+      if (options.enableAuth) middleware.push('full-framework/auth')
+      if (options.enableLogging) middleware.push('full-framework/logging')
+      
+      return middleware.join(',')
+    },
+    
+    entries: {
+      ssr: {
+        id: 'full-framework/ssr',
+        compositionMode: 'compose'
+      },
+      
+      api: {
+        id: 'full-framework/api',
+        compositionMode: 'isolated'
+      }
+    }
+  })
+}
+```
+
+### Framework with Fallback
+
+Framework that provides automatic fallback:
+
+```ts
+export function frameworkWithFallback(): Plugin[] {
+  return installPhoton('framework', {
+    fullInstall: true,
+    
+    resolveMiddlewares: () => 'framework/middleware',
+    
+    entries: {
+      // Main framework entry
+      main: {
+        id: 'framework/main',
+        compositionMode: 'compose'
+      },
+      
+      // Fallback for unhandled routes
+      fallback: {
+        id: 'framework/fallback',
+        compositionMode: 'isolated',
+        order: -1000 // Run last
+      }
+    }
+  })
+}
+```
+
+## Error Handling
+
+### Configuration Validation
+
+```ts
+function validateConfig(config: RuntimeConfig): void {
+  if (!config.resolveMiddlewares) {
+    throw new Error('resolveMiddlewares is required')
+  }
+  
+  if (config.entries) {
+    for (const [key, entry] of Object.entries(config.entries)) {
+      if (!entry.id) {
+        throw new Error(`Entry ${key} missing required id`)
+      }
+    }
+  }
+}
+
+export function safeFrameworkPlugin(config: RuntimeConfig): Plugin[] {
+  validateConfig(config)
+  return installPhoton('framework', config)
+}
+```
+
+### Graceful Degradation
+
+```ts
+export function resilientFramework(): Plugin[] {
+  try {
+    return installPhoton('framework', {
+      fullInstall: true,
+      resolveMiddlewares: () => 'framework/full-middleware'
+    })
+  } catch (error) {
+    console.warn('Full installation failed, falling back to minimal:', error)
+    
+    return installPhoton('framework', {
+      fullInstall: false,
+      resolveMiddlewares: () => 'framework/minimal-middleware'
+    })
+  }
+}
+```
+
+## Examples
+
+### Framework Plugin
+
+```ts
+// src/vite/index.ts
+import { installPhoton } from '@photonjs/runtime/vite'
+import type { Plugin } from 'vite'
+
+export interface FrameworkOptions {
+  ssr?: boolean
+  api?: boolean
+  logging?: boolean
+}
+
+export function framework(options: FrameworkOptions = {}): Plugin[] {
+  return installPhoton('my-framework', {
+    fullInstall: true,
+    
+    resolveMiddlewares: () => {
+      const middleware = ['my-framework/core']
+      if (options.logging) middleware.push('my-framework/logging')
+      return middleware.join(',')
+    },
+    
+    entries: {
+      ...(options.ssr && {
+        ssr: { id: 'my-framework/ssr' }
+      }),
+      
+      ...(options.api && {
+        api: { id: 'my-framework/api' }
+      })
+    }
+  })
+}
+```
+
+### User Integration
+
+```ts
+// vite.config.ts
+import { framework } from 'my-framework/vite'
+
+export default {
+  plugins: [
+    framework({
+      ssr: true,
+      api: true,
+      logging: process.env.NODE_ENV === 'development'
+    })
+  ]
+}
+```
+
+## Next Steps
+
+- Learn about [framework integration](/guide/framework-integration)
+- Explore [universal middleware](/guide/middleware)
+- Check the [core API](/api/core) for lower-level functions

@@ -1,0 +1,383 @@
+> ⚠️ **Alpha Stage**: Cloudflare adapter is in alpha. Some features may be incomplete.
+
+Deploy your Photon application to Cloudflare Workers and Pages.
+
+## Prerequisites
+
+- [Cloudflare account](https://dash.cloudflare.com/sign-up)
+- [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/install-and-update/)
+
+```bash
+npm install -g wrangler
+wrangler login
+```
+
+## Installation
+
+Install the Cloudflare adapter:
+
+```bash
+npm install @photonjs/cloudflare
+```
+
+## Configuration
+
+### Vite Configuration
+
+Add the Cloudflare adapter to your Vite config:
+
+```ts
+// vite.config.ts
+import { photon } from '@photonjs/core/vite'
+import { cloudflare } from '@photonjs/cloudflare/vite'
+
+export default {
+  plugins: [
+    photon({
+      server: './src/server.ts'
+    }),
+    cloudflare()
+  ]
+}
+```
+
+### Wrangler Configuration
+
+Create a `wrangler.toml` file:
+
+```toml
+name = "my-photon-app"
+main = "dist/cloudflare-entry.js"
+compatibility_date = "2024-01-01"
+
+[build]
+command = "npm run build"
+
+[[kv_namespaces]]
+binding = "MY_KV"
+id = "your-kv-namespace-id"
+
+[vars]
+ENVIRONMENT = "production"
+```
+
+### Cloudflare Entry
+
+Create a Cloudflare entry file:
+
+```ts
+// cloudflare-entry.ts
+import handler from 'photon:cloudflare-entry'
+
+export default handler
+```
+
+## Server Setup
+
+### With Hono (Recommended)
+
+```ts
+// src/server.ts
+import { Hono } from 'hono'
+import { apply, serve } from '@photonjs/hono'
+
+const app = new Hono()
+
+app.get('/', (c) => c.text('Hello from Cloudflare!'))
+
+app.get('/api/env', (c) => {
+  // Access Cloudflare environment
+  return c.json({
+    environment: c.env.ENVIRONMENT,
+    cf: c.req.cf
+  })
+})
+
+apply(app)
+export default serve(app)
+```
+
+### With H3
+
+```ts
+// src/server.ts
+import { createApp, defineEventHandler } from 'h3'
+import { apply, serve } from '@photonjs/h3'
+
+const app = createApp()
+
+app.use('/', defineEventHandler(() => 'Hello from Cloudflare!'))
+
+apply(app)
+export default serve(app)
+```
+
+## Environment Variables
+
+### Wrangler Secrets
+
+Set sensitive environment variables:
+
+```bash
+wrangler secret put DATABASE_URL
+wrangler secret put API_KEY
+```
+
+### Environment Variables
+
+Set non-sensitive variables in `wrangler.toml`:
+
+```toml
+[vars]
+ENVIRONMENT = "production"
+API_BASE_URL = "https://api.example.com"
+```
+
+### Access in Code
+
+```ts
+app.get('/api/config', (c) => {
+  return c.json({
+    environment: c.env.ENVIRONMENT,
+    apiUrl: c.env.API_BASE_URL,
+    // Secrets are also available
+    hasDbUrl: !!c.env.DATABASE_URL
+  })
+})
+```
+
+## Cloudflare Features
+
+### KV Storage
+
+Use Cloudflare KV for data storage:
+
+```ts
+app.get('/api/data/:key', async (c) => {
+  const key = c.req.param('key')
+  const value = await c.env.MY_KV.get(key)
+  
+  if (!value) {
+    return c.notFound()
+  }
+  
+  return c.json({ key, value })
+})
+
+app.put('/api/data/:key', async (c) => {
+  const key = c.req.param('key')
+  const value = await c.req.text()
+  
+  await c.env.MY_KV.put(key, value)
+  
+  return c.json({ success: true })
+})
+```
+
+### Durable Objects
+
+Use Durable Objects for stateful applications:
+
+```ts
+// wrangler.toml
+[[durable_objects.bindings]]
+name = "COUNTER"
+class_name = "Counter"
+
+[[migrations]]
+tag = "v1"
+new_classes = ["Counter"]
+```
+
+```ts
+// src/counter.ts
+export class Counter {
+  constructor(private state: DurableObjectState) {}
+  
+  async fetch(request: Request) {
+    const count = (await this.state.storage.get('count')) || 0
+    await this.state.storage.put('count', count + 1)
+    
+    return new Response(JSON.stringify({ count: count + 1 }), {
+      headers: { 'Content-Type': 'application/json' }
+    })
+  }
+}
+```
+
+### WebSockets
+
+Enable WebSocket support:
+
+```bash
+npm install crossws
+```
+
+```ts
+// src/server.ts
+import { Hono } from 'hono'
+import { upgradeWebSocket } from 'hono/cloudflare-workers'
+
+const app = new Hono()
+
+app.get('/ws', upgradeWebSocket((c) => {
+  return {
+    onMessage: (event, ws) => {
+      ws.send(`Echo: ${event.data}`)
+    },
+    onClose: () => {
+      console.log('Connection closed')
+    }
+  }
+}))
+```
+
+## Deployment
+
+### Development
+
+Test locally with Wrangler:
+
+```bash
+npm run build
+wrangler dev
+```
+
+### Production
+
+Deploy to Cloudflare:
+
+```bash
+npm run build
+wrangler deploy
+```
+
+### Custom Domains
+
+Add a custom domain:
+
+```bash
+wrangler domains add example.com
+```
+
+Or configure in `wrangler.toml`:
+
+```toml
+[env.production]
+routes = [
+  { pattern = "example.com/*", zone_name = "example.com" }
+]
+```
+
+## Pages Integration
+
+Deploy to Cloudflare Pages:
+
+```bash
+# Build for Pages
+npm run build:pages
+
+# Deploy
+wrangler pages deploy dist
+```
+
+Configure Pages functions:
+
+```ts
+// functions/_middleware.ts
+import handler from '../dist/cloudflare-entry.js'
+
+export const onRequest = handler
+```
+
+## Performance Optimization
+
+### Caching
+
+Use Cloudflare's cache:
+
+```ts
+app.get('/api/cached', (c) => {
+  c.header('Cache-Control', 'public, max-age=3600')
+  return c.json({ timestamp: Date.now() })
+})
+```
+
+### Edge Caching
+
+Cache at the edge:
+
+```ts
+app.get('/api/edge-cached', async (c) => {
+  const cache = caches.default
+  const cacheKey = new Request(c.req.url, c.req)
+  
+  let response = await cache.match(cacheKey)
+  
+  if (!response) {
+    response = new Response(JSON.stringify({ data: 'fresh' }), {
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'public, max-age=300'
+      }
+    })
+    
+    c.executionCtx.waitUntil(cache.put(cacheKey, response.clone()))
+  }
+  
+  return response
+})
+```
+
+## Monitoring
+
+### Analytics
+
+Enable Cloudflare Analytics:
+
+```toml
+# wrangler.toml
+[observability]
+enabled = true
+```
+
+### Logging
+
+Use console.log for debugging:
+
+```ts
+app.use('*', (c, next) => {
+  console.log(`${c.req.method} ${c.req.url}`)
+  return next()
+})
+```
+
+View logs:
+
+```bash
+wrangler tail
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**Build errors:**
+- Ensure all dependencies are compatible with Workers runtime
+- Check for Node.js-specific APIs
+
+**Runtime errors:**
+- Review Wrangler logs
+- Check environment variable configuration
+- Verify KV namespace bindings
+
+**Performance issues:**
+- Monitor CPU time limits
+- Optimize bundle size
+- Use appropriate caching strategies
+
+## Next Steps
+
+- [Configure KV storage](https://developers.cloudflare.com/workers/runtime-apis/kv/)
+- [Set up Durable Objects](https://developers.cloudflare.com/workers/runtime-apis/durable-objects/)
+- [Learn about Workers limits](https://developers.cloudflare.com/workers/platform/limits/)

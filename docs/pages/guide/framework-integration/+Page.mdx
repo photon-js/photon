@@ -1,0 +1,331 @@
+> ⚠️ **Alpha Stage**: Framework integration APIs are in alpha and may change.
+
+Learn how to integrate Photon into your Vite-based framework to enable universal server capabilities.
+
+## Overview
+
+Photon enables frameworks to work universally across server runtimes and deployment platforms. This guide shows how to integrate Photon into your framework using the patterns from successful integrations.
+
+## Basic Integration
+
+### 1. Install Dependencies
+
+```bash
+npm install @photonjs/runtime @universal-middleware/core
+```
+
+### 2. Create Photon Plugin
+
+Create a Vite plugin that integrates Photon:
+
+```ts
+// src/vite/photonPlugin.ts
+import { installPhoton } from "@photonjs/runtime/vite";
+import type { Plugin } from "vite";
+
+export function photonPlugin(): Plugin[] {
+  return installPhoton("your-framework", {
+    // Enable full Photon functionality
+    fullInstall: true,
+
+    // Configure code splitting (optional)
+    codeSplitting: {
+      framework: false, // Disable for simpler setup
+    },
+
+    // Define universal middlewares for all entries
+    resolveMiddlewares() {
+      return "your-framework/universal-middleware";
+    },
+
+    // Define framework-specific entries
+    entries: {
+      standalone: {
+        id: "your-framework/standalone",
+        compositionMode: "isolated",
+      },
+    },
+  });
+}
+```
+
+### 3. Create Universal Middleware
+
+Define middleware using the universal middleware pattern:
+
+```ts
+// src/photon/middlewares/ssr.ts
+import { enhance } from "@universal-middleware/core";
+
+export const ssrMiddleware = enhance(
+  async (request: Request) => {
+    // Your framework's rendering logic
+    const html = await renderPage(request.url);
+
+    return new Response(html, {
+      status: 200,
+      headers: {
+        "Content-Type": "text/html",
+      },
+    });
+  },
+  {
+    name: "your-framework:ssr",
+    path: "/**",
+    method: "GET",
+  }
+);
+```
+
+### 4. Export Middleware
+
+Create entry points for your middleware:
+
+```ts
+// src/photon/entries/universal-middleware.ts
+export { ssrMiddleware } from "../middlewares/ssr.js";
+export { apiMiddleware } from "../middlewares/api.js";
+```
+
+### 5. Configure Package Exports
+
+Set up conditional exports in your `package.json`:
+
+```json
+{
+  "exports": {
+    "./universal-middleware": {
+      "types": "./dist/photon/entries/universal-middleware.d.ts",
+      "default": "./dist/photon/entries/universal-middleware.js"
+    },
+    "./standalone": {
+      "types": "./dist/photon/entries/standalone.d.ts", 
+      "default": "./dist/photon/entries/standalone.js"
+    }
+  }
+}
+```
+
+## Advanced Patterns
+
+### Multiple Middleware Types
+
+Create different middleware for different purposes:
+
+```ts
+// src/photon/middlewares/api.ts
+import { enhance } from "@universal-middleware/core";
+
+export const apiMiddleware = enhance(
+  async (request: Request) => {
+    // Handle API routes
+    const response = await handleApiRequest(request);
+    return response;
+  },
+  {
+    name: "your-framework:api",
+    path: "/api/**",
+    method: ["GET", "POST", "PUT", "DELETE"],
+  }
+);
+```
+
+```ts
+// src/photon/middlewares/logger.ts
+import { enhance } from "@universal-middleware/core";
+
+export const loggerMiddleware = enhance(
+  async (request: Request, context, next) => {
+    console.log(`${request.method} ${request.url}`);
+    return next();
+  },
+  {
+    name: "your-framework:logger",
+    path: "/**",
+  }
+);
+```
+
+### Conditional Middleware Loading
+
+Use export conditions to load middleware conditionally:
+
+```json
+{
+  "exports": {
+    "./universal-middleware": {
+      "development": "./dist/photon/entries/universal-middleware.dev.js",
+      "production": "./dist/photon/entries/universal-middleware.prod.js",
+      "default": "./dist/photon/entries/universal-middleware.js"
+    }
+  }
+}
+```
+
+### Framework Configuration
+
+Allow users to configure your framework through Photon:
+
+```ts
+export function photonPlugin(options: FrameworkOptions = {}): Plugin[] {
+  return installPhoton("your-framework", {
+    fullInstall: true,
+    
+    resolveMiddlewares() {
+      return "your-framework/universal-middleware";
+    },
+
+    // Pass framework options to entries
+    entries: {
+      standalone: {
+        id: "your-framework/standalone",
+        compositionMode: "isolated",
+        // Framework-specific configuration
+        frameworkOptions: options,
+      },
+    },
+  });
+}
+```
+
+## Integration Examples
+
+### Simple Framework (awesome-framework)
+
+The `example/awesome-framework` shows a minimal integration:
+
+- **Universal middleware** for SSR and API handling
+- **Simple configuration** with basic Photon setup
+- **Export conditions** for conditional loading
+
+Key files:
+- `src/vite/photonPlugin.ts` - Photon integration
+- `src/photon/middlewares/ssr.ts` - SSR middleware
+- `src/photon/entries/` - Middleware exports
+
+### Advanced Framework (Vike)
+
+Vike demonstrates advanced Photon integration:
+
+- **Complex middleware composition** with multiple layers
+- **Runtime-specific optimizations** for different deployment targets
+- **Advanced configuration** with user customization options
+
+## Best Practices
+
+### 1. Universal Middleware Design
+
+```ts
+// ✅ Good: Universal middleware that works everywhere
+export const middleware = enhance(
+  async (request: Request) => {
+    // Use standard Web APIs
+    const url = new URL(request.url);
+    const response = await processRequest(url);
+    return response;
+  },
+  { name: "framework:handler" }
+);
+
+// ❌ Avoid: Platform-specific code
+export const middleware = enhance(
+  async (request: Request, context) => {
+    // Don't rely on platform-specific context
+    const nodeReq = context.nodeRequest; // Won't work on edge
+    return processNodeRequest(nodeReq);
+  },
+  { name: "framework:handler" }
+);
+```
+
+### 2. Error Handling
+
+```ts
+export const errorMiddleware = enhance(
+  async (request: Request, context, next) => {
+    try {
+      return await next();
+    } catch (error) {
+      console.error('Framework error:', error);
+      return new Response('Internal Server Error', { status: 500 });
+    }
+  },
+  {
+    name: "framework:error-handler",
+    path: "/**",
+  }
+);
+```
+
+### 3. Development vs Production
+
+```ts
+// src/photon/entries/universal-middleware.dev.ts
+export { ssrMiddleware } from "../middlewares/ssr.js";
+export { loggerMiddleware } from "../middlewares/logger.js";
+export { errorMiddleware } from "../middlewares/error.js";
+
+// src/photon/entries/universal-middleware.prod.ts  
+export { ssrMiddleware } from "../middlewares/ssr.js";
+export { errorMiddleware } from "../middlewares/error.js";
+// No logger in production
+```
+
+## Testing Your Integration
+
+### 1. Test Across Server Frameworks
+
+```bash
+# Test with different server adapters
+npm install @photonjs/hono
+npm install @photonjs/express
+npm install @photonjs/fastify
+```
+
+### 2. Test Deployment Targets
+
+```bash
+# Test Cloudflare Workers
+npm install @photonjs/cloudflare
+wrangler dev
+
+# Test Node.js
+node dist/server/index.js
+```
+
+### 3. Verify Universal Middleware
+
+Ensure your middleware works across all server frameworks:
+
+```ts
+// Test helper
+async function testMiddleware(serverAdapter: string) {
+  const { apply, serve } = await import(`@photonjs/${serverAdapter}`);
+  // Test your middleware with different adapters
+}
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**Middleware not loading:**
+- Check export conditions in `package.json`
+- Verify file paths in `resolveMiddlewares()`
+- Ensure TypeScript compilation includes middleware files
+
+**Runtime errors:**
+- Use only Web Standard APIs in universal middleware
+- Avoid Node.js-specific or browser-specific code
+- Test across different server frameworks
+
+**Build issues:**
+- Ensure all dependencies are properly declared
+- Check Vite configuration for proper bundling
+- Verify TypeScript configuration includes all source files
+
+## Next Steps
+
+- Study the [awesome-framework example](https://github.com/photon-js/photon/tree/main/example/awesome-framework)
+- Explore [Vike's integration](https://github.com/vikejs/vike-server/tree/magne4000/dev) for advanced patterns
+- Ask questions in [GitHub Discussions](https://github.com/photon-js/photon/discussions) for integration support

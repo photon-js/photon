@@ -1,0 +1,259 @@
+> ⚠️ **Alpha Stage**: Deployment adapters are in alpha. Some features may be incomplete.
+
+Deploy your Photon application to any platform.
+
+## Overview
+
+Photon applications can be deployed to various platforms with minimal configuration:
+
+- **Edge Runtimes**: Cloudflare Workers, Vercel Edge, Netlify Edge
+- **Serverless**: AWS Lambda, Vercel Functions, Netlify Functions  
+- **Traditional Servers**: Node.js, Docker, VPS
+- **Static Hosting**: GitHub Pages, Netlify, Vercel (for SSG)
+
+## Build Process
+
+Build your application for production:
+
+```bash
+npm run build
+```
+
+This creates optimized bundles in the `dist/` directory:
+
+```
+dist/
+├── client/          # Client-side assets
+├── server/          # Server bundle
+└── static/          # Static assets
+```
+
+## Platform-Specific Guides
+
+### [Cloudflare](/guide/deploy/cloudflare)
+
+Deploy to Cloudflare Workers and Pages:
+
+```bash
+npm install @photonjs/cloudflare
+wrangler deploy
+```
+
+### [Vercel](/guide/deploy/vercel)
+
+Deploy to Vercel's platform:
+
+```bash
+npm install @photonjs/vercel
+vercel deploy
+```
+
+### [Netlify](/guide/deploy/netlify)
+
+Deploy to Netlify Functions:
+
+```bash
+npm install @photonjs/netlify
+netlify deploy
+```
+
+### [Node.js](/guide/deploy/nodejs)
+
+Deploy to traditional Node.js servers:
+
+```bash
+node dist/server/index.js
+```
+
+## Environment Variables
+
+Configure environment-specific settings:
+
+```bash
+# .env.production
+NODE_ENV=production
+DATABASE_URL=postgresql://...
+API_KEY=your-api-key
+```
+
+## Build Configuration
+
+Customize the build process:
+
+```ts
+// vite.config.ts
+export default {
+  plugins: [
+    photon({
+      server: './src/server.ts',
+      build: {
+        target: 'node18',
+        minify: true,
+        sourcemap: false
+      }
+    })
+  ]
+}
+```
+
+## Static Site Generation (SSG)
+
+Pre-render pages at build time:
+
+```ts
+// vite.config.ts
+export default {
+  plugins: [
+    photon({
+      server: './src/server.ts',
+      prerender: {
+        routes: ['/', '/about', '/contact']
+      }
+    })
+  ]
+}
+```
+
+## Docker Deployment
+
+Create a Dockerfile:
+
+```dockerfile
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci --only=production
+
+COPY dist ./dist
+
+EXPOSE 3000
+
+CMD ["node", "dist/server/index.js"]
+```
+
+## Health Checks
+
+Add health check endpoints:
+
+```ts
+// src/server.ts
+app.get('/health', (c) => {
+  return c.json({ 
+    status: 'ok', 
+    timestamp: new Date().toISOString() 
+  })
+})
+```
+
+## Performance Optimization
+
+### Bundle Analysis
+
+Analyze your bundle size:
+
+```bash
+npm run build -- --analyze
+```
+
+### Code Splitting
+
+Split code by routes:
+
+```ts
+export default {
+  plugins: [
+    photon({
+      entries: {
+        'api/users': './src/api/users.ts',
+        'api/posts': './src/api/posts.ts'
+      }
+    })
+  ]
+}
+```
+
+### Caching
+
+Configure caching headers:
+
+```ts
+app.use('*', (c, next) => {
+  c.header('Cache-Control', 'public, max-age=3600')
+  return next()
+})
+```
+
+## Monitoring
+
+Add monitoring and logging:
+
+```ts
+// Error tracking
+app.onError((error, c) => {
+  console.error('Server error:', error)
+  // Send to monitoring service
+  return c.text('Internal Server Error', 500)
+})
+
+// Request logging
+app.use('*', (c, next) => {
+  console.log(`${c.req.method} ${c.req.url}`)
+  return next()
+})
+```
+
+## Security
+
+### HTTPS
+
+Always use HTTPS in production:
+
+```ts
+// Redirect HTTP to HTTPS
+app.use('*', (c, next) => {
+  if (c.req.header('x-forwarded-proto') !== 'https') {
+    return c.redirect(`https://${c.req.header('host')}${c.req.url}`)
+  }
+  return next()
+})
+```
+
+### Security Headers
+
+Add security headers:
+
+```ts
+app.use('*', (c, next) => {
+  c.header('X-Content-Type-Options', 'nosniff')
+  c.header('X-Frame-Options', 'DENY')
+  c.header('X-XSS-Protection', '1; mode=block')
+  return next()
+})
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**Build failures:**
+- Check Node.js version compatibility
+- Verify all dependencies are installed
+- Review build logs for specific errors
+
+**Runtime errors:**
+- Check environment variables
+- Verify server configuration
+- Review application logs
+
+**Performance issues:**
+- Analyze bundle size
+- Check for memory leaks
+- Monitor server metrics
+
+## Next Steps
+
+- [Choose your deployment platform](/guide/deploy/cloudflare)
+- [Configure environment variables](/guide/env)
+- [Set up monitoring](/guide/advanced/performance)

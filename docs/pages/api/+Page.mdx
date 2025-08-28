@@ -1,0 +1,146 @@
+> ⚠️ **Alpha Stage**: Photon is currently in alpha. APIs may change before stable release.
+
+Complete API documentation for all Photon packages.
+
+## Core Packages
+
+### [@photonjs/core](/api/core)
+The foundation of Photon with Vite integration and core functionality.
+
+### [@photonjs/runtime](/api/runtime)
+Convenience package with automatic fallback for quick prototyping.
+
+## Server Adapters
+
+### [@photonjs/hono](/api/hono)
+Hono framework adapter for ultrafast edge applications.
+
+### [@photonjs/express](/api/express)
+Express.js adapter for traditional Node.js applications.
+
+### [@photonjs/fastify](/api/fastify)
+Fastify adapter for high-performance applications.
+
+### [@photonjs/elysia](/api/elysia)
+Elysia adapter for Bun-optimized applications.
+
+### [@photonjs/h3](/api/h3)
+H3 adapter for minimal and modern applications.
+
+### [@photonjs/hattip](/api/hattip)
+HatTip adapter for Web Standards-based applications.
+
+## Deployment Adapters
+
+### [@photonjs/cloudflare](/api/cloudflare)
+Cloudflare Workers and Pages deployment adapter.
+
+## Common Patterns
+
+### Configuration
+
+```ts
+// vite.config.ts
+import { photon } from '@photonjs/core/vite'
+
+export default {
+  plugins: [
+    photon({
+      server: './src/server.ts',
+      entries: {
+        'api/users': './src/api/users.ts'
+      }
+    })
+  ]
+}
+```
+
+### Server Setup
+
+```ts
+// src/server.ts
+import { Hono } from 'hono'
+import { apply, serve } from '@photonjs/hono'
+
+const app = new Hono()
+apply(app)
+export default serve(app)
+```
+
+### Universal Middleware
+
+```ts
+// Universal middleware works across all frameworks
+const middleware = createUniversalMiddleware((context) => {
+  // Middleware logic
+})
+
+apply(app, [middleware])
+```
+
+## Type Definitions
+
+Photon provides comprehensive TypeScript definitions:
+
+```ts
+import type { Photon } from '@photonjs/core'
+
+// Configuration types
+type Config = Photon.Config
+type ConfigResolved = Photon.ConfigResolved
+
+// Entry types
+type Entry = Photon.Entry
+type EntryServer = Photon.EntryServer
+```
+
+## Virtual Modules
+
+Photon uses virtual modules for build-time code generation:
+
+```ts
+// Available in your code
+import handler from 'photon:server-entry'
+import { getMiddlewares } from 'photon:get-middlewares'
+```
+
+## Error Handling
+
+Photon provides specific error classes:
+
+```ts
+import {
+  PhotonError,
+  PhotonConfigError,
+  PhotonRuntimeError
+} from '@photonjs/core'
+```
+
+## CLI Commands
+
+When using Photon with Vite:
+
+```bash
+# Development
+vite dev
+
+# Build
+vite build
+
+# Preview
+vite preview
+```
+
+## Environment Variables
+
+Photon respects standard environment variables:
+
+- `NODE_ENV` - Environment mode
+- `PORT` - Server port (development)
+- `HOST` - Server hostname (development)
+
+## Next Steps
+
+- [Explore core API](/api/core)
+- [Learn server adapters](/api/hono)
+- [Check deployment options](/api/cloudflare)
