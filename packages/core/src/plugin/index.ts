@@ -3,14 +3,21 @@ import type { Photon } from "../types.js";
 import { commonConfig } from "./plugins/commonConfig.js";
 import { devServer } from "./plugins/devServer.js";
 import { getMiddlewaresPlugin } from "./plugins/getMiddlewaresPlugin.js";
-import { type InstallPhotonBaseOptions, installPhotonBase } from "./plugins/installPhoton.js";
+import { type InstallPhotonBaseOptions, installPhotonForLib } from "./plugins/installPhoton.js";
 import { mirrorMeta } from "./plugins/mirrorMeta.js";
 import { photonEntry } from "./plugins/photonEntry.js";
 import { resolvePhotonConfigPlugin } from "./plugins/resolvePhotonConfigPlugin.js";
 import { supportedTargetServers } from "./plugins/supportedServers.js";
 import { targetLoader } from "./plugins/targetLoader.js";
 
-export { photon, installPhoton, supportedTargetServers, targetLoader, type InstallPhotonOptions, photon as default };
+export {
+  photon,
+  installPhotonCore,
+  supportedTargetServers,
+  targetLoader,
+  type InstallPhotonCoreOptions,
+  photon as default,
+};
 
 function photon(config?: Photon.Config): Plugin[] {
   return [
@@ -24,22 +31,10 @@ function photon(config?: Photon.Config): Plugin[] {
   ];
 }
 
-interface InstallPhotonOptions {
-  fullInstall?: boolean;
-}
+type InstallPhotonCoreOptions = InstallPhotonBaseOptions & Photon.Config;
 
-// TODO divide into more specific helpers (split across core and runtime)
-function installPhoton(
-  name: string,
-  options?: InstallPhotonBaseOptions & InstallPhotonOptions & Photon.Config,
-): Plugin[] {
-  const plugins: Plugin[] = [];
-  if (options?.fullInstall) {
-    plugins.push(...photon(options));
-  }
-  plugins.push(...installPhotonBase(name, options));
-
-  return plugins;
+function installPhotonCore(name: string, options?: InstallPhotonCoreOptions): Plugin[] {
+  return [...photon(options), ...installPhotonForLib(name, options)];
 }
 
 declare module "vite" {

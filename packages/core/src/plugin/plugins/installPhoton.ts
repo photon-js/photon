@@ -8,7 +8,7 @@ export interface InstallPhotonBaseOptions {
   resolveMiddlewares?: GetPhotonCondition;
 }
 
-export function installPhotonBase(name: string, options?: InstallPhotonBaseOptions): Plugin[] {
+export function installPhotonForLib(name: string, options?: InstallPhotonBaseOptions): Plugin[] {
   let resolvedName: Awaited<ReturnType<typeof resolveFirst>>;
 
   function photonVirtualModuleResolver(

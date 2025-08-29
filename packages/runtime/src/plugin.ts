@@ -1,5 +1,5 @@
 import type { Photon } from "@photonjs/core";
-import { installPhoton as coreInstallPhoton, photon as corePhoton } from "@photonjs/core/vite";
+import { photon as corePhoton, type InstallPhotonCoreOptions, installPhotonCore } from "@photonjs/core/vite";
 import type { Plugin } from "vite";
 
 function fallback(): Plugin {
@@ -48,8 +48,13 @@ export function photon(config?: Photon.Config): Plugin[] {
   return [fallback(), ...plugins];
 }
 
-export function installPhoton(...args: Parameters<typeof coreInstallPhoton>): Plugin[] {
-  const plugins = coreInstallPhoton(...args);
+/**
+ * All Photon's Vite plugins required for your library to operate correctly.
+ * @param name Your package name as specified in package.json
+ * @param options
+ */
+export function installPhoton(name: string, options?: InstallPhotonCoreOptions): Plugin[] {
+  const plugins = installPhotonCore(name, options);
 
   return [fallback(), ...plugins];
 }
