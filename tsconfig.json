@@ -1,0 +1,15 @@
+{
+  "files": [],
+  "include": [],
+  "references": [
+    { "path": "./packages/core" },
+    { "path": "./packages/adapter-cloudflare" },
+    { "path": "./packages/elysia" },
+    { "path": "./packages/express" },
+    { "path": "./packages/fastify" },
+    { "path": "./packages/h3" },
+    { "path": "./packages/hattip" },
+    { "path": "./packages/hono" },
+    { "path": "./packages/runtime" }
+  ]
+}

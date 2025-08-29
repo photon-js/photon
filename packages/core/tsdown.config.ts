@@ -1,6 +1,6 @@
-import { defineConfig, type Options as TsupOptions } from "tsdown";
+import { defineConfig, type Options as TsdownOptions } from "tsdown";
 
-const commonOptions: TsupOptions = {
+const commonOptions: TsdownOptions = {
   format: ["esm"],
   target: "es2022",
   dts: true,

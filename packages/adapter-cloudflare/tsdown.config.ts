@@ -1,19 +1,15 @@
 import { builtinModules } from "node:module";
-import { defineConfig, type Options as TsupOptions } from "tsup";
+import { defineConfig, type Options as TsdownOptions } from "tsdown";
 
-const externalServers: (string | RegExp)[] = ["elysia", "fastify", "h3", "hono"];
-
-const commonOptions: TsupOptions = {
+const commonOptions = {
   format: ["esm"],
   target: "es2022",
-  esbuildOptions(opts) {
-    opts.outbase = "src";
-  },
   dts: true,
   outDir: "dist",
   treeshake: true,
-  removeNodeProtocol: false,
-};
+  nodeProtocol: true,
+  external: [/^photon:get-middlewares:/, /^@photonjs\/core\/dev/, /^@photonjs\/cloudflare/],
+} satisfies TsdownOptions;
 
 export default defineConfig([
   {
@@ -32,10 +28,6 @@ export default defineConfig([
       h3: "./src/adapters/h3.ts",
       dev: "./src/adapters/dev.ts",
     },
-    // TODO shared Photon plugin?
-    external: externalServers
-      .concat(...builtinModules.flatMap((e) => [e, `node:${e}`]))
-      .concat(/^@photonjs\/cloudflare/)
-      .concat("@photonjs/core/dev"),
+    external: [...commonOptions.external, ...builtinModules.flatMap((e) => [e, `node:${e}`])],
   },
 ]);
