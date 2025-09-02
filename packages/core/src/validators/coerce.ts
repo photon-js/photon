@@ -68,7 +68,7 @@ const resolver = Validators.PhotonConfig.transform((c) => {
           {
             id: "photon:fallback-entry",
             type: "server",
-            server: "hono",
+            server: "srvx",
           },
           "index",
         ),

@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@photonjs/core": "workspace:^",
-    "@photonjs/hono": "workspace:^"
+    "@photonjs/srvx": "workspace:^"
   },
   "peerDependencies": {
     "vite": ">=7.1"

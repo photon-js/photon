@@ -454,9 +454,9 @@ importers:
       '@photonjs/core':
         specifier: workspace:^
         version: link:../core
-      '@photonjs/hono':
+      '@photonjs/srvx':
         specifier: workspace:^
-        version: link:../hono
+        version: link:../srvx
     devDependencies:
       '@types/node':
         specifier: ^22.17.2

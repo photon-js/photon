@@ -15,7 +15,7 @@ function fallback(): Plugin {
               id,
               resolvedId: id,
               type: "server",
-              server: "hono",
+              server: "srvx",
             },
           },
         };
@@ -25,12 +25,10 @@ function fallback(): Plugin {
     load(id) {
       if (id === "photon:fallback-entry") {
         //language=ts
-        return `import { apply, serve } from 'photon:resolve-from-photon:@photonjs/hono'
-import { Hono } from 'photon:resolve-from-photon:hono'
+        return `import { apply, serve } from 'photon:resolve-from-photon:@photonjs/srvx'
 
 function startServer() {
-  const app = new Hono()
-  apply(app)
+  const app = apply()
   return serve(app)
 }
 
