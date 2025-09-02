@@ -17,11 +17,9 @@
   },
   "dependencies": {
     "@photonjs/core": "workspace:^",
-    "@photonjs/hono": "workspace:^",
-    "hono": "^4.9.2"
+    "@photonjs/srvx": "workspace:^"
   },
   "peerDependencies": {
-    "hono": "^4.9.2",
     "vite": ">=7.1"
   },
   "peerDependenciesMeta": {
@@ -31,6 +29,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.17.2",
+    "srvx": "^0.8.7",
     "tsdown": "^0.14.2",
     "typescript": "^5.9.2",
     "vite": "^7.1.3"

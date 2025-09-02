@@ -16,6 +16,7 @@
     "@photonjs/h3": "workspace:",
     "@photonjs/hono": "workspace:",
     "@photonjs/runtime": "workspace:",
+    "@photonjs/srvx": "workspace:",
     "@types/express": "^5.0.3",
     "@types/node": "^22.17.2",
     "typescript": "^5.9.2",
@@ -27,6 +28,7 @@
     "express": "^5.1.0",
     "fastify": "^5.5.0",
     "h3": "^1.15.4",
-    "hono": "^4.9.2"
+    "hono": "^4.9.2",
+    "srvx": "^0.8.7"
   }
 }

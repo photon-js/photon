@@ -27,6 +27,7 @@ export default defineConfig([
       hono: "./src/adapters/hono.ts",
       h3: "./src/adapters/h3.ts",
       dev: "./src/adapters/dev.ts",
+      srvx: "./src/adapters/srvx.ts",
     },
     external: [...commonOptions.external, ...builtinModules.flatMap((e) => [e, `node:${e}`])],
   },

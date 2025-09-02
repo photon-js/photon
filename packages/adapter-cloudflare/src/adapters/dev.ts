@@ -13,9 +13,15 @@ export function asFetch(app: unknown, id: string): ExportedHandlerFetchHandler {
   }
 
   switch (server) {
+    case "srvx":
+      return async (request, env, ctx) => {
+        // biome-ignore lint/suspicious/noExplicitAny: self reference
+        const { asFetch } = (await import("@photonjs/cloudflare/srvx")) as any;
+        // biome-ignore lint/suspicious/noExplicitAny: any
+        return asFetch(app as any)(request, env, ctx);
+      };
     case "hono":
       return async (request, env, ctx) => {
-        // @ts-expect-error
         // biome-ignore lint/suspicious/noExplicitAny: self reference
         const { asFetch } = (await import("@photonjs/cloudflare/hono")) as any;
         // biome-ignore lint/suspicious/noExplicitAny: any
@@ -23,7 +29,6 @@ export function asFetch(app: unknown, id: string): ExportedHandlerFetchHandler {
       };
     case "h3":
       return async (request, env, ctx) => {
-        // @ts-expect-error
         // biome-ignore lint/suspicious/noExplicitAny: self reference
         const { asFetch } = (await import("@photonjs/cloudflare/h3")) as any;
         // biome-ignore lint/suspicious/noExplicitAny: any

@@ -106,6 +106,7 @@ export default serve(app)
 - `./vite` - Vite plugin for Cloudflare integration
 - `./hono` - Hono-specific Cloudflare utilities
 - `./h3` - H3-specific Cloudflare utilities
+- `./srvx` - srvx-specific Cloudflare utilities
 - `./dev` - Development server utilities
 - `./virtual` - TypeScript declarations for virtual modules
 

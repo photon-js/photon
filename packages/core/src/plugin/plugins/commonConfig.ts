@@ -16,10 +16,13 @@ function commonConfig(): Plugin[] {
             // From Vite doc:
             // > If the dependency is small and is already valid ESM,
             // > you can exclude it and let the browser load it directly.
+            // When using cloudflare, if you stumble upon the following error, you probably needs to exclude some
+            // dependency from optimizeDeps: "There is a new version of the pre-bundle for [...]"
             optimizeDeps: {
               exclude: [
                 "hono",
                 "h3",
+                "srvx",
                 "elysia",
                 "@universal-middleware/cloudflare",
                 "@universal-middleware/compress",
@@ -31,6 +34,7 @@ function commonConfig(): Plugin[] {
                 "@universal-middleware/hattip",
                 "@universal-middleware/hono",
                 "@universal-middleware/sirv",
+                "@universal-middleware/srvx",
               ],
             },
           },

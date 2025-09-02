@@ -2,12 +2,17 @@ import type { Photon } from "@photonjs/core";
 import { photon as corePhoton, type InstallPhotonCoreOptions, installPhotonCore } from "@photonjs/core/vite";
 import type { Plugin } from "vite";
 
+const re_photonFallback = /^photon:fallback-entry$/;
+
 function fallback(): Plugin {
   return {
     name: "photon:fallback",
 
-    resolveId(id) {
-      if (id === "photon:fallback-entry") {
+    resolveId: {
+      filter: {
+        id: re_photonFallback,
+      },
+      handler(id) {
         return {
           id,
           meta: {
@@ -15,28 +20,29 @@ function fallback(): Plugin {
               id,
               resolvedId: id,
               type: "server",
-              server: "hono",
+              server: "srvx",
             },
           },
         };
-      }
+      },
     },
 
-    load(id) {
-      if (id === "photon:fallback-entry") {
+    load: {
+      filter: {
+        id: re_photonFallback,
+      },
+      handler() {
         //language=ts
-        return `import { apply, serve } from 'photon:resolve-from-photon:@photonjs/hono'
-import { Hono } from 'photon:resolve-from-photon:hono'
+        return `import { apply, serve } from 'photon:resolve-from-photon:@photonjs/srvx'
 
-function startServer() {
-  const app = new Hono()
-  apply(app)
-  return serve(app)
-}
+        function startServer() {
+          const app = apply()
+          return serve(app)
+        }
 
-export default startServer()
-`;
-      }
+        export default startServer()
+        `;
+      },
     },
   };
 }

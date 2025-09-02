@@ -1,8 +1,13 @@
 packages:
-  - 'docs/'
-  - 'packages/*'
-  - 'tests/*'
-  - 'example/*'
-
+  - docs/
+  - packages/*
+  - tests/*
+  - example/*
 linkWorkspacePackages: true
+onlyBuiltDependencies:
+  - '@swc/core'
+  - esbuild
+  - playwright-chromium
+  - sharp
+  - workerd
 preferWorkspacePackages: true

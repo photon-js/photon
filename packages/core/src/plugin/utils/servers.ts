@@ -11,6 +11,7 @@ export const serversToImports: Record<SupportedServers, string[]> = {
   h3: getImports("h3"),
   express: getImports("express"),
   fastify: getImports("fastify"),
+  srvx: getImports("srvx"),
 };
 
 export const importsToServer = Object.fromEntries(
