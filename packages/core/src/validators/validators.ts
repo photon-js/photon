@@ -10,7 +10,7 @@ export type GetPhotonCondition = (
   // biome-ignore lint/suspicious/noConfusingVoidType: prefer void
 ) => string | string[] | undefined | null | void;
 
-export const SupportedServers = z.enum(["hono", "hattip", "elysia", "express", "fastify", "h3"]);
+export const SupportedServers = z.enum(["hono", "hattip", "elysia", "express", "fastify", "h3", "srvx"]);
 
 export const PhotonEntryBase = z.object({
   id: z.string(),

@@ -12,7 +12,44 @@ function errorMessageMiddleware(_id: string, index: number) {
 }
 
 type Apply<App> = (app: App, middlewares: EnhancedMiddleware[]) => void;
+type ApplyReturnApp<App> = (middlewares: EnhancedMiddleware[]) => App;
 type AsyncApply<App> = (app: App, middlewares: EnhancedMiddleware[]) => Promise<void>;
+
+export function createApplyReturnApp<App>(
+  server: string,
+  applyAdapter: ApplyReturnApp<App>,
+  getUniversalEntries: () => UniversalHandler[],
+  getUniversalMiddlewares: () => UniversalMiddleware[],
+  devServerMiddleware?: () => UniversalMiddleware,
+) {
+  return function apply<T extends App>(additionalMiddlewares?: UniversalMiddleware[]): T {
+    const middlewares = getUniversalMiddlewares();
+    const entries = getUniversalEntries();
+    if (devServerMiddleware) {
+      middlewares.unshift(devServerMiddleware());
+    }
+
+    // dedupe
+    if (additionalMiddlewares) {
+      for (const middleware of extractUniversal(additionalMiddlewares, "", errorMessageMiddleware)) {
+        const i = middlewares.findIndex(
+          (m) => getUniversalProp(m, nameSymbol) === getUniversalProp(middleware, nameSymbol),
+        );
+        if (i !== -1) {
+          middlewares.splice(i, 1);
+        }
+        middlewares.push(middleware);
+      }
+    }
+
+    const app = applyAdapter([...middlewares, ...entries]);
+
+    // biome-ignore lint/suspicious/noExplicitAny: any
+    (app as any)[Symbol.for("photon:server")] = server;
+
+    return app as T;
+  };
+}
 
 export function createApply<App>(
   server: string,

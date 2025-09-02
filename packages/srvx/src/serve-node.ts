@@ -1,8 +1,8 @@
 import { getPort, installServerHMR, onReady, type ServerOptions } from "@photonjs/core/serve";
-import type { ServerHandler } from "srvx";
 import { serve as srvxServe } from "srvx/node";
+import type { Handler } from "./types.js";
 
-export function serve<App extends ServerHandler>(app: App, options: ServerOptions = {}) {
+export function serve<App extends Handler>(app: App, options: ServerOptions = {}) {
   const serverOptions = options.serverOptions ?? {};
   const isHttps = Boolean("cert" in serverOptions && serverOptions.cert);
 

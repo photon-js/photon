@@ -1,7 +1,7 @@
 import { denoServe, type ServerOptions } from "@photonjs/core/serve";
-import type { ServerHandler } from "srvx";
+import type { Handler } from "./types.js";
 
-export function serve<App extends ServerHandler>(app: App, options: ServerOptions = {}) {
+export function serve<App extends Handler>(app: App, options: ServerOptions = {}) {
   denoServe(options, app);
 
   return app;
