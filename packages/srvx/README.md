@@ -1,10 +1,10 @@
-# @photonjs/hono
+# @photonjs/srvx
 
-Hono adapter for Photon.
+Srvx adapter for Photon.
 
 ## Features
 
-- Ultrafast performance with Hono
+- Ultrafast performance with Srvx
 - Edge-first design for Cloudflare Workers, Deno, Bun
 - Universal middleware support
 - Multi-runtime deployment
@@ -14,23 +14,35 @@ Hono adapter for Photon.
 ## Installation
 
 ```bash
-npm install @photonjs/hono hono
+npm install @photonjs/srvx @universal-middleware/core
 ```
 
 ## Getting Started
 
 ```ts
 // src/server.ts
-import { Hono } from 'hono'
-import { apply, serve } from '@photonjs/hono'
+import { apply, serve } from '@photonjs/srvx'
+import { enhance } from ' @universal-middleware/core'
 
-const app = new Hono()
 
-app.get('/', (c) => c.text('Hello Hono!'))
-app.get('/api/users', (c) => c.json({ users: ['Alice', 'Bob'] }))
-
-apply(app)
-export default serve(app)
+export default serve(apply([
+  enhance(
+    () => new Response('/api'),
+    {
+      name: "my-app:api",
+      path: "/api",
+      method: ["GET", "POST"],
+    }
+  ),
+  enhance(
+    () => new Response('OK'),
+    {
+      name: "my-app:catch-all",
+      path: "/**",
+      method: "GET",
+    }
+  )
+]))
 ```
 
 ```ts
@@ -46,35 +58,15 @@ export default {
 }
 ```
 
-## With Middleware
-
-```ts
-import { Hono } from 'hono'
-import { cors } from 'hono/cors'
-import { logger } from 'hono/logger'
-import { apply, serve } from '@photonjs/hono'
-
-const app = new Hono()
-
-app.use('*', logger())
-app.use('*', cors())
-
-app.get('/', (c) => c.json({ message: 'Hello!' }))
-app.get('/api/health', (c) => c.json({ status: 'ok' }))
-
-apply(app)
-export default serve(app)
-```
-
 ## API
 
-### `apply(app, middlewares?)`
+### `apply(middlewares?)`
 
-Apply Photon middlewares to a Hono app.
+Pipes Photon middlewares and returns a srvx request handler.
 
 ```ts
-apply(app) // Apply configured middlewares
-apply(app, [customMiddleware]) // Apply additional middlewares
+const app = apply() // Apply configured middlewares
+const app = apply([customMiddleware]) // Apply additional middlewares
 ```
 
 ### `serve(app, options?)`
@@ -87,7 +79,7 @@ serve(app, { port: 3000 })
 
 ## Deployment
 
-Hono works across all JavaScript runtimes:
+Srvx works across all JavaScript runtimes:
 
 - **Node.js** - `node dist/server/index.js`
 - **Cloudflare Workers** - Deploy with Wrangler
@@ -101,28 +93,3 @@ npm run dev     # Start dev server
 npm run build   # Build for production
 npm run preview # Preview production build
 ```
-
-## Examples
-
-```ts
-// Custom context
-type Env = {
-  Variables: { user: { id: string } }
-}
-
-const app = new Hono<Env>()
-app.use('*', async (c, next) => {
-  c.set('user', { id: '1' })
-  await next()
-})
-```
-
-```ts
-// Error handling
-app.onError((err, c) => {
-  console.error(err)
-  return c.text('Error', 500)
-})
-```
-
-See [examples](../../example/app-hono-cloudflare) for more.

@@ -59,7 +59,7 @@ export default { fetch };
         return this.error(`[photon][cloudflare] Unable to load ${id}`);
       },
     }),
-    supportedTargetServers("cloudflare", ["hono", "h3"]),
+    supportedTargetServers("cloudflare", ["hono", "h3", "srvx"]),
     // FIXME do not enforce ssr env?
     ...cloudflareVitePlugins({ ...config, viteEnvironment: { name: "ssr" } }),
   ];
