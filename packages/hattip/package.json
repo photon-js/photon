@@ -64,7 +64,7 @@
   "dependencies": {
     "@hattip/adapter-node": "^0.0.49",
     "@photonjs/core": "workspace:^",
-    "@universal-middleware/hattip": "^0.4.12"
+    "@universal-middleware/hattip": "^0.4.13"
   },
   "peerDependencies": {
     "vite": ">=7.1"
@@ -78,7 +78,7 @@
     "@types/bun": "^1.2.20",
     "@types/deno": "^2.3.0",
     "@types/node": "^22.17.2",
-    "@universal-middleware/core": "^0.4.9",
+    "@universal-middleware/core": "^0.4.10",
     "tsdown": "^0.14.2",
     "typescript": "^5.9.2",
     "vite": "^7.1.3"

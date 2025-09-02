@@ -19,7 +19,7 @@
     "wrangler": "^4.31.0"
   },
   "dependencies": {
-    "@universal-middleware/core": "^0.4.9",
+    "@universal-middleware/core": "^0.4.10",
     "awesome-framework": "workspace:",
     "hono": "^4.9.2"
   }
