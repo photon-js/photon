@@ -42,7 +42,7 @@ export function targetLoader<T extends { load: LoadHook } & Omit<Plugin, "load" 
           if (photon.defaultBuildEnv === envName) {
             this.emitFile({
               type: "chunk",
-              fileName: photon.server.target || photon.server.name,
+              fileName: ensureExtension(photon.server.target || photon.server.name),
               id: `${prefix}:${photon.server.id}`,
             });
           }
@@ -56,7 +56,7 @@ export function targetLoader<T extends { load: LoadHook } & Omit<Plugin, "load" 
             ) {
               this.emitFile({
                 type: "chunk",
-                fileName: entry.target || entry.name,
+                fileName: ensureExtension(entry.target || entry.name),
                 id: `${prefix}:${getPhotonServerIdWithEntry(isEdge ? "edge" : "node", entry.name)}`,
               });
             }
@@ -116,4 +116,11 @@ export function targetLoader<T extends { load: LoadHook } & Omit<Plugin, "load" 
       sharedDuringBuild: true,
     },
   ] satisfies Plugin[];
+}
+
+function ensureExtension(id: string) {
+  if (!id.match(/\.m?js$/)) {
+    return `${id}.js`;
+  }
+  return id;
 }

@@ -19,6 +19,8 @@ function commonConfig(): Plugin[] {
             // When using cloudflare, if you stumble upon the following error, you probably needs to exclude some
             // dependency from optimizeDeps: "There is a new version of the pre-bundle for [...]"
             optimizeDeps: {
+              // TODO add @photonjs/*
+              // TODO auto compute
               exclude: [
                 "hono",
                 "h3",

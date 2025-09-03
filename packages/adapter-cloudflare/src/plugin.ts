@@ -4,7 +4,9 @@ import type { Plugin } from "vite";
 
 const moduleId = "photon:cloudflare";
 
-export function cloudflare(config?: Omit<PluginConfig, "viteEnvironment">): Plugin[] {
+export function cloudflare(config?: PluginConfig): Plugin[] {
+  const defaultBuildEnv = config?.viteEnvironment?.name ?? "ssr";
+
   return [
     {
       name: `${moduleId}:config`,
@@ -18,8 +20,7 @@ export function cloudflare(config?: Omit<PluginConfig, "viteEnvironment">): Plug
               codeSplitting: {
                 target: false,
               },
-              // Should be set to the value of cloudflareVitePlugins -> viteEnvironment.name
-              // defaultBuildEnv: 'cloudflare',
+              defaultBuildEnv,
             },
           };
         },
@@ -60,7 +61,9 @@ export default { fetch };
       },
     }),
     supportedTargetServers("cloudflare", ["hono", "h3", "srvx"]),
-    // FIXME do not enforce ssr env?
-    ...cloudflareVitePlugins({ ...config, viteEnvironment: { name: "ssr" } }),
+    ...cloudflareVitePlugins({
+      ...config,
+      viteEnvironment: { ...config?.viteEnvironment, name: defaultBuildEnv },
+    }),
   ];
 }
