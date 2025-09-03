@@ -1,5 +1,13 @@
 # @photonjs/runtime
 
+## 0.0.8
+
+### Patch Changes
+
+- Updated dependencies [6a892a8]
+  - @photonjs/core@0.0.11
+  - @photonjs/srvx@0.0.5
+
 ## 0.0.7
 
 ### Patch Changes

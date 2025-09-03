@@ -1,5 +1,11 @@
 ## [0.0.3](https://github.com/photon-js/photon/compare/@photonjs/core@0.0.2...@photonjs/core@0.0.3) (2025-08-20)
 
+## 0.0.11
+
+### Patch Changes
+
+- 6a892a8: chore: dynamic node imports
+
 ## 0.0.10
 
 ### Patch Changes
