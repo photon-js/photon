@@ -16,6 +16,7 @@ Next-generation server toolkit designed for **library and framework developers**
 - [packages/fastify](./packages/fastify) - Fastify adapter
 - [packages/elysia](./packages/elysia) - Elysia adapter
 - [packages/h3](./packages/h3) - H3 adapter
+- [packages/srvx](./packages/srvx) - Srvx adapter
 - [packages/hattip](./packages/hattip) - HatTip adapter
 
 ### Deployment Adapters
