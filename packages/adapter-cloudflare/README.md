@@ -29,12 +29,13 @@ Add the Cloudflare adapter to your Vite configuration:
 
 ```ts
 // vite.config.ts
-import { photon } from '@photonjs/core/vite'
+import { installPhoton } from '@photonjs/runtime/vite'
 import { cloudflare } from '@photonjs/cloudflare/vite'
 
 export default {
   plugins: [
-    photon({
+    installPhoton({
+      // optional
       server: './src/server.ts'
     }),
     cloudflare()
@@ -48,7 +49,7 @@ Create a Cloudflare entry file that imports your Photon virtual module:
 
 ```ts
 // cloudflare-entry.ts
-import handler from 'photon:cloudflare-entry'
+import handler from 'photon:cloudflare:photon:server-entry'
 
 export default handler
 ```
@@ -62,9 +63,6 @@ Configure Wrangler to use your Cloudflare entry:
 name = "my-photon-app"
 main = "cloudflare-entry.ts"
 compatibility_date = "2025-08-28"
-
-[build]
-command = "npm run build"
 ```
 
 ### Server Integration

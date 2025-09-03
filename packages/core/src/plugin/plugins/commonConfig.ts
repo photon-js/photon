@@ -71,7 +71,9 @@ function commonConfig(): Plugin[] {
         // do not override `noExternal: true`
         if (config.resolve?.noExternal !== true) {
           additionalResolveConfig.noExternal = [
+            "@photonjs/cloudflare",
             "@photonjs/core",
+            "@photonjs/runtime",
             "@photonjs/h3",
             "@photonjs/elysia",
             "@photonjs/hono",
