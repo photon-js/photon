@@ -1,5 +1,11 @@
 ## [0.0.3](https://github.com/photon-js/photon/compare/@photonjs/core@0.0.2...@photonjs/core@0.0.3) (2025-08-20)
 
+## 0.0.9
+
+### Patch Changes
+
+- 78e177a: fix: add @photonjs/srvx to noExternal
+
 ## 0.0.8
 
 ### Patch Changes
