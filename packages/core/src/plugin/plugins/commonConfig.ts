@@ -78,6 +78,7 @@ function commonConfig(): Plugin[] {
             "@photonjs/express",
             "@photonjs/fastify",
             "@photonjs/hattip",
+            "@photonjs/srvx",
           ];
         }
 
