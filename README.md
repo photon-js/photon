@@ -32,7 +32,7 @@ Next-generation server toolkit designed for **library and framework developers**
 Photon is designed as an **unopinionated and flexible alternative to Nitro**, specifically for framework developers who need:
 
 ### Universal Server Support
-- **Any server framework**: Hono, Express, Fastify, Elysia, H3, HatTip
+- **Any server framework**: Hono, Express, Fastify, Elysia, H3, Srvx, HatTip
 - **Any deployment target**: Cloudflare, Vercel, Netlify, Node.js, VPS
 - **Any runtime**: Node.js, Cloudflare Workers, Deno, Bun
 
