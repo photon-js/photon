@@ -1,5 +1,13 @@
 ## 0.0.1 (2025-08-19)
 
+## 0.0.8
+
+### Patch Changes
+
+- 20f3404: chore: improve cloudflare support
+- Updated dependencies [20f3404]
+  - @photonjs/core@0.0.10
+
 ## 0.0.7
 
 ### Patch Changes

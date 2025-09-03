@@ -1,5 +1,11 @@
 ## [0.0.3](https://github.com/photon-js/photon/compare/@photonjs/core@0.0.2...@photonjs/core@0.0.3) (2025-08-20)
 
+## 0.0.10
+
+### Patch Changes
+
+- 20f3404: chore: improve cloudflare support
+
 ## 0.0.9
 
 ### Patch Changes
