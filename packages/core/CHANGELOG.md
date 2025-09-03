@@ -1,5 +1,11 @@
 ## [0.0.3](https://github.com/photon-js/photon/compare/@photonjs/core@0.0.2...@photonjs/core@0.0.3) (2025-08-20)
 
+## 0.0.8
+
+### Patch Changes
+
+- 28135a8: feat: add support for srvx
+
 ## 0.0.7
 
 ### Patch Changes

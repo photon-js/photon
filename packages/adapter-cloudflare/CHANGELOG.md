@@ -1,5 +1,13 @@
 ## 0.0.1 (2025-08-19)
 
+## 0.0.6
+
+### Patch Changes
+
+- 28135a8: feat: add support for srvx
+- Updated dependencies [28135a8]
+  - @photonjs/core@0.0.8
+
 ## 0.0.5
 
 ### Patch Changes

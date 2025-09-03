@@ -1,5 +1,15 @@
 # @photonjs/runtime
 
+## 0.0.5
+
+### Patch Changes
+
+- 28135a8: feat: add support for srvx
+- 684c71a: feat: default fallback to srvx instead of hono
+- Updated dependencies [28135a8]
+  - @photonjs/core@0.0.8
+  - @photonjs/srvx@0.0.2
+
 ## 0.0.4
 
 ### Patch Changes
