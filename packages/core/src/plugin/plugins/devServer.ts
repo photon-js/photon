@@ -1,5 +1,4 @@
-import { fork } from "node:child_process";
-import { createServer, type IncomingMessage, type Server } from "node:http";
+import type { IncomingMessage, Server } from "node:http";
 import pc from "@brillout/picocolors";
 import {
   enhance,
@@ -100,7 +99,7 @@ async function importHandler(vite: ViteDevServer, handler: PhotonEntryUniversalH
 
 export function devServer(config?: Photon.Config): Plugin {
   let resolvedEntryId: string;
-  let HMRServer: ReturnType<typeof createServer> | undefined;
+  let HMRServer: Server | undefined;
   let viteDevServer: ViteDevServer;
   let setupHMRProxyDone = false;
 
@@ -121,7 +120,7 @@ export function devServer(config?: Photon.Config): Plugin {
     enforce: "post",
     config: {
       order: "post",
-      handler(userConfig) {
+      async handler(userConfig) {
         const resolvedPhotonConfig = resolvePhotonConfig(userConfig.photon);
         if (resolvedPhotonConfig.devServer === false) return;
         // FIXME
@@ -133,6 +132,8 @@ export function devServer(config?: Photon.Config): Plugin {
             },
           };
         }
+
+        const { createServer } = await import("node:http");
 
         HMRServer = createServer();
         return {
@@ -381,13 +382,16 @@ async function setupProcessRestarter() {
   if (isRestarterSetUp()) return;
   process.env[IS_RESTARTER_SET_UP] = "true";
 
-  function start() {
+  async function start() {
     const cliEntry = process.argv[1];
     if (!cliEntry) {
       throw new Error("Unable to read argv[1]");
     }
 
     const cliArgs = process.argv.slice(2);
+
+    const { fork } = await import("node:child_process");
+
     // Re-run the exact same CLI
     const clone = fork(cliEntry, cliArgs, { stdio: "inherit" });
     clone.on("exit", (code) => {
@@ -398,7 +402,7 @@ async function setupProcessRestarter() {
       }
     });
   }
-  start();
+  await start();
 
   // Trick: never-resolving-promise in order to block the CLI root process
   await new Promise(() => {});
