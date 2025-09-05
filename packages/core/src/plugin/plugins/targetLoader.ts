@@ -16,6 +16,17 @@ type LoadHook = (
 
 type PluginInterop = Record<string, unknown> & { name: string };
 
+/**
+ * Create plugins that will emit deployment target files.
+ * A custom `load` hook needs to be provided. The generated code will need to:
+ * - Load the module pointed by `id`
+ * - Create the necessary code that is required by the target, wrapping and calling loaded module
+ *
+ * @see Cloudflare adapter for usage
+ *
+ * @param name Target's name, i.e. "cloudflare"
+ * @param options The `load` hook
+ */
 export function targetLoader<T extends { load: LoadHook } & Omit<Plugin, "load" | "resolveId" | "name">>(
   name: string,
   options: T,
@@ -30,6 +41,8 @@ export function targetLoader<T extends { load: LoadHook } & Omit<Plugin, "load" 
       apply: "build",
       enforce: "post",
 
+      // Any entry added after this hook will be ignored
+      // TODO add warnings, but be careful, as entries can be added later to be emitted by other environments
       buildStart: {
         order: "post",
         handler() {
@@ -68,7 +81,7 @@ export function targetLoader<T extends { load: LoadHook } & Omit<Plugin, "load" 
     },
     {
       ...options,
-      name: `photon:target-loader:${name}:loader`,
+      name: `photon:target-loader:${name}:load`,
 
       resolveId: {
         filter: {
@@ -103,10 +116,10 @@ export function targetLoader<T extends { load: LoadHook } & Omit<Plugin, "load" 
         },
 
         async handler(id, opts) {
-          const actualId = id.slice(prefix.length + 1);
+          const originalEntryId = id.slice(prefix.length + 1);
           // At this point, all handlers are wrapped with the server entry, so the entry type is always "server"
           const meta = (await getPhotonMeta(this, id)) as Photon.EntryServer;
-          return options.load.call(this, actualId, {
+          return options.load.call(this, originalEntryId, {
             ...opts,
             meta,
           });
