@@ -87,13 +87,13 @@ function commonConfig(): Plugin[] {
           ];
         }
 
+        const buildTarget = config.consumer === "client" ? null : { build: { target: "es2022" } };
+
         return {
           resolve: {
             ...additionalResolveConfig,
           },
-          build: {
-            target: "es2022",
-          },
+          ...buildTarget,
         };
       },
     }),
