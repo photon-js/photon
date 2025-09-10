@@ -1,5 +1,11 @@
 ## 0.0.1 (2025-08-19)
 
+## 0.0.10
+
+### Patch Changes
+
+- 26b7ab8: fix: bundle /virtual types
+
 ## 0.0.9
 
 ### Patch Changes
