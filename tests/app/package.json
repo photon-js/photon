@@ -18,17 +18,17 @@
     "@photonjs/runtime": "workspace:",
     "@photonjs/srvx": "workspace:",
     "@types/express": "^5.0.3",
-    "@types/node": "^22.17.2",
+    "@types/node": "^22.18.1",
     "typescript": "^5.9.2",
-    "vite": "^7.1.3",
-    "wrangler": "^4.31.0"
+    "vite": "^7.1.5",
+    "wrangler": "^4.35.0"
   },
   "dependencies": {
     "awesome-framework": "workspace:",
     "express": "^5.1.0",
-    "fastify": "^5.5.0",
+    "fastify": "^5.6.0",
     "h3": "^1.15.4",
-    "hono": "^4.9.2",
+    "hono": "^4.9.6",
     "srvx": "^0.8.7"
   }
 }
