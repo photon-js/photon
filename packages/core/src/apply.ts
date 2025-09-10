@@ -8,7 +8,7 @@ import {
 import { extractUniversal } from "./plugin/utils/universal.js";
 
 function errorMessageMiddleware(_id: string, index: number) {
-  return `Additional middleware at index ${index} default export must respect the following type: UniversalMiddleware | UniversalMiddleware[]. Each individual middleware must be wrapped with enhance helper. See https://universal-middleware.dev/helpers/enhance`;
+  return `Additional middleware at index ${index} default export must respect the following type: UniversalMiddleware | UniversalMiddleware[]. Each individual middleware must be wrapped with enhance helper with at least a 'name'. See https://universal-middleware.dev/helpers/enhance`;
 }
 
 type Apply<App> = (app: App, middlewares: EnhancedMiddleware[]) => void;

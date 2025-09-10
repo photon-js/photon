@@ -53,7 +53,8 @@
     }
   },
   "files": [
-    "dist/"
+    "dist/",
+    "virtual.d.ts"
   ],
   "repository": "github:photon-js/photon",
   "license": "MIT"
