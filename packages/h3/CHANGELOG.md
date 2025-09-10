@@ -1,5 +1,13 @@
 # @photonjs/h3
 
+## 0.0.9
+
+### Patch Changes
+
+- 5a90439: feat: upgrade dependencies
+- Updated dependencies [5a90439]
+  - @photonjs/core@0.0.12
+
 ## 0.0.8
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 ## [0.0.3](https://github.com/photon-js/photon/compare/@photonjs/core@0.0.2...@photonjs/core@0.0.3) (2025-08-20)
 
+## 0.0.12
+
+### Patch Changes
+
+- 5a90439: feat: upgrade dependencies
+
 ## 0.0.11
 
 ### Patch Changes
