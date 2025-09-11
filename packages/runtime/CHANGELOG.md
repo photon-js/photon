@@ -1,5 +1,14 @@
 # @photonjs/runtime
 
+## 0.0.10
+
+### Patch Changes
+
+- 5659f49: fix: properly compute optimizeDeps
+- Updated dependencies [5659f49]
+  - @photonjs/core@0.0.13
+  - @photonjs/srvx@0.0.7
+
 ## 0.0.9
 
 ### Patch Changes

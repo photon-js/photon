@@ -1,5 +1,13 @@
 ## 0.0.1 (2025-08-19)
 
+## 0.0.12
+
+### Patch Changes
+
+- 5659f49: fix: properly compute optimizeDeps
+- Updated dependencies [5659f49]
+  - @photonjs/core@0.0.13
+
 ## 0.0.11
 
 ### Patch Changes
