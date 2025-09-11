@@ -1,5 +1,11 @@
 ## 0.0.1 (2025-08-19)
 
+## 0.0.13
+
+### Patch Changes
+
+- b01b2e4: fix: upgrade @universal-middleware/h3
+
 ## 0.0.12
 
 ### Patch Changes

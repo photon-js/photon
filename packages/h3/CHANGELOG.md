@@ -1,5 +1,11 @@
 # @photonjs/h3
 
+## 0.0.11
+
+### Patch Changes
+
+- b01b2e4: fix: upgrade @universal-middleware/h3
+
 ## 0.0.10
 
 ### Patch Changes
