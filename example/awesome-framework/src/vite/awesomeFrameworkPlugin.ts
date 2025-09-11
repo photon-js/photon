@@ -22,6 +22,10 @@ export function awesomeFrameworkPlugin(): Plugin {
     configEnvironment(name) {
       if (name === "ssr") {
         return {
+          optimizeDeps: {
+            // awesome-framework is an ESM package, so no need to optimize it
+            exclude: ["awesome-framework"],
+          },
           build: {
             outDir: "./dist/server",
             emptyOutDir: false,
