@@ -35,9 +35,11 @@ function fallback(): Plugin {
         //language=ts
         return `import { apply, serve } from 'photon:resolve-from-photon:@photonjs/srvx'
 
+        const port = process.env.PORT ? Number.parseInt(process.env.PORT, 10) : undefined;
+
         function startServer() {
           const app = apply()
-          return serve(app)
+          return serve(app, { port })
         }
 
         export default startServer()
