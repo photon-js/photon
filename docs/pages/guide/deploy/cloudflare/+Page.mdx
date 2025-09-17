@@ -45,7 +45,7 @@ Create a `wrangler.toml` file:
 
 ```toml
 name = "my-photon-app"
-main = "cloudflare-entry.ts"
+main = "photon:cloudflare:photon:server-entry"
 compatibility_date = "2025-08-28"
 
 [build]
@@ -57,17 +57,6 @@ id = "your-kv-namespace-id"
 
 [vars]
 ENVIRONMENT = "production"
-```
-
-### Cloudflare Entry
-
-Create a Cloudflare entry file:
-
-```ts
-// cloudflare-entry.ts
-import handler from 'photon:cloudflare-entry'
-
-export default handler
 ```
 
 ## Server Setup

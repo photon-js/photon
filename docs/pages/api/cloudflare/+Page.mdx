@@ -3,7 +3,7 @@ import { PackageInfo, InstallCommand, NextSteps } from '../../../components'
 <PackageInfo
   name="@photonjs/cloudflare"
   description="Cloudflare Workers and Pages adapter for Photon applications."
-  version="0.0.7"
+  version="0.0.14"
   status="alpha"
   npmUrl="https://www.npmjs.com/package/@photonjs/cloudflare"
   githubUrl="https://github.com/photon-js/photon/tree/main/packages/cloudflare"
@@ -202,20 +202,20 @@ Use Cloudflare KV for data storage:
 app.get('/api/data/:key', async (c) => {
   const key = c.req.param('key')
   const value = await c.env.MY_KV.get(key)
-  
+
   if (!value) {
     return c.notFound()
   }
-  
+
   return c.json({ key, value })
 })
 
 app.put('/api/data/:key', async (c) => {
   const key = c.req.param('key')
   const value = await c.req.text()
-  
+
   await c.env.MY_KV.put(key, value)
-  
+
   return c.json({ success: true })
 })
 ```
@@ -228,7 +228,7 @@ Integrate with Durable Objects:
 app.get('/api/counter', async (c) => {
   const id = c.env.COUNTER.idFromName('global')
   const stub = c.env.COUNTER.get(id)
-  
+
   const response = await stub.fetch(c.req.raw)
   return response
 })
@@ -281,13 +281,13 @@ export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext) {
     // Custom logic before handling
     console.log(`Request: ${request.method} ${request.url}`)
-    
+
     // Handle with Hono app
     const response = await serve(app).fetch(request, env, ctx)
-    
+
     // Custom logic after handling
     response.headers.set('X-Powered-By', 'Photon + Cloudflare')
-    
+
     return response
   }
 }
@@ -301,12 +301,12 @@ Implement edge caching:
 app.get('/api/cached', async (c) => {
   const cache = caches.default
   const cacheKey = new Request(c.req.url, c.req.raw)
-  
+
   let response = await cache.match(cacheKey)
-  
+
   if (!response) {
     // Generate fresh response
-    response = new Response(JSON.stringify({ 
+    response = new Response(JSON.stringify({
       data: 'fresh',
       timestamp: Date.now()
     }), {
@@ -315,11 +315,11 @@ app.get('/api/cached', async (c) => {
         'Cache-Control': 'public, max-age=300'
       }
     })
-    
+
     // Cache the response
     c.executionCtx.waitUntil(cache.put(cacheKey, response.clone()))
   }
-  
+
   return response
 })
 ```
@@ -333,10 +333,10 @@ app.get('/api/info', (c) => {
   return c.json({
     // Cloudflare request properties
     cf: c.req.raw.cf,
-    
+
     // Environment variables
     environment: c.env.ENVIRONMENT,
-    
+
     // Request headers
     country: c.req.header('cf-ipcountry'),
     ip: c.req.header('cf-connecting-ip')
@@ -386,7 +386,7 @@ export const onRequest = handler
 // In your server setup
 app.onError((error, c) => {
   console.error('Cloudflare error:', error)
-  
+
   return c.json({
     error: 'Internal Server Error',
     message: error.message,
@@ -419,14 +419,14 @@ app.get('/api/feature', async (c) => {
 // Optimize for Cloudflare's CPU time limits
 app.use('*', async (c, next) => {
   const start = Date.now()
-  
+
   const response = await next()
-  
+
   const duration = Date.now() - start
   if (duration > 50) {
     console.warn(`Slow request: ${duration}ms`)
   }
-  
+
   return response
 })
 ```
@@ -446,7 +446,7 @@ app.get('/api/large-data', async (c) => {
       controller.close()
     }
   })
-  
+
   return new Response(stream, {
     headers: { 'Content-Type': 'text/plain' }
   })
