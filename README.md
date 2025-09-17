@@ -11,7 +11,9 @@ Photon supports popular deployments such as:
 
 And popular servers:
  - Hono
- - Hono
+ - Express
+ - Fastify
+ - etc.
 
 It currently supports Vike. More Vite-based frameworks are coming (e.g. [we're talking with TanStack](https://github.com/SeanCassiere/cautious-giggle)).
 
