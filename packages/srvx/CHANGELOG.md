@@ -1,5 +1,12 @@
 # @photonjs/srvx
 
+## 0.0.9
+
+### Patch Changes
+
+- Updated dependencies [371c2e6]
+  - @photonjs/core@0.0.15
+
 ## 0.0.8
 
 ### Patch Changes

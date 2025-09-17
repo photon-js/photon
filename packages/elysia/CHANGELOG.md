@@ -1,5 +1,12 @@
 # @photonjs/elysia
 
+## 0.0.12
+
+### Patch Changes
+
+- Updated dependencies [371c2e6]
+  - @photonjs/core@0.0.15
+
 ## 0.0.11
 
 ### Patch Changes
