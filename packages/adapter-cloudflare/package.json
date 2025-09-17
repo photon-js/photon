@@ -20,7 +20,7 @@
     "build": "tsdown"
   },
   "dependencies": {
-    "@cloudflare/vite-plugin": "^1.12.4",
+    "@cloudflare/vite-plugin": "^1.13.2",
     "@photonjs/core": "workspace:^",
     "@universal-middleware/cloudflare": "^0.4.10"
   },

@@ -43,25 +43,14 @@ export default {
 }
 ```
 
-### Cloudflare Entry Point
-
-Create a Cloudflare entry file that imports your Photon virtual module:
-
-```ts
-// cloudflare-entry.ts
-import handler from 'photon:cloudflare:photon:server-entry'
-
-export default handler
-```
-
 ### Wrangler Configuration
 
-Configure Wrangler to use your Cloudflare entry:
+Configure Wrangler to use your Photon's virtual entry:
 
 ```toml
 # wrangler.toml
 name = "my-photon-app"
-main = "cloudflare-entry.ts"
+main = "photon:cloudflare:photon:server-entry"
 compatibility_date = "2025-08-28"
 ```
 

@@ -21,7 +21,7 @@
     "@types/node": "^22.18.1",
     "typescript": "^5.9.2",
     "vite": "^7.1.5",
-    "wrangler": "^4.35.0"
+    "wrangler": "^4.37.1"
   },
   "dependencies": {
     "awesome-framework": "workspace:",
