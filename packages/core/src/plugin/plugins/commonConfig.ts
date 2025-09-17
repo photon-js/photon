@@ -42,7 +42,6 @@ function commonConfig(): Plugin[] {
           // dependency from optimizeDeps: "There is a new version of the pre-bundle for [...]"
           optimizeDeps: {
             entries,
-            include: ["@photonjs/core > @brillout/picocolors"],
             exclude: [
               "hono",
               "h3",

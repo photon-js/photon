@@ -1,6 +1,6 @@
-import pc from "@brillout/picocolors";
 import { getPort, installServerHMR, onReady, type ServerOptionsBase } from "@photonjs/core/serve";
 import type { App as FastifyApp } from "@universal-middleware/fastify";
+import { bold, yellow } from "ansis";
 import type { FastifyListenOptions } from "fastify";
 
 export function serve<App extends FastifyApp>(app: App, options: ServerOptionsBase = {}) {
@@ -26,8 +26,8 @@ export function serve<App extends FastifyApp>(app: App, options: ServerOptionsBa
 
     if (optionsSymbol && !appAny[optionsSymbol]?.forceCloseConnections) {
       console.warn(
-        pc.yellow(
-          `${pc.bold("[photon:fastify]")} Please make sure that fastify is initialized with \`{ forceCloseConnections: true }\` for proper HMR support.`,
+        yellow(
+          `${bold("[photon:fastify]")} Please make sure that fastify is initialized with \`{ forceCloseConnections: true }\` for proper HMR support.`,
         ),
       );
     }

@@ -1,5 +1,4 @@
 import type { IncomingMessage, Server } from "node:http";
-import pc from "@brillout/picocolors";
 import {
   enhance,
   getUniversalProp,
@@ -11,6 +10,7 @@ import {
   type UniversalHandler,
   type UniversalMiddleware,
 } from "@universal-middleware/core";
+import { cyan } from "ansis";
 import type {
   DevEnvironment,
   Environment,
@@ -296,7 +296,7 @@ export function devServer(config?: Photon.Config): Plugin {
     });
     assertUsage(
       indexResolved?.id,
-      `Cannot find server entry ${pc.cyan(index.id)}. Make sure its path is relative to the root of your project.`,
+      `Cannot find server entry ${cyan(index.id)}. Make sure its path is relative to the root of your project.`,
     );
     resolvedEntryId = indexResolved.id;
     assertUsage(isRunnableDevEnvironment(env), `${envName} environment is not runnable`);
