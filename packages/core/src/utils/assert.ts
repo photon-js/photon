@@ -1,3 +1,5 @@
+import { red as _red, bold } from "ansis";
+
 export {
   assert,
   assertUsage,
@@ -8,8 +10,6 @@ export {
   PhotonRuntimeError,
   PhotonDependencyError,
 };
-
-import pc from "@brillout/picocolors";
 
 /**
  * Base class for all PhotonJS errors
@@ -79,5 +79,5 @@ function assertUsage(condition: unknown, message: string): asserts condition {
 }
 
 function red(str: string) {
-  return pc.red(pc.bold(str));
+  return _red(bold(str));
 }

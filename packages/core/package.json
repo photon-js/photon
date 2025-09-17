@@ -21,13 +21,13 @@
     "build": "tsdown"
   },
   "dependencies": {
-    "@brillout/picocolors": "^1.0.28",
     "@brillout/vite-plugin-server-entry": "^0.7.14",
     "@universal-middleware/cloudflare": "^0.4.10",
     "@universal-middleware/compress": "^0.2.31",
     "@universal-middleware/core": "^0.4.10",
     "@universal-middleware/express": "^0.4.19",
     "@universal-middleware/sirv": "^0.1.21",
+    "ansis": "^4.1.0",
     "estree-walker": "^3.0.3",
     "ts-deepmerge": "^7.0.3",
     "zod": "^3.25.76"
