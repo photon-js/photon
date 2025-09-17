@@ -1,5 +1,13 @@
 ## 0.0.1 (2025-08-19)
 
+## 0.0.14
+
+### Patch Changes
+
+- 82a785f: feat: bump @cloudflare/vite-plugin to support virtual main entries
+- Updated dependencies [8cb65bb]
+  - @photonjs/core@0.0.14
+
 ## 0.0.13
 
 ### Patch Changes
