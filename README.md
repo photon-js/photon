@@ -1,8 +1,29 @@
 # Photon
 
-> ⚠️ **Alpha Stage**: Photon is currently in alpha. APIs may change before stable release.
+> ⚠️ **Alpha**: Photon is currently in alpha. APIs may change before stable release.
 
-Next-generation server toolkit designed for **library and framework developers** who need universal server capabilities.
+Next-generation deployment and server toolkit.
+
+Photon supports popular deployments such as:
+ - Self-hosted
+ - Cloudflare
+ - Vercel
+
+And popular servers:
+ - Hono
+ - Express
+ - Fastify
+ - etc.
+
+It currently supports Vike. More Vite-based frameworks are coming (e.g. [we're talking with TanStack](https://github.com/SeanCassiere/cautious-giggle)).
+
+
+## Documentation
+
+- **[Getting Started](https://photonjs.dev/get-started)** - Learn how to use Photon
+- **[Framework Integration](https://photonjs.dev/guide/framework-integration)** - Integrate Photon into your framework
+- **[Examples](./example)** - Real-world integration examples
+
 
 ## Packages
 
@@ -27,33 +48,24 @@ Next-generation server toolkit designed for **library and framework developers**
 - [example/app-cloudflare](./example/app-cloudflare) - Example app using a framework powered by Photon
 - [example/app-hono-cloudflare](./example/app-hono-cloudflare) - Example app using Photon + Hono on Cloudflare
 
+
 ## Philosophy
 
-Photon is designed as an **unopinionated and flexible alternative to Nitro**, specifically for framework developers who need:
+Photon is designed as an **unopinionated and flexible alternative to [Nitro](https://nitro.build/)**, specifically for framework developers who want universal server capabilities.
 
 ### Universal Server Support
 - **Any server framework**: Hono, Express, Fastify, Elysia, H3, Srvx, HatTip
 - **Any deployment target**: Cloudflare, Vercel, Netlify, Node.js, VPS
 - **Any runtime**: Node.js, Cloudflare Workers, Deno, Bun
 
-### Framework Developer Focus
+### Features
 - **Easy integration** for Vite-based frameworks
-- **Universal middleware** that works across all server frameworks
-- **Server code-splitting**: Deploy each route to separate edge workers
+- **Universal middlewares** that work across all server frameworks
+- **Server code-splitting** for deploying each route to separate edge workers
 - **Hot Module Replacement** for server code
-- **TypeScript-first** with excellent developer experience
+- **TypeScript support** with first-class developer experience
 
 ### Powered by Modern Standards
 - Built on **Vite's Environment API**
 - Uses **Web Standard APIs** for universal compatibility
 - Leverages **Universal Middleware** for framework-agnostic capabilities
-
-## Documentation
-
-- **[Getting Started](https://photonjs.dev/get-started)** - Learn how to use Photon
-- **[Framework Integration](https://photonjs.dev/guide/framework-integration)** - Integrate Photon into your framework
-- **[Examples](./example)** - Real-world integration examples
-
-## See also
-
- - [Playground trying out PhotonJS - made by TanStack team](https://github.com/SeanCassiere/cautious-giggle)
