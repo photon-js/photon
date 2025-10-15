@@ -1,5 +1,13 @@
 ## 0.0.1 (2025-08-19)
 
+## 0.0.16
+
+### Patch Changes
+
+- d2e67f8: feat: upgrade dependencies
+- Updated dependencies [d2e67f8]
+  - @photonjs/core@0.0.16
+
 ## 0.0.15
 
 ### Patch Changes
