@@ -42,10 +42,12 @@ It currently supports Vike. More Vite-based frameworks are coming (e.g. [we're t
 
 ### Deployment Adapters
 - [packages/adapter-cloudflare](./packages/adapter-cloudflare) - Cloudflare Workers/Pages adapter
+- [packages/adapter-vercel](./packages/adapter-vercel) -Vercel adapter
 
 ## Examples
 - [example/awesome-framework](./example/awesome-framework) - Example of integrating Photon into a Vite-based framework
 - [example/app-cloudflare](./example/app-cloudflare) - Example app using a framework powered by Photon
+- [example/app-vercel](./example/app-vercel) - Example app using a framework powered by Photon
 - [example/app-hono-cloudflare](./example/app-hono-cloudflare) - Example app using Photon + Hono on Cloudflare
 
 
