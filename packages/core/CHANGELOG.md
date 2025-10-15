@@ -1,5 +1,11 @@
 ## [0.0.3](https://github.com/photon-js/photon/compare/@photonjs/core@0.0.2...@photonjs/core@0.0.3) (2025-08-20)
 
+## 0.1.0
+
+### Minor Changes
+
+- 90c6e01: Release as 0.1.0
+
 ## 0.0.16
 
 ### Patch Changes

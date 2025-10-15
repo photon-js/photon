@@ -1,5 +1,16 @@
 # @photonjs/srvx
 
+## 0.1.0
+
+### Minor Changes
+
+- 90c6e01: Release as 0.1.0
+
+### Patch Changes
+
+- Updated dependencies [90c6e01]
+  - @photonjs/core@0.1.0
+
 ## 0.0.10
 
 ### Patch Changes
