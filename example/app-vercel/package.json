@@ -1,0 +1,21 @@
+{
+  "name": "app-vercel",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "@photonjs/core": "workspace:",
+    "@photonjs/runtime": "workspace:",
+    "@photonjs/vercel": "workspace:",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.10",
+    "wrangler": "^4.43.0"
+  },
+  "dependencies": {
+    "@universal-middleware/core": "^0.4.11",
+    "awesome-framework": "workspace:"
+  }
+}

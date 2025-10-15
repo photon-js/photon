@@ -24,11 +24,11 @@
     "release": "pnpm run build:photon && changeset version && pnpm i && pnpm publish -r"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.2.4",
-    "@brillout/test-e2e": "^0.6.18",
+    "@biomejs/biome": "^2.2.6",
+    "@brillout/test-e2e": "^0.6.19",
     "@changesets/cli": "^2.29.7",
     "@vikejs/biome-config": "^2.0.1",
-    "playwright": "^1.55.0"
+    "playwright": "^1.56.0"
   },
   "packageManager": "pnpm@10.15.1"
 }

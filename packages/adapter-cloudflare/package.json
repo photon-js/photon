@@ -20,21 +20,21 @@
     "build": "tsdown"
   },
   "dependencies": {
-    "@cloudflare/vite-plugin": "^1.13.2",
+    "@cloudflare/vite-plugin": "^1.13.13",
     "@photonjs/core": "workspace:^",
     "@universal-middleware/cloudflare": "^0.4.10"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250910.0",
-    "@universal-middleware/core": "^0.4.10",
+    "@cloudflare/workers-types": "^4.20251011.0",
+    "@universal-middleware/core": "^0.4.11",
     "@universal-middleware/h3": "^0.4.14",
-    "@universal-middleware/hono": "^0.4.16",
+    "@universal-middleware/hono": "^0.4.17",
     "@universal-middleware/srvx": "^0.1.0",
     "crossws": "^0.3.5",
     "h3": "^1.15.4",
-    "tsdown": "^0.15.0",
-    "typescript": "^5.9.2",
-    "vite": "^7.1.5"
+    "tsdown": "^0.15.7",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.10"
   },
   "peerDependencies": {
     "crossws": "^0",

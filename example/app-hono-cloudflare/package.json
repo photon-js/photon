@@ -15,12 +15,12 @@
     "@photonjs/core": "workspace:",
     "@photonjs/hono": "workspace:",
     "@photonjs/runtime": "workspace:",
-    "typescript": "^5.9.2",
-    "vite": "^7.1.5",
-    "wrangler": "^4.37.1"
+    "typescript": "^5.9.3",
+    "vite": "^7.1.10",
+    "wrangler": "^4.43.0"
   },
   "dependencies": {
     "awesome-framework": "workspace:",
-    "hono": "^4.9.6"
+    "hono": "^4.9.12"
   }
 }

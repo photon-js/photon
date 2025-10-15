@@ -65,10 +65,19 @@ export function installPhotonForLib(name: string, options?: InstallPhotonBaseOpt
         return ifPhotonModule("resolve-from-photon", id, async ({ module: actualId }) => {
           if (opts.custom?.photonScope !== undefined && opts.custom.photonScope !== name) return;
 
+          const isLog = name === "@photonjs/vercel";
+
           resolvedName ??= await resolveFirst(this, [
             { source: name, importer: undefined },
             { source: name, importer },
           ]);
+
+          if (resolvedName && isLog) {
+            const resolved = await this.resolve(actualId, resolvedName.id, opts);
+            if (resolved) {
+              return resolved;
+            }
+          }
 
           const foundPhotonRuntime = await resolveFirst(this, [
             { source: "@photonjs/runtime", importer: undefined, opts },

@@ -426,7 +426,12 @@ export function photonEntry(): Plugin[] {
 
             if (!entry) {
               const resolvedIdWithPhotonPrefix = asPhotonEntryId(resolved.id, "handler-entry");
-              entry = handlers.find((e) => e.id === resolvedIdWithPhotonPrefix);
+              entry = handlers.find((e) => {
+                if (e.resolvedId) {
+                  return e.resolvedId === resolved.id;
+                }
+                return e.id === resolvedIdWithPhotonPrefix;
+              });
             }
 
             assertUsage(entry, `Cannot find a handler for ${resolved.id}`);
