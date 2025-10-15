@@ -1,19 +1,15 @@
 {
-  "name": "app-cloudflare",
+  "name": "app-vercel",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:cloudflare": "vite --mode cloudflare",
-    "build": "vite build",
-    "build:cloudflare": "vite build --mode cloudflare",
-    "preview": "pnpm run build && node dist/server/index.js",
-    "preview:cloudflare": "pnpm run build:cloudflare && vite preview --mode cloudflare"
+    "build": "vite build"
   },
   "devDependencies": {
-    "@photonjs/cloudflare": "workspace:",
     "@photonjs/core": "workspace:",
     "@photonjs/runtime": "workspace:",
+    "@photonjs/vercel": "workspace:",
     "typescript": "^5.9.3",
     "vite": "^7.1.10",
     "wrangler": "^4.43.0"
