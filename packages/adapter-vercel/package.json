@@ -1,0 +1,34 @@
+{
+  "name": "@photonjs/vercel",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./universal-middleware": "./dist/universal-middleware-prod.js",
+    "./universal-middleware/dev": "./dist/universal-middleware-dev.js",
+    "./utils": "./dist/utils.js",
+    "./api": "./dist/api.js",
+    "./types": {
+      "types": "./dist/types.d.ts"
+    }
+  },
+  "scripts": {
+    "dev": "tsdown --watch",
+    "build": "tsdown"
+  },
+  "dependencies": {
+    "vite-plugin-vercel": "^10.0.0-beta.4",
+    "@photonjs/core": "workspace:^"
+  },
+  "devDependencies": {
+    "tsdown": "^0.15.7"
+  },
+  "files": [
+    "dist/",
+    "virtual.d.ts"
+  ],
+  "repository": "github:photon-js/photon",
+  "license": "MIT"
+}
