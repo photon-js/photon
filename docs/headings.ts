@@ -109,22 +109,4 @@ const headings: HeadingDefinition[] = [
     title: "@photonjs/runtime",
     url: "/api/runtime",
   },
-  {
-    level: 4,
-    title: "Server Adapters",
-  },
-  {
-    level: 2,
-    title: "@photonjs/hono",
-    url: "/api/hono",
-  },
-  {
-    level: 4,
-    title: "Deployment Adapters",
-  },
-  {
-    level: 2,
-    title: "@photonjs/cloudflare",
-    url: "/api/cloudflare",
-  },
 ];
