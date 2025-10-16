@@ -53,7 +53,7 @@ It currently supports Vike. More Vite-based frameworks are coming (e.g. [we're t
 
 ## Philosophy
 
-Photon is designed as an **unopinionated and flexible alternative to [Nitro](https://nitro.build/)**, specifically for framework developers who want universal server capabilities.
+Photon is designed as an **unopinionated and flexible alternative to [Nitro](https://nitro.build/)**, with support for universal server capabilities.
 
 ### Universal Server Support
 - **Any server framework**: Hono, Express, Fastify, Elysia, H3, Srvx, HatTip
