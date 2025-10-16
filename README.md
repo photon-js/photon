@@ -4,8 +4,8 @@
 
 ## Links
 
-What is Photon: [vike.dev](https://vike.dev)  
-Why Photon: [Why Photon](https://photonjs.dev/why)  
+What is Photon: [photonjs.dev](https://photonjs.dev)  
+Why Photon: [photonjs.dev/why](https://photonjs.dev/why)  
 
 ## Monorepo
 
