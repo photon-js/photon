@@ -65,16 +65,6 @@ const headings: HeadingDefinition[] = [
     url: "/guide/middleware",
   },
   {
-    level: 2,
-    title: "Configuration",
-    url: "/guide/config",
-  },
-  {
-    level: 2,
-    title: "Ecosystem",
-    url: "/guide/ecosystem",
-  },
-  {
     level: 4,
     title: "Deployment",
   },
@@ -87,6 +77,21 @@ const headings: HeadingDefinition[] = [
     level: 2,
     title: "Cloudflare",
     url: "/guide/deploy/cloudflare",
+  },
+  {
+    level: 2,
+    title: "Vercel",
+    url: "/guide/deploy/vercel",
+  },
+  {
+    level: 2,
+    title: "Node.js",
+    url: "/guide/deploy/node",
+  },
+  {
+    level: 2,
+    title: "Bun",
+    url: "/guide/deploy/bun",
   },
   {
     level: 1,
@@ -108,23 +113,5 @@ const headings: HeadingDefinition[] = [
     level: 2,
     title: "@photonjs/runtime",
     url: "/api/runtime",
-  },
-  {
-    level: 4,
-    title: "Server Adapters",
-  },
-  {
-    level: 2,
-    title: "@photonjs/hono",
-    url: "/api/hono",
-  },
-  {
-    level: 4,
-    title: "Deployment Adapters",
-  },
-  {
-    level: 2,
-    title: "@photonjs/cloudflare",
-    url: "/api/cloudflare",
   },
 ];

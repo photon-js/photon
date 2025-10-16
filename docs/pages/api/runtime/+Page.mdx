@@ -3,7 +3,6 @@ import { PackageInfo, InstallCommand, ApiReference, NextSteps } from '../../../c
 <PackageInfo
   name="@photonjs/runtime"
   description="The runtime package provides convenience functions for framework developers to integrate Photon."
-  version="0.0.7"
   status="alpha"
   npmUrl="https://www.npmjs.com/package/@photonjs/runtime"
   githubUrl="https://github.com/photon-js/photon/tree/main/packages/runtime"
@@ -86,7 +85,7 @@ Configure code splitting behavior.
 ```ts
 interface CodeSplittingConfig {
   framework?: boolean
-  routes?: boolean
+  target?: boolean
 }
 ```
 
@@ -94,7 +93,7 @@ interface CodeSplittingConfig {
 ```ts
 codeSplitting: {
   framework: false, // Disable framework-level splitting
-  routes: true      // Enable per-route splitting
+  target: true      // Enable per-route splitting when supported by target
 }
 ```
 
@@ -108,7 +107,7 @@ resolveMiddlewares: () => 'my-framework/universal-middleware'
 
 // Dynamic resolution
 resolveMiddlewares: (context) => {
-  return context.isDevelopment 
+  return context.isDevelopment
     ? 'my-framework/dev-middleware'
     : 'my-framework/prod-middleware'
 }
@@ -121,8 +120,7 @@ Define framework-specific entry points.
 ```ts
 interface EntryConfig {
   id: string
-  compositionMode?: 'compose' | 'isolated'
-  order?: number
+  compositionMode?: 'auto' | 'isolated'
 }
 ```
 
@@ -133,11 +131,9 @@ entries: {
     id: 'my-framework/standalone',
     compositionMode: 'isolated'
   },
-  
+
   api: {
-    id: 'my-framework/api',
-    compositionMode: 'compose',
-    order: 100
+    id: 'my-framework/api'
   }
 }
 ```
@@ -146,114 +142,11 @@ entries: {
 
 ### Composition Modes
 
-**`compose` (default):**
+**`auto` (default):**
 Entry is composed with framework middleware from `resolveMiddlewares()`.
 
 **`isolated`:**
 Entry runs independently without framework middleware composition.
-
-```ts
-entries: {
-  // Composed with framework middleware
-  main: {
-    id: 'framework/main',
-    compositionMode: 'compose'
-  },
-  
-  // Runs independently
-  worker: {
-    id: 'framework/worker', 
-    compositionMode: 'isolated'
-  }
-}
-```
-
-### Entry Order
-
-Control the order of entry execution:
-
-```ts
-entries: {
-  early: {
-    id: 'framework/early',
-    order: 100  // Higher numbers run first
-  },
-  
-  late: {
-    id: 'framework/late',
-    order: -100 // Lower numbers run later
-  }
-}
-```
-
-## Advanced Usage
-
-### Conditional Configuration
-
-```ts
-export function frameworkPlugin(options: FrameworkOptions): Plugin[] {
-  const config: RuntimeConfig = {
-    fullInstall: true,
-    resolveMiddlewares: () => 'framework/core-middleware'
-  }
-  
-  // Add conditional entries
-  if (options.enableSSR) {
-    config.entries = {
-      ...config.entries,
-      ssr: { id: 'framework/ssr' }
-    }
-  }
-  
-  if (options.enableAPI) {
-    config.entries = {
-      ...config.entries,
-      api: { id: 'framework/api' }
-    }
-  }
-  
-  return installPhoton('framework', config)
-}
-```
-
-### Multiple Framework Integration
-
-```ts
-export function compositeFramework(): Plugin[] {
-  // Base framework
-  const basePlugins = installPhoton('base-framework', {
-    resolveMiddlewares: () => 'base/middleware'
-  })
-  
-  // Extension framework
-  const extensionPlugins = installPhoton('extension', {
-    resolveMiddlewares: () => 'extension/middleware',
-    entries: {
-      extension: { id: 'extension/handler' }
-    }
-  })
-  
-  return [...basePlugins, ...extensionPlugins]
-}
-```
-
-### Development vs Production
-
-```ts
-export function frameworkPlugin(): Plugin[] {
-  return installPhoton('framework', {
-    resolveMiddlewares: () => {
-      return process.env.NODE_ENV === 'development'
-        ? 'framework/dev-middleware'
-        : 'framework/prod-middleware'
-    },
-    
-    codeSplitting: {
-      framework: process.env.NODE_ENV === 'production'
-    }
-  })
-}
-```
 
 ## Integration Patterns
 
@@ -271,115 +164,7 @@ export function simpleFramework(): Plugin[] {
 
 ### Full-Featured Framework
 
-Complete integration with all features:
-
-```ts
-export function fullFramework(options: FullOptions): Plugin[] {
-  return installPhoton('full-framework', {
-    fullInstall: true,
-    
-    codeSplitting: {
-      framework: options.codeSplitting ?? true,
-      routes: options.routeSplitting ?? false
-    },
-    
-    resolveMiddlewares: () => {
-      const middleware = ['full-framework/core']
-      
-      if (options.enableAuth) middleware.push('full-framework/auth')
-      if (options.enableLogging) middleware.push('full-framework/logging')
-      
-      return middleware.join(',')
-    },
-    
-    entries: {
-      ssr: {
-        id: 'full-framework/ssr',
-        compositionMode: 'compose'
-      },
-      
-      api: {
-        id: 'full-framework/api',
-        compositionMode: 'isolated'
-      }
-    }
-  })
-}
-```
-
-### Framework with Fallback
-
-Framework that provides automatic fallback:
-
-```ts
-export function frameworkWithFallback(): Plugin[] {
-  return installPhoton('framework', {
-    fullInstall: true,
-    
-    resolveMiddlewares: () => 'framework/middleware',
-    
-    entries: {
-      // Main framework entry
-      main: {
-        id: 'framework/main',
-        compositionMode: 'compose'
-      },
-      
-      // Fallback for unhandled routes
-      fallback: {
-        id: 'framework/fallback',
-        compositionMode: 'isolated',
-        order: -1000 // Run last
-      }
-    }
-  })
-}
-```
-
-## Error Handling
-
-### Configuration Validation
-
-```ts
-function validateConfig(config: RuntimeConfig): void {
-  if (!config.resolveMiddlewares) {
-    throw new Error('resolveMiddlewares is required')
-  }
-  
-  if (config.entries) {
-    for (const [key, entry] of Object.entries(config.entries)) {
-      if (!entry.id) {
-        throw new Error(`Entry ${key} missing required id`)
-      }
-    }
-  }
-}
-
-export function safeFrameworkPlugin(config: RuntimeConfig): Plugin[] {
-  validateConfig(config)
-  return installPhoton('framework', config)
-}
-```
-
-### Graceful Degradation
-
-```ts
-export function resilientFramework(): Plugin[] {
-  try {
-    return installPhoton('framework', {
-      fullInstall: true,
-      resolveMiddlewares: () => 'framework/full-middleware'
-    })
-  } catch (error) {
-    console.warn('Full installation failed, falling back to minimal:', error)
-    
-    return installPhoton('framework', {
-      fullInstall: false,
-      resolveMiddlewares: () => 'framework/minimal-middleware'
-    })
-  }
-}
-```
+Refer to [vike-photon](https://github.com/vikejs/vike-photon/blob/main/packages/vike-photon/src/plugin/index.ts) for a complete integration example.
 
 ## Examples
 
@@ -399,18 +184,18 @@ export interface FrameworkOptions {
 export function framework(options: FrameworkOptions = {}): Plugin[] {
   return installPhoton('my-framework', {
     fullInstall: true,
-    
+
     resolveMiddlewares: () => {
-      const middleware = ['my-framework/core']
-      if (options.logging) middleware.push('my-framework/logging')
-      return middleware.join(',')
+      const middlewares = ['my-framework/core']
+      if (options.logging) middlewares.push('my-framework/logging')
+      return middlewares
     },
-    
+
     entries: {
       ...(options.ssr && {
         ssr: { id: 'my-framework/ssr' }
       }),
-      
+
       ...(options.api && {
         api: { id: 'my-framework/api' }
       })

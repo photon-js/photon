@@ -213,28 +213,6 @@ async function generateDeploymentEntries(options: BuildOptions) {
 }
 ```
 
-## Integration Examples
-
-### Simple Framework (awesome-framework)
-
-The `example/awesome-framework` shows a minimal integration:
-
-- **Universal middleware** for SSR and API handling
-- **Simple configuration** with basic Photon setup
-- **Export conditions** for conditional loading
-
-Key files:
-- `src/vite/photonPlugin.ts` - Photon integration
-- `src/photon/middlewares/ssr.ts` - SSR middleware
-- `src/photon/entries/` - Middleware exports
-
-### Advanced Framework (Vike)
-
-Vike demonstrates advanced Photon integration:
-
-- **Complex middleware composition** with multiple layers
-- **Runtime-specific optimizations** for different deployment targets
-- **Advanced configuration** with user customization options
 
 ## Best Practices
 
@@ -267,32 +245,6 @@ export const middleware = enhance(
 );
 ```
 
-### Development vs. Production
-
-```ts
-// src/photon/entries/universal-middleware.dev.ts
-import { ssrMiddleware } from "../middlewares/ssr.js";
-import { loggerMiddleware } from "../middlewares/logger.js";
-import { errorMiddleware } from "../middlewares/error.js";
-
-export default [ssrMiddleware, loggerMiddleware, errorMiddleware];
-
-// src/photon/entries/universal-middleware.prod.ts  
-import { ssrMiddleware } from "../middlewares/ssr.js";
-import { errorMiddleware } from "../middlewares/error.js";
-// No logger in production
-
-export default [ssrMiddleware, errorMiddleware];
-```
-
-## Testing Your Integration
-
-TODO
-
-## Troubleshooting
-
-TODO
-
 <NextSteps steps={[
   {
     title: "Awesome Framework Example",
@@ -303,7 +255,7 @@ TODO
   {
     title: "Vike Integration",
     description: "Explore advanced integration patterns",
-    url: "https://github.com/vikejs/vike-server/tree/magne4000/dev",
+    url: "https://github.com/vikejs/vike-photon",
     external: true
   },
   {

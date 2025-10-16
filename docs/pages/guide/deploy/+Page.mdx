@@ -1,85 +1,13 @@
+import { Link } from '@brillout/docpress'
 import { AlphaWarning, NextSteps } from '../../../components'
 
 <AlphaWarning message="Deployment adapters are in alpha. Some features may be incomplete." />
 
-Enable universal deployment capabilities for your framework users.
+Photon provides universal deployment capabilities, allowing users to deploy to any platform without framework-specific configuration
 
-## Overview
+## Supported platforms
 
-Photon enables frameworks to provide universal deployment capabilities, allowing users to deploy to any platform without framework-specific configuration. Your framework can support:
-
-- **Edge Runtimes**: Cloudflare Workers, Vercel Edge, Netlify Edge
-- **Serverless**: AWS Lambda, Vercel Functions, Netlify Functions
-- **Traditional Servers**: Node.js, Docker, VPS
-- **Static Hosting**: GitHub Pages, Netlify, Vercel (for SSG)
-
-## Framework Integration
-
-### Enable Deployment Support
-
-Add deployment adapter support to your framework:
-
-```ts
-// src/vite/photonPlugin.ts
-import type { Plugin } from "vite";
-import { installPhoton } from "@photonjs/runtime/vite";
-
-export async function myFramework(options: FrameworkOptions): Plugin[] {
-  const plugins = installPhoton("my-framework", {
-    fullInstall: true,
-    resolveMiddlewares: () => "my-framework/universal-middleware"
-  });
-
-  // Add deployment adapters based on configuration
-  if (options.deploy?.cloudflare) {
-    const { cloudflare } = await import("@photonjs/cloudflare/vite");
-    plugins.push(cloudflare(options.deploy.cloudflare));
-  }
-
-  return plugins;
-}
-
-// Or you can let users directly set the adapter in their vite config
-```
-
-## Platform-Specific Integration
-
-### Cloudflare
-
-See [Cloudflare](/guide/deploy/cloudflare)
-
-### Vercel (Coming Soon)
-
-TODO
-
-### Node.js
-
-Enable traditional Node.js deployment:
-
-```sh
-npm run build && node dist/server/index.js
-```
-
-### Deno
-
-TODO
-
-### Bun
-
-TODO
-
-## User Documentation
-
-Provide clear deployment guides for your framework users:
-
-### Documentation Template
-
-TODO
-
-<NextSteps steps={[
-  {
-    title: "Cloudflare Deployment",
-    description: "Deploy to Cloudflare Workers and Pages",
-    url: "/guide/deploy/cloudflare"
-  }
-]} />
+- <Link href="/guide/deploy/cloudflare">Cloudflare</Link>
+- <Link href="/guide/deploy/vercel">Vercel</Link>
+- <Link href="/guide/deploy/node">Node.js</Link>
+- <Link href="/guide/deploy/bun">Bun</Link>

@@ -1,0 +1,49 @@
+import { AlphaWarning, InstallCommand } from '../../../../components'
+
+<AlphaWarning message="Cloudflare adapter is in alpha. Some features may be incomplete." />
+
+Deploy your Photon application to Cloudflare Workers and Pages.
+
+## Prerequisites
+
+- [Vercel account](https://vercel.com)
+- [Vercel CLI](https://vercel.com/docs/cli)
+
+```bash
+npm install -g vercel
+vercel login
+```
+
+## Installation
+
+<InstallCommand packages="@photonjs/runtime @photonjs/vercel" title="Install the Vercel adapter:" />
+
+## Configuration
+
+### Vite Configuration
+
+Add the Vercel adapter to your Vite config:
+
+```ts
+// vite.config.ts
+import { photon } from '@photonjs/runtime/vite'
+import { vercel } from '@photonjs/vercel/vite'
+
+export default {
+  plugins: [
+    photon(),
+    vercel()
+  ]
+}
+```
+
+## Deployment
+
+### Production
+
+Deploy to Vercel Functions using the CLI:
+
+```bash
+# This will guide you through the setup process
+vercel
+```

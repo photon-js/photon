@@ -2,22 +2,9 @@ import { AlphaWarning, InstallCommand, NextSteps, Tabs } from '../../components'
 
 <AlphaWarning />
 
-Photon is a next-generation server toolkit designed for **library and framework developers** who need universal server capabilities.
-
-## Who is Photon for?
-
-Photon is primarily designed for:
-
-- **Framework developers** building universal web frameworks
-- **Library authors** creating server-agnostic tools
-- **Platform builders** needing multi-runtime support
-- **Advanced developers** who want maximum flexibility
-
-If you're looking to build a simple web app, consider using frameworks built with Photon like [Vike](https://vike.dev) instead.
-
 ## Installation
 
-<InstallCommand packages="@photonjs/core" title="Install Photon core:" />
+<InstallCommand packages="@photonjs/runtime" title="Install Photon package:" />
 
 Choose a server adapter:
 
@@ -140,14 +127,6 @@ Build for production:
 npm run build
 ```
 
-## Building a Framework
-
-If you're building a framework with Photon, consider:
-
-1. **Universal middleware** - Create middleware that works across all server adapters
-2. **Runtime detection** - Handle different deployment targets gracefully
-3. **Type safety** - Leverage Photon's TypeScript support
-4. **Documentation** - Help your users understand deployment options
 
 <NextSteps steps={[
   {
