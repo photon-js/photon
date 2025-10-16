@@ -1,8 +1,8 @@
 export { Page };
 
+import { Link } from "@brillout/docpress";
 import type React from "react";
 import { FeatureGrid } from "../../components";
-import { Link } from '@brillout/docpress'
 
 function Page() {
   return (
@@ -53,7 +53,11 @@ function Features() {
     {
       icon: "🌍",
       title: "Any deployment",
-      description: <>Cloudflare, Vercel, self-hosted, <Link href="/guide/deploy">and more</Link>.</>,
+      description: (
+        <>
+          Cloudflare, Vercel, self-hosted, <Link href="/guide/deploy">and more</Link>.
+        </>
+      ),
     },
     {
       icon: "⚡",
