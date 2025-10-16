@@ -6,11 +6,11 @@ import { FeatureGrid } from "../../components";
 function Page() {
   return (
     <>
-    <Block noMargin>
-      <Hero />
-    <div style={{height: 20}} />
-      <Features />
-    </Block>
+      <Block noMargin>
+        <Hero />
+        <div style={{ height: 20 }} />
+        <Features />
+      </Block>
     </>
   );
 }
@@ -29,10 +29,13 @@ function Hero() {
             color: "#856404",
           }}
         >
-          ⚠️ <strong>Alpha:</strong> Photon is currently in alpha: APIs may change before stable release, and the docs are work-in-progress.
+          ⚠️ <strong>Alpha:</strong> Photon is currently in alpha: APIs may change before stable release, and the docs
+          are work-in-progress.
         </div>
         <h1 style={{ fontSize: "3.4em", marginBottom: "1rem", fontWeight: 450, lineHeight: 1.2 }}>
-          Any server<br/>deployed anywhere.
+          Any server
+          <br />
+          deployed anywhere.
         </h1>
       </div>
     </>
