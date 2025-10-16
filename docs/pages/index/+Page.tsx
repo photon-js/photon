@@ -30,8 +30,8 @@ function Hero() {
         >
           ⚠️ <strong>Alpha Stage:</strong> Photon is currently in alpha. APIs may change before stable release.
         </div>
-        <h1 style={{ fontSize: "3.4em", marginBottom: "1rem" }}>
-          <img src={logoWithText} height={50} />
+        <h1 style={{ fontSize: "3.4em", marginBottom: "1rem", fontWeight: 450 }}>
+          Deploy. Anywhere.
         </h1>
         <p style={{ fontSize: "1.4em", color: "var(--text-color-secondary)", marginBottom: "1rem" }}>
           Next generation server toolkit
