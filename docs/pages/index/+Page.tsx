@@ -33,7 +33,7 @@ function Hero() {
           are work-in-progress.
         </div>
         <h1 style={{ fontSize: "3.4em", marginBottom: "1rem", fontWeight: 450, lineHeight: 1.2 }}>
-          Any server
+          Any server,
           <br />
           deployed anywhere.
         </h1>

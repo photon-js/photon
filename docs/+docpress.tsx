@@ -20,5 +20,6 @@ const config: Config = {
   categories,
 
   topNavigation: <TopNavigation />,
+  navMaxWidth: 1000,
   navLogo: <img src={logoWithText} height={60} width={150} />,
 };
