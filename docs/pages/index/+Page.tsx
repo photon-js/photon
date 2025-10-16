@@ -37,8 +37,7 @@ function Hero() {
           Next generation server toolkit
         </p>
         <p style={{ fontSize: "1.1em", maxWidth: "700px", margin: "0 auto 1rem", lineHeight: "1.6" }}>
-          Unopinionated and flexible alternative to Nitro. Designed for{" "}
-          <strong>library and framework developers</strong> who need universal server capabilities.
+          Unopinionated and flexible alternative to Nitro.
         </p>
         <p
           style={{
@@ -49,7 +48,7 @@ function Hero() {
             color: "var(--text-color-secondary)",
           }}
         >
-          Build frameworks that work with any server (Hono, Express, Fastify, Elysia, H3, HatTip) and deploy anywhere.
+          Build apps that work with any server (Hono, Express, Fastify, Elysia, H3, HatTip) and deploy anywhere.
         </p>
         <p
           style={{
