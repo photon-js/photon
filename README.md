@@ -1,6 +1,7 @@
 # Photon
 
-> ⚠️ **Alpha**: Photon is currently in alpha. APIs may change before stable release.
+> [!WARNING]
+> **Alpha**: Photon is currently in alpha. APIs may change before stable release.
 
 ## Links
 
