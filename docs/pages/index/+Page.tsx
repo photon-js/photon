@@ -48,7 +48,7 @@ function Features() {
     {
       icon: "🔌",
       title: "Any server",
-      description: "Hono, Express.js, Fastify, Elysia, H3, HatTip.",
+      description: "Hono, Express.js, Fastify, Elysia, H3, Srvx, HatTip.",
     },
     {
       icon: "🌍",
