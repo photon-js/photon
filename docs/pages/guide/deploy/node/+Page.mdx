@@ -1,0 +1,40 @@
+import { AlphaWarning, InstallCommand } from '../../../../components'
+
+<AlphaWarning message="Cloudflare adapter is in alpha. Some features may be incomplete." />
+
+## Configuration
+
+### Vite Configuration
+
+Ensure that your Vite config includes the Photon Vite plugin:
+
+```ts
+// vite.config.ts
+import { photon } from '@photonjs/runtime/vite'
+
+export default {
+  plugins: [
+    photon(),
+  ]
+}
+```
+
+## Deployment
+
+### Preview
+
+Test build output locally with Node:
+
+```bash
+vite build
+vite preview
+```
+
+### Production
+
+Run build output directly:
+
+```bash
+vite build
+node dist/server/index.mjs
+```
