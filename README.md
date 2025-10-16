@@ -4,8 +4,8 @@
 
 ## Links
 
-What is Photon: [photonjs.dev](https://photonjs.dev)  
-Why Photon: [photonjs.dev/why](https://photonjs.dev/why)  
+[What is Photon](https://photonjs.dev)  
+[Why Photon](https://photonjs.dev/why)  
 
 ## Monorepo
 
