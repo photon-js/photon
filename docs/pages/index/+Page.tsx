@@ -2,6 +2,7 @@ export { Page };
 
 import type React from "react";
 import { FeatureGrid } from "../../components";
+import { Link } from '@brillout/docpress'
 
 function Page() {
   return (
@@ -45,34 +46,34 @@ function Hero() {
 function Features() {
   const features = [
     {
-      icon: "🏗️",
-      title: "Framework Builder",
-      description: "Build frameworks and libraries that work universally across server runtimes",
-    },
-    {
-      icon: "🚀",
-      title: "Universal Server Support",
-      description: "Single codebase works with Hono, Express, Fastify, Elysia, H3, HatTip",
+      icon: "🔌",
+      title: "Any server",
+      description: "Hono, Express.js, Fastify, Elysia, H3, HatTip.",
     },
     {
       icon: "🌍",
-      title: "Deploy Anywhere",
-      description: "Your framework users can deploy to any platform without extra configuration",
+      title: "Any deployment",
+      description: <>Cloudflare, Vercel, self-hosted, <Link href="/guide/deploy">and more</Link>.</>,
     },
     {
       icon: "⚡",
-      title: "Vite-Powered",
-      description: "Built on Vite's Environment API with HMR for server code",
+      title: "HMR",
+      description: "No full server reload required.",
+    },
+    {
+      icon: "✨",
+      title: "Vite Environment API",
+      description: "Develop against the same runtime as production (e.g. Cloudflare's `workerd` runtime).",
+    },
+    {
+      icon: "✂️",
+      title: "Code-splitting",
+      description: "Per-route deployment to separate edge workers.",
     },
     {
       icon: "📦",
-      title: "Code Splitting",
-      description: "Enable per-route deployment to separate edge workers",
-    },
-    {
-      icon: "🔧",
-      title: "Unopinionated",
-      description: "Minimal design that doesn't impose architectural decisions",
+      title: "Zero-config",
+      description: "Deploy with minimal configuration.",
     },
   ];
 
