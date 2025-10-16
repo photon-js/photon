@@ -30,6 +30,11 @@ const headings: HeadingDefinition[] = [
   },
   {
     level: 2,
+    title: "Why Photon",
+    url: "/why",
+  },
+  {
+    level: 2,
     title: "Get Started",
     url: "/get-started",
   },

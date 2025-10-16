@@ -1,7 +1,7 @@
 interface Feature {
   icon: string;
   title: string;
-  description: string;
+  description: string | React.ReactNode;
 }
 
 interface FeatureGridProps {

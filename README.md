@@ -2,30 +2,12 @@
 
 > ⚠️ **Alpha**: Photon is currently in alpha. APIs may change before stable release.
 
-Next-generation deployment and server toolkit.
+## Links
 
-Photon supports popular deployments such as:
- - Self-hosted
- - Cloudflare
- - Vercel
+What is Photon: [vike.dev](https://vike.dev)  
+Why Photon: [Why Photon](https://photonjs.dev/why)  
 
-And popular servers:
- - Hono
- - Express
- - Fastify
- - etc.
-
-It currently supports Vike. More Vite-based frameworks are coming (e.g. [we're talking with TanStack](https://github.com/SeanCassiere/cautious-giggle)).
-
-
-## Documentation
-
-- **[Getting Started](https://photonjs.dev/get-started)** - Learn how to use Photon
-- **[Framework Integration](https://photonjs.dev/guide/framework-integration)** - Integrate Photon into your framework
-- **[Examples](./example)** - Real-world integration examples
-
-
-## Packages
+## Monorepo
 
 ### Core
 - [packages/core](./packages/core) - Photon core with Vite integration
@@ -49,25 +31,3 @@ It currently supports Vike. More Vite-based frameworks are coming (e.g. [we're t
 - [example/app-cloudflare](./example/app-cloudflare) - Example app using a framework powered by Photon
 - [example/app-vercel](./example/app-vercel) - Example app using a framework powered by Photon
 - [example/app-hono-cloudflare](./example/app-hono-cloudflare) - Example app using Photon + Hono on Cloudflare
-
-
-## Philosophy
-
-Photon is designed as an **unopinionated and flexible alternative to [Nitro](https://nitro.build/)**, with support for universal server capabilities.
-
-### Universal Server Support
-- **Any server framework**: Hono, Express, Fastify, Elysia, H3, Srvx, HatTip
-- **Any deployment target**: Cloudflare, Vercel, Netlify, Node.js, VPS
-- **Any runtime**: Node.js, Cloudflare Workers, Deno, Bun
-
-### Features
-- **Easy integration** for Vite-based frameworks
-- **Universal middlewares** that work across all server frameworks
-- **Server code-splitting** for deploying each route to separate edge workers
-- **Hot Module Replacement** for server code
-- **TypeScript support** with first-class developer experience
-
-### Powered by Modern Standards
-- Built on **Vite's Environment API**
-- Uses **Web Standard APIs** for universal compatibility
-- Leverages **Universal Middleware** for framework-agnostic capabilities
