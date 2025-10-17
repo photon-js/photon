@@ -8,7 +8,7 @@ const commonOptions = {
   outDir: "dist",
   treeshake: true,
   nodeProtocol: true,
-  external: [/^photon:get-middlewares:/, /^@photonjs\/core\/dev/, /^@photonjs\/cloudflare/],
+  external: [/^virtual:photon:get-middlewares:/, /^@photonjs\/core\/dev/, /^@photonjs\/cloudflare/],
 } satisfies TsdownOptions;
 
 export default defineConfig([

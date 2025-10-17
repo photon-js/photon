@@ -40,8 +40,8 @@ async function getAllPhotonMiddlewares(
 
   //language=javascript
   return `
-import { getUniversal, nameSymbol } from 'photon:resolve-from-photon:@universal-middleware/core';
-import { PhotonConfigError } from 'photon:resolve-from-photon:@photonjs/core/errors';
+import { getUniversal, nameSymbol } from 'virtual:photon:resolve-from-photon:@universal-middleware/core';
+import { PhotonConfigError } from 'virtual:photon:resolve-from-photon:@photonjs/core/errors';
 ${middlewares.map((m, i) => `import m${i} from ${JSON.stringify(m)};`).join("\n")}
 ${universalEntriesIds.map((m, i) => `import u${i} from ${JSON.stringify(m)};`).join("\n")}
 

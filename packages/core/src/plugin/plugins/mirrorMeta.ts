@@ -147,7 +147,9 @@ export function mirrorMeta(): Plugin[] {
           assertUsage(hasExportDefault, `Entry ${id} must have a default export`);
 
           if (!hasEnhanceImport) {
-            magicString.prepend(`import { enhance } from 'photon:resolve-from-photon:@universal-middleware/core';\n`);
+            magicString.prepend(
+              `import { enhance } from 'virtual:photon:resolve-from-photon:@universal-middleware/core';\n`,
+            );
           }
 
           if (!magicString.hasChanged()) return;

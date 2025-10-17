@@ -7,7 +7,7 @@ const commonOptions: TsdownOptions = {
   outDir: "dist",
   treeshake: true,
   nodeProtocol: true,
-  external: [/^photon:get-middlewares:/, /^@photonjs\/core/, /^@photonjs\/srvx/],
+  external: [/^virtual:photon:get-middlewares:/, /^@photonjs\/core/, /^@photonjs\/srvx/],
 };
 
 export default defineConfig([

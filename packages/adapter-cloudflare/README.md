@@ -50,7 +50,7 @@ Configure Wrangler to use your Photon's virtual entry:
 ```toml
 # wrangler.toml
 name = "my-photon-app"
-main = "photon:cloudflare:photon:server-entry"
+main = "virtual:photon:cloudflare:server-entry"
 compatibility_date = "2025-08-28"
 ```
 

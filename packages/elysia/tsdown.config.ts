@@ -7,7 +7,7 @@ const commonOptions: TsdownOptions = {
   outDir: "dist",
   treeshake: true,
   nodeProtocol: true,
-  external: ["elysia", /^photon:get-middlewares:/, /^@photonjs\/core/, /^@photonjs\/elysia/],
+  external: ["elysia", /^virtual:photon:get-middlewares:/, /^@photonjs\/core/, /^@photonjs\/elysia/],
 };
 
 export default defineConfig([

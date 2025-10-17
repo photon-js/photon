@@ -1,4 +1,4 @@
-import { getUniversalEntries, getUniversalMiddlewares } from "photon:get-middlewares:dev:srvx";
+import { getUniversalEntries, getUniversalMiddlewares } from "virtual:photon:get-middlewares:dev:srvx";
 import { createApplyReturnApp } from "@photonjs/core/apply";
 import { devServerMiddleware } from "@photonjs/core/dev";
 import type { RuntimeAdapterTarget } from "@universal-middleware/core";

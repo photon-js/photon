@@ -45,7 +45,7 @@ export function installPhotonForLib(name: string, options?: InstallPhotonBaseOpt
       }
 
       // finally, fallback to finding photon and trying to resolve from there
-      return this.resolve(`photon:resolve-from-photon:${id}`, importer, {
+      return this.resolve(`virtual:photon:resolve-from-photon:${id}`, importer, {
         ...opts,
         custom: {
           ...opts?.custom,

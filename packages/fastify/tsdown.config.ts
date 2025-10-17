@@ -7,7 +7,7 @@ const commonOptions: TsdownOptions = {
   outDir: "dist",
   treeshake: true,
   nodeProtocol: true,
-  external: ["fastify", /^photon:get-middlewares:/, /^@photonjs\/core/, /^@photonjs\/fastify/],
+  external: ["fastify", /^virtual:photon:get-middlewares:/, /^@photonjs\/core/, /^@photonjs\/fastify/],
 };
 
 export default defineConfig([

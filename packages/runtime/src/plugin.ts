@@ -2,7 +2,7 @@ import type { Photon } from "@photonjs/core";
 import { photon as corePhoton, type InstallPhotonCoreOptions, installPhotonCore } from "@photonjs/core/vite";
 import type { Plugin } from "vite";
 
-const re_photonFallback = /^photon:fallback-entry$/;
+const re_photonFallback = /^virtual:photon:fallback-entry$/;
 
 function fallback(): Plugin {
   return {
@@ -33,7 +33,7 @@ function fallback(): Plugin {
       },
       handler() {
         //language=ts
-        return `import { apply, serve } from 'photon:resolve-from-photon:@photonjs/srvx'
+        return `import { apply, serve } from 'virtual:photon:resolve-from-photon:@photonjs/srvx'
 
         const port = process.env.PORT ? Number.parseInt(process.env.PORT, 10) : undefined;
 

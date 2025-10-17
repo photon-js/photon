@@ -62,7 +62,7 @@ function computePhotonMetaServer(
 }
 
 function cleanImport(imp: string) {
-  const s = "photon:resolve-from-photon:";
+  const s = "virtual:photon:resolve-from-photon:";
   return imp.startsWith(s) ? imp.slice(s.length) : imp;
 }
 
@@ -90,7 +90,7 @@ export function photonEntry(): Plugin[] {
             // This causes a conflict since the server is already listening for connections.
             // To avoid that, we import the entry into a separate file without a default export.
             // The import is done dynamically to prevent unintended side effects.
-            input["bun-index"] = `photon:dynamic-entry:${server.id}`;
+            input["bun-index"] = `virtual:photon:dynamic-entry:${server.id}`;
           }
 
           return {
@@ -322,7 +322,7 @@ export function photonEntry(): Plugin[] {
             .replace(/@photonjs\/core\/([^/]+)\/apply/, `@photonjs/core/$1/apply?${query}`)
             .replace(/@photonjs\/([^/]+)\/apply/, `@photonjs/$1/apply?${query}`)
             // Transform get-middleware import
-            .replace(/photon:get-middlewares:(.+?):(\w+)/, `photon:get-middlewares:$1:$2:${handlerId}`);
+            .replace(/virtual:photon:get-middlewares:(.+?):(\w+)/, `virtual:photon:get-middlewares:$1:$2:${handlerId}`);
 
           return {
             code: newCode,

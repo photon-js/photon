@@ -55,5 +55,5 @@ export function updatePhotonEntry(pluginContext: PluginContext, name: string, en
 }
 
 export function getPhotonServerIdWithEntry(condition: "dev" | "node" | "edge", handlerId: string) {
-  return `photon:server-entry-with-entry:${condition}:${handlerId}`;
+  return `virtual:photon:server-entry-with-entry:${condition}:${handlerId}`;
 }

@@ -26,6 +26,22 @@ export function cloudflare(config?: PluginConfig): Plugin[] {
         },
       },
     },
+    {
+      name: `${moduleId}:shorthand`,
+
+      resolveId: {
+        filter: {
+          // User-facing module ID shorthand for wrangler config file
+          id: /virtual:photon:cloudflare:server-entry/,
+        },
+
+        async handler(_id, importer, opts) {
+          return this.resolve("virtual:photon:cloudflare:virtual:photon:server-entry", importer, opts);
+        },
+      },
+
+      sharedDuringBuild: true,
+    },
     ...targetLoader("cloudflare", {
       async load(id, { meta }) {
         const isDev = this.environment.config.command === "serve";
