@@ -30,8 +30,8 @@ function Hero() {
             color: "#856404",
           }}
         >
-          ⚠️ <strong>Alpha:</strong> Photon is currently in alpha: APIs may change before stable release, and the docs
-          are work-in-progress.
+          ⚠️ <strong>Beta:</strong> Photon is currently in beta: Some details may change before stable release, and the
+          docs are work-in-progress.
         </div>
         <h1 style={{ fontSize: "3.4em", marginBottom: "1rem", fontWeight: 450, lineHeight: 1.2 }}>
           Any server,

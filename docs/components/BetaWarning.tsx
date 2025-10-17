@@ -1,10 +1,10 @@
-interface AlphaWarningProps {
+interface BetaWarningProps {
   message?: string;
 }
 
-export function AlphaWarning({
-  message = "Photon is currently in alpha. APIs may change before stable release.",
-}: AlphaWarningProps) {
+export function BetaWarning({
+  message = "Photon is currently in beta. APIs may change before stable release.",
+}: BetaWarningProps) {
   return (
     <div
       style={{
@@ -17,7 +17,7 @@ export function AlphaWarning({
         fontSize: "0.95em",
       }}
     >
-      <strong>⚠️ Alpha Stage:</strong> {message}
+      <strong>⚠️ Beta Stage:</strong> {message}
     </div>
   );
 }

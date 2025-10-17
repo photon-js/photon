@@ -1,6 +1,7 @@
 // Export all reusable components
-export { AlphaWarning } from "./AlphaWarning";
+
 export { ApiReference } from "./ApiReference";
+export { BetaWarning } from "./BetaWarning";
 export { CodeBlock } from "./CodeBlock";
 export { ExampleCard } from "./ExampleCard";
 export { FeatureGrid } from "./FeatureGrid";
