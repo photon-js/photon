@@ -10,30 +10,12 @@ Relevant files:
 
 ## scripts
 
-### Run and build for node
-
-```sh
-# dev on node
-pnpm run dev
-
-# builds for node runtime and runs `$ node dist/server/index.js`
-pnpm run preview
-```
-
 ### Run and build for cloudflare
 
 ```sh
 # dev on cloudflare workerd
-pnpm run dev:cloudflare
+pnpm run dev
 
 # builds for cloudflare runtime and runs `$ vite preview`
-pnpm run preview:cloudflare
+pnpm run preview
 ```
-
-### Run and build for vercel
-
-Coming soon
-
-### Demo with a virtual entry
-
-Coming soon

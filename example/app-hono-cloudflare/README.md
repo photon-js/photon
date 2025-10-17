@@ -28,11 +28,3 @@ pnpm run dev:cloudflare
 # builds for cloudflare runtime and runs `$ vite preview`
 pnpm run preview:cloudflare
 ```
-
-### Run and build for vercel
-
-Coming soon
-
-### Demo with a virtual entry
-
-Coming soon
