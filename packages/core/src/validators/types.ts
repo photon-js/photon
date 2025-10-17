@@ -1,4 +1,4 @@
-import type { z } from "zod/v4";
+import type { z } from "zod";
 import type * as Validators from "./validators.js";
 
 export type SupportedServers = z.infer<typeof Validators.SupportedServers>;

@@ -1,5 +1,5 @@
 import { merge } from "ts-deepmerge";
-import { z } from "zod/v4";
+import * as z from "zod";
 import type { PluginContext } from "../plugin/utils/rollupTypes.js";
 import type { Photon } from "../types.js";
 import { PhotonConfigError, PhotonUsageError } from "../utils/assert.js";
