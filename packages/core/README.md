@@ -5,7 +5,7 @@ The core package of Photon - an unopinionated and flexible alternative to Nitro 
 ## Overview
 
 Photon Core provides the foundational functionality for building universal web applications with:
-- **Universal server support**: Works with Hono, Express, Fastify, Elysia, H3, HatTip, and more
+- **Universal server support**: Works with Hono, Express, Fastify, Elysia, H3, Hattip, and more
 - **Multi-platform deployment**: Deploy to Netlify, Vercel, Cloudflare, VPS, or any other platform
 - **Vite integration**: Powered by Vite's Environment API with HMR support
 - **Server code-splitting**: Each page and API route can be deployed to separate edge workers
@@ -118,7 +118,7 @@ While this is the core package, you'll typically use it alongside server-specifi
 - `@photonjs/hono` - Hono integration
 - `@photonjs/h3` - H3 integration
 - `@photonjs/elysia` - Elysia integration
-- `@photonjs/hattip` - HatTip integration
+- `@photonjs/hattip` - Hattip integration
 
 ## Deployment Adapters
 

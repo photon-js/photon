@@ -21,7 +21,7 @@
 - [packages/elysia](./packages/elysia) - Elysia adapter
 - [packages/h3](./packages/h3) - H3 adapter
 - [packages/srvx](./packages/srvx) - Srvx adapter
-- [packages/hattip](./packages/hattip) - HatTip adapter
+- [packages/hattip](./packages/hattip) - Hattip adapter
 
 ### Deployment Adapters
 - [packages/adapter-cloudflare](./packages/adapter-cloudflare) - Cloudflare Workers/Pages adapter
