@@ -1,5 +1,3 @@
 name = "cloudflare-vite-get-started"
 compatibility_date = "2025-04-03"
-# Required during development
-compatibility_flags = [ "nodejs_compat" ]
 main = "photon:cloudflare:photon:server-entry"
