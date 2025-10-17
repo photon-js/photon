@@ -1,5 +1,12 @@
 ## [0.0.3](https://github.com/photon-js/photon/compare/@photonjs/core@0.0.2...@photonjs/core@0.0.3) (2025-08-20)
 
+## 0.1.1
+
+### Patch Changes
+
+- 589ae48: fix: ensure that no node side-effects are present
+- f3472b7: refactor: prefix all virtual modules with virtual:
+
 ## 0.1.0
 
 ### Minor Changes

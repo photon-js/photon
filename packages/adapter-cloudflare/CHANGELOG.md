@@ -1,5 +1,14 @@
 ## 0.0.1 (2025-08-19)
 
+## 0.1.1
+
+### Patch Changes
+
+- f3472b7: refactor: prefix all virtual modules with virtual:
+- Updated dependencies [589ae48]
+- Updated dependencies [f3472b7]
+  - @photonjs/core@0.1.1
+
 ## 0.1.0
 
 ### Minor Changes
