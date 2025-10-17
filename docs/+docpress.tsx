@@ -8,7 +8,7 @@ import { TopNavigation } from "./TopNavigation";
 
 const config: Config = {
   name: "Photon",
-  version: "0.0.7",
+  version: "0.1.0",
   url: "photonjs.dev",
   tagline: "Next generation server toolkit",
   logo,
