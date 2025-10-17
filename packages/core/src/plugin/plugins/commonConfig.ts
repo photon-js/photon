@@ -32,7 +32,7 @@ function commonConfig(): Plugin[] {
         // still points to users entries so that Vite can crawl them
         const entries = [resolvedPhotonConfig.server.id, ...resolvedPhotonConfig.entries.map((e) => e.id)]
           .filter(Boolean)
-          .map((id) => id.replace(/^photon:(handler-entry|server-entry|server-config):/, ""));
+          .map((id) => id.replace(/^virtual:photon:(handler-entry|server-entry|server-config):/, ""));
 
         return {
           // From Vite doc:

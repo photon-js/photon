@@ -31,7 +31,7 @@ export function targetLoader<T extends { load: LoadHook } & Omit<Plugin, "load" 
   name: string,
   options: T,
 ): PluginInterop[] {
-  const prefix = `photon:${name}`;
+  const prefix = `virtual:photon:${name}`;
   const re_prefix = new RegExp(`^${escapeStringRegexp(prefix)}:`);
 
   return [

@@ -1,4 +1,4 @@
-import { getUniversalEntries, getUniversalMiddlewares } from "photon:get-middlewares:dev:elysia";
+import { getUniversalEntries, getUniversalMiddlewares } from "virtual:photon:get-middlewares:dev:elysia";
 import { createApply } from "@photonjs/core/apply";
 import { devServerMiddleware } from "@photonjs/core/dev";
 import type { RuntimeAdapterTarget, UniversalMiddleware } from "@universal-middleware/core";

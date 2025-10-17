@@ -7,7 +7,7 @@ const commonOptions = {
   outDir: "dist",
   treeshake: true,
   nodeProtocol: true,
-  external: [/^photon:get-middlewares:/, /^@photonjs\/core\/dev/, /^@photonjs\/vercel/],
+  external: [/^virtual:photon:get-middlewares:/, /^@photonjs\/core\/dev/, /^@photonjs\/vercel/],
 } satisfies TsdownOptions;
 
 export default defineConfig([

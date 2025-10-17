@@ -156,7 +156,7 @@ export function loaderPlugin(pluginConfig: ViteVercelConfig): Plugin[] {
 
         //language=javascript
         return `
-import { ${fn} } from "photon:resolve-from-photon:${importFrom}";
+import { ${fn} } from "virtual:photon:resolve-from-photon:${importFrom}";
 import handlerOrApp from "${entry.resolvedId ?? entry.id}";
 
 ${exportDefault};

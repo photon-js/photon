@@ -12,18 +12,18 @@ export function regexGroups<T extends object>(regex: RegExp) {
 
 const virtualModules = {
   "virtual-entry": regexGroups<{ uniqueId: string; entry: string }>(
-    /^photon:virtual-entry:(?<uniqueId>.+?):(?<entry>.+)/,
+    /^virtual:photon:virtual-entry:(?<uniqueId>.+?):(?<entry>.+)/,
   ),
-  "handler-entry": regexGroups<{ entry: string }>(/^photon:handler-entry:(?<entry>.+)/),
-  "server-entry": regexGroups<{ entry?: string }>(/^photon:server-entry(?:$|:(?<entry>.+))/),
+  "handler-entry": regexGroups<{ entry: string }>(/^virtual:photon:handler-entry:(?<entry>.+)/),
+  "server-entry": regexGroups<{ entry?: string }>(/^virtual:photon:server-entry(?:$|:(?<entry>.+))/),
   "server-entry-with-entry": regexGroups<{ condition: string; entry: string }>(
-    /^photon:server-entry-with-entry:(?<condition>.+?):(?<entry>.+)/,
+    /^virtual:photon:server-entry-with-entry:(?<condition>.+?):(?<entry>.+)/,
   ),
-  "dynamic-entry": regexGroups<{ entry: string }>(/^photon:dynamic-entry:(?<entry>.+)/),
-  "fallback-entry": regexGroups(/^photon:fallback-entry/),
-  "resolve-from-photon": regexGroups<{ module: string }>(/^photon:resolve-from-photon:(?<module>.+)/),
+  "dynamic-entry": regexGroups<{ entry: string }>(/^virtual:photon:dynamic-entry:(?<entry>.+)/),
+  "fallback-entry": regexGroups(/^virtual:photon:fallback-entry/),
+  "resolve-from-photon": regexGroups<{ module: string }>(/^virtual:photon:resolve-from-photon:(?<module>.+)/),
   "get-middlewares": regexGroups<{ condition: string; server: string; handler?: string }>(
-    /^photon:get-middlewares:(?<condition>.+?):(?<server>[^:]+)(?::(?<handler>.+))?/,
+    /^virtual:photon:get-middlewares:(?<condition>.+?):(?<server>[^:]+)(?::(?<handler>.+))?/,
   ),
 };
 
@@ -94,8 +94,8 @@ export function ifPhotonModule<
 }
 
 export function asPhotonEntryId(id: string, type: "handler-entry" | "server-entry" | "server-config") {
-  if (id.startsWith(`photon:${type}`)) {
+  if (id.startsWith(`virtual:photon:${type}`)) {
     return id;
   }
-  return `photon:${type}:${id}`;
+  return `virtual:photon:${type}:${id}`;
 }

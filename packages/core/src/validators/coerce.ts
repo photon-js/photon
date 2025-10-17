@@ -29,10 +29,10 @@ export function entryToPhoton(
       type: defaultType === "server-entry" ? "server" : "universal-handler",
     };
   }
-  if (entry.type === "server-config" || entry.id === "photon:server-entry" || !entry.id) {
+  if (entry.type === "server-config" || entry.id === "virtual:photon:server-entry" || !entry.id) {
     return {
       ...entry,
-      id: "photon:server-entry",
+      id: "virtual:photon:server-entry",
       type: "server-config",
       name,
     };
@@ -66,7 +66,7 @@ const resolver = Validators.PhotonConfig.transform((c) => {
       : entryToPhoton(
           "server-entry",
           {
-            id: "photon:fallback-entry",
+            id: "virtual:photon:fallback-entry",
             type: "server",
             server: "srvx",
           },
