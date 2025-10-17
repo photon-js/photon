@@ -1,5 +1,13 @@
 ## 0.0.1 (2025-08-19)
 
+## 0.1.2
+
+### Patch Changes
+
+- 623579c: fix(deps): upgrade zod
+- Updated dependencies [623579c]
+  - @photonjs/core@0.1.2
+
 ## 0.1.1
 
 ### Patch Changes

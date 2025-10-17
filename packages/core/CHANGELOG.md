@@ -1,5 +1,11 @@
 ## [0.0.3](https://github.com/photon-js/photon/compare/@photonjs/core@0.0.2...@photonjs/core@0.0.3) (2025-08-20)
 
+## 0.1.2
+
+### Patch Changes
+
+- 623579c: fix(deps): upgrade zod
+
 ## 0.1.1
 
 ### Patch Changes

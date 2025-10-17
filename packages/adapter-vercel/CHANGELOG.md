@@ -1,5 +1,14 @@
 # @photonjs/vercel
 
+## 0.1.3
+
+### Patch Changes
+
+- 623579c: fix(deps): upgrade zod
+- Updated dependencies [623579c]
+  - @photonjs/core@0.1.2
+  - @photonjs/runtime@0.1.2
+
 ## 0.1.2
 
 ### Patch Changes
