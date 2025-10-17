@@ -1,5 +1,13 @@
 ## 0.0.1 (2025-08-19)
 
+## 0.1.3
+
+### Patch Changes
+
+- baaaaf9: fix: missing virtual prefix is zod literal
+- Updated dependencies [baaaaf9]
+  - @photonjs/core@0.1.3
+
 ## 0.1.2
 
 ### Patch Changes

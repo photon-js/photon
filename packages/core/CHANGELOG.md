@@ -1,5 +1,11 @@
 ## [0.0.3](https://github.com/photon-js/photon/compare/@photonjs/core@0.0.2...@photonjs/core@0.0.3) (2025-08-20)
 
+## 0.1.3
+
+### Patch Changes
+
+- baaaaf9: fix: missing virtual prefix is zod literal
+
 ## 0.1.2
 
 ### Patch Changes
