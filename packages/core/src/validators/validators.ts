@@ -45,7 +45,7 @@ export const PhotonEntryUniversalHandler = PhotonEntryBase.extend({
 }).loose();
 
 export const PhotonEntryServerConfig = PhotonEntryBase.extend({
-  id: z.literal("photon:server-entry"),
+  id: z.literal("virtual:photon:server-entry"),
   type: z.literal("server-config"),
   compositionMode: PhotonEntryUniversalHandler.shape.compositionMode,
   env: PhotonEntryUniversalHandler.shape.env,
