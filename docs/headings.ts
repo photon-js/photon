@@ -9,7 +9,7 @@ import {
   iconCompass,
 } from "@brillout/docpress";
 
-const categories: Config["categories"] = ["Overview", "Guide", "API"];
+const categories: Config["categories"] = ["Overview"];
 
 const headingsDetached: HeadingDetachedDefinition[] = [];
 
