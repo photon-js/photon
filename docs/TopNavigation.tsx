@@ -5,15 +5,6 @@ import { iconGear, iconSeedling, MenuToggle } from "@brillout/docpress";
 function TopNavigation() {
   return (
     <>
-      <MenuToggle menuId={1}>
-        <img
-          src={iconGear}
-          width={18}
-          style={{ marginRight: "calc(var(--icon-text-padding))", position: "relative", top: -2 }}
-          className="decolorize-8"
-        />{" "}
-        API
-      </MenuToggle>
       <a
         className="colorize-on-hover"
         href="/get-started"

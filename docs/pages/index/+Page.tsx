@@ -90,7 +90,7 @@ function Features() {
       title: "Deploy anywhere",
       description: (
         <>
-          Cloudflare, Vercel, self-hosted, <Link href="/guide/deploy">and more</Link>.
+          Cloudflare, Vercel, self-hosted, and more.
         </>
       ),
     },
