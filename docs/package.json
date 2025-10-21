@@ -7,7 +7,7 @@
     "preview": "vike build && vike preview"
   },
   "dependencies": {
-    "@brillout/docpress": "0.15.10",
+    "@brillout/docpress": "^0.15.13",
     "@types/node": "^22.18.10",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
