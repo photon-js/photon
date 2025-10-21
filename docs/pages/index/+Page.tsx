@@ -1,8 +1,6 @@
 export { Page };
 
-import { Link } from "@brillout/docpress";
 import type React from "react";
-import logoWithText from "../../assets/logo-with-text.svg";
 import { FeatureGrid } from "../../components";
 
 function Page() {
@@ -39,8 +37,8 @@ function Hero() {
             color: "#856404",
           }}
         >
-          ⚠️ <strong>Beta:</strong> Photon is currently in beta: Some details may change before stable release, and the
-          docs are work-in-progress.
+          ⚠️ <strong>Photon is currently in beta</strong> — you can use it in production, but expect breaking changes
+          more frequently than usual.
         </div>
         <div style={{ display: "flex", alignItems: "center" }}>
           <h1 style={{ fontSize: "3.4em", marginBottom: "1rem", fontWeight: 450, lineHeight: 1.2 }}>
@@ -88,11 +86,7 @@ function Features() {
     {
       icon: "🌍",
       title: "Deploy anywhere",
-      description: (
-        <>
-          Cloudflare, Vercel, self-hosted, and more.
-        </>
-      ),
+      description: <>Cloudflare, Vercel, self-hosted, and more.</>,
     },
     {
       icon: "⚡",
