@@ -17,6 +17,7 @@ const config: Config = {
   headings,
   headingsDetached,
   categories,
+  changelog: false,
 
   navMaxWidth: 1000,
   navLogo: <img src={logoWithText} height={60} width={150} />,
