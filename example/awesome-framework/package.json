@@ -9,13 +9,13 @@
   "dependencies": {
     "@photonjs/core": "workspace:",
     "@photonjs/runtime": "workspace:",
-    "@universal-middleware/core": "^0.4.11",
+    "@universal-middleware/core": "^0.4.12",
     "@universal-middleware/sirv": "^0.1.22"
   },
   "devDependencies": {
     "@types/node": "^22.18.10",
     "typescript": "^5.9.3",
-    "vite": "^7.1.10"
+    "vite": "^7.1.12"
   },
   "exports": {
     ".": "./dist/vite/index.js",

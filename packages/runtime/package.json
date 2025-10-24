@@ -29,10 +29,10 @@
   },
   "devDependencies": {
     "@types/node": "^22.18.10",
-    "srvx": "^0.8.16",
-    "tsdown": "^0.15.7",
+    "srvx": "^0.9.1",
+    "tsdown": "^0.15.9",
     "typescript": "^5.9.3",
-    "vite": "^7.1.10"
+    "vite": "^7.1.12"
   },
   "files": [
     "dist/",

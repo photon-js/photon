@@ -11,12 +11,12 @@
     "@types/node": "^22.18.10",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
-    "@vitejs/plugin-react-swc": "^4.1.0",
+    "@vitejs/plugin-react-swc": "^4.2.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "typescript": "^5.9.3",
-    "vike": "^0.4.242",
-    "vite": "^7.1.10"
+    "vike": "^0.4.244",
+    "vite": "^7.1.12"
   },
   "type": "module"
 }

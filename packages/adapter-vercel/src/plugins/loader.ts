@@ -147,8 +147,8 @@ export function loaderPlugin(pluginConfig: ViteVercelConfig): Plugin[] {
         }
 
         const importFrom = isServerEntry
-          ? `@universal-middleware/vercel/${entry.server}`
-          : "@universal-middleware/vercel";
+          ? `@universal-middleware/vercel/${entry.server}/${isEdge ? "edge" : "node"}`
+          : `@universal-middleware/vercel/${isEdge ? "edge" : "node"}`;
 
         const exportDefault = isServerEntry
           ? `export default ${fn}(handlerOrApp)`
