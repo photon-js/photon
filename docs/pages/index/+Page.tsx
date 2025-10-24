@@ -66,9 +66,7 @@ function Hero() {
             (Cloudflare, Vercel, self-hosted, ...).
           </p>
           <p>
-            It currently supports <a href="https://vike.dev">Vike</a> and will soon support other frameworks as well
-            (reach out to your framework if you want it to add Photon support — Photon aims for broad framework
-            support).
+            It currently supports <a href="https://vike.dev">Vike</a> and is open to supporting other frameworks as well.
           </p>
         </div>
       </div>
@@ -110,7 +108,7 @@ function Features() {
     {
       icon: "📦",
       title: "Zero-config",
-      description: "Integrate your server and deploy with minimal configuration.",
+      description: "Integrate your server and deployment with minimal configuration.",
     },
   ];
 
