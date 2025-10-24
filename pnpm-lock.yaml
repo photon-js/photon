@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@biomejs/biome':
-        specifier: ^2.2.6
-        version: 2.2.6
+        specifier: ^2.3.0
+        version: 2.3.0
       '@brillout/test-e2e':
         specifier: ^0.6.19
         version: 0.6.19
@@ -19,16 +19,16 @@ importers:
         version: 2.29.7(@types/node@22.18.10)
       '@vikejs/biome-config':
         specifier: ^2.0.1
-        version: 2.0.1(@biomejs/biome@2.2.6)
+        version: 2.0.1(@biomejs/biome@2.3.0)
       playwright:
-        specifier: ^1.56.0
-        version: 1.56.0
+        specifier: ^1.56.1
+        version: 1.56.1
 
   docs:
     dependencies:
       '@brillout/docpress':
         specifier: ^0.15.13
-        version: 0.15.13(@algolia/client-search@5.40.0)(@types/react@19.2.2)(@vitejs/plugin-react-swc@4.1.0(vite@7.1.10(@types/node@22.18.10)(jiti@2.6.1)))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(rollup@4.52.4)(search-insights@2.17.3)(typescript@5.9.3)(vike@0.4.242(vite@7.1.10(@types/node@22.18.10)(jiti@2.6.1)))(vite@7.1.10(@types/node@22.18.10)(jiti@2.6.1))
+        version: 0.15.13(@algolia/client-search@5.40.0)(@types/react@19.2.2)(@vitejs/plugin-react-swc@4.2.0(vite@7.1.12(@types/node@22.18.10)(jiti@2.6.1)))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(rollup@4.52.5)(search-insights@2.17.3)(typescript@5.9.3)(vike@0.4.244(vite@7.1.12(@types/node@22.18.10)(jiti@2.6.1)))(vite@7.1.12(@types/node@22.18.10)(jiti@2.6.1))
       '@types/node':
         specifier: ^22.18.10
         version: 22.18.10
@@ -39,8 +39,8 @@ importers:
         specifier: ^19.2.2
         version: 19.2.2(@types/react@19.2.2)
       '@vitejs/plugin-react-swc':
-        specifier: ^4.1.0
-        version: 4.1.0(vite@7.1.10(@types/node@22.18.10)(jiti@2.6.1))
+        specifier: ^4.2.0
+        version: 4.2.0(vite@7.1.12(@types/node@22.18.10)(jiti@2.6.1))
       react:
         specifier: ^19.2.0
         version: 19.2.0
@@ -51,17 +51,17 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
       vike:
-        specifier: ^0.4.242
-        version: 0.4.242(vite@7.1.10(@types/node@22.18.10)(jiti@2.6.1))
+        specifier: ^0.4.244
+        version: 0.4.244(vite@7.1.12(@types/node@22.18.10)(jiti@2.6.1))
       vite:
-        specifier: ^7.1.10
-        version: 7.1.10(@types/node@22.18.10)(jiti@2.6.1)
+        specifier: ^7.1.12
+        version: 7.1.12(@types/node@22.18.10)(jiti@2.6.1)
 
   example/app-cloudflare:
     dependencies:
       '@universal-middleware/core':
-        specifier: ^0.4.11
-        version: 0.4.11(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+        specifier: ^0.4.12
+        version: 0.4.12(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
       awesome-framework:
         specifier: 'workspace:'
         version: link:../awesome-framework
@@ -79,11 +79,11 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
       vite:
-        specifier: ^7.1.10
-        version: 7.1.10(@types/node@22.18.10)(jiti@2.6.1)
+        specifier: ^7.1.12
+        version: 7.1.12(@types/node@22.18.10)(jiti@2.6.1)
       wrangler:
-        specifier: ^4.43.0
-        version: 4.43.0(@cloudflare/workers-types@4.20251011.0)
+        specifier: ^4.45.0
+        version: 4.45.0(@cloudflare/workers-types@4.20251014.0)
 
   example/app-hono-cloudflare:
     dependencies:
@@ -91,8 +91,8 @@ importers:
         specifier: 'workspace:'
         version: link:../awesome-framework
       hono:
-        specifier: ^4.9.12
-        version: 4.9.12
+        specifier: ^4.10.2
+        version: 4.10.2
     devDependencies:
       '@photonjs/cloudflare':
         specifier: 'workspace:'
@@ -110,17 +110,17 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
       vite:
-        specifier: ^7.1.10
-        version: 7.1.10(@types/node@22.18.10)(jiti@2.6.1)
+        specifier: ^7.1.12
+        version: 7.1.12(@types/node@22.18.10)(jiti@2.6.1)
       wrangler:
-        specifier: ^4.43.0
-        version: 4.43.0(@cloudflare/workers-types@4.20251011.0)
+        specifier: ^4.45.0
+        version: 4.45.0(@cloudflare/workers-types@4.20251014.0)
 
   example/app-vercel:
     dependencies:
       '@universal-middleware/core':
-        specifier: ^0.4.11
-        version: 0.4.11(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+        specifier: ^0.4.12
+        version: 0.4.12(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
       awesome-framework:
         specifier: 'workspace:'
         version: link:../awesome-framework
@@ -138,11 +138,11 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
       vite:
-        specifier: ^7.1.10
-        version: 7.1.10(@types/node@22.18.10)(jiti@2.6.1)
+        specifier: ^7.1.12
+        version: 7.1.12(@types/node@22.18.10)(jiti@2.6.1)
       wrangler:
-        specifier: ^4.43.0
-        version: 4.43.0(@cloudflare/workers-types@4.20251011.0)
+        specifier: ^4.45.0
+        version: 4.45.0(@cloudflare/workers-types@4.20251014.0)
 
   example/awesome-framework:
     dependencies:
@@ -153,8 +153,8 @@ importers:
         specifier: 'workspace:'
         version: link:../../packages/runtime
       '@universal-middleware/core':
-        specifier: ^0.4.11
-        version: 0.4.11(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+        specifier: ^0.4.12
+        version: 0.4.12(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
       '@universal-middleware/sirv':
         specifier: ^0.1.22
         version: 0.1.22
@@ -166,39 +166,39 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
       vite:
-        specifier: ^7.1.10
-        version: 7.1.10(@types/node@22.18.10)(jiti@2.6.1)
+        specifier: ^7.1.12
+        version: 7.1.12(@types/node@22.18.10)(jiti@2.6.1)
 
   packages/adapter-cloudflare:
     dependencies:
       '@cloudflare/vite-plugin':
-        specifier: ^1.13.13
-        version: 1.13.13(vite@7.1.10(@types/node@22.18.10)(jiti@2.6.1))(workerd@1.20251008.0)(wrangler@4.43.0(@cloudflare/workers-types@4.20251011.0))
+        specifier: ^1.13.15
+        version: 1.13.15(vite@7.1.12(@types/node@22.18.10)(jiti@2.6.1))(workerd@1.20251011.0)(wrangler@4.45.0(@cloudflare/workers-types@4.20251014.0))
       '@photonjs/core':
         specifier: workspace:^
         version: link:../core
       '@universal-middleware/cloudflare':
         specifier: ^0.4.10
-        version: 0.4.10(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+        version: 0.4.10(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
       srvx:
         specifier: ^0
-        version: 0.8.16
+        version: 0.9.1
     devDependencies:
       '@cloudflare/workers-types':
-        specifier: ^4.20251011.0
-        version: 4.20251011.0
+        specifier: ^4.20251014.0
+        version: 4.20251014.0
       '@universal-middleware/core':
-        specifier: ^0.4.11
-        version: 0.4.11(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+        specifier: ^0.4.12
+        version: 0.4.12(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
       '@universal-middleware/h3':
         specifier: ^0.4.14
-        version: 0.4.14(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+        version: 0.4.14(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
       '@universal-middleware/hono':
         specifier: ^0.4.17
-        version: 0.4.17(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+        version: 0.4.17(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
       '@universal-middleware/srvx':
-        specifier: ^0.1.0
-        version: 0.1.0(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+        specifier: ^0.1.1
+        version: 0.1.1(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
       crossws:
         specifier: ^0.3.5
         version: 0.3.5
@@ -206,14 +206,14 @@ importers:
         specifier: ^1.15.4
         version: 1.15.4
       tsdown:
-        specifier: ^0.15.7
-        version: 0.15.7(typescript@5.9.3)
+        specifier: ^0.15.9
+        version: 0.15.9(typescript@5.9.3)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
       vite:
-        specifier: ^7.1.10
-        version: 7.1.10(@types/node@22.18.10)(jiti@2.6.1)
+        specifier: ^7.1.12
+        version: 7.1.12(@types/node@22.18.10)(jiti@2.6.1)
 
   packages/adapter-vercel:
     dependencies:
@@ -230,17 +230,17 @@ importers:
         specifier: workspace:^
         version: link:../runtime
       '@universal-middleware/core':
-        specifier: ^0.4.11
-        version: 0.4.11(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+        specifier: ^0.4.12
+        version: 0.4.12(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
       '@universal-middleware/vercel':
-        specifier: ^0.4.23
-        version: 0.4.23(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(@universal-middleware/h3@0.4.14(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16))(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(express@5.1.0)(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+        specifier: ^0.4.24
+        version: 0.4.24(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(@universal-middleware/h3@0.4.14(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1))(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(express@5.1.0)(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
       '@vercel/build-utils':
-        specifier: ^12.1.2
-        version: 12.1.2
+        specifier: ^12.2.0
+        version: 12.2.0
       '@vercel/nft':
-        specifier: ^0.30.2
-        version: 0.30.2(rollup@4.52.4)
+        specifier: ^0.30.3
+        version: 0.30.3(rollup@4.52.5)
       '@vercel/routing-utils':
         specifier: ^5.2.0
         version: 5.2.0
@@ -267,29 +267,29 @@ importers:
         version: 7.1.2
       vite-plugin-wasm:
         specifier: ^3.5.0
-        version: 3.5.0(vite@7.1.10(@types/node@20.19.21)(jiti@2.6.1))
+        version: 3.5.0(vite@7.1.12(@types/node@20.19.21)(jiti@2.6.1))
     devDependencies:
       '@types/node':
         specifier: ^20.19.21
         version: 20.19.21
       '@universal-middleware/express':
         specifier: ^0.4.19
-        version: 0.4.19(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+        version: 0.4.19(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
       '@vercel/node':
-        specifier: ^5.3.26
-        version: 5.3.26(@swc/core@1.13.5)(rollup@4.52.4)
+        specifier: ^5.5.0
+        version: 5.5.0(@swc/core@1.13.5)(rollup@4.52.5)
       rollup:
-        specifier: ^4.52.4
-        version: 4.52.4
+        specifier: ^4.52.5
+        version: 4.52.5
       tsdown:
-        specifier: ^0.15.7
-        version: 0.15.7(typescript@5.9.3)
+        specifier: ^0.15.9
+        version: 0.15.9(typescript@5.9.3)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
       vite:
-        specifier: ^7.1.10
-        version: 7.1.10(@types/node@20.19.21)(jiti@2.6.1)
+        specifier: ^7.1.12
+        version: 7.1.12(@types/node@20.19.21)(jiti@2.6.1)
 
   packages/core:
     dependencies:
@@ -298,16 +298,16 @@ importers:
         version: 0.7.15
       '@universal-middleware/cloudflare':
         specifier: ^0.4.10
-        version: 0.4.10(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+        version: 0.4.10(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
       '@universal-middleware/compress':
         specifier: ^0.2.32
         version: 0.2.32
       '@universal-middleware/core':
-        specifier: ^0.4.11
-        version: 0.4.11(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+        specifier: ^0.4.12
+        version: 0.4.12(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
       '@universal-middleware/express':
         specifier: ^0.4.19
-        version: 0.4.19(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+        version: 0.4.19(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
       '@universal-middleware/sirv':
         specifier: ^0.1.22
         version: 0.1.22
@@ -322,8 +322,8 @@ importers:
         version: 4.1.12
     devDependencies:
       '@types/bun':
-        specifier: ^1.3.0
-        version: 1.3.0(@types/react@19.2.2)
+        specifier: ^1.3.1
+        version: 1.3.1(@types/react@19.2.2)
       '@types/deno':
         specifier: ^2.5.0
         version: 2.5.0
@@ -337,11 +337,11 @@ importers:
         specifier: ^0.25.11
         version: 0.25.11
       magic-string:
-        specifier: ^0.30.19
-        version: 0.30.19
+        specifier: ^0.30.21
+        version: 0.30.21
       tsdown:
-        specifier: ^0.15.7
-        version: 0.15.7(typescript@5.9.3)
+        specifier: ^0.15.9
+        version: 0.15.9(typescript@5.9.3)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -349,8 +349,8 @@ importers:
         specifier: ^2.3.10
         version: 2.3.10
       vite:
-        specifier: ^7.1.10
-        version: 7.1.10(@types/node@22.18.10)(jiti@2.6.1)
+        specifier: ^7.1.12
+        version: 7.1.12(@types/node@22.18.10)(jiti@2.6.1)
 
   packages/elysia:
     dependencies:
@@ -359,14 +359,14 @@ importers:
         version: link:../core
       '@universal-middleware/elysia':
         specifier: ^0.6.0
-        version: 0.6.0(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+        version: 0.6.0(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.8.16)
     devDependencies:
       '@elysiajs/node':
         specifier: ^1.4.1
-        version: 1.4.1(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))
+        version: 1.4.1(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))
       '@types/bun':
-        specifier: ^1.3.0
-        version: 1.3.0(@types/react@19.2.2)
+        specifier: ^1.3.1
+        version: 1.3.1(@types/react@19.2.2)
       '@types/deno':
         specifier: ^2.5.0
         version: 2.5.0
@@ -374,20 +374,20 @@ importers:
         specifier: ^22.18.10
         version: 22.18.10
       '@universal-middleware/core':
-        specifier: ^0.4.11
-        version: 0.4.11(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+        specifier: ^0.4.12
+        version: 0.4.12(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.8.16)
       elysia:
-        specifier: ^1.4.11
-        version: 1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3)
+        specifier: ^1.4.13
+        version: 1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3)
       tsdown:
-        specifier: ^0.15.7
-        version: 0.15.7(typescript@5.9.3)
+        specifier: ^0.15.9
+        version: 0.15.9(typescript@5.9.3)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
       vite:
-        specifier: ^7.1.10
-        version: 7.1.10(@types/node@22.18.10)(jiti@2.6.1)
+        specifier: ^7.1.12
+        version: 7.1.12(@types/node@22.18.10)(jiti@2.6.1)
 
   packages/express:
     dependencies:
@@ -396,26 +396,26 @@ importers:
         version: link:../core
       '@universal-middleware/express':
         specifier: ^0.4.19
-        version: 0.4.19(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+        version: 0.4.19(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
     devDependencies:
       '@types/node':
         specifier: ^22.18.10
         version: 22.18.10
       '@universal-middleware/core':
-        specifier: ^0.4.11
-        version: 0.4.11(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+        specifier: ^0.4.12
+        version: 0.4.12(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
       express:
         specifier: ^5.1.0
         version: 5.1.0
       tsdown:
-        specifier: ^0.15.7
-        version: 0.15.7(typescript@5.9.3)
+        specifier: ^0.15.9
+        version: 0.15.9(typescript@5.9.3)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
       vite:
-        specifier: ^7.1.10
-        version: 7.1.10(@types/node@22.18.10)(jiti@2.6.1)
+        specifier: ^7.1.12
+        version: 7.1.12(@types/node@22.18.10)(jiti@2.6.1)
 
   packages/fastify:
     dependencies:
@@ -424,14 +424,14 @@ importers:
         version: link:../core
       '@universal-middleware/fastify':
         specifier: ^0.5.22
-        version: 0.5.22(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+        version: 0.5.22(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
     devDependencies:
       '@types/node':
         specifier: ^22.18.10
         version: 22.18.10
       '@universal-middleware/core':
-        specifier: ^0.4.11
-        version: 0.4.11(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+        specifier: ^0.4.12
+        version: 0.4.12(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
       ansis:
         specifier: ^4.2.0
         version: 4.2.0
@@ -439,14 +439,14 @@ importers:
         specifier: ^5.6.1
         version: 5.6.1
       tsdown:
-        specifier: ^0.15.7
-        version: 0.15.7(typescript@5.9.3)
+        specifier: ^0.15.9
+        version: 0.15.9(typescript@5.9.3)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
       vite:
-        specifier: ^7.1.10
-        version: 7.1.10(@types/node@22.18.10)(jiti@2.6.1)
+        specifier: ^7.1.12
+        version: 7.1.12(@types/node@22.18.10)(jiti@2.6.1)
 
   packages/h3:
     dependencies:
@@ -455,11 +455,11 @@ importers:
         version: link:../core
       '@universal-middleware/h3':
         specifier: ^0.4.14
-        version: 0.4.14(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+        version: 0.4.14(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
     devDependencies:
       '@types/bun':
-        specifier: ^1.3.0
-        version: 1.3.0(@types/react@19.2.2)
+        specifier: ^1.3.1
+        version: 1.3.1(@types/react@19.2.2)
       '@types/deno':
         specifier: ^2.5.0
         version: 2.5.0
@@ -467,20 +467,20 @@ importers:
         specifier: ^22.18.10
         version: 22.18.10
       '@universal-middleware/core':
-        specifier: ^0.4.11
-        version: 0.4.11(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+        specifier: ^0.4.12
+        version: 0.4.12(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
       h3:
         specifier: ^1.15.4
         version: 1.15.4
       tsdown:
-        specifier: ^0.15.7
-        version: 0.15.7(typescript@5.9.3)
+        specifier: ^0.15.9
+        version: 0.15.9(typescript@5.9.3)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
       vite:
-        specifier: ^7.1.10
-        version: 7.1.10(@types/node@22.18.10)(jiti@2.6.1)
+        specifier: ^7.1.12
+        version: 7.1.12(@types/node@22.18.10)(jiti@2.6.1)
 
   packages/hattip:
     dependencies:
@@ -492,11 +492,11 @@ importers:
         version: link:../core
       '@universal-middleware/hattip':
         specifier: ^0.4.13
-        version: 0.4.13(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+        version: 0.4.13(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
     devDependencies:
       '@types/bun':
-        specifier: ^1.3.0
-        version: 1.3.0(@types/react@19.2.2)
+        specifier: ^1.3.1
+        version: 1.3.1(@types/react@19.2.2)
       '@types/deno':
         specifier: ^2.5.0
         version: 2.5.0
@@ -504,17 +504,17 @@ importers:
         specifier: ^22.18.10
         version: 22.18.10
       '@universal-middleware/core':
-        specifier: ^0.4.11
-        version: 0.4.11(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+        specifier: ^0.4.12
+        version: 0.4.12(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
       tsdown:
-        specifier: ^0.15.7
-        version: 0.15.7(typescript@5.9.3)
+        specifier: ^0.15.9
+        version: 0.15.9(typescript@5.9.3)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
       vite:
-        specifier: ^7.1.10
-        version: 7.1.10(@types/node@22.18.10)(jiti@2.6.1)
+        specifier: ^7.1.12
+        version: 7.1.12(@types/node@22.18.10)(jiti@2.6.1)
 
   packages/hono:
     dependencies:
@@ -523,14 +523,14 @@ importers:
         version: link:../core
       '@universal-middleware/hono':
         specifier: ^0.4.17
-        version: 0.4.17(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+        version: 0.4.17(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
     devDependencies:
       '@hono/node-server':
         specifier: ^1.19.5
-        version: 1.19.5(hono@4.9.12)
+        version: 1.19.5(hono@4.10.2)
       '@types/bun':
-        specifier: ^1.3.0
-        version: 1.3.0(@types/react@19.2.2)
+        specifier: ^1.3.1
+        version: 1.3.1(@types/react@19.2.2)
       '@types/deno':
         specifier: ^2.5.0
         version: 2.5.0
@@ -538,17 +538,17 @@ importers:
         specifier: ^22.18.10
         version: 22.18.10
       '@universal-middleware/core':
-        specifier: ^0.4.11
-        version: 0.4.11(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+        specifier: ^0.4.12
+        version: 0.4.12(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
       tsdown:
-        specifier: ^0.15.7
-        version: 0.15.7(typescript@5.9.3)
+        specifier: ^0.15.9
+        version: 0.15.9(typescript@5.9.3)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
       vite:
-        specifier: ^7.1.10
-        version: 7.1.10(@types/node@22.18.10)(jiti@2.6.1)
+        specifier: ^7.1.12
+        version: 7.1.12(@types/node@22.18.10)(jiti@2.6.1)
 
   packages/runtime:
     dependencies:
@@ -563,17 +563,17 @@ importers:
         specifier: ^22.18.10
         version: 22.18.10
       srvx:
-        specifier: ^0.8.16
-        version: 0.8.16
+        specifier: ^0.9.1
+        version: 0.9.1
       tsdown:
-        specifier: ^0.15.7
-        version: 0.15.7(typescript@5.9.3)
+        specifier: ^0.15.9
+        version: 0.15.9(typescript@5.9.3)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
       vite:
-        specifier: ^7.1.10
-        version: 7.1.10(@types/node@22.18.10)(jiti@2.6.1)
+        specifier: ^7.1.12
+        version: 7.1.12(@types/node@22.18.10)(jiti@2.6.1)
 
   packages/srvx:
     dependencies:
@@ -581,12 +581,12 @@ importers:
         specifier: workspace:^
         version: link:../core
       '@universal-middleware/srvx':
-        specifier: ^0.1.0
-        version: 0.1.0(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+        specifier: ^0.1.1
+        version: 0.1.1(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
     devDependencies:
       '@types/bun':
-        specifier: ^1.3.0
-        version: 1.3.0(@types/react@19.2.2)
+        specifier: ^1.3.1
+        version: 1.3.1(@types/react@19.2.2)
       '@types/deno':
         specifier: ^2.5.0
         version: 2.5.0
@@ -594,20 +594,20 @@ importers:
         specifier: ^22.18.10
         version: 22.18.10
       '@universal-middleware/core':
-        specifier: ^0.4.11
-        version: 0.4.11(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+        specifier: ^0.4.12
+        version: 0.4.12(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
       srvx:
-        specifier: ^0.8.16
-        version: 0.8.16
+        specifier: ^0.9.1
+        version: 0.9.1
       tsdown:
-        specifier: ^0.15.7
-        version: 0.15.7(typescript@5.9.3)
+        specifier: ^0.15.9
+        version: 0.15.9(typescript@5.9.3)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
       vite:
-        specifier: ^7.1.10
-        version: 7.1.10(@types/node@22.18.10)(jiti@2.6.1)
+        specifier: ^7.1.12
+        version: 7.1.12(@types/node@22.18.10)(jiti@2.6.1)
 
   tests/app:
     dependencies:
@@ -624,11 +624,11 @@ importers:
         specifier: ^1.15.4
         version: 1.15.4
       hono:
-        specifier: ^4.9.12
-        version: 4.9.12
+        specifier: ^4.10.2
+        version: 4.10.2
       srvx:
-        specifier: ^0.8.16
-        version: 0.8.16
+        specifier: ^0.9.1
+        version: 0.9.1
     devDependencies:
       '@photonjs/cloudflare':
         specifier: 'workspace:'
@@ -655,8 +655,8 @@ importers:
         specifier: 'workspace:'
         version: link:../../packages/srvx
       '@types/express':
-        specifier: ^5.0.3
-        version: 5.0.3
+        specifier: ^5.0.4
+        version: 5.0.4
       '@types/node':
         specifier: ^22.18.10
         version: 22.18.10
@@ -664,11 +664,11 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
       vite:
-        specifier: ^7.1.10
-        version: 7.1.10(@types/node@22.18.10)(jiti@2.6.1)
+        specifier: ^7.1.12
+        version: 7.1.12(@types/node@22.18.10)(jiti@2.6.1)
       wrangler:
-        specifier: ^4.43.0
-        version: 4.43.0(@cloudflare/workers-types@4.20251011.0)
+        specifier: ^4.45.0
+        version: 4.45.0(@cloudflare/workers-types@4.20251014.0)
 
 packages:
 
@@ -881,55 +881,55 @@ packages:
     resolution: {integrity: sha512-bkFqkLhh3pMBUQQkpVgWDWq/lqzc2678eUyDlTBhRqhCHFguYYGM0Efga7tYk4TogG/3x0EEl66/OQ+WGbWB/Q==}
     engines: {node: '>=6.9.0'}
 
-  '@biomejs/biome@2.2.6':
-    resolution: {integrity: sha512-yKTCNGhek0rL5OEW1jbLeZX8LHaM8yk7+3JRGv08my+gkpmtb5dDE+54r2ZjZx0ediFEn1pYBOJSmOdDP9xtFw==}
+  '@biomejs/biome@2.3.0':
+    resolution: {integrity: sha512-shdUY5H3S3tJVUWoVWo5ua+GdPW5lRHf+b0IwZ4OC1o2zOKQECZ6l2KbU6t89FNhtd3Qx5eg5N7/UsQWGQbAFw==}
     engines: {node: '>=14.21.3'}
     hasBin: true
 
-  '@biomejs/cli-darwin-arm64@2.2.6':
-    resolution: {integrity: sha512-UZPmn3M45CjTYulgcrFJFZv7YmK3pTxTJDrFYlNElT2FNnkkX4fsxjExTSMeWKQYoZjvekpH5cvrYZZlWu3yfA==}
+  '@biomejs/cli-darwin-arm64@2.3.0':
+    resolution: {integrity: sha512-3cJVT0Z5pbTkoBmbjmDZTDFYxIkRcrs9sYVJbIBHU8E6qQxgXAaBfSVjjCreG56rfDuQBr43GzwzmaHPcu4vlw==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [darwin]
 
-  '@biomejs/cli-darwin-x64@2.2.6':
-    resolution: {integrity: sha512-HOUIquhHVgh/jvxyClpwlpl/oeMqntlteL89YqjuFDiZ091P0vhHccwz+8muu3nTyHWM5FQslt+4Jdcd67+xWQ==}
+  '@biomejs/cli-darwin-x64@2.3.0':
+    resolution: {integrity: sha512-6LIkhglh3UGjuDqJXsK42qCA0XkD1Ke4K/raFOii7QQPbM8Pia7Qj2Hji4XuF2/R78hRmEx7uKJH3t/Y9UahtQ==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [darwin]
 
-  '@biomejs/cli-linux-arm64-musl@2.2.6':
-    resolution: {integrity: sha512-TjCenQq3N6g1C+5UT3jE1bIiJb5MWQvulpUngTIpFsL4StVAUXucWD0SL9MCW89Tm6awWfeXBbZBAhJwjyFbRQ==}
+  '@biomejs/cli-linux-arm64-musl@2.3.0':
+    resolution: {integrity: sha512-nDksoFdwZ2YrE7NiYDhtMhL2UgFn8Kb7Y0bYvnTAakHnqEdb4lKindtBc1f+xg2Snz0JQhJUYO7r9CDBosRU5w==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [linux]
 
-  '@biomejs/cli-linux-arm64@2.2.6':
-    resolution: {integrity: sha512-BpGtuMJGN+o8pQjvYsUKZ+4JEErxdSmcRD/JG3mXoWc6zrcA7OkuyGFN1mDggO0Q1n7qXxo/PcupHk8gzijt5g==}
+  '@biomejs/cli-linux-arm64@2.3.0':
+    resolution: {integrity: sha512-uhAsbXySX7xsXahegDg5h3CDgfMcRsJvWLFPG0pjkylgBb9lErbK2C0UINW52zhwg0cPISB09lxHPxCau4e2xA==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [linux]
 
-  '@biomejs/cli-linux-x64-musl@2.2.6':
-    resolution: {integrity: sha512-1ZcBux8zVM3JhWN2ZCPaYf0+ogxXG316uaoXJdgoPZcdK/rmRcRY7PqHdAos2ExzvjIdvhQp72UcveI98hgOog==}
+  '@biomejs/cli-linux-x64-musl@2.3.0':
+    resolution: {integrity: sha512-+i9UcJwl99uAhtRQDz9jUAh+Xkb097eekxs/D9j4deWDg5/yB/jPWzISe1nBHvlzTXsdUSj0VvB4Go2DSpKIMw==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [linux]
 
-  '@biomejs/cli-linux-x64@2.2.6':
-    resolution: {integrity: sha512-1HaM/dpI/1Z68zp8ZdT6EiBq+/O/z97a2AiHMl+VAdv5/ELckFt9EvRb8hDHpk8hUMoz03gXkC7VPXOVtU7faA==}
+  '@biomejs/cli-linux-x64@2.3.0':
+    resolution: {integrity: sha512-uxa8reA2s1VgoH8MhbGlCmMOt3JuSE1vJBifkh1ulaPiuk0SPx8cCdpnm9NWnTe2x/LfWInWx4sZ7muaXTPGGw==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [linux]
 
-  '@biomejs/cli-win32-arm64@2.2.6':
-    resolution: {integrity: sha512-h3A88G8PGM1ryTeZyLlSdfC/gz3e95EJw9BZmA6Po412DRqwqPBa2Y9U+4ZSGUAXCsnSQE00jLV8Pyrh0d+jQw==}
+  '@biomejs/cli-win32-arm64@2.3.0':
+    resolution: {integrity: sha512-ynjmsJLIKrAjC3CCnKMMhzcnNy8dbQWjKfSU5YA0mIruTxBNMbkAJp+Pr2iV7/hFou+66ZSD/WV8hmLEmhUaXA==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [win32]
 
-  '@biomejs/cli-win32-x64@2.2.6':
-    resolution: {integrity: sha512-yx0CqeOhPjYQ5ZXgPfu8QYkgBhVJyvWe36as7jRuPrKPO5ylVDfwVtPQ+K/mooNTADW0IhxOZm3aPu16dP8yNQ==}
+  '@biomejs/cli-win32-x64@2.3.0':
+    resolution: {integrity: sha512-zOCYmCRVkWXc9v8P7OLbLlGGMxQTKMvi+5IC4v7O8DkjLCOHRzRVK/Lno2pGZNo0lzKM60pcQOhH8HVkXMQdFg==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [win32]
@@ -1036,8 +1036,8 @@ packages:
     resolution: {integrity: sha512-+tv3z+SPp+gqTIcImN9o0hqE9xyfQjI1XD9pL6NuKjua9B1y7mNYv0S9cP+QEbA4ppVgGZEmKOvHX5G5Ei1CVA==}
     engines: {node: '>=18.0.0'}
 
-  '@cloudflare/unenv-preset@2.7.7':
-    resolution: {integrity: sha512-HtZuh166y0Olbj9bqqySckz0Rw9uHjggJeoGbDx5x+sgezBXlxO6tQSig2RZw5tgObF8mWI8zaPvQMkQZtAODw==}
+  '@cloudflare/unenv-preset@2.7.8':
+    resolution: {integrity: sha512-Ky929MfHh+qPhwCapYrRPwPVHtA2Ioex/DbGZyskGyNRDe9Ru3WThYZivyNVaPy5ergQSgMs9OKrM9Ajtz9F6w==}
     peerDependencies:
       unenv: 2.0.0-rc.21
       workerd: ^1.20250927.0
@@ -1045,44 +1045,44 @@ packages:
       workerd:
         optional: true
 
-  '@cloudflare/vite-plugin@1.13.13':
-    resolution: {integrity: sha512-RgyoPy0fzqEETVmhzb2yhr2Jqz2N8dxwhL9+1bDiO0Bajdfb8cCURgBgppcRfmcYKlBTXYl9xvus+nnH5KRmRQ==}
+  '@cloudflare/vite-plugin@1.13.15':
+    resolution: {integrity: sha512-tVkdkRmwGzqs7RzRIwKkJp/FvRZ0YL108jXhQRYTSCDcuDVROK4O1hjf9bcC7Gr0KISSaEPj9oJtR5eTSNN+Ag==}
     peerDependencies:
       vite: ^6.1.0 || ^7.0.0
-      wrangler: ^4.43.0
+      wrangler: ^4.45.0
 
-  '@cloudflare/workerd-darwin-64@1.20251008.0':
-    resolution: {integrity: sha512-yph0H+8mMOK5Z9oDwjb8rI96oTVt4no5lZ43aorcbzsWG9VUIaXSXlBBoB3von6p4YCRW+J3n36fBM9XZ6TLaA==}
+  '@cloudflare/workerd-darwin-64@1.20251011.0':
+    resolution: {integrity: sha512-0DirVP+Z82RtZLlK2B+VhLOkk+ShBqDYO/jhcRw4oVlp0TOvk3cOVZChrt3+y3NV8Y/PYgTEywzLKFSziK4wCg==}
     engines: {node: '>=16'}
     cpu: [x64]
     os: [darwin]
 
-  '@cloudflare/workerd-darwin-arm64@1.20251008.0':
-    resolution: {integrity: sha512-Yc4lMGSbM4AEtYRpyDpmk77MsHb6X2BSwJgMgGsLVPmckM7ZHivZkJChfcNQjZ/MGR6nkhYc4iF6TcVS+UMEVw==}
+  '@cloudflare/workerd-darwin-arm64@1.20251011.0':
+    resolution: {integrity: sha512-1WuFBGwZd15p4xssGN/48OE2oqokIuc51YvHvyNivyV8IYnAs3G9bJNGWth1X7iMDPe4g44pZrKhRnISS2+5dA==}
     engines: {node: '>=16'}
     cpu: [arm64]
     os: [darwin]
 
-  '@cloudflare/workerd-linux-64@1.20251008.0':
-    resolution: {integrity: sha512-AjoQnylw4/5G6SmfhZRsli7EuIK7ZMhmbxtU0jkpciTlVV8H01OsFOgS1d8zaTXMfkWamEfMouy8oH/L7B9YcQ==}
+  '@cloudflare/workerd-linux-64@1.20251011.0':
+    resolution: {integrity: sha512-BccMiBzFlWZyFghIw2szanmYJrJGBGHomw2y/GV6pYXChFzMGZkeCEMfmCyJj29xczZXxcZmUVJxNy4eJxO8QA==}
     engines: {node: '>=16'}
     cpu: [x64]
     os: [linux]
 
-  '@cloudflare/workerd-linux-arm64@1.20251008.0':
-    resolution: {integrity: sha512-hRy9yyvzVq1HsqHZUmFkAr0C8JGjAD/PeeVEGCKL3jln3M9sNCKIrbDXiL+efe+EwajJNNlDxpO+s30uVWVaRg==}
+  '@cloudflare/workerd-linux-arm64@1.20251011.0':
+    resolution: {integrity: sha512-79o/216lsbAbKEVDZYXR24ivEIE2ysDL9jvo0rDTkViLWju9dAp3CpyetglpJatbSi3uWBPKZBEOqN68zIjVsQ==}
     engines: {node: '>=16'}
     cpu: [arm64]
     os: [linux]
 
-  '@cloudflare/workerd-windows-64@1.20251008.0':
-    resolution: {integrity: sha512-Gm0RR+ehfNMsScn2pUcn3N9PDUpy7FyvV9ecHEyclKttvztyFOcmsF14bxEaSVv7iM4TxWEBn1rclmYHxDM4ow==}
+  '@cloudflare/workerd-windows-64@1.20251011.0':
+    resolution: {integrity: sha512-RIXUQRchFdqEvaUqn1cXZXSKjpqMaSaVAkI5jNZ8XzAw/bw2bcdOVUtakrflgxDprltjFb0PTNtuss1FKtH9Jg==}
     engines: {node: '>=16'}
     cpu: [x64]
     os: [win32]
 
-  '@cloudflare/workers-types@4.20251011.0':
-    resolution: {integrity: sha512-gQpih+pbq3sP4uXltUeCSbPgZxTNp2gQd8639SaIbQMwgA6oJNHLhIART1fWy6DQACngiRzDVULA2x0ohmkGTQ==}
+  '@cloudflare/workers-types@4.20251014.0':
+    resolution: {integrity: sha512-tEW98J/kOa0TdylIUOrLKRdwkUw0rvvYVlo+Ce0mqRH3c8kSoxLzUH9gfCvwLe0M89z1RkzFovSKAW2Nwtyn3w==}
 
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -1936,8 +1936,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@rolldown/pluginutils@1.0.0-beta.35':
-    resolution: {integrity: sha512-slYrCpoxJUqzFDDNlvrOYRazQUNRvWPjXA17dAOISY3rDMxX6k8K4cj2H+hEYMHF81HO3uNd5rHVigAWRM5dSg==}
+  '@rolldown/pluginutils@1.0.0-beta.43':
+    resolution: {integrity: sha512-5Uxg7fQUCmfhax7FJke2+8B6cqgeUJUD9o2uXIKXhD+mG0mL6NObmVoi9wXEU1tY89mZKgAYA6fTbftx3q2ZPQ==}
 
   '@rolldown/pluginutils@1.0.0-beta.44':
     resolution: {integrity: sha512-g6eW7Zwnr2c5RADIoqziHoVs6b3W5QTQ4+qbpfjbkMJ9x+8Og211VW/oot2dj9dVwaK/UyC6Yo+02gV+wWQVNg==}
@@ -1951,113 +1951,113 @@ packages:
       rollup:
         optional: true
 
-  '@rollup/rollup-android-arm-eabi@4.52.4':
-    resolution: {integrity: sha512-BTm2qKNnWIQ5auf4deoetINJm2JzvihvGb9R6K/ETwKLql/Bb3Eg2H1FBp1gUb4YGbydMA3jcmQTR73q7J+GAA==}
+  '@rollup/rollup-android-arm-eabi@4.52.5':
+    resolution: {integrity: sha512-8c1vW4ocv3UOMp9K+gToY5zL2XiiVw3k7f1ksf4yO1FlDFQ1C2u72iACFnSOceJFsWskc2WZNqeRhFRPzv+wtQ==}
     cpu: [arm]
     os: [android]
 
-  '@rollup/rollup-android-arm64@4.52.4':
-    resolution: {integrity: sha512-P9LDQiC5vpgGFgz7GSM6dKPCiqR3XYN1WwJKA4/BUVDjHpYsf3iBEmVz62uyq20NGYbiGPR5cNHI7T1HqxNs2w==}
+  '@rollup/rollup-android-arm64@4.52.5':
+    resolution: {integrity: sha512-mQGfsIEFcu21mvqkEKKu2dYmtuSZOBMmAl5CFlPGLY94Vlcm+zWApK7F/eocsNzp8tKmbeBP8yXyAbx0XHsFNA==}
     cpu: [arm64]
     os: [android]
 
-  '@rollup/rollup-darwin-arm64@4.52.4':
-    resolution: {integrity: sha512-QRWSW+bVccAvZF6cbNZBJwAehmvG9NwfWHwMy4GbWi/BQIA/laTIktebT2ipVjNncqE6GLPxOok5hsECgAxGZg==}
+  '@rollup/rollup-darwin-arm64@4.52.5':
+    resolution: {integrity: sha512-takF3CR71mCAGA+v794QUZ0b6ZSrgJkArC+gUiG6LB6TQty9T0Mqh3m2ImRBOxS2IeYBo4lKWIieSvnEk2OQWA==}
     cpu: [arm64]
     os: [darwin]
 
-  '@rollup/rollup-darwin-x64@4.52.4':
-    resolution: {integrity: sha512-hZgP05pResAkRJxL1b+7yxCnXPGsXU0fG9Yfd6dUaoGk+FhdPKCJ5L1Sumyxn8kvw8Qi5PvQ8ulenUbRjzeCTw==}
+  '@rollup/rollup-darwin-x64@4.52.5':
+    resolution: {integrity: sha512-W901Pla8Ya95WpxDn//VF9K9u2JbocwV/v75TE0YIHNTbhqUTv9w4VuQ9MaWlNOkkEfFwkdNhXgcLqPSmHy0fA==}
     cpu: [x64]
     os: [darwin]
 
-  '@rollup/rollup-freebsd-arm64@4.52.4':
-    resolution: {integrity: sha512-xmc30VshuBNUd58Xk4TKAEcRZHaXlV+tCxIXELiE9sQuK3kG8ZFgSPi57UBJt8/ogfhAF5Oz4ZSUBN77weM+mQ==}
+  '@rollup/rollup-freebsd-arm64@4.52.5':
+    resolution: {integrity: sha512-QofO7i7JycsYOWxe0GFqhLmF6l1TqBswJMvICnRUjqCx8b47MTo46W8AoeQwiokAx3zVryVnxtBMcGcnX12LvA==}
     cpu: [arm64]
     os: [freebsd]
 
-  '@rollup/rollup-freebsd-x64@4.52.4':
-    resolution: {integrity: sha512-WdSLpZFjOEqNZGmHflxyifolwAiZmDQzuOzIq9L27ButpCVpD7KzTRtEG1I0wMPFyiyUdOO+4t8GvrnBLQSwpw==}
+  '@rollup/rollup-freebsd-x64@4.52.5':
+    resolution: {integrity: sha512-jr21b/99ew8ujZubPo9skbrItHEIE50WdV86cdSoRkKtmWa+DDr6fu2c/xyRT0F/WazZpam6kk7IHBerSL7LDQ==}
     cpu: [x64]
     os: [freebsd]
 
-  '@rollup/rollup-linux-arm-gnueabihf@4.52.4':
-    resolution: {integrity: sha512-xRiOu9Of1FZ4SxVbB0iEDXc4ddIcjCv2aj03dmW8UrZIW7aIQ9jVJdLBIhxBI+MaTnGAKyvMwPwQnoOEvP7FgQ==}
+  '@rollup/rollup-linux-arm-gnueabihf@4.52.5':
+    resolution: {integrity: sha512-PsNAbcyv9CcecAUagQefwX8fQn9LQ4nZkpDboBOttmyffnInRy8R8dSg6hxxl2Re5QhHBf6FYIDhIj5v982ATQ==}
     cpu: [arm]
     os: [linux]
 
-  '@rollup/rollup-linux-arm-musleabihf@4.52.4':
-    resolution: {integrity: sha512-FbhM2p9TJAmEIEhIgzR4soUcsW49e9veAQCziwbR+XWB2zqJ12b4i/+hel9yLiD8pLncDH4fKIPIbt5238341Q==}
+  '@rollup/rollup-linux-arm-musleabihf@4.52.5':
+    resolution: {integrity: sha512-Fw4tysRutyQc/wwkmcyoqFtJhh0u31K+Q6jYjeicsGJJ7bbEq8LwPWV/w0cnzOqR2m694/Af6hpFayLJZkG2VQ==}
     cpu: [arm]
     os: [linux]
 
-  '@rollup/rollup-linux-arm64-gnu@4.52.4':
-    resolution: {integrity: sha512-4n4gVwhPHR9q/g8lKCyz0yuaD0MvDf7dV4f9tHt0C73Mp8h38UCtSCSE6R9iBlTbXlmA8CjpsZoujhszefqueg==}
+  '@rollup/rollup-linux-arm64-gnu@4.52.5':
+    resolution: {integrity: sha512-a+3wVnAYdQClOTlyapKmyI6BLPAFYs0JM8HRpgYZQO02rMR09ZcV9LbQB+NL6sljzG38869YqThrRnfPMCDtZg==}
     cpu: [arm64]
     os: [linux]
 
-  '@rollup/rollup-linux-arm64-musl@4.52.4':
-    resolution: {integrity: sha512-u0n17nGA0nvi/11gcZKsjkLj1QIpAuPFQbR48Subo7SmZJnGxDpspyw2kbpuoQnyK+9pwf3pAoEXerJs/8Mi9g==}
+  '@rollup/rollup-linux-arm64-musl@4.52.5':
+    resolution: {integrity: sha512-AvttBOMwO9Pcuuf7m9PkC1PUIKsfaAJ4AYhy944qeTJgQOqJYJ9oVl2nYgY7Rk0mkbsuOpCAYSs6wLYB2Xiw0Q==}
     cpu: [arm64]
     os: [linux]
 
-  '@rollup/rollup-linux-loong64-gnu@4.52.4':
-    resolution: {integrity: sha512-0G2c2lpYtbTuXo8KEJkDkClE/+/2AFPdPAbmaHoE870foRFs4pBrDehilMcrSScrN/fB/1HTaWO4bqw+ewBzMQ==}
+  '@rollup/rollup-linux-loong64-gnu@4.52.5':
+    resolution: {integrity: sha512-DkDk8pmXQV2wVrF6oq5tONK6UHLz/XcEVow4JTTerdeV1uqPeHxwcg7aFsfnSm9L+OO8WJsWotKM2JJPMWrQtA==}
     cpu: [loong64]
     os: [linux]
 
-  '@rollup/rollup-linux-ppc64-gnu@4.52.4':
-    resolution: {integrity: sha512-teSACug1GyZHmPDv14VNbvZFX779UqWTsd7KtTM9JIZRDI5NUwYSIS30kzI8m06gOPB//jtpqlhmraQ68b5X2g==}
+  '@rollup/rollup-linux-ppc64-gnu@4.52.5':
+    resolution: {integrity: sha512-W/b9ZN/U9+hPQVvlGwjzi+Wy4xdoH2I8EjaCkMvzpI7wJUs8sWJ03Rq96jRnHkSrcHTpQe8h5Tg3ZzUPGauvAw==}
     cpu: [ppc64]
     os: [linux]
 
-  '@rollup/rollup-linux-riscv64-gnu@4.52.4':
-    resolution: {integrity: sha512-/MOEW3aHjjs1p4Pw1Xk4+3egRevx8Ji9N6HUIA1Ifh8Q+cg9dremvFCUbOX2Zebz80BwJIgCBUemjqhU5XI5Eg==}
+  '@rollup/rollup-linux-riscv64-gnu@4.52.5':
+    resolution: {integrity: sha512-sjQLr9BW7R/ZiXnQiWPkErNfLMkkWIoCz7YMn27HldKsADEKa5WYdobaa1hmN6slu9oWQbB6/jFpJ+P2IkVrmw==}
     cpu: [riscv64]
     os: [linux]
 
-  '@rollup/rollup-linux-riscv64-musl@4.52.4':
-    resolution: {integrity: sha512-1HHmsRyh845QDpEWzOFtMCph5Ts+9+yllCrREuBR/vg2RogAQGGBRC8lDPrPOMnrdOJ+mt1WLMOC2Kao/UwcvA==}
+  '@rollup/rollup-linux-riscv64-musl@4.52.5':
+    resolution: {integrity: sha512-hq3jU/kGyjXWTvAh2awn8oHroCbrPm8JqM7RUpKjalIRWWXE01CQOf/tUNWNHjmbMHg/hmNCwc/Pz3k1T/j/Lg==}
     cpu: [riscv64]
     os: [linux]
 
-  '@rollup/rollup-linux-s390x-gnu@4.52.4':
-    resolution: {integrity: sha512-seoeZp4L/6D1MUyjWkOMRU6/iLmCU2EjbMTyAG4oIOs1/I82Y5lTeaxW0KBfkUdHAWN7j25bpkt0rjnOgAcQcA==}
+  '@rollup/rollup-linux-s390x-gnu@4.52.5':
+    resolution: {integrity: sha512-gn8kHOrku8D4NGHMK1Y7NA7INQTRdVOntt1OCYypZPRt6skGbddska44K8iocdpxHTMMNui5oH4elPH4QOLrFQ==}
     cpu: [s390x]
     os: [linux]
 
-  '@rollup/rollup-linux-x64-gnu@4.52.4':
-    resolution: {integrity: sha512-Wi6AXf0k0L7E2gteNsNHUs7UMwCIhsCTs6+tqQ5GPwVRWMaflqGec4Sd8n6+FNFDw9vGcReqk2KzBDhCa1DLYg==}
+  '@rollup/rollup-linux-x64-gnu@4.52.5':
+    resolution: {integrity: sha512-hXGLYpdhiNElzN770+H2nlx+jRog8TyynpTVzdlc6bndktjKWyZyiCsuDAlpd+j+W+WNqfcyAWz9HxxIGfZm1Q==}
     cpu: [x64]
     os: [linux]
 
-  '@rollup/rollup-linux-x64-musl@4.52.4':
-    resolution: {integrity: sha512-dtBZYjDmCQ9hW+WgEkaffvRRCKm767wWhxsFW3Lw86VXz/uJRuD438/XvbZT//B96Vs8oTA8Q4A0AfHbrxP9zw==}
+  '@rollup/rollup-linux-x64-musl@4.52.5':
+    resolution: {integrity: sha512-arCGIcuNKjBoKAXD+y7XomR9gY6Mw7HnFBv5Rw7wQRvwYLR7gBAgV7Mb2QTyjXfTveBNFAtPt46/36vV9STLNg==}
     cpu: [x64]
     os: [linux]
 
-  '@rollup/rollup-openharmony-arm64@4.52.4':
-    resolution: {integrity: sha512-1ox+GqgRWqaB1RnyZXL8PD6E5f7YyRUJYnCqKpNzxzP0TkaUh112NDrR9Tt+C8rJ4x5G9Mk8PQR3o7Ku2RKqKA==}
+  '@rollup/rollup-openharmony-arm64@4.52.5':
+    resolution: {integrity: sha512-QoFqB6+/9Rly/RiPjaomPLmR/13cgkIGfA40LHly9zcH1S0bN2HVFYk3a1eAyHQyjs3ZJYlXvIGtcCs5tko9Cw==}
     cpu: [arm64]
     os: [openharmony]
 
-  '@rollup/rollup-win32-arm64-msvc@4.52.4':
-    resolution: {integrity: sha512-8GKr640PdFNXwzIE0IrkMWUNUomILLkfeHjXBi/nUvFlpZP+FA8BKGKpacjW6OUUHaNI6sUURxR2U2g78FOHWQ==}
+  '@rollup/rollup-win32-arm64-msvc@4.52.5':
+    resolution: {integrity: sha512-w0cDWVR6MlTstla1cIfOGyl8+qb93FlAVutcor14Gf5Md5ap5ySfQ7R9S/NjNaMLSFdUnKGEasmVnu3lCMqB7w==}
     cpu: [arm64]
     os: [win32]
 
-  '@rollup/rollup-win32-ia32-msvc@4.52.4':
-    resolution: {integrity: sha512-AIy/jdJ7WtJ/F6EcfOb2GjR9UweO0n43jNObQMb6oGxkYTfLcnN7vYYpG+CN3lLxrQkzWnMOoNSHTW54pgbVxw==}
+  '@rollup/rollup-win32-ia32-msvc@4.52.5':
+    resolution: {integrity: sha512-Aufdpzp7DpOTULJCuvzqcItSGDH73pF3ko/f+ckJhxQyHtp67rHw3HMNxoIdDMUITJESNE6a8uh4Lo4SLouOUg==}
     cpu: [ia32]
     os: [win32]
 
-  '@rollup/rollup-win32-x64-gnu@4.52.4':
-    resolution: {integrity: sha512-UF9KfsH9yEam0UjTwAgdK0anlQ7c8/pWPU2yVjyWcF1I1thABt6WXE47cI71pGiZ8wGvxohBoLnxM04L/wj8mQ==}
+  '@rollup/rollup-win32-x64-gnu@4.52.5':
+    resolution: {integrity: sha512-UGBUGPFp1vkj6p8wCRraqNhqwX/4kNQPS57BCFc8wYh0g94iVIW33wJtQAx3G7vrjjNtRaxiMUylM0ktp/TRSQ==}
     cpu: [x64]
     os: [win32]
 
-  '@rollup/rollup-win32-x64-msvc@4.52.4':
-    resolution: {integrity: sha512-bf9PtUa0u8IXDVxzRToFQKsNCRz9qLYfR/MpECxl4mRoWYjAeFjgxj1XdZr2M/GNVpT05p+LgQOHopYDlUu6/w==}
+  '@rollup/rollup-win32-x64-msvc@4.52.5':
+    resolution: {integrity: sha512-TAcgQh2sSkykPRWLrdyy2AiceMckNf5loITqXxFI5VuQjS5tSuw3WlwdN8qv8vzjLAUTvYaH/mVjSFpbkFbpTg==}
     cpu: [x64]
     os: [win32]
 
@@ -2180,8 +2180,8 @@ packages:
   '@types/body-parser@1.19.6':
     resolution: {integrity: sha512-HLFeCYgz89uk22N5Qg3dvGvsv46B8GLvKKo1zKG4NybA8U2DiEO3w9lqGg29t/tfLRJpJ6iQxnVw4OnB7MoM9g==}
 
-  '@types/bun@1.3.0':
-    resolution: {integrity: sha512-+lAGCYjXjip2qY375xX/scJeVRmZ5cY0wyHYyCYxNcdEXrQ4AOe3gACgd4iQ8ksOslJtW4VNxBJ8llUwc3a6AA==}
+  '@types/bun@1.3.1':
+    resolution: {integrity: sha512-4jNMk2/K9YJtfqwoAa28c8wK+T7nvJFOjxI4h/7sORWcypRNxBpr+TPNaCfVWq70tLCJsqoFwcf0oI0JU/fvMQ==}
 
   '@types/connect@3.4.38':
     resolution: {integrity: sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==}
@@ -2201,8 +2201,8 @@ packages:
   '@types/express-serve-static-core@5.1.0':
     resolution: {integrity: sha512-jnHMsrd0Mwa9Cf4IdOzbz543y4XJepXrbia2T4b6+spXC2We3t1y6K44D3mR8XMFSXMCf3/l7rCgddfx7UNVBA==}
 
-  '@types/express@5.0.3':
-    resolution: {integrity: sha512-wGA0NX93b19/dZC1J18tKWVIYWyyF2ZjT9vin/NRu0qzzvfVzWjs04iq2rQ3H65vCTQYlRqs3YHfY7zjdV+9Kw==}
+  '@types/express@5.0.4':
+    resolution: {integrity: sha512-g64dbryHk7loCIrsa0R3shBnEu5p6LPJ09bu9NG58+jz+cRUjFrc3Bz0kNQ7j9bXeCsrRDvNET1G54P/GJkAyA==}
 
   '@types/hast@3.0.4':
     resolution: {integrity: sha512-WPs+bbQw5aCj+x6laNGWLH3wviHtoCv/P3+otBhbOhJgG8qtpdAMlTCxLtsTWA7LH1Oh/bFCHsBn0TPS5m30EQ==}
@@ -2275,17 +2275,17 @@ packages:
   '@universal-middleware/compress@0.2.32':
     resolution: {integrity: sha512-BCbgQuS6dcbUX1YWlQhIreX4XOsYQMRwyrcgIFnSd/LKuulRkTgSx3/wtpMq925NAos7jzsumjPSeXfYp/jMgw==}
 
-  '@universal-middleware/core@0.4.11':
-    resolution: {integrity: sha512-8hUpWThsO6mX4eNkSgtk7zxV+d5LbI9WAJQ3Cv+54pMeG7tOi4BRkhItEpVW0Y0lXDtLFzDfy7bFDui8/Inm/Q==}
+  '@universal-middleware/core@0.4.12':
+    resolution: {integrity: sha512-BkpZ2JGol23HshMncMFQPEg5sjyO8Xekp7t8wrb/jvFYoZ2M1csMFJwsrG/gDWfWH6scByq+sj4EPCWSSAhCHQ==}
     peerDependencies:
-      '@cloudflare/workers-types': ^4.20251011.0
+      '@cloudflare/workers-types': ^4.20251014.0
       '@hattip/core': ^0.0.49
       '@webroute/route': ^0.8.0
       elysia: ^1.4.11
       fastify: ^5.6.1
       h3: ^1.15.4
-      hono: ^4.9.12
-      srvx: ^0.8.16
+      hono: ^4.10.2
+      srvx: ^0.8 || ^0.9
     peerDependenciesMeta:
       '@cloudflare/workers-types':
         optional: true
@@ -2325,11 +2325,11 @@ packages:
   '@universal-middleware/sirv@0.1.22':
     resolution: {integrity: sha512-WjIYTG9wOOJ179U/WjTgou6LuS7mL6LPOUMFwJkWgDyICwOBHF3T6qLCzRCdMKGcLh+xYPays83KXRBkvF+/vQ==}
 
-  '@universal-middleware/srvx@0.1.0':
-    resolution: {integrity: sha512-9LiPniDaBwHl/V+B6ct4ldBWIAQ/fKGLBBKd/6QaJiZqWQNDPekcfNvR4HjyxX8k8XbFfW3FpPJge4QysRGrig==}
+  '@universal-middleware/srvx@0.1.1':
+    resolution: {integrity: sha512-nTy4BZvaEI+rFO8sWEVvZrZWwFuqEXlXPNvIBAfl16+nKcorwiwm1x+qzuDrSqLd/kr5LSsGR3/KenTvESS9dQ==}
 
-  '@universal-middleware/vercel@0.4.23':
-    resolution: {integrity: sha512-392rWyT3BTjZD7OiHfe6+XvAukybAStT/w6vlZULru0wQ6Gf4xucmyLXNMOJAMDJ4wB8NEIIxD2q1KpVuWaQ2A==}
+  '@universal-middleware/vercel@0.4.24':
+    resolution: {integrity: sha512-N34iVprR9fElqHa/aFPH7yrWr2Cz8JOFcHgNn09Su4DNfVmKqsIhz+pv/7UtNnyC3Xllr7JZ03kxogODoIor0Q==}
     peerDependencies:
       '@hattip/core': ^0.0.49
       '@universal-middleware/h3': ^0.4.14
@@ -2337,8 +2337,8 @@ packages:
       express: ^5.1.0
       fastify: ^5.6.1
       h3: ^1.15.4
-      hono: ^4.9.12
-      srvx: ^0.8.16
+      hono: ^4.10.2
+      srvx: ^0.9.1
     peerDependenciesMeta:
       '@hattip/core':
         optional: true
@@ -2357,8 +2357,8 @@ packages:
       srvx:
         optional: true
 
-  '@vercel/build-utils@12.1.2':
-    resolution: {integrity: sha512-W0j2n9e65rr/fpzghTCgH4qFJgMX249hCQJmEdVzdKkXRlO6DfSqBljEHASCFaeBeumBdgS5jeSDixXyjKtdfw==}
+  '@vercel/build-utils@12.2.0':
+    resolution: {integrity: sha512-6gcZ8mA/pW/mD/uUVEGHf+Y2i0Lfm+1qx/eol59SNftoce26LQhsGnz7fnBzspIJTjUbk7iB+gSm9ybe457FYQ==}
 
   '@vercel/error-utils@2.0.3':
     resolution: {integrity: sha512-CqC01WZxbLUxoiVdh9B/poPbNpY9U+tO1N9oWHwTl5YAZxcqXmmWJ8KNMFItJCUUWdY3J3xv8LvAuQv2KZ5YdQ==}
@@ -2368,13 +2368,13 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@vercel/nft@0.30.2':
-    resolution: {integrity: sha512-pquXF3XZFg/T3TBor08rUhIGgOhdSilbn7WQLVP/aVSSO+25Rs4H/m3nxNDQ2x3znX7Z3yYjryN8xaLwypcwQg==}
+  '@vercel/nft@0.30.3':
+    resolution: {integrity: sha512-UEq+eF0ocEf9WQCV1gktxKhha36KDs7jln5qii6UpPf5clMqDc0p3E7d9l2Smx0i9Pm1qpq4S4lLfNl97bbv6w==}
     engines: {node: '>=18'}
     hasBin: true
 
-  '@vercel/node@5.3.26':
-    resolution: {integrity: sha512-9oJAmWviJsH82X748D2K0nutED9SpL2oJBLi6X4NmlSa5AXXoMf268iHp/VaDObB8b8OxVUA1Vr9EpjyaZ+ojA==}
+  '@vercel/node@5.5.0':
+    resolution: {integrity: sha512-jMDsJYf1Xf3FZoH/kAsjcHlv33jxyXlBGOCrOe3Ns9tnqlkobbXnkrkQR8JRUcnHCiAoQt4ia8uYgzGDFAAQUw==}
 
   '@vercel/routing-utils@5.2.0':
     resolution: {integrity: sha512-XBexLmd746XkSFa459tJpHd0NtxYEGswBe1o99BmpC4w4/8hoz6/BhlY+XWJh8jakPTP4hcKiE4w3TjOwuUxfw==}
@@ -2390,8 +2390,8 @@ packages:
   '@vite-plugin-vercel/schemas@1.0.0':
     resolution: {integrity: sha512-iUEJwHmAD4wFem5iI1Jmtcj4CO49PVBBUGDA8R8yWKC72/n1FLiQ6AgaetLqFTTT7KCbA32o9T6P3XJow4vCsg==}
 
-  '@vitejs/plugin-react-swc@4.1.0':
-    resolution: {integrity: sha512-Ff690TUck0Anlh7wdIcnsVMhofeEVgm44Y4OYdeeEEPSKyZHzDI9gfVBvySEhDfXtBp8tLCbfsVKPWEMEjq8/g==}
+  '@vitejs/plugin-react-swc@4.2.0':
+    resolution: {integrity: sha512-/tesahXD1qpkGC6FzMoFOJj0RyZdw9xLELOL+6jbElwmWfwOnIVy+IfpY+o9JfD9PKaR/Eyb6DNrvbXpuvA+8Q==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       vite: ^4 || ^5 || ^6 || ^7
@@ -2616,8 +2616,8 @@ packages:
   buffer-from@1.1.2:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
 
-  bun-types@1.3.0:
-    resolution: {integrity: sha512-u8X0thhx+yJ0KmkxuEo9HAtdfgCBaM/aI9K90VQcQioAmkVp3SG3FkwWGibUFz3WdXAdcsqOcbU40lK7tbHdkQ==}
+  bun-types@1.3.1:
+    resolution: {integrity: sha512-NMrcy7smratanWJ2mMXdpatalovtxVggkj11bScuWuiOoXTiKIu2eVS1/7qbyI/4yHedtsn175n4Sm4JcdHLXw==}
     peerDependencies:
       '@types/react': ^19
 
@@ -2876,15 +2876,18 @@ packages:
   electron-to-chromium@1.5.237:
     resolution: {integrity: sha512-icUt1NvfhGLar5lSWH3tHNzablaA5js3HVHacQimfP8ViEBOQv+L7DKEuHdbTZ0SKCO1ogTJTIL1Gwk9S6Qvcg==}
 
-  elysia@1.4.12:
-    resolution: {integrity: sha512-wbd0BkrobsjWSloIfYeF3f7G7rR0UWMa6tuLUhf6ZvwjiCEX3FVfhDsM+KaqqRRxkZpPDw42q4yIZlBLyE32ww==}
+  elysia@1.4.13:
+    resolution: {integrity: sha512-6QaWQEm7QN1UCo1TPpEjaRJPHUmnM7R29y6LY224frDGk5PrpAnWmdHkoZxkcv+JRWp1j2ROr2IHbxHbG/jRjw==}
     peerDependencies:
       '@sinclair/typebox': '>= 0.34.0 < 1'
+      '@types/bun': '>= 1.2.0'
       exact-mirror: '>= 0.0.9'
       file-type: '>= 20.0.0'
       openapi-types: '>= 12.0.0'
       typescript: '>= 5.0.0'
     peerDependenciesMeta:
+      '@types/bun':
+        optional: true
       typescript:
         optional: true
 
@@ -3373,8 +3376,8 @@ packages:
   hastscript@9.0.1:
     resolution: {integrity: sha512-g7df9rMFX/SPi34tyGCyUBREQoKkapwdY/T04Qn9TDWfHhAYt4/I0gMVirzK5wEzeUqIjEB+LXC/ypb7Aqno5w==}
 
-  hono@4.9.12:
-    resolution: {integrity: sha512-SrTC0YxqPwnN7yKa8gg/giLyQ2pILCKoideIHbYbFQlWZjYt68D2A4Ae1hehO/aDQ6RmTcpqOV/O2yBtMzx/VQ==}
+  hono@4.10.2:
+    resolution: {integrity: sha512-p6fyzl+mQo6uhESLxbF5WlBOAJMDh36PljwlKtP5V1v09NxlqGru3ShK+4wKhSuhuYf8qxMmrivHOa/M7q0sMg==}
     engines: {node: '>=16.9.0'}
 
   hookable@5.5.3:
@@ -3643,8 +3646,8 @@ packages:
     resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==}
     engines: {node: '>=10'}
 
-  magic-string@0.30.19:
-    resolution: {integrity: sha512-2N21sPY9Ws53PZvsEpVtNuSW+ScYbQdp4b9qUaL+9QkHUrGFKo56Lg9Emg5s9V/qrtNBmiR01sYhUOwu3H+VOw==}
+  magic-string@0.30.21:
+    resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
 
   magicast@0.3.5:
     resolution: {integrity: sha512-L0WhttDl+2BOsybvEOLK7fW3UA0OQ0IQ2d6Zl2x/a6vVRs3bAY0ECOSHHeL5jD+SbOpOCUEi0y1DgHEn9Qn1AQ==}
@@ -3714,6 +3717,9 @@ packages:
   media-typer@1.1.0:
     resolution: {integrity: sha512-aisnrDP4GNe06UcKFnV5bfMNPBUw4jsLGaWwWfnH3v02GnBuXX2MCVn5RbrWo0j3pczUilYblq7fQ7Nw2t5XKw==}
     engines: {node: '>= 0.8'}
+
+  memoirist@0.4.0:
+    resolution: {integrity: sha512-zxTgA0mSYELa66DimuNQDvyLq36AwDlTuVRbnQtB+VuTcKWm5Qc4z3WkSpgsFWHNhexqkIooqpv4hdcqrX5Nmg==}
 
   merge-descriptors@2.0.0:
     resolution: {integrity: sha512-Snk314V5ayFLhp3fkUREub6WtjBfPdCPY1Ln8/8munuLuiYhsABgBVWsozAG+MWMbVEvcdcpbi9R7ww22l9Q3g==}
@@ -3853,8 +3859,8 @@ packages:
     engines: {node: '>=10.0.0'}
     hasBin: true
 
-  miniflare@4.20251008.0:
-    resolution: {integrity: sha512-sKCNYNzXG6l8qg0Oo7y8WcDKcpbgw0qwZsxNpdZilFTR4EavRow2TlcwuPSVN99jqAjhz0M4VXvTdSGdtJ2VfQ==}
+  miniflare@4.20251011.1:
+    resolution: {integrity: sha512-Qbw1Z8HTYM1adWl6FAtzhrj34/6dPRDPwdYOx21dkae8a/EaxbMzRIPbb4HKVGMVvtqbK1FaRCgDLVLolNzGHg==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -4092,8 +4098,13 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  playwright@1.56.0:
-    resolution: {integrity: sha512-X5Q1b8lOdWIE4KAoHpW3SE8HvUB+ZZsUoN64ZhjnN8dOb1UpujxBtENGiZFE+9F/yhzJwYa+ca3u43FeLbboHA==}
+  playwright-core@1.56.1:
+    resolution: {integrity: sha512-hutraynyn31F+Bifme+Ps9Vq59hKuUCz7H1kDOcBs+2oGguKkWTU50bBWrtz34OUWmIwpBTWDxaRPXrIXkgvmQ==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  playwright@1.56.1:
+    resolution: {integrity: sha512-aFi5B0WovBHTEvpM3DzXTUaeN6eN0qWnTkKx4NQaH4Wvcmc153PdaY2UBdSYKaGYw+UyWXSVyxDUg5DoPEttjw==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -4243,8 +4254,8 @@ packages:
   rfdc@1.4.1:
     resolution: {integrity: sha512-q1b3N5QkRUWUl7iyylaaj3kOpIT0N2i9MqIEQXP73GVsN9cw3fdx8X63cEmWhJGi2PPCF23Ijp7ktmd39rawIA==}
 
-  rolldown-plugin-dts@0.16.11:
-    resolution: {integrity: sha512-9IQDaPvPqTx3RjG2eQCK5GYZITo203BxKunGI80AGYicu1ySFTUyugicAaTZWRzFWh9DSnzkgNeMNbDWBbSs0w==}
+  rolldown-plugin-dts@0.16.12:
+    resolution: {integrity: sha512-9dGjm5oqtKcbZNhpzyBgb8KrYiU616A7IqcFWG7Msp1RKAXQ/hapjivRg+g5IYWSiFhnk3OKYV5T4Ft1t8Cczg==}
     engines: {node: '>=20.18.0'}
     peerDependencies:
       '@ts-macro/tsc': ^0.3.6
@@ -4267,8 +4278,8 @@ packages:
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
 
-  rollup@4.52.4:
-    resolution: {integrity: sha512-CLEVl+MnPAiKh5pl4dEWSyMTpuflgNQiLGhMv8ezD5W/qP8AKvmYpCOKRRNOh7oRKnauBZ4SyeYkMS+1VSyKwQ==}
+  rollup@4.52.5:
+    resolution: {integrity: sha512-3GuObel8h7Kqdjt0gxkEzaifHTqLVW56Y/bjN7PSQtkKr0w3V/QYSdt6QWYtd7A1xUtYQigtdUfgj1RvWVtorw==}
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
 
@@ -4440,6 +4451,11 @@ packages:
     engines: {node: '>=20.16.0'}
     hasBin: true
 
+  srvx@0.9.1:
+    resolution: {integrity: sha512-5aj0RC0IGUMoSClrFvwz8AJkI4x6y91treTDN8CALV7sib/7szhPN4RbbcgLJ+YMZ0gz1XDoiiPA+SgZ5Gm8Uw==}
+    engines: {node: '>=20.16.0'}
+    hasBin: true
+
   statuses@2.0.1:
     resolution: {integrity: sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ==}
     engines: {node: '>= 0.8'}
@@ -4603,8 +4619,8 @@ packages:
   ts-toolbelt@6.15.5:
     resolution: {integrity: sha512-FZIXf1ksVyLcfr7M317jbB67XFJhOO1YqdTcuGaq9q5jLUoTikukZ+98TPjKiP2jC5CgmYdWWYs0s2nLSU0/1A==}
 
-  tsdown@0.15.7:
-    resolution: {integrity: sha512-uFaVgWAogjOMqjY+CQwrUt3C6wzy6ynt82CIoXymnbS17ipUZ8WDXUceJjkislUahF/BZc5+W44Ue3p2oWtqUg==}
+  tsdown@0.15.9:
+    resolution: {integrity: sha512-C0EJYpXIYdlJokTumIL4lmv/wEiB20oa6iiYsXFE7Q0VKF3Ju6TQ7XAn4JQdm+2iQGEfl8cnEKcX5DB7iVR5Dw==}
     engines: {node: '>=20.19.0'}
     hasBin: true
     peerDependencies:
@@ -4754,8 +4770,8 @@ packages:
   vfile@6.0.3:
     resolution: {integrity: sha512-KzIbH/9tXat2u30jf+smMwFCsno4wHVdNmzFyL+T/L3UGqqk6JKfVqOFOZEpZSHADH1k40ab6NUIXZq422ov3Q==}
 
-  vike@0.4.242:
-    resolution: {integrity: sha512-oDogaWBjX26BiI24JXdrFsxFZPzuu1xNDMiwq/wu+BsXd1yDQGbmYQgKfE5u4RHqLPj7OCt1F6Rdg8Yz9s1rdQ==}
+  vike@0.4.244:
+    resolution: {integrity: sha512-Cq9Xye5l7k/J6QF3/PI3KklAh5BKi6a956GpfVH5pIeznOWRu80DIUHHZFwKceDZscgLnb9ZKxQ5G0UeZk/yCA==}
     engines: {node: '>=20.19.0'}
     hasBin: true
     peerDependencies:
@@ -4772,8 +4788,8 @@ packages:
     peerDependencies:
       vite: ^2 || ^3 || ^4 || ^5 || ^6 || ^7
 
-  vite@7.1.10:
-    resolution: {integrity: sha512-CmuvUBzVJ/e3HGxhg6cYk88NGgTnBoOo7ogtfJJ0fefUWAxN/WDSUa50o+oVBxuIhO8FoEZW0j2eW7sfjs5EtA==}
+  vite@7.1.12:
+    resolution: {integrity: sha512-ZWyE8YXEXqJrrSLvYgrRP7p62OziLW7xI5HYGWFzOvupfAlrLvURSzv/FyGyy0eidogEM3ujU+kUG1zuHgb6Ug==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -4845,17 +4861,17 @@ packages:
     engines: {node: '>= 8'}
     hasBin: true
 
-  workerd@1.20251008.0:
-    resolution: {integrity: sha512-HwaJmXO3M1r4S8x2ea2vy8Rw/y/38HRQuK/gNDRQ7w9cJXn6xSl1sIIqKCffULSUjul3wV3I3Nd/GfbmsRReEA==}
+  workerd@1.20251011.0:
+    resolution: {integrity: sha512-Dq35TLPEJAw7BuYQMkN3p9rge34zWMU2Gnd4DSJFeVqld4+DAO2aPG7+We2dNIAyM97S8Y9BmHulbQ00E0HC7Q==}
     engines: {node: '>=16'}
     hasBin: true
 
-  wrangler@4.43.0:
-    resolution: {integrity: sha512-IBNqXlYHSUSCNNWj/tQN4hFiQy94l7fTxEnJWETXyW69+cjUyjQ7MfeoId3vIV9KBgY8y5M5uf2XulU95OikJg==}
+  wrangler@4.45.0:
+    resolution: {integrity: sha512-2qM6bHw8l7r89Z9Y5A7Wn4L9U+dFoLjYgEUVpqy7CcmXpppL3QIYqU6rU5lre7/SRzBuPu/H93Vwfh538gZ3iw==}
     engines: {node: '>=18.0.0'}
     hasBin: true
     peerDependencies:
-      '@cloudflare/workers-types': ^4.20251008.0
+      '@cloudflare/workers-types': ^4.20251011.0
     peerDependenciesMeta:
       '@cloudflare/workers-types':
         optional: true
@@ -5214,51 +5230,51 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.27.1
 
-  '@biomejs/biome@2.2.6':
+  '@biomejs/biome@2.3.0':
     optionalDependencies:
-      '@biomejs/cli-darwin-arm64': 2.2.6
-      '@biomejs/cli-darwin-x64': 2.2.6
-      '@biomejs/cli-linux-arm64': 2.2.6
-      '@biomejs/cli-linux-arm64-musl': 2.2.6
-      '@biomejs/cli-linux-x64': 2.2.6
-      '@biomejs/cli-linux-x64-musl': 2.2.6
-      '@biomejs/cli-win32-arm64': 2.2.6
-      '@biomejs/cli-win32-x64': 2.2.6
+      '@biomejs/cli-darwin-arm64': 2.3.0
+      '@biomejs/cli-darwin-x64': 2.3.0
+      '@biomejs/cli-linux-arm64': 2.3.0
+      '@biomejs/cli-linux-arm64-musl': 2.3.0
+      '@biomejs/cli-linux-x64': 2.3.0
+      '@biomejs/cli-linux-x64-musl': 2.3.0
+      '@biomejs/cli-win32-arm64': 2.3.0
+      '@biomejs/cli-win32-x64': 2.3.0
 
-  '@biomejs/cli-darwin-arm64@2.2.6':
+  '@biomejs/cli-darwin-arm64@2.3.0':
     optional: true
 
-  '@biomejs/cli-darwin-x64@2.2.6':
+  '@biomejs/cli-darwin-x64@2.3.0':
     optional: true
 
-  '@biomejs/cli-linux-arm64-musl@2.2.6':
+  '@biomejs/cli-linux-arm64-musl@2.3.0':
     optional: true
 
-  '@biomejs/cli-linux-arm64@2.2.6':
+  '@biomejs/cli-linux-arm64@2.3.0':
     optional: true
 
-  '@biomejs/cli-linux-x64-musl@2.2.6':
+  '@biomejs/cli-linux-x64-musl@2.3.0':
     optional: true
 
-  '@biomejs/cli-linux-x64@2.2.6':
+  '@biomejs/cli-linux-x64@2.3.0':
     optional: true
 
-  '@biomejs/cli-win32-arm64@2.2.6':
+  '@biomejs/cli-win32-arm64@2.3.0':
     optional: true
 
-  '@biomejs/cli-win32-x64@2.2.6':
+  '@biomejs/cli-win32-x64@2.3.0':
     optional: true
 
   '@borewit/text-codec@0.1.1': {}
 
-  '@brillout/docpress@0.15.13(@algolia/client-search@5.40.0)(@types/react@19.2.2)(@vitejs/plugin-react-swc@4.1.0(vite@7.1.10(@types/node@22.18.10)(jiti@2.6.1)))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(rollup@4.52.4)(search-insights@2.17.3)(typescript@5.9.3)(vike@0.4.242(vite@7.1.10(@types/node@22.18.10)(jiti@2.6.1)))(vite@7.1.10(@types/node@22.18.10)(jiti@2.6.1))':
+  '@brillout/docpress@0.15.13(@algolia/client-search@5.40.0)(@types/react@19.2.2)(@vitejs/plugin-react-swc@4.2.0(vite@7.1.12(@types/node@22.18.10)(jiti@2.6.1)))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(rollup@4.52.5)(search-insights@2.17.3)(typescript@5.9.3)(vike@0.4.244(vite@7.1.12(@types/node@22.18.10)(jiti@2.6.1)))(vite@7.1.12(@types/node@22.18.10)(jiti@2.6.1))':
     dependencies:
       '@brillout/picocolors': 1.0.28
       '@docsearch/css': 3.9.0
       '@docsearch/react': 3.9.0(@algolia/client-search@5.40.0)(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(search-insights@2.17.3)
       '@mdx-js/mdx': 3.0.1
       '@mdx-js/react': 3.0.1(@types/react@19.2.2)(react@19.2.0)
-      '@mdx-js/rollup': 3.0.1(rollup@4.52.4)
+      '@mdx-js/rollup': 3.0.1(rollup@4.52.5)
       '@shikijs/transformers': 1.2.0
       detype: 1.1.3
       react: 19.2.0
@@ -5268,10 +5284,10 @@ snapshots:
       shiki: 1.2.0
       typescript: 5.9.3
       unist-util-visit: 5.0.0
-      vike: 0.4.242(vite@7.1.10(@types/node@22.18.10)(jiti@2.6.1))
+      vike: 0.4.244(vite@7.1.12(@types/node@22.18.10)(jiti@2.6.1))
     optionalDependencies:
-      '@vitejs/plugin-react-swc': 4.1.0(vite@7.1.10(@types/node@22.18.10)(jiti@2.6.1))
-      vite: 7.1.10(@types/node@22.18.10)(jiti@2.6.1)
+      '@vitejs/plugin-react-swc': 4.2.0(vite@7.1.12(@types/node@22.18.10)(jiti@2.6.1))
+      vite: 7.1.12(@types/node@22.18.10)(jiti@2.6.1)
     transitivePeerDependencies:
       - '@algolia/client-search'
       - '@types/react'
@@ -5457,45 +5473,45 @@ snapshots:
     dependencies:
       mime: 3.0.0
 
-  '@cloudflare/unenv-preset@2.7.7(unenv@2.0.0-rc.21)(workerd@1.20251008.0)':
+  '@cloudflare/unenv-preset@2.7.8(unenv@2.0.0-rc.21)(workerd@1.20251011.0)':
     dependencies:
       unenv: 2.0.0-rc.21
     optionalDependencies:
-      workerd: 1.20251008.0
+      workerd: 1.20251011.0
 
-  '@cloudflare/vite-plugin@1.13.13(vite@7.1.10(@types/node@22.18.10)(jiti@2.6.1))(workerd@1.20251008.0)(wrangler@4.43.0(@cloudflare/workers-types@4.20251011.0))':
+  '@cloudflare/vite-plugin@1.13.15(vite@7.1.12(@types/node@22.18.10)(jiti@2.6.1))(workerd@1.20251011.0)(wrangler@4.45.0(@cloudflare/workers-types@4.20251014.0))':
     dependencies:
-      '@cloudflare/unenv-preset': 2.7.7(unenv@2.0.0-rc.21)(workerd@1.20251008.0)
+      '@cloudflare/unenv-preset': 2.7.8(unenv@2.0.0-rc.21)(workerd@1.20251011.0)
       '@remix-run/node-fetch-server': 0.8.1
       get-port: 7.1.0
-      miniflare: 4.20251008.0
+      miniflare: 4.20251011.1
       picocolors: 1.1.1
       tinyglobby: 0.2.15
       unenv: 2.0.0-rc.21
-      vite: 7.1.10(@types/node@22.18.10)(jiti@2.6.1)
-      wrangler: 4.43.0(@cloudflare/workers-types@4.20251011.0)
+      vite: 7.1.12(@types/node@22.18.10)(jiti@2.6.1)
+      wrangler: 4.45.0(@cloudflare/workers-types@4.20251014.0)
       ws: 8.18.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
       - workerd
 
-  '@cloudflare/workerd-darwin-64@1.20251008.0':
+  '@cloudflare/workerd-darwin-64@1.20251011.0':
     optional: true
 
-  '@cloudflare/workerd-darwin-arm64@1.20251008.0':
+  '@cloudflare/workerd-darwin-arm64@1.20251011.0':
     optional: true
 
-  '@cloudflare/workerd-linux-64@1.20251008.0':
+  '@cloudflare/workerd-linux-64@1.20251011.0':
     optional: true
 
-  '@cloudflare/workerd-linux-arm64@1.20251008.0':
+  '@cloudflare/workerd-linux-arm64@1.20251011.0':
     optional: true
 
-  '@cloudflare/workerd-windows-64@1.20251008.0':
+  '@cloudflare/workerd-windows-64@1.20251011.0':
     optional: true
 
-  '@cloudflare/workers-types@4.20251011.0': {}
+  '@cloudflare/workers-types@4.20251014.0': {}
 
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
@@ -5529,10 +5545,10 @@ snapshots:
     dependencies:
       '@edge-runtime/primitives': 4.1.0
 
-  '@elysiajs/node@1.4.1(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))':
+  '@elysiajs/node@1.4.1(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))':
     dependencies:
       crossws: 0.4.1(srvx@0.8.16)
-      elysia: 1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3)
+      elysia: 1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3)
       srvx: 0.8.16
 
   '@emnapi/core@1.5.0':
@@ -5825,9 +5841,9 @@ snapshots:
       cac: 6.7.14
       mime-types: 2.1.35
 
-  '@hono/node-server@1.19.5(hono@4.9.12)':
+  '@hono/node-server@1.19.5(hono@4.10.2)':
     dependencies:
-      hono: 4.9.12
+      hono: 4.10.2
 
   '@img/sharp-darwin-arm64@0.33.5':
     optionalDependencies:
@@ -6023,11 +6039,11 @@ snapshots:
       '@types/react': 19.2.2
       react: 19.2.0
 
-  '@mdx-js/rollup@3.0.1(rollup@4.52.4)':
+  '@mdx-js/rollup@3.0.1(rollup@4.52.5)':
     dependencies:
       '@mdx-js/mdx': 3.0.1
-      '@rollup/pluginutils': 5.3.0(rollup@4.52.4)
-      rollup: 4.52.4
+      '@rollup/pluginutils': 5.3.0(rollup@4.52.5)
+      rollup: 4.52.5
       source-map: 0.7.6
       vfile: 6.0.3
     transitivePeerDependencies:
@@ -6121,82 +6137,82 @@ snapshots:
   '@rolldown/binding-win32-x64-msvc@1.0.0-beta.44':
     optional: true
 
-  '@rolldown/pluginutils@1.0.0-beta.35': {}
+  '@rolldown/pluginutils@1.0.0-beta.43': {}
 
   '@rolldown/pluginutils@1.0.0-beta.44': {}
 
-  '@rollup/pluginutils@5.3.0(rollup@4.52.4)':
+  '@rollup/pluginutils@5.3.0(rollup@4.52.5)':
     dependencies:
       '@types/estree': 1.0.8
       estree-walker: 2.0.2
       picomatch: 4.0.3
     optionalDependencies:
-      rollup: 4.52.4
+      rollup: 4.52.5
 
-  '@rollup/rollup-android-arm-eabi@4.52.4':
+  '@rollup/rollup-android-arm-eabi@4.52.5':
     optional: true
 
-  '@rollup/rollup-android-arm64@4.52.4':
+  '@rollup/rollup-android-arm64@4.52.5':
     optional: true
 
-  '@rollup/rollup-darwin-arm64@4.52.4':
+  '@rollup/rollup-darwin-arm64@4.52.5':
     optional: true
 
-  '@rollup/rollup-darwin-x64@4.52.4':
+  '@rollup/rollup-darwin-x64@4.52.5':
     optional: true
 
-  '@rollup/rollup-freebsd-arm64@4.52.4':
+  '@rollup/rollup-freebsd-arm64@4.52.5':
     optional: true
 
-  '@rollup/rollup-freebsd-x64@4.52.4':
+  '@rollup/rollup-freebsd-x64@4.52.5':
     optional: true
 
-  '@rollup/rollup-linux-arm-gnueabihf@4.52.4':
+  '@rollup/rollup-linux-arm-gnueabihf@4.52.5':
     optional: true
 
-  '@rollup/rollup-linux-arm-musleabihf@4.52.4':
+  '@rollup/rollup-linux-arm-musleabihf@4.52.5':
     optional: true
 
-  '@rollup/rollup-linux-arm64-gnu@4.52.4':
+  '@rollup/rollup-linux-arm64-gnu@4.52.5':
     optional: true
 
-  '@rollup/rollup-linux-arm64-musl@4.52.4':
+  '@rollup/rollup-linux-arm64-musl@4.52.5':
     optional: true
 
-  '@rollup/rollup-linux-loong64-gnu@4.52.4':
+  '@rollup/rollup-linux-loong64-gnu@4.52.5':
     optional: true
 
-  '@rollup/rollup-linux-ppc64-gnu@4.52.4':
+  '@rollup/rollup-linux-ppc64-gnu@4.52.5':
     optional: true
 
-  '@rollup/rollup-linux-riscv64-gnu@4.52.4':
+  '@rollup/rollup-linux-riscv64-gnu@4.52.5':
     optional: true
 
-  '@rollup/rollup-linux-riscv64-musl@4.52.4':
+  '@rollup/rollup-linux-riscv64-musl@4.52.5':
     optional: true
 
-  '@rollup/rollup-linux-s390x-gnu@4.52.4':
+  '@rollup/rollup-linux-s390x-gnu@4.52.5':
     optional: true
 
-  '@rollup/rollup-linux-x64-gnu@4.52.4':
+  '@rollup/rollup-linux-x64-gnu@4.52.5':
     optional: true
 
-  '@rollup/rollup-linux-x64-musl@4.52.4':
+  '@rollup/rollup-linux-x64-musl@4.52.5':
     optional: true
 
-  '@rollup/rollup-openharmony-arm64@4.52.4':
+  '@rollup/rollup-openharmony-arm64@4.52.5':
     optional: true
 
-  '@rollup/rollup-win32-arm64-msvc@4.52.4':
+  '@rollup/rollup-win32-arm64-msvc@4.52.5':
     optional: true
 
-  '@rollup/rollup-win32-ia32-msvc@4.52.4':
+  '@rollup/rollup-win32-ia32-msvc@4.52.5':
     optional: true
 
-  '@rollup/rollup-win32-x64-gnu@4.52.4':
+  '@rollup/rollup-win32-x64-gnu@4.52.5':
     optional: true
 
-  '@rollup/rollup-win32-x64-msvc@4.52.4':
+  '@rollup/rollup-win32-x64-msvc@4.52.5':
     optional: true
 
   '@shikijs/core@1.2.0': {}
@@ -6298,9 +6314,9 @@ snapshots:
       '@types/connect': 3.4.38
       '@types/node': 22.18.10
 
-  '@types/bun@1.3.0(@types/react@19.2.2)':
+  '@types/bun@1.3.1(@types/react@19.2.2)':
     dependencies:
-      bun-types: 1.3.0(@types/react@19.2.2)
+      bun-types: 1.3.1(@types/react@19.2.2)
     transitivePeerDependencies:
       - '@types/react'
 
@@ -6327,7 +6343,7 @@ snapshots:
       '@types/range-parser': 1.2.7
       '@types/send': 1.2.0
 
-  '@types/express@5.0.3':
+  '@types/express@5.0.4':
     dependencies:
       '@types/body-parser': 1.19.6
       '@types/express-serve-static-core': 5.1.0
@@ -6396,9 +6412,9 @@ snapshots:
 
   '@ungap/structured-clone@1.3.0': {}
 
-  '@universal-middleware/cloudflare@0.4.10(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)':
+  '@universal-middleware/cloudflare@0.4.10(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)':
     dependencies:
-      '@universal-middleware/core': 0.4.11(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+      '@universal-middleware/core': 0.4.12(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@hattip/core'
@@ -6411,22 +6427,35 @@ snapshots:
 
   '@universal-middleware/compress@0.2.32': {}
 
-  '@universal-middleware/core@0.4.11(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)':
+  '@universal-middleware/core@0.4.12(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.8.16)':
     dependencies:
       regexparam: 3.0.0
       tough-cookie: 6.0.0
     optionalDependencies:
-      '@cloudflare/workers-types': 4.20251011.0
+      '@cloudflare/workers-types': 4.20251014.0
       '@hattip/core': 0.0.49
-      elysia: 1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3)
+      elysia: 1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3)
       fastify: 5.6.1
       h3: 1.15.4
-      hono: 4.9.12
+      hono: 4.10.2
       srvx: 0.8.16
 
-  '@universal-middleware/elysia@0.6.0(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)':
+  '@universal-middleware/core@0.4.12(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)':
     dependencies:
-      '@universal-middleware/core': 0.4.11(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+      regexparam: 3.0.0
+      tough-cookie: 6.0.0
+    optionalDependencies:
+      '@cloudflare/workers-types': 4.20251014.0
+      '@hattip/core': 0.0.49
+      elysia: 1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3)
+      fastify: 5.6.1
+      h3: 1.15.4
+      hono: 4.10.2
+      srvx: 0.9.1
+
+  '@universal-middleware/elysia@0.6.0(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.8.16)':
+    dependencies:
+      '@universal-middleware/core': 0.4.12(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.8.16)
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@hattip/core'
@@ -6437,9 +6466,9 @@ snapshots:
       - hono
       - srvx
 
-  '@universal-middleware/express@0.4.19(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)':
+  '@universal-middleware/express@0.4.19(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)':
     dependencies:
-      '@universal-middleware/core': 0.4.11(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+      '@universal-middleware/core': 0.4.12(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@hattip/core'
@@ -6450,10 +6479,10 @@ snapshots:
       - hono
       - srvx
 
-  '@universal-middleware/fastify@0.5.22(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)':
+  '@universal-middleware/fastify@0.5.22(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)':
     dependencies:
-      '@universal-middleware/core': 0.4.11(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
-      '@universal-middleware/express': 0.4.19(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+      '@universal-middleware/core': 0.4.12(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
+      '@universal-middleware/express': 0.4.19(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
       fastify-raw-body: 5.0.0
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
@@ -6465,9 +6494,9 @@ snapshots:
       - hono
       - srvx
 
-  '@universal-middleware/h3@0.4.14(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)':
+  '@universal-middleware/h3@0.4.14(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)':
     dependencies:
-      '@universal-middleware/core': 0.4.11(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+      '@universal-middleware/core': 0.4.12(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@hattip/core'
@@ -6478,9 +6507,9 @@ snapshots:
       - hono
       - srvx
 
-  '@universal-middleware/hattip@0.4.13(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)':
+  '@universal-middleware/hattip@0.4.13(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)':
     dependencies:
-      '@universal-middleware/core': 0.4.11(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+      '@universal-middleware/core': 0.4.12(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@hattip/core'
@@ -6491,9 +6520,9 @@ snapshots:
       - hono
       - srvx
 
-  '@universal-middleware/hono@0.4.17(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)':
+  '@universal-middleware/hono@0.4.17(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)':
     dependencies:
-      '@universal-middleware/core': 0.4.11(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+      '@universal-middleware/core': 0.4.12(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@hattip/core'
@@ -6509,9 +6538,9 @@ snapshots:
       mrmime: 2.0.1
       totalist: 3.0.1
 
-  '@universal-middleware/srvx@0.1.0(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)':
+  '@universal-middleware/srvx@0.1.1(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)':
     dependencies:
-      '@universal-middleware/core': 0.4.11(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+      '@universal-middleware/core': 0.4.12(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@hattip/core'
@@ -6522,31 +6551,31 @@ snapshots:
       - hono
       - srvx
 
-  '@universal-middleware/vercel@0.4.23(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(@universal-middleware/h3@0.4.14(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16))(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(express@5.1.0)(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)':
+  '@universal-middleware/vercel@0.4.24(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(@universal-middleware/h3@0.4.14(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1))(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(express@5.1.0)(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)':
     dependencies:
-      '@universal-middleware/core': 0.4.11(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
-      '@universal-middleware/express': 0.4.19(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
+      '@universal-middleware/core': 0.4.12(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
+      '@universal-middleware/express': 0.4.19(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
     optionalDependencies:
       '@hattip/core': 0.0.49
-      '@universal-middleware/h3': 0.4.14(@cloudflare/workers-types@4.20251011.0)(@hattip/core@0.0.49)(elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.9.12)(srvx@0.8.16)
-      elysia: 1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3)
+      '@universal-middleware/h3': 0.4.14(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
+      elysia: 1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3)
       express: 5.1.0
       fastify: 5.6.1
       h3: 1.15.4
-      hono: 4.9.12
-      srvx: 0.8.16
+      hono: 4.10.2
+      srvx: 0.9.1
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@webroute/route'
 
-  '@vercel/build-utils@12.1.2': {}
+  '@vercel/build-utils@12.2.0': {}
 
   '@vercel/error-utils@2.0.3': {}
 
-  '@vercel/nft@0.30.1(rollup@4.52.4)':
+  '@vercel/nft@0.30.1(rollup@4.52.5)':
     dependencies:
       '@mapbox/node-pre-gyp': 2.0.0
-      '@rollup/pluginutils': 5.3.0(rollup@4.52.4)
+      '@rollup/pluginutils': 5.3.0(rollup@4.52.5)
       acorn: 8.15.0
       acorn-import-attributes: 1.9.5(acorn@8.15.0)
       async-sema: 3.1.1
@@ -6562,10 +6591,10 @@ snapshots:
       - rollup
       - supports-color
 
-  '@vercel/nft@0.30.2(rollup@4.52.4)':
+  '@vercel/nft@0.30.3(rollup@4.52.5)':
     dependencies:
       '@mapbox/node-pre-gyp': 2.0.0
-      '@rollup/pluginutils': 5.3.0(rollup@4.52.4)
+      '@rollup/pluginutils': 5.3.0(rollup@4.52.5)
       acorn: 8.15.0
       acorn-import-attributes: 1.9.5(acorn@8.15.0)
       async-sema: 3.1.1
@@ -6581,15 +6610,15 @@ snapshots:
       - rollup
       - supports-color
 
-  '@vercel/node@5.3.26(@swc/core@1.13.5)(rollup@4.52.4)':
+  '@vercel/node@5.5.0(@swc/core@1.13.5)(rollup@4.52.5)':
     dependencies:
       '@edge-runtime/node-utils': 2.3.0
       '@edge-runtime/primitives': 4.1.0
       '@edge-runtime/vm': 3.2.0
       '@types/node': 16.18.11
-      '@vercel/build-utils': 12.1.2
+      '@vercel/build-utils': 12.2.0
       '@vercel/error-utils': 2.0.3
-      '@vercel/nft': 0.30.1(rollup@4.52.4)
+      '@vercel/nft': 0.30.1(rollup@4.52.5)
       '@vercel/static-config': 3.1.2
       async-listen: 3.0.0
       cjs-module-lexer: 1.2.3
@@ -6625,19 +6654,19 @@ snapshots:
       json-schema-to-ts: 1.6.4
       ts-morph: 12.0.0
 
-  '@vikejs/biome-config@2.0.1(@biomejs/biome@2.2.6)':
+  '@vikejs/biome-config@2.0.1(@biomejs/biome@2.3.0)':
     dependencies:
-      '@biomejs/biome': 2.2.6
+      '@biomejs/biome': 2.3.0
 
   '@vite-plugin-vercel/schemas@1.0.0':
     dependencies:
       zod: 4.1.12
 
-  '@vitejs/plugin-react-swc@4.1.0(vite@7.1.10(@types/node@22.18.10)(jiti@2.6.1))':
+  '@vitejs/plugin-react-swc@4.2.0(vite@7.1.12(@types/node@22.18.10)(jiti@2.6.1))':
     dependencies:
-      '@rolldown/pluginutils': 1.0.0-beta.35
+      '@rolldown/pluginutils': 1.0.0-beta.43
       '@swc/core': 1.13.5
-      vite: 7.1.10(@types/node@22.18.10)(jiti@2.6.1)
+      vite: 7.1.12(@types/node@22.18.10)(jiti@2.6.1)
     transitivePeerDependencies:
       - '@swc/helpers'
 
@@ -6662,7 +6691,7 @@ snapshots:
       '@vue/compiler-ssr': 3.5.22
       '@vue/shared': 3.5.22
       estree-walker: 2.0.2
-      magic-string: 0.30.19
+      magic-string: 0.30.21
       postcss: 8.5.6
       source-map-js: 1.2.1
 
@@ -6889,7 +6918,7 @@ snapshots:
 
   buffer-from@1.1.2: {}
 
-  bun-types@1.3.0(@types/react@19.2.2):
+  bun-types@1.3.1(@types/react@19.2.2):
     dependencies:
       '@types/node': 22.18.10
       '@types/react': 19.2.2
@@ -7128,15 +7157,17 @@ snapshots:
 
   electron-to-chromium@1.5.237: {}
 
-  elysia@1.4.12(@sinclair/typebox@0.34.41)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3):
+  elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3):
     dependencies:
       '@sinclair/typebox': 0.34.41
       cookie: 1.0.2
       exact-mirror: 0.2.2(@sinclair/typebox@0.34.41)
       fast-decode-uri-component: 1.0.1
       file-type: 21.0.0
+      memoirist: 0.4.0
       openapi-types: 12.1.3
     optionalDependencies:
+      '@types/bun': 1.3.1(@types/react@19.2.2)
       typescript: 5.9.3
 
   emoji-regex@8.0.0: {}
@@ -7820,7 +7851,7 @@ snapshots:
       property-information: 7.1.0
       space-separated-tokens: 2.0.2
 
-  hono@4.9.12: {}
+  hono@4.10.2: {}
 
   hookable@5.5.3: {}
 
@@ -8079,7 +8110,7 @@ snapshots:
     dependencies:
       yallist: 4.0.0
 
-  magic-string@0.30.19:
+  magic-string@0.30.21:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
 
@@ -8261,6 +8292,8 @@ snapshots:
       '@types/mdast': 4.0.4
 
   media-typer@1.1.0: {}
+
+  memoirist@0.4.0: {}
 
   merge-descriptors@2.0.0: {}
 
@@ -8549,7 +8582,7 @@ snapshots:
 
   mime@3.0.0: {}
 
-  miniflare@4.20251008.0:
+  miniflare@4.20251011.1:
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       acorn: 8.14.0
@@ -8559,7 +8592,7 @@ snapshots:
       sharp: 0.33.5
       stoppable: 1.1.0
       undici: 7.14.0
-      workerd: 1.20251008.0
+      workerd: 1.20251011.0
       ws: 8.18.0
       youch: 4.1.0-beta.10
       zod: 3.22.3
@@ -8759,9 +8792,11 @@ snapshots:
 
   playwright-core@1.56.0: {}
 
-  playwright@1.56.0:
+  playwright-core@1.56.1: {}
+
+  playwright@1.56.1:
     dependencies:
-      playwright-core: 1.56.0
+      playwright-core: 1.56.1
     optionalDependencies:
       fsevents: 2.3.2
 
@@ -8926,7 +8961,7 @@ snapshots:
 
   rfdc@1.4.1: {}
 
-  rolldown-plugin-dts@0.16.11(rolldown@1.0.0-beta.44)(typescript@5.9.3):
+  rolldown-plugin-dts@0.16.12(rolldown@1.0.0-beta.44)(typescript@5.9.3):
     dependencies:
       '@babel/generator': 7.28.3
       '@babel/parser': 7.28.4
@@ -8936,7 +8971,7 @@ snapshots:
       debug: 4.4.3
       dts-resolver: 2.1.2
       get-tsconfig: 4.12.0
-      magic-string: 0.30.19
+      magic-string: 0.30.21
       rolldown: 1.0.0-beta.44
     optionalDependencies:
       typescript: 5.9.3
@@ -8964,32 +8999,32 @@ snapshots:
       '@rolldown/binding-win32-ia32-msvc': 1.0.0-beta.44
       '@rolldown/binding-win32-x64-msvc': 1.0.0-beta.44
 
-  rollup@4.52.4:
+  rollup@4.52.5:
     dependencies:
       '@types/estree': 1.0.8
     optionalDependencies:
-      '@rollup/rollup-android-arm-eabi': 4.52.4
-      '@rollup/rollup-android-arm64': 4.52.4
-      '@rollup/rollup-darwin-arm64': 4.52.4
-      '@rollup/rollup-darwin-x64': 4.52.4
-      '@rollup/rollup-freebsd-arm64': 4.52.4
-      '@rollup/rollup-freebsd-x64': 4.52.4
-      '@rollup/rollup-linux-arm-gnueabihf': 4.52.4
-      '@rollup/rollup-linux-arm-musleabihf': 4.52.4
-      '@rollup/rollup-linux-arm64-gnu': 4.52.4
-      '@rollup/rollup-linux-arm64-musl': 4.52.4
-      '@rollup/rollup-linux-loong64-gnu': 4.52.4
-      '@rollup/rollup-linux-ppc64-gnu': 4.52.4
-      '@rollup/rollup-linux-riscv64-gnu': 4.52.4
-      '@rollup/rollup-linux-riscv64-musl': 4.52.4
-      '@rollup/rollup-linux-s390x-gnu': 4.52.4
-      '@rollup/rollup-linux-x64-gnu': 4.52.4
-      '@rollup/rollup-linux-x64-musl': 4.52.4
-      '@rollup/rollup-openharmony-arm64': 4.52.4
-      '@rollup/rollup-win32-arm64-msvc': 4.52.4
-      '@rollup/rollup-win32-ia32-msvc': 4.52.4
-      '@rollup/rollup-win32-x64-gnu': 4.52.4
-      '@rollup/rollup-win32-x64-msvc': 4.52.4
+      '@rollup/rollup-android-arm-eabi': 4.52.5
+      '@rollup/rollup-android-arm64': 4.52.5
+      '@rollup/rollup-darwin-arm64': 4.52.5
+      '@rollup/rollup-darwin-x64': 4.52.5
+      '@rollup/rollup-freebsd-arm64': 4.52.5
+      '@rollup/rollup-freebsd-x64': 4.52.5
+      '@rollup/rollup-linux-arm-gnueabihf': 4.52.5
+      '@rollup/rollup-linux-arm-musleabihf': 4.52.5
+      '@rollup/rollup-linux-arm64-gnu': 4.52.5
+      '@rollup/rollup-linux-arm64-musl': 4.52.5
+      '@rollup/rollup-linux-loong64-gnu': 4.52.5
+      '@rollup/rollup-linux-ppc64-gnu': 4.52.5
+      '@rollup/rollup-linux-riscv64-gnu': 4.52.5
+      '@rollup/rollup-linux-riscv64-musl': 4.52.5
+      '@rollup/rollup-linux-s390x-gnu': 4.52.5
+      '@rollup/rollup-linux-x64-gnu': 4.52.5
+      '@rollup/rollup-linux-x64-musl': 4.52.5
+      '@rollup/rollup-openharmony-arm64': 4.52.5
+      '@rollup/rollup-win32-arm64-msvc': 4.52.5
+      '@rollup/rollup-win32-ia32-msvc': 4.52.5
+      '@rollup/rollup-win32-x64-gnu': 4.52.5
+      '@rollup/rollup-win32-x64-msvc': 4.52.5
       fsevents: 2.3.3
 
   router@2.2.0:
@@ -9208,6 +9243,8 @@ snapshots:
 
   srvx@0.8.16: {}
 
+  srvx@0.9.1: {}
+
   statuses@2.0.1: {}
 
   statuses@2.0.2: {}
@@ -9384,7 +9421,7 @@ snapshots:
 
   ts-toolbelt@6.15.5: {}
 
-  tsdown@0.15.7(typescript@5.9.3):
+  tsdown@0.15.9(typescript@5.9.3):
     dependencies:
       ansis: 4.2.0
       cac: 6.7.14
@@ -9394,7 +9431,7 @@ snapshots:
       empathic: 2.0.0
       hookable: 5.5.3
       rolldown: 1.0.0-beta.44
-      rolldown-plugin-dts: 0.16.11(rolldown@1.0.0-beta.44)(typescript@5.9.3)
+      rolldown-plugin-dts: 0.16.12(rolldown@1.0.0-beta.44)(typescript@5.9.3)
       semver: 7.7.3
       tinyexec: 1.0.1
       tinyglobby: 0.2.15
@@ -9571,7 +9608,7 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
 
-  vike@0.4.242(vite@7.1.10(@types/node@22.18.10)(jiti@2.6.1)):
+  vike@0.4.244(vite@7.1.12(@types/node@22.18.10)(jiti@2.6.1)):
     dependencies:
       '@brillout/import': 0.2.6
       '@brillout/json-serializer': 0.5.21
@@ -9583,39 +9620,39 @@ snapshots:
       es-module-lexer: 1.7.0
       esbuild: 0.25.11
       json5: 2.2.3
-      magic-string: 0.30.19
+      magic-string: 0.30.21
       picomatch: 4.0.3
       semver: 7.7.3
       sirv: 3.0.2
       source-map-support: 0.5.21
       tinyglobby: 0.2.15
     optionalDependencies:
-      vite: 7.1.10(@types/node@22.18.10)(jiti@2.6.1)
+      vite: 7.1.12(@types/node@22.18.10)(jiti@2.6.1)
 
-  vite-plugin-wasm@3.5.0(vite@7.1.10(@types/node@20.19.21)(jiti@2.6.1)):
+  vite-plugin-wasm@3.5.0(vite@7.1.12(@types/node@20.19.21)(jiti@2.6.1)):
     dependencies:
-      vite: 7.1.10(@types/node@20.19.21)(jiti@2.6.1)
+      vite: 7.1.12(@types/node@20.19.21)(jiti@2.6.1)
 
-  vite@7.1.10(@types/node@20.19.21)(jiti@2.6.1):
+  vite@7.1.12(@types/node@20.19.21)(jiti@2.6.1):
     dependencies:
       esbuild: 0.25.11
       fdir: 6.5.0(picomatch@4.0.3)
       picomatch: 4.0.3
       postcss: 8.5.6
-      rollup: 4.52.4
+      rollup: 4.52.5
       tinyglobby: 0.2.15
     optionalDependencies:
       '@types/node': 20.19.21
       fsevents: 2.3.3
       jiti: 2.6.1
 
-  vite@7.1.10(@types/node@22.18.10)(jiti@2.6.1):
+  vite@7.1.12(@types/node@22.18.10)(jiti@2.6.1):
     dependencies:
       esbuild: 0.25.11
       fdir: 6.5.0(picomatch@4.0.3)
       picomatch: 4.0.3
       postcss: 8.5.6
-      rollup: 4.52.4
+      rollup: 4.52.5
       tinyglobby: 0.2.15
     optionalDependencies:
       '@types/node': 22.18.10
@@ -9678,26 +9715,26 @@ snapshots:
     dependencies:
       isexe: 2.0.0
 
-  workerd@1.20251008.0:
+  workerd@1.20251011.0:
     optionalDependencies:
-      '@cloudflare/workerd-darwin-64': 1.20251008.0
-      '@cloudflare/workerd-darwin-arm64': 1.20251008.0
-      '@cloudflare/workerd-linux-64': 1.20251008.0
-      '@cloudflare/workerd-linux-arm64': 1.20251008.0
-      '@cloudflare/workerd-windows-64': 1.20251008.0
+      '@cloudflare/workerd-darwin-64': 1.20251011.0
+      '@cloudflare/workerd-darwin-arm64': 1.20251011.0
+      '@cloudflare/workerd-linux-64': 1.20251011.0
+      '@cloudflare/workerd-linux-arm64': 1.20251011.0
+      '@cloudflare/workerd-windows-64': 1.20251011.0
 
-  wrangler@4.43.0(@cloudflare/workers-types@4.20251011.0):
+  wrangler@4.45.0(@cloudflare/workers-types@4.20251014.0):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.4.0
-      '@cloudflare/unenv-preset': 2.7.7(unenv@2.0.0-rc.21)(workerd@1.20251008.0)
+      '@cloudflare/unenv-preset': 2.7.8(unenv@2.0.0-rc.21)(workerd@1.20251011.0)
       blake3-wasm: 2.1.5
       esbuild: 0.25.4
-      miniflare: 4.20251008.0
+      miniflare: 4.20251011.1
       path-to-regexp: 6.3.0
       unenv: 2.0.0-rc.21
-      workerd: 1.20251008.0
+      workerd: 1.20251011.0
     optionalDependencies:
-      '@cloudflare/workers-types': 4.20251011.0
+      '@cloudflare/workers-types': 4.20251014.0
       fsevents: 2.3.3
     transitivePeerDependencies:
       - bufferutil
