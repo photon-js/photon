@@ -9,7 +9,7 @@ const config: Config = {
   name: "Photon",
   version: "0.1.0",
   url: "photonjs.dev",
-  tagline: "Any server, deployed anywhere.",
+  tagline: "Next-generation infrastructure for deploying any JavaScript server.",
   logo,
 
   github: "https://github.com/photon-js/photon",
