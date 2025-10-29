@@ -3,7 +3,7 @@ import type { Photon } from "../types.js";
 import { commonConfig } from "./plugins/commonConfig.js";
 import { devServer } from "./plugins/devServer.js";
 import { getMiddlewaresPlugin } from "./plugins/getMiddlewaresPlugin.js";
-import { type InstallPhotonBaseOptions, installPhotonForLib } from "./plugins/installPhoton.js";
+import { type InstallPhotonBaseOptions, installPhotonResolver } from "./plugins/installPhoton.js";
 import { mirrorMeta } from "./plugins/mirrorMeta.js";
 import { photonEntry } from "./plugins/photonEntry.js";
 import { resolvePhotonConfigPlugin } from "./plugins/resolvePhotonConfigPlugin.js";
@@ -13,6 +13,7 @@ import { targetLoader } from "./plugins/targetLoader.js";
 export {
   photon,
   installPhotonCore,
+  installPhotonResolver,
   supportedTargetServers,
   targetLoader,
   type InstallPhotonCoreOptions,
@@ -34,7 +35,7 @@ function photon(config?: Photon.Config): Plugin[] {
 type InstallPhotonCoreOptions = InstallPhotonBaseOptions & Photon.Config;
 
 function installPhotonCore(name: string, options?: InstallPhotonCoreOptions): Plugin[] {
-  return [...photon(options), ...installPhotonForLib(name, options)];
+  return [...photon(options), ...installPhotonResolver(name, options)];
 }
 
 declare module "vite" {
