@@ -1,5 +1,11 @@
 ## [0.0.3](https://github.com/photon-js/photon/compare/@photonjs/core@0.0.2...@photonjs/core@0.0.3) (2025-08-20)
 
+## 0.1.5
+
+### Patch Changes
+
+- b80dab2: feat: export `installPhotonResolver`
+
 ## 0.1.4
 
 ### Patch Changes
