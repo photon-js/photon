@@ -23,9 +23,6 @@ export function FeatureGrid({ features }: FeatureGridProps) {
           key={index}
           style={{
             padding: "1.5rem",
-            border: "1px solid var(--border-color)",
-            borderRadius: "8px",
-            backgroundColor: "var(--bg-color-secondary)",
             textAlign: "center",
           }}
         >
@@ -43,7 +40,6 @@ export function FeatureGrid({ features }: FeatureGridProps) {
             style={{
               marginBottom: "0.5rem",
               fontSize: "1.2em",
-              color: "var(--text-color)",
             }}
           >
             {feature.title}
@@ -52,7 +48,6 @@ export function FeatureGrid({ features }: FeatureGridProps) {
           <p
             style={{
               margin: 0,
-              color: "var(--text-color-secondary)",
               lineHeight: "1.5",
               fontSize: "0.95em",
             }}

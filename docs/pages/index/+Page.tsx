@@ -124,7 +124,7 @@ function Block({ children, noMargin }: { children: React.ReactNode; noMargin?: t
   return (
     <div
       style={{
-        backgroundColor: "var(--bg-color)",
+        backgroundColor: "var(--color-bg-gray)",
         display: "flex",
         justifyContent: "center",
         paddingBottom: 40,
