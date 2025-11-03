@@ -66,8 +66,7 @@ function Hero() {
             (Cloudflare, Vercel, self-hosted, ...).
           </p>
           <p>
-            It currently supports <a href="https://vike.dev">Vike</a> and we're open to supporting other frameworks as
-            well.
+            It currently supports <a href="https://vike.dev">Vike</a> and we're open to supporting other frameworks.
           </p>
         </div>
       </div>
