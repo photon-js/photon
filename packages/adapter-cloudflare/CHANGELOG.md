@@ -1,5 +1,11 @@
 ## 0.0.1 (2025-08-19)
 
+## 0.1.5
+
+### Patch Changes
+
+- 5be6fd4: fix: make sure Durable Objects are exported
+
 ## 0.1.4
 
 ### Patch Changes
