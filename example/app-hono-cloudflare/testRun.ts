@@ -1,6 +1,6 @@
 export { testRun };
 
-import { autoRetry, expect, fetchHtml, getServerUrl, page, run, test } from "@brillout/test-e2e";
+import { autoRetry, expect, fetch, fetchHtml, getServerUrl, page, run, test } from "@brillout/test-e2e";
 
 function testRun(cmd: `pnpm run ${string}`) {
   run(cmd, {
@@ -18,6 +18,32 @@ function testRun(cmd: `pnpm run ${string}`) {
     await page.goto(`${getServerUrl()}/`);
     expect(await page.textContent("h1")).toBe("Hello Vite!");
     await testCounter();
+  });
+
+  test("durable object", async () => {
+    {
+      const res = await fetch(`${getServerUrl()}/counter`);
+      const value = Number.parseInt(await res.text(), 10);
+      expect(value).toBe(0);
+    }
+
+    {
+      const res = await fetch(`${getServerUrl()}/counter/increment`, { method: "POST" });
+      const value = Number.parseInt(await res.text(), 10);
+      expect(value).toBe(1);
+    }
+
+    {
+      const res = await fetch(`${getServerUrl()}/counter/decrement`, { method: "POST" });
+      const value = Number.parseInt(await res.text(), 10);
+      expect(value).toBe(0);
+    }
+
+    {
+      const res = await fetch(`${getServerUrl()}/counter`);
+      const value = Number.parseInt(await res.text(), 10);
+      expect(value).toBe(0);
+    }
   });
 }
 

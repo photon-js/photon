@@ -2,7 +2,12 @@
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "extends": ["./node_modules/@vikejs/biome-config/config.json"],
   "files": {
-    "includes": ["**", "!**/.vercel", "!**/.wrangler"]
+    "includes": [
+      "**",
+      "!**/.vercel",
+      "!**/.wrangler",
+      "!**/worker-configuration.d.ts"
+    ]
   },
   "overrides": [
     {
