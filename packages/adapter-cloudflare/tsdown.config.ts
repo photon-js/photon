@@ -1,4 +1,3 @@
-import { builtinModules } from "node:module";
 import { defineConfig, type Options as TsdownOptions } from "tsdown";
 
 const commonOptions = {
@@ -19,16 +18,5 @@ export default defineConfig([
       index: "./src/index.ts",
       vite: "./src/plugin.ts",
     },
-  },
-  {
-    ...commonOptions,
-    platform: "neutral",
-    entry: {
-      hono: "./src/adapters/hono.ts",
-      h3: "./src/adapters/h3.ts",
-      dev: "./src/adapters/dev.ts",
-      srvx: "./src/adapters/srvx.ts",
-    },
-    external: [...commonOptions.external, ...builtinModules.flatMap((e) => [e, `node:${e}`])],
   },
 ]);

@@ -43,41 +43,15 @@ export function cloudflare(config?: PluginConfig): Plugin[] {
       sharedDuringBuild: true,
     },
     ...targetLoader("cloudflare", {
-      async load(id, { meta }) {
-        const isDev = this.environment.config.command === "serve";
+      async load(id) {
+        return {
+          // language=ts
+          code: `import entry from ${JSON.stringify(id)};
 
-        // `server` usually exists only during build time
-        if (meta.server) {
-          return {
-            // language=ts
-            code: `import serverEntry from ${JSON.stringify(id)};
-import { asFetch } from "@photonjs/cloudflare/${meta.server}";
-
-// re-export Durable Objects
-export * from ${JSON.stringify(id)};
-export const fetch = asFetch(serverEntry);
-export default { fetch };
-`,
-            map: { mappings: "" },
-          };
-        }
-
-        if (isDev) {
-          return {
-            // language=ts
-            code: `import serverEntry from ${JSON.stringify(id)};
-import { asFetch } from "@photonjs/cloudflare/dev";
-
-// re-export Durable Objects
-export * from ${JSON.stringify(id)};
-export const fetch = asFetch(serverEntry, ${JSON.stringify(id)});
-export default { fetch };
-`,
-            map: { mappings: "" },
-          };
-        }
-
-        return this.error(`[photon][cloudflare] Unable to load ${id}`);
+export default entry;
+export * from ${JSON.stringify(id)};`,
+          map: { mappings: "" },
+        };
       },
     }),
     supportedTargetServers("cloudflare", ["hono", "h3", "srvx"]),
