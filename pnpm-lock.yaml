@@ -611,9 +611,15 @@ importers:
 
   tests/app:
     dependencies:
+      '@hattip/router':
+        specifier: ^0.0.49
+        version: 0.0.49
       awesome-framework:
         specifier: 'workspace:'
         version: link:../../example/awesome-framework
+      elysia:
+        specifier: ^1.4.13
+        version: 1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3)
       express:
         specifier: ^5.1.0
         version: 5.1.0
@@ -630,15 +636,15 @@ importers:
         specifier: ^0.9.1
         version: 0.9.1
     devDependencies:
-      '@hattip/router':
-        specifier: ^0.0.49
-        version: 0.0.49
       '@photonjs/cloudflare':
         specifier: 'workspace:'
         version: link:../../packages/adapter-cloudflare
       '@photonjs/core':
         specifier: 'workspace:'
         version: link:../../packages/core
+      '@photonjs/elysia':
+        specifier: 'workspace:'
+        version: link:../../packages/elysia
       '@photonjs/express':
         specifier: 'workspace:'
         version: link:../../packages/express
