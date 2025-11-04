@@ -9,11 +9,13 @@
     "preview:vite": "pnpm run build && vite preview"
   },
   "devDependencies": {
+    "@hattip/router": "^0.0.49",
     "@photonjs/cloudflare": "workspace:",
     "@photonjs/core": "workspace:",
     "@photonjs/express": "workspace:",
     "@photonjs/fastify": "workspace:",
     "@photonjs/h3": "workspace:",
+    "@photonjs/hattip": "workspace:",
     "@photonjs/hono": "workspace:",
     "@photonjs/runtime": "workspace:",
     "@photonjs/srvx": "workspace:",
