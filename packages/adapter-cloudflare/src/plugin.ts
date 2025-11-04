@@ -51,11 +51,13 @@ export function cloudflare(config?: PluginConfig): Plugin[] {
           return {
             // language=ts
             code: `import serverEntry from ${JSON.stringify(id)};
-            import { asFetch } from "@photonjs/cloudflare/${meta.server}";
+import { asFetch } from "@photonjs/cloudflare/${meta.server}";
 
-            export const fetch = asFetch(serverEntry);
-            export default { fetch };
-            `,
+// re-export Durable Objects
+export * from ${JSON.stringify(id)};
+export const fetch = asFetch(serverEntry);
+export default { fetch };
+`,
             map: { mappings: "" },
           };
         }
@@ -66,6 +68,8 @@ export function cloudflare(config?: PluginConfig): Plugin[] {
             code: `import serverEntry from ${JSON.stringify(id)};
 import { asFetch } from "@photonjs/cloudflare/dev";
 
+// re-export Durable Objects
+export * from ${JSON.stringify(id)};
 export const fetch = asFetch(serverEntry, ${JSON.stringify(id)});
 export default { fetch };
 `,
