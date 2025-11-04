@@ -1,6 +1,7 @@
 import { getPort, installServerHMR, onReady, type ServerOptions } from "@photonjs/core/serve";
 import { serve as srvxServe } from "srvx/node";
 import type { Handler } from "./types.js";
+import { defineFetchLazy } from "./utils.js";
 
 export function serve<App extends Handler>(app: App, options: ServerOptions = {}) {
   const serverOptions = options.serverOptions ?? {};
@@ -29,6 +30,8 @@ export function serve<App extends Handler>(app: App, options: ServerOptions = {}
   } else {
     _serve();
   }
+
+  defineFetchLazy(app);
 
   return app;
 }
