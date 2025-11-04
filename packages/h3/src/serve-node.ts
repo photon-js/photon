@@ -2,6 +2,7 @@ import { createServer } from "node:http";
 import { installServerHMR, type NodeHandler, nodeServe, type ServerOptions } from "@photonjs/core/serve";
 import type { App as H3App } from "@universal-middleware/h3";
 import { toNodeListener } from "h3";
+import { defineFetchLazy } from "./utils.js";
 
 export function serve<App extends H3App>(app: App, options: ServerOptions = {}) {
   if (!options.createServer) options.createServer = createServer;
@@ -12,6 +13,8 @@ export function serve<App extends H3App>(app: App, options: ServerOptions = {}) 
   } else {
     _serve();
   }
+
+  defineFetchLazy(app);
 
   return app;
 }

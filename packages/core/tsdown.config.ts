@@ -17,6 +17,7 @@ export default defineConfig([
     entry: {
       plugin: "./src/plugin/index.ts",
       api: "./src/api.ts",
+      internal: "./src/api/internal.ts",
       dev: "./src/dev.ts",
       assert: "./src/utils/assert.ts",
       index: "./src/index.ts",
