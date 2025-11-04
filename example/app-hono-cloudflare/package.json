@@ -4,11 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:cloudflare": "vite --mode cloudflare",
     "build": "vite build",
-    "build:cloudflare": "vite build --mode cloudflare",
-    "preview": "pnpm run build && node dist/server/index.js",
-    "preview:cloudflare": "pnpm run build:cloudflare && vite preview --mode cloudflare"
+    "preview": "pnpm run build && vite preview"
   },
   "devDependencies": {
     "@photonjs/cloudflare": "workspace:",
