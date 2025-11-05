@@ -48,7 +48,9 @@ export function cloudflare(config?: PluginConfig): Plugin[] {
           // language=ts
           code: `import entry from ${JSON.stringify(id)};
 
-export default entry;
+export default {
+  ...entry
+};
 export * from ${JSON.stringify(id)};`,
           map: { mappings: "" },
         };

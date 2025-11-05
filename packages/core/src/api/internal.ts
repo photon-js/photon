@@ -7,6 +7,7 @@ export function defineFetchLazy<App>(
 ): asserts app is App & Fetchable {
   let fetchHandler: FetchHandler | null = null;
   Object.defineProperty(app, "fetch", {
+    enumerable: true,
     get: () => {
       if (!fetchHandler) {
         fetchHandler = getFetchHandler(app);
