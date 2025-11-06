@@ -21,6 +21,7 @@
     "@photonjs/srvx": "workspace:",
     "@types/express": "^5.0.4",
     "@types/node": "^22.18.10",
+    "@universal-middleware/core": "^0.4.12",
     "typescript": "^5.9.3",
     "vite": "^7.1.12",
     "wrangler": "^4.45.0"
