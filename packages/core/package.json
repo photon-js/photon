@@ -7,6 +7,7 @@
   "exports": {
     "./vite": "./dist/plugin.js",
     "./api": "./dist/api.js",
+    "./api/internal": "./dist/internal.js",
     "./dev": "./dist/dev.js",
     "./apply": "./dist/apply.js",
     "./serve": "./dist/serve.js",

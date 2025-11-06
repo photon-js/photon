@@ -180,31 +180,10 @@ importers:
       '@universal-middleware/cloudflare':
         specifier: ^0.4.10
         version: 0.4.10(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
-      srvx:
-        specifier: ^0
-        version: 0.9.1
     devDependencies:
       '@cloudflare/workers-types':
         specifier: ^4.20251014.0
         version: 4.20251014.0
-      '@universal-middleware/core':
-        specifier: ^0.4.12
-        version: 0.4.12(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
-      '@universal-middleware/h3':
-        specifier: ^0.4.14
-        version: 0.4.14(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
-      '@universal-middleware/hono':
-        specifier: ^0.4.17
-        version: 0.4.17(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
-      '@universal-middleware/srvx':
-        specifier: ^0.1.1
-        version: 0.1.1(@cloudflare/workers-types@4.20251014.0)(@hattip/core@0.0.49)(elysia@1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.1)(h3@1.15.4)(hono@4.10.2)(srvx@0.9.1)
-      crossws:
-        specifier: ^0.3.5
-        version: 0.3.5
-      h3:
-        specifier: ^1.15.4
-        version: 1.15.4
       tsdown:
         specifier: ^0.15.9
         version: 0.15.9(typescript@5.9.3)
@@ -611,9 +590,15 @@ importers:
 
   tests/app:
     dependencies:
+      '@hattip/router':
+        specifier: ^0.0.49
+        version: 0.0.49
       awesome-framework:
         specifier: 'workspace:'
         version: link:../../example/awesome-framework
+      elysia:
+        specifier: ^1.4.13
+        version: 1.4.13(@sinclair/typebox@0.34.41)(@types/bun@1.3.1(@types/react@19.2.2))(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3)
       express:
         specifier: ^5.1.0
         version: 5.1.0
@@ -636,6 +621,9 @@ importers:
       '@photonjs/core':
         specifier: 'workspace:'
         version: link:../../packages/core
+      '@photonjs/elysia':
+        specifier: 'workspace:'
+        version: link:../../packages/elysia
       '@photonjs/express':
         specifier: 'workspace:'
         version: link:../../packages/express
@@ -645,6 +633,9 @@ importers:
       '@photonjs/h3':
         specifier: 'workspace:'
         version: link:../../packages/h3
+      '@photonjs/hattip':
+        specifier: 'workspace:'
+        version: link:../../packages/hattip
       '@photonjs/hono':
         specifier: 'workspace:'
         version: link:../../packages/hono
@@ -1617,6 +1608,9 @@ packages:
   '@hattip/adapter-node@0.0.49':
     resolution: {integrity: sha512-BE+Y8Q4U0YcH34FZUYU4DssGKOaZLbNL0zK57Z41UZp0m9kS79ZIolBmjjpPhTVpIlRY3Rs+uhXbVXKk7mUcJA==}
 
+  '@hattip/compose@0.0.49':
+    resolution: {integrity: sha512-jEJGi6EdHpLJGxpFMqcF2J6cNYKGhkDyepXtR7Esxthk5rWC37lFQEl19rWsYOqByn4zpwq87W8qGgsl940dWQ==}
+
   '@hattip/core@0.0.49':
     resolution: {integrity: sha512-3/ZJtC17cv8m6Sph8+nw4exUp9yhEf2Shi7HK6AHSUSBtaaQXZ9rJBVxTfZj3PGNOR/P49UBXOym/52WYKFTJQ==}
 
@@ -1625,6 +1619,9 @@ packages:
 
   '@hattip/polyfills@0.0.49':
     resolution: {integrity: sha512-5g7W5s6Gq+HDxwULGFQ861yAnEx3yd9V8GDwS96HBZ1nM1u93vN+KTuwXvNsV7Z3FJmCrD/pgU8WakvchclYuA==}
+
+  '@hattip/router@0.0.49':
+    resolution: {integrity: sha512-DcPTUdEFHATUK71kBgjuz4kNpvGqsIIvp391t5fiERbsR0oAKUSRzpI6rVQGJo3WwX64sFd9eHr7P/h4UgxGYg==}
 
   '@hattip/walk@0.0.49':
     resolution: {integrity: sha512-AgJgKLooZyQnzMfoFg5Mo/aHM+HGBC9ExpXIjNqGimYTRgNbL/K7X5EM1kR2JY90BNKk9lo6Usq1T/nWFdT7TQ==}
@@ -5823,6 +5820,10 @@ snapshots:
       '@hattip/polyfills': 0.0.49
       '@hattip/walk': 0.0.49
 
+  '@hattip/compose@0.0.49':
+    dependencies:
+      '@hattip/core': 0.0.49
+
   '@hattip/core@0.0.49': {}
 
   '@hattip/headers@0.0.49':
@@ -5834,6 +5835,11 @@ snapshots:
       '@hattip/core': 0.0.49
       '@whatwg-node/fetch': 0.9.23
       node-fetch-native: 1.6.7
+
+  '@hattip/router@0.0.49':
+    dependencies:
+      '@hattip/compose': 0.0.49
+      '@hattip/core': 0.0.49
 
   '@hattip/walk@0.0.49':
     dependencies:

@@ -1,7 +1,13 @@
+import { defineFetchLazy as defineFetchLazyCore } from "@photonjs/core/api/internal";
 import type { App as HattipApp } from "@universal-middleware/hattip";
 
-export function buildHandler<App extends HattipApp>(app: App) {
-  return ensurePhotonServer(app.buildHandler(), app);
+export function defineFetchLazy<App extends HattipApp>(app: App): App {
+  const hattipHandler = app.buildHandler();
+  ensurePhotonServer<App>(hattipHandler, app);
+  defineFetchLazyCore<App>(app, () => hattipHandler);
+  defineFetchLazyCore<App>(hattipHandler, () => hattipHandler);
+
+  return hattipHandler;
 }
 
 function ensurePhotonServer<T>(newApp: T, app: T): T {

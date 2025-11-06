@@ -9,11 +9,7 @@
     "./vite": "./dist/vite.js",
     "./virtual": {
       "types": "./virtual.d.ts"
-    },
-    "./hono": "./dist/hono.js",
-    "./h3": "./dist/h3.js",
-    "./srvx": "./dist/srvx.js",
-    "./dev": "./dist/dev.js"
+    }
   },
   "scripts": {
     "dev": "tsdown --watch",
@@ -26,31 +22,9 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20251014.0",
-    "@universal-middleware/core": "^0.4.12",
-    "@universal-middleware/h3": "^0.4.14",
-    "@universal-middleware/hono": "^0.4.17",
-    "@universal-middleware/srvx": "^0.1.1",
-    "crossws": "^0.3.5",
-    "h3": "^1.15.4",
     "tsdown": "^0.15.9",
     "typescript": "^5.9.3",
     "vite": "^7.1.12"
-  },
-  "peerDependencies": {
-    "crossws": "^0",
-    "h3": "^1",
-    "srvx": "^0"
-  },
-  "peerDependenciesMeta": {
-    "h3": {
-      "optional": true
-    },
-    "srvx": {
-      "optional": true
-    },
-    "crossws": {
-      "optional": true
-    }
   },
   "files": [
     "dist/",
