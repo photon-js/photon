@@ -3,70 +3,18 @@ import MagicString from "magic-string";
 import type { Plugin } from "vite";
 import { assert, assertUsage } from "../../utils/assert.js";
 import { resolvePhotonConfig } from "../../validators/coerce.js";
-import type { SupportedServers } from "../../validators/types.js";
 import { singleton } from "../utils/dedupe.js";
-import { isPhotonMeta } from "../utils/entry.js";
 import { isBun } from "../utils/isBun.js";
-import type { ModuleInfo, PluginContext } from "../utils/rollupTypes.js";
 import { importsToServer } from "../utils/servers.js";
 import { asPhotonEntryId, ifPhotonModule, virtualModulesRegex } from "../utils/virtual.js";
 
 const serverImports = new Set(Object.keys(importsToServer));
 const re_photonHandler = /[?&]photonHandler=/;
 
-function computePhotonMetaServer(
-  pluginContext: PluginContext,
-  resolvedIdsToServers: Record<string, SupportedServers>,
-  info: ModuleInfo,
-) {
-  assertUsage(!info.isExternal, `Entry should not be external: ${info.id}`);
-  // early return for better performance
-  if (
-    isPhotonMeta(info.meta) &&
-    info.meta.photon.type &&
-    (info.meta.photon.type !== "server" || info.meta.photon.server)
-  )
-    return;
-  const graph = new Set([...info.importedIdResolutions, ...info.dynamicallyImportedIdResolutions]);
-
-  let found: SupportedServers | undefined;
-  for (const imported of graph.values()) {
-    found = resolvedIdsToServers[imported.id];
-    if (found) break;
-    if (imported.external) continue;
-    const sub = pluginContext.getModuleInfo(imported.id);
-    if (sub) {
-      for (const imp of [...sub.importedIdResolutions, ...sub.dynamicallyImportedIdResolutions]) {
-        graph.add(imp);
-      }
-    }
-  }
-
-  const serverEntry = pluginContext.environment.config.photon.server;
-
-  if (found) {
-    if (!info.hasDefaultExport) {
-      // TODO better error message with link to documentation
-      pluginContext.error(`Entry "${info.id}" seems to use "${found}", but no default export was found`);
-    }
-
-    serverEntry.server = found;
-
-    assert(isPhotonMeta(info.meta));
-    // Already assigned by ref by photon:resolve-entry-meta
-    assert(info.meta.photon === serverEntry);
-  } else {
-    // TODO better error message with link to documentation
-    pluginContext.error(`Cannot guess "${info.id}" server type. Make sure to use "@photonjs/<server>" package`);
-  }
-}
-
 function cleanImport(imp: string) {
   const s = "virtual:photon:resolve-from-photon:";
   return imp.startsWith(s) ? imp.slice(s.length) : imp;
 }
-
-const resolvedIdsToServers: Record<string, SupportedServers> = {};
 
 export function photonEntry(): Plugin[] {
   return [
@@ -127,37 +75,6 @@ export function photonEntry(): Plugin[] {
           return ifPhotonModule("dynamic-entry", id, async ({ entry }) => {
             return `await import(${JSON.stringify(entry)});`;
           });
-        },
-      },
-
-      sharedDuringBuild: true,
-    }),
-    singleton({
-      name: "photon:compute-meta",
-      apply: "build",
-      enforce: "pre",
-
-      applyToEnvironment(env) {
-        return env.config.consumer === "server";
-      },
-
-      async resolveId(id, importer, opts) {
-        if (id in importsToServer) {
-          const resolved = await this.resolve(id, importer, opts);
-          if (resolved) {
-            // biome-ignore lint/style/noNonNullAssertion: in check
-            resolvedIdsToServers[resolved.id] = importsToServer[id]!;
-          }
-        }
-      },
-
-      moduleParsed: {
-        order: "pre",
-        handler(info) {
-          if (isPhotonMeta(info.meta) && info.meta.photon.type === "server") {
-            // Must be kept synchronous
-            computePhotonMetaServer(this, resolvedIdsToServers, info);
-          }
         },
       },
 
