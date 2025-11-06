@@ -135,15 +135,23 @@ export function loaderPlugin(pluginConfig: ViteVercelConfig): Plugin[] {
         const fn = isEdge ? "createEdgeHandler" : "createNodeHandler";
         const isServerEntry = entry.type === "server";
 
-        if (isServerEntry) {
-          assert(entry.server, `Could not determine server for entry ${entry.id}`);
+        if (isServerEntry && entry.server && isEdge) {
           // TODO dynamically import the potential module and check if it exports expected function
-          if (isEdge) {
-            assert(
-              !nonEdgeServers.includes(entry.server),
-              `${entry.server} is not compatible with Vercel Edge target. Either use another server like Hono or change target to Node`,
-            );
-          }
+          assert(
+            !nonEdgeServers.includes(entry.server),
+            `${entry.server} is not compatible with Vercel Edge target. Either use another server like Hono or change target to Node`,
+          );
+        }
+
+        // Default to assuming `{ fetch }` syntax
+        if (isServerEntry && !entry.server) {
+          //language=javascript
+          return `import fetchable from "${entry.resolvedId ?? entry.id}";
+
+export default {
+  fetch: fetchable.fetch
+};
+`;
         }
 
         const importFrom = isServerEntry
