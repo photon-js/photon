@@ -56,7 +56,7 @@ export function targetLoader<T extends { load: LoadHook } & Omit<Plugin, "load" 
             this.emitFile({
               type: "chunk",
               fileName: ensureExtension(photon.server.target || photon.server.name),
-              id: `${prefix}:${photon.server.id}`,
+              id: `${prefix}:virtual:photon:server-entry-wrapper`,
             });
           }
 

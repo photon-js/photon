@@ -87,8 +87,7 @@ function fetchable(): Plugin {
         const strServerId = JSON.stringify(resolved.id);
 
         //language=ts
-        return `import { apply, serve } from 'virtual:photon:resolve-from-photon:@photonjs/srvx';
-import { enhance } from 'virtual:photon:resolve-from-photon:@universal-middleware/core';
+        return `import { serve } from 'virtual:photon:resolve-from-photon:@photonjs/srvx';
 import userServerEntry from ${strServerId};
 
 if (!userServerEntry) {
@@ -101,16 +100,9 @@ function wrapper() {
     return userServerEntry;
   } else if (userServerEntry.fetch) {
     const port = process.env.PORT ? Number.parseInt(process.env.PORT, 10) : undefined;
-    const enhancedFetch = enhance(userServerEntry.fetch, {
-      name: "server-entry",
-      method: ["GET", "POST"],
-      path: "/**",
-      immutable: false,
-    });
 
     function startServer() {
-      const app = apply([enhancedFetch]);
-      return serve(app, {port});
+      return serve(userServerEntry.fetch, {port});
     }
 
     return startServer();
