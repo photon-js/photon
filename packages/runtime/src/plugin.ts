@@ -3,6 +3,7 @@ import { photon as corePhoton, type InstallPhotonCoreOptions, installPhotonCore 
 import type { Plugin } from "vite";
 
 const re_photonFallback = /^virtual:photon:fallback-entry$/;
+const re_photonWrapper = /^virtual:photon:server-entry-wrapper$/;
 
 function fallback(): Plugin {
   return {
@@ -49,11 +50,86 @@ function fallback(): Plugin {
   };
 }
 
+function fetchable(): Plugin {
+  return {
+    name: "photon:fetchable",
+
+    resolveId: {
+      filter: {
+        id: re_photonWrapper,
+      },
+      handler(id) {
+        return {
+          id,
+          meta: {
+            photon: {
+              id,
+              resolvedId: id,
+              type: "server",
+              server: "srvx",
+            },
+          },
+        };
+      },
+    },
+
+    load: {
+      filter: {
+        id: re_photonWrapper,
+      },
+      async handler() {
+        const resolved = await this.resolve(this.environment.config.photon.server.id, undefined, {
+          isEntry: true,
+        });
+        if (!resolved) {
+          throw new Error(`Cannot find server entry ${JSON.stringify(this.environment.config.photon.server.id)}`);
+        }
+        const strServerId = JSON.stringify(resolved.id);
+
+        //language=ts
+        return `import { apply, serve } from 'virtual:photon:resolve-from-photon:@photonjs/srvx';
+import { enhance } from 'virtual:photon:resolve-from-photon:@universal-middleware/core';
+import userServerEntry from ${strServerId};
+
+if (!userServerEntry) {
+  throw new Error('Missing export default in ${strServerId}');
+}
+
+function wrapper() {
+  if (userServerEntry[Symbol.for("photon:server")]) {
+    // apply() + serve() + { fetch? } app
+    return userServerEntry;
+  } else if (userServerEntry.fetch) {
+    const port = process.env.PORT ? Number.parseInt(process.env.PORT, 10) : undefined;
+    const enhancedFetch = enhance(userServerEntry.fetch, {
+      name: "server-entry",
+      method: ["GET", "POST"],
+      path: "/**",
+      immutable: false,
+    });
+
+    function startServer() {
+      const app = apply([enhancedFetch]);
+      return serve(app, {port});
+    }
+
+    return startServer();
+  }
+  throw new Error('{ apply } function needs to be called before export in ${strServerId}');
+}
+
+export default wrapper();
+`;
+      },
+    },
+  };
+}
+
 // Export photon function that includes core plugins + fallback
 export function photon(config?: Photon.Config): Plugin[] {
   const plugins = corePhoton(config);
 
-  return [fallback(), ...plugins];
+  return [fallback(), fetchable(), ...plugins];
 }
 
 /**
@@ -64,5 +140,5 @@ export function photon(config?: Photon.Config): Plugin[] {
 export function installPhoton(name: string, options?: InstallPhotonCoreOptions): Plugin[] {
   const plugins = installPhotonCore(name, options);
 
-  return [fallback(), ...plugins];
+  return [fallback(), fetchable(), ...plugins];
 }

@@ -10,6 +10,7 @@
   },
   "devDependencies": {
     "@photonjs/cloudflare": "workspace:",
+    "@photonjs/vercel": "workspace:",
     "@photonjs/core": "workspace:",
     "@photonjs/elysia": "workspace:",
     "@photonjs/express": "workspace:",

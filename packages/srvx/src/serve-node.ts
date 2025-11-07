@@ -14,7 +14,7 @@ export function serve<App extends Handler>(app: App, options: ServerOptions = {}
       ...(options as any),
       port,
       hostname: options?.hostname,
-      fetch: app,
+      fetch: typeof app === "function" ? app : app.fetch,
     });
     // onCreate hook
     options.onCreate?.(server);

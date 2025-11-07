@@ -143,14 +143,17 @@ export function loaderPlugin(pluginConfig: ViteVercelConfig): Plugin[] {
           );
         }
 
-        // Default to assuming `{ fetch }` syntax
+        // Extract server at runtime, or default to { fetch } syntax
         if (isServerEntry && !entry.server) {
           //language=javascript
-          return `import fetchable from "${entry.resolvedId ?? entry.id}";
+          return `import servers from "virtual:photon:resolve-from-photon:@universal-middleware/vercel/${isEdge ? "edge" : "node"}/servers";
+import fetchable from "${entry.resolvedId ?? entry.id}";
 
-export default {
-  fetch: fetchable.fetch
-};
+const exportDefault = (fetchable && fetchable[Symbol.for("photon:server")]) ?
+    servers[fetchable[Symbol.for("photon:server")]].${fn}(fetchable) :
+    { fetch: fetchable.fetch };
+
+export default exportDefault;
 `;
         }
 
