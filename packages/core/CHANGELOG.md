@@ -1,5 +1,12 @@
 ## [0.0.3](https://github.com/photon-js/photon/compare/@photonjs/core@0.0.2...@photonjs/core@0.0.3) (2025-08-20)
 
+## 0.1.6
+
+### Patch Changes
+
+- 12ee518: feat: disable static analysis during build
+- 6951bd3: fix: handle multiple installs of Photon
+
 ## 0.1.5
 
 ### Patch Changes
