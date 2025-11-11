@@ -1,5 +1,11 @@
 ## 0.0.1 (2025-08-19)
 
+## 0.1.6
+
+### Patch Changes
+
+- e148965: feat: update dependencies
+
 ## 0.1.5
 
 ### Patch Changes
