@@ -1,5 +1,13 @@
 # @photonjs/vercel
 
+## 0.1.6
+
+### Patch Changes
+
+- e148965: feat: update dependencies
+- Updated dependencies [e148965]
+  - @photonjs/runtime@0.1.5
+
 ## 0.1.5
 
 ### Patch Changes
