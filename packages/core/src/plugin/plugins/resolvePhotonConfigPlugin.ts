@@ -1,3 +1,4 @@
+import { yellow } from "ansis";
 import type { Plugin } from "vite";
 import type { Photon } from "../../types.js";
 import { PhotonConfigError } from "../../utils/assert.js";
@@ -25,8 +26,19 @@ export function resolvePhotonConfigPlugin(pluginConfig?: Photon.Config): Plugin[
         handler(config) {
           // Ensures that a unique photon config exists across all envs
           if (resolvedPhotonConfig === null) {
-            // biome-ignore lint/suspicious/noExplicitAny: any
-            resolvedPhotonConfig = resolvePhotonConfig(config.photon as any);
+            if (Array.isArray(config.photon.entries)) {
+              // If `entries` is already an Array, it means that `config.photon` is already resolved,
+              // most probably because another version of this plugin is installed.
+              console.warn(
+                yellow(
+                  "[photon] Multiple versions of @photonjs/core detected. This may cause unexpected behavior. Try running 'npm dedupe' or 'yarn dedupe' to resolve version conflicts.",
+                ),
+              );
+              resolvedPhotonConfig = config.photon;
+            } else {
+              // biome-ignore lint/suspicious/noExplicitAny: any
+              resolvedPhotonConfig = resolvePhotonConfig(config.photon as any);
+            }
           }
           if (resolvedPhotonConfig.codeSplitting.framework) {
             const serverConfigEntries = resolvedPhotonConfig.entries.filter((e) => e.type === "server-config");
