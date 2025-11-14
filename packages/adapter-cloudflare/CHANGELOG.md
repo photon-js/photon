@@ -1,5 +1,13 @@
 ## 0.0.1 (2025-08-19)
 
+## 0.1.7
+
+### Patch Changes
+
+- 230ab19: revert: fix: remove static analysis at build time (#37)
+- Updated dependencies [230ab19]
+  - @photonjs/core@0.1.8
+
 ## 0.1.6
 
 ### Patch Changes

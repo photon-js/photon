@@ -1,5 +1,13 @@
 # @photonjs/hono
 
+## 0.1.6
+
+### Patch Changes
+
+- 230ab19: revert: fix: remove static analysis at build time (#37)
+- Updated dependencies [230ab19]
+  - @photonjs/core@0.1.8
+
 ## 0.1.5
 
 ### Patch Changes

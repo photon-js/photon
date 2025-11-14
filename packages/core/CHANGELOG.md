@@ -1,5 +1,11 @@
 ## [0.0.3](https://github.com/photon-js/photon/compare/@photonjs/core@0.0.2...@photonjs/core@0.0.3) (2025-08-20)
 
+## 0.1.8
+
+### Patch Changes
+
+- 230ab19: revert: fix: remove static analysis at build time (#37)
+
 ## 0.1.7
 
 ### Patch Changes
