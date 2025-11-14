@@ -30,12 +30,13 @@ export function cloudflare(config?: PluginConfig): Plugin[] {
       name: `${moduleId}:shorthand`,
 
       resolveId: {
+        order: "pre",
         filter: {
           // User-facing module ID shorthand for wrangler config file
           id: /virtual:photon:cloudflare:server-entry/,
         },
 
-        async handler(_id, importer, opts) {
+        handler(_id, importer, opts) {
           return this.resolve("virtual:photon:cloudflare:virtual:photon:server-entry", importer, opts);
         },
       },

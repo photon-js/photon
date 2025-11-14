@@ -4,6 +4,11 @@ declare module "virtual:photon:fallback-entry" {
   export default handler;
 }
 
+declare module "virtual:photon:server-entry" {
+  const handler: undefined | import("@photonjs/core/serve").ServeReturn;
+  export default handler;
+}
+
 declare module "virtual:photon:get-middlewares:*" {
   export const getUniversalEntries: () => import("@universal-middleware/core").UniversalHandler[];
   export const getUniversalMiddlewares: () => import("@universal-middleware/core").UniversalMiddleware[];

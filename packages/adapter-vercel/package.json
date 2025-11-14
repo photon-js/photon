@@ -47,7 +47,7 @@
     "@photonjs/core": "workspace:^",
     "@photonjs/runtime": "workspace:^",
     "@universal-middleware/core": "^0.4.12",
-    "@universal-middleware/vercel": "^0.4.25",
+    "@universal-middleware/vercel": "^0.4.26",
     "@vercel/build-utils": "^12.2.0",
     "@vercel/nft": "^0.30.3",
     "@vercel/routing-utils": "^5.2.0",
