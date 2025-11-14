@@ -7,5 +7,5 @@ run("pnpm run dev --strictPort --port 3000");
 
 test("page crashes with error message", async () => {
   await fetchHtml("/");
-  expectLog('Expected "default" export');
+  expectLog("Missing export default");
 });
