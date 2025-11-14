@@ -50,80 +50,79 @@ function fallback(): Plugin {
   };
 }
 
-function serve(): Plugin {
-  return {
-    name: "photon:serve",
+// Creates a server and listens for connections in Node/Deno/Bun
+function serve(): Plugin[] {
+  const nodeTargets = new Set<string>(["node", "bun", "deno"]);
+  return [
+    {
+      name: "photon:serve",
 
-    resolveId: {
-      filter: {
-        id: re_photonServe,
-      },
-      handler(id) {
-        return {
-          id,
-          meta: {
-            photon: {
-              id,
-              resolvedId: id,
+      resolveId: {
+        filter: {
+          id: re_photonServe,
+        },
+        async handler(id) {
+          const isDev = this.environment.config.command === "serve";
+          const resolved = await this.resolve(
+            isDev
+              ? "virtual:photon:resolve-from-photon:@photonjs/runtime/serve-dev"
+              : "virtual:photon:resolve-from-photon:@photonjs/runtime/serve",
+            undefined,
+            {
+              isEntry: true,
             },
-            photonConfig: {
-              isTargetEntry: true,
+          );
+          if (!resolved) {
+            throw new Error(`Cannot find server entry ${JSON.stringify(id)}`);
+          }
+
+          return {
+            id: resolved.id,
+            meta: {
+              photon: {
+                id,
+                resolvedId: resolved.id,
+              },
+              photonConfig: {
+                isTargetEntry: true,
+              },
             },
-          },
-        };
+          };
+        },
       },
     },
+    {
+      name: "photon:serve:emit",
 
-    load: {
-      filter: {
-        id: re_photonServe,
+      apply: "build",
+      enforce: "post",
+
+      buildStart: {
+        order: "post",
+        handler() {
+          const envName = this.environment.name;
+          const photon = this.environment.config.photon;
+
+          if (photon.defaultBuildEnv === envName && nodeTargets.has(photon.target)) {
+            this.emitFile({
+              type: "chunk",
+              fileName: "node.js",
+              id: `virtual:photon:serve-entry`,
+            });
+          }
+        },
       },
-      async handler() {
-        const resolved = await this.resolve(this.environment.config.photon.server.id, undefined, {
-          isEntry: true,
-        });
-        if (!resolved) {
-          throw new Error(`Cannot find server entry ${JSON.stringify(this.environment.config.photon.server.id)}`);
-        }
-        const strServerId = JSON.stringify(resolved.id);
 
-        //language=ts
-        return `import { serve } from 'virtual:photon:resolve-from-photon:@photonjs/srvx';
-import userServerEntry from ${strServerId};
-
-if (!userServerEntry) {
-  throw new Error('Missing export default in ${strServerId}');
-}
-
-function wrapper() {
-  if (userServerEntry[Symbol.for("photon:server")]) {
-    // apply() + serve() + { fetch? } app
-    return userServerEntry;
-  } else if (userServerEntry.fetch) {
-    const port = process.env.PORT ? Number.parseInt(process.env.PORT, 10) : undefined;
-
-    function startServer() {
-      return serve(userServerEntry.fetch, {port});
-    }
-
-    return startServer();
-  }
-  throw new Error('{ apply } function needs to be called before export in ${strServerId}');
-}
-
-export default wrapper();
-export * from ${strServerId};
-`;
-      },
+      sharedDuringBuild: true,
     },
-  };
+  ];
 }
 
 // Export photon function that includes core plugins + fallback
 export function photon(config?: Photon.Config): Plugin[] {
   const plugins = corePhoton(config);
 
-  return [fallback(), serve(), ...plugins];
+  return [fallback(), ...serve(), ...plugins];
 }
 
 /**
@@ -134,5 +133,5 @@ export function photon(config?: Photon.Config): Plugin[] {
 export function installPhoton(name: string, options?: InstallPhotonCoreOptions): Plugin[] {
   const plugins = installPhotonCore(name, options);
 
-  return [fallback(), serve(), ...plugins];
+  return [fallback(), ...serve(), ...plugins];
 }

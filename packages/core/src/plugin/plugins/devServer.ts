@@ -223,7 +223,7 @@ export function devServer(config?: Photon.Config): Plugin {
     assertUsage(env, `Environment ${envName} does not exists`);
 
     const index = vite.config.photon.server;
-    const indexResolved = await env.pluginContainer.resolveId("virtual:photon:server-entry-wrapper", undefined, {
+    const indexResolved = await env.pluginContainer.resolveId("virtual:photon:serve-entry", undefined, {
       isEntry: true,
     });
     assertUsage(

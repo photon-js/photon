@@ -36,6 +36,18 @@ export function targetLoader<T extends { load: LoadHook } & Omit<Plugin, "load" 
 
   return [
     {
+      name: `photon:target-loader:${name}:config`,
+      config() {
+        return {
+          photon: {
+            target: name,
+          },
+        };
+      },
+
+      sharedDuringBuild: true,
+    },
+    {
       name: `photon:target-loader:${name}:emit`,
 
       apply: "build",

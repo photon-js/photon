@@ -86,6 +86,7 @@ const resolver = Validators.PhotonConfig.transform((c) => {
     },
     defaultBuildEnv: c.defaultBuildEnv ?? "ssr",
     hmr: c.hmr ?? (isBun || isDeno ? "prefer-restart" : true),
+    target: c.target ?? "node",
   });
 });
 

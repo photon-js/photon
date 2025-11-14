@@ -6,7 +6,7 @@ import { resolvePhotonConfig } from "../../validators/coerce.js";
 import { singleton } from "../utils/dedupe.js";
 import { isBun } from "../utils/isBun.js";
 import { importsToServer } from "../utils/servers.js";
-import { asPhotonEntryId, ifPhotonModule, virtualModulesRegex } from "../utils/virtual.js";
+import { asPhotonEntryId, ifPhotonModule, virtualModules, virtualModulesRegex } from "../utils/virtual.js";
 
 const serverImports = new Set(Object.keys(importsToServer));
 const re_photonHandler = /[?&]photonHandler=/;
@@ -33,6 +33,7 @@ export function photonEntry(): Plugin[] {
           const { server } = resolvePhotonConfig(config.photon);
           const input: Record<string, string> = { index: server.id };
 
+          // FIXME to remove
           if (isBun) {
             // If an entry contains an `export default`, Bun will attempt to run `Bun.serve`.
             // This causes a conflict since the server is already listening for connections.
@@ -262,6 +263,28 @@ export function photonEntry(): Plugin[] {
             const entry = this.environment.config.photon.server;
 
             if (!actualId) {
+              const match = virtualModules["server-entry"].match(this.environment.config.photon.server.id);
+              if (match?.entry) {
+                actualId = match.entry;
+              }
+            }
+
+            if (!actualId) {
+              console.log(
+                'resolving "server-entry"',
+                {
+                  id: this.environment.config.photon.server.id,
+                  _importer,
+                  opts,
+                },
+                await this.resolve(this.environment.config.photon.server.id, undefined, {
+                  isEntry: true,
+                  custom: {
+                    setPhotonMeta: entry,
+                  },
+                }),
+              );
+
               return this.resolve(this.environment.config.photon.server.id, undefined, {
                 isEntry: true,
                 custom: {

@@ -154,8 +154,6 @@ export function srvxServe(options: ServeReturn) {
   serverOptions?.onCreate?.(server);
   server.ready().then(onReady({ isHttps, ...options, port }));
 
-  installServerHMR(() => server.serve());
-
   return server.ready();
 }
 
@@ -200,7 +198,7 @@ function onServerClose(server: Server | Http2Server | Http2SecureServer | Promis
   }
 }
 
-function _installServerHMR(server: Server | Http2Server | Http2SecureServer | Promise<SrvxServer> | null | undefined) {
+function _installServerHMR(server: Server | Http2Server | Http2SecureServer | Promise<SrvxServer> | void) {
   if (!server) return;
   if (import.meta.hot) {
     const destroy = onServerClose(server);
@@ -225,9 +223,7 @@ function _installServerHMR(server: Server | Http2Server | Http2SecureServer | Pr
   }
 }
 
-export function installServerHMR(
-  serve: () => Server | Http2Server | Http2SecureServer | Promise<SrvxServer> | null | undefined,
-) {
+export function installServerHMR(serve: () => Server | Http2Server | Http2SecureServer | Promise<SrvxServer> | void) {
   // biome-ignore lint/style/noNonNullAssertion: asserted by wrapping function, and e2e tested
   const previousServerClosing: Promise<void> = import.meta.hot!.data.previousServerClosing ?? Promise.resolve();
 

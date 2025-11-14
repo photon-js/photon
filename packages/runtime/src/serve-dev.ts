@@ -1,5 +1,5 @@
 import userServerEntry from "virtual:photon:server-entry";
-import { isBun, isDeno, nodeServe, srvxServe } from "./serve-utils.js";
+import { installServerHMR, isBun, isDeno, nodeServe, srvxServe } from "./serve-utils.js";
 
 async function startServer() {
   if (!userServerEntry) {
@@ -8,7 +8,8 @@ async function startServer() {
 
   if (isBun || isDeno || !userServerEntry.server?.nodeHandler) {
     const server = await srvxServe(userServerEntry);
-    return server.serve();
+    installServerHMR(() => server.serve());
+    return server;
   }
   return nodeServe(userServerEntry.server?.options ?? {}, userServerEntry.server.nodeHandler);
 }

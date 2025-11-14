@@ -10,7 +10,7 @@ export function regexGroups<T extends object>(regex: RegExp) {
   };
 }
 
-const virtualModules = {
+export const virtualModules = {
   "virtual-entry": regexGroups<{ uniqueId: string; entry: string }>(
     /^virtual:photon:virtual-entry:(?<uniqueId>.+?):(?<entry>.+)/,
   ),

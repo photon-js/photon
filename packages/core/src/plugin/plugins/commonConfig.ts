@@ -1,3 +1,4 @@
+import { builtinModules } from "node:module";
 import { defaultClientConditions, defaultExternalConditions, defaultServerConditions, type Plugin } from "vite";
 import type { Photon } from "../../types.js";
 import { resolvePhotonConfig } from "../../validators/coerce.js";
@@ -77,6 +78,7 @@ function commonConfig(): Plugin[] {
           externalConditions?: string[];
           conditions?: string[];
           noExternal?: string[];
+          alias?: Record<string, string>;
         } = {};
 
         if (isBun) {
@@ -92,6 +94,9 @@ function commonConfig(): Plugin[] {
             externalConditions: ["deno", ...defaultExternalConditions],
           };
         }
+
+        // Ensure that all native node modules start with `node:`, mostly for Deno compat
+        additionalResolveConfig.alias = Object.fromEntries(builtinModules.map((m) => [m, `node:${m}`]));
 
         // do not override `noExternal: true`
         if (config.resolve?.noExternal !== true) {

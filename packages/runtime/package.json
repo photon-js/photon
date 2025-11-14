@@ -5,8 +5,10 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
-    "./vite": "./dist/plugin.js",
     ".": "./dist/index.js",
+    "./vite": "./dist/plugin.js",
+    "./serve": "./dist/serve.js",
+    "./serve/dev": "./dist/serve-dev.js",
     "./virtual": {
       "types": "./virtual.d.ts"
     }
