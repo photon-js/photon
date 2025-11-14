@@ -37,7 +37,7 @@ export function cloudflare(config?: PluginConfig): Plugin[] {
         },
 
         handler(_id, importer, opts) {
-          return this.resolve("virtual:photon:cloudflare:virtual:photon:server-entry-wrapper", importer, opts);
+          return this.resolve("virtual:photon:cloudflare:virtual:photon:server-entry", importer, opts);
         },
       },
 

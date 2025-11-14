@@ -3,7 +3,7 @@ import { photon as corePhoton, type InstallPhotonCoreOptions, installPhotonCore 
 import type { Plugin } from "vite";
 
 const re_photonFallback = /^virtual:photon:fallback-entry$/;
-const re_photonWrapper = /^virtual:photon:server-entry-wrapper$/;
+const re_photonServe = /^virtual:photon:serve-entry$/;
 
 function fallback(): Plugin {
   return {
@@ -50,13 +50,13 @@ function fallback(): Plugin {
   };
 }
 
-function fetchable(): Plugin {
+function serve(): Plugin {
   return {
-    name: "photon:fetchable",
+    name: "photon:serve",
 
     resolveId: {
       filter: {
-        id: re_photonWrapper,
+        id: re_photonServe,
       },
       handler(id) {
         return {
@@ -65,8 +65,9 @@ function fetchable(): Plugin {
             photon: {
               id,
               resolvedId: id,
-              type: "server",
-              server: "srvx",
+            },
+            photonConfig: {
+              isTargetEntry: true,
             },
           },
         };
@@ -75,7 +76,7 @@ function fetchable(): Plugin {
 
     load: {
       filter: {
-        id: re_photonWrapper,
+        id: re_photonServe,
       },
       async handler() {
         const resolved = await this.resolve(this.environment.config.photon.server.id, undefined, {
@@ -122,7 +123,7 @@ export * from ${strServerId};
 export function photon(config?: Photon.Config): Plugin[] {
   const plugins = corePhoton(config);
 
-  return [fallback(), fetchable(), ...plugins];
+  return [fallback(), serve(), ...plugins];
 }
 
 /**
@@ -133,5 +134,5 @@ export function photon(config?: Photon.Config): Plugin[] {
 export function installPhoton(name: string, options?: InstallPhotonCoreOptions): Plugin[] {
   const plugins = installPhotonCore(name, options);
 
-  return [fallback(), fetchable(), ...plugins];
+  return [fallback(), serve(), ...plugins];
 }
