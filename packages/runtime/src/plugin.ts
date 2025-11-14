@@ -1,5 +1,5 @@
 import type { Photon } from "@photonjs/core";
-import { photon as corePhoton, type InstallPhotonCoreOptions, installPhotonCore } from "@photonjs/core/vite";
+import { installPhotonCore, type InstallPhotonCoreOptions, photon as corePhoton } from "@photonjs/core/vite";
 import type { Plugin } from "vite";
 
 const re_photonFallback = /^virtual:photon:fallback-entry$/;
@@ -111,6 +111,7 @@ function wrapper() {
 }
 
 export default wrapper();
+export * from ${strServerId};
 `;
       },
     },
