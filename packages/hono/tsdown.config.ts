@@ -7,7 +7,7 @@ const commonOptions: TsdownOptions = {
   outDir: "dist",
   treeshake: true,
   nodeProtocol: true,
-  external: ["hono", /^virtual:photon:get-middlewares:/, /^@photonjs\/core/, /^@photonjs\/hono/],
+  external: ["hono", "@hono/node-server", /^virtual:photon:get-middlewares:/, /^@photonjs\/core/, /^@photonjs\/hono/],
 };
 
 export default defineConfig([
@@ -16,7 +16,7 @@ export default defineConfig([
     platform: "neutral",
     entry: {
       // serve (noop)
-      serve: "./src/serve-noop.ts",
+      serve: "./src/serve.ts",
       // apply (edge)
       "apply.edge": "./src/apply-edge.ts",
     },
@@ -25,12 +25,6 @@ export default defineConfig([
     ...commonOptions,
     platform: "node",
     entry: {
-      // serve (bun)
-      "serve.bun": "./src/serve-bun.ts",
-      // serve (deno)
-      "serve.deno": "./src/serve-deno.ts",
-      // serve (node)
-      "serve.node": "./src/serve-node.ts",
       // apply (dev)
       "apply.dev": "./src/apply-dev.ts",
       // apply (node)

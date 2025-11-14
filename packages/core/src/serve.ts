@@ -64,8 +64,18 @@ export interface ServerOptionsBase {
 type Handler = (req: Request) => Response | Promise<Response>;
 
 export interface NodeHandler {
-  (req: IncomingMessage, res: ServerResponse, next?: (err?: unknown) => void): void;
-  (req: Http2ServerRequest, res: Http2ServerResponse, next?: (err?: unknown) => void): void;
+  (req: IncomingMessage, res: ServerResponse, next?: (err?: unknown) => void): void | Promise<void>;
+  (req: Http2ServerRequest, res: Http2ServerResponse, next?: (err?: unknown) => void): void | Promise<void>;
+}
+
+export interface ServeReturn<App = unknown> {
+  fetch: (request: Request) => Response | Promise<Response>;
+  server?: {
+    name: string;
+    app?: App;
+    nodeHandler?: NodeHandler;
+    options?: ServerOptions;
+  };
 }
 
 // biome-ignore lint/suspicious/noExplicitAny: any
