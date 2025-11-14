@@ -259,8 +259,7 @@ function envImportAndCheckDefaultExport(env: RunnableDevEnvironment, resolvedId:
       if (isServer) {
         const keys = Object.keys(mod.default);
         if (keys.length === 1 && keys[0] === "fetch") {
-          // TODO server becomes fallback again
-          //  and current ID becomes an entry (standalone?)
+          // export default { fetch }
         } else {
           assertUsage(
             photonServerSymbol in mod.default,
