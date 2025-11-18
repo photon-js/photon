@@ -5,8 +5,12 @@ import { defineFetchLazy } from "./utils.js";
 export function serve<App extends HattipApp>(app: App, options: ServerOptions = {}): ServeReturn<App> {
   defineFetchLazy(app);
 
+  // We are not using @hattip/adapter-node, as srvx + crossws seems to do the job
+
   return {
-    fetch: app.fetch,
+    get fetch() {
+      return app.fetch;
+    },
     server: {
       name: "hattip",
       app,

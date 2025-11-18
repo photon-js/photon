@@ -18,6 +18,7 @@ import nodeHTTP2 from "node:http2";
 import type { createServer as createServerHTTPS, ServerOptions as ServerOptionsHTTPS } from "node:https";
 import type { Socket } from "node:net";
 import type { ServeReturn } from "@photonjs/core/serve";
+import { plugin as ws } from "crossws/server";
 import type { Server as SrvxServer, ServerOptions as SrvxServerOptions } from "srvx";
 import { serve as serveBun } from "srvx/bun";
 import { serve as serveDeno } from "srvx/deno";
@@ -104,6 +105,7 @@ export function nodeServe(options: ServerOptions, handler: NodeHandler): ServerT
   const server: ServerType = createServer(serverOptions, handler);
   // onCreate hook
   options.onCreate?.(server);
+
   const isHttps = Boolean("cert" in serverOptions && serverOptions.cert);
   const port = getPort(options);
   if (options?.hostname) {
@@ -116,7 +118,7 @@ export function nodeServe(options: ServerOptions, handler: NodeHandler): ServerT
 }
 
 export function srvxServe(options: ServeReturn) {
-  const srvxOptions: SrvxServerOptions = { fetch: options.fetch, manual: true };
+  const srvxOptions: SrvxServerOptions = { fetch: options.fetch, manual: true, plugins: [ws({})] };
   const serverOptions = options.server?.options;
   const port = getPort(serverOptions);
 
@@ -141,7 +143,7 @@ export function srvxServe(options: ServeReturn) {
     }
     server = serveDeno(srvxOptions);
   } else {
-    isHttps = Boolean(serverOptions?.createServer);
+    isHttps = Boolean(serverOptions?.createServer) && nodeHTTP.createServer !== serverOptions?.createServer;
     srvxOptions.node = {
       ...serverOptions?.serverOptions,
       http2: nodeHTTP2.createSecureServer === serverOptions?.createServer,
