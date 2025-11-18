@@ -12,7 +12,6 @@ import { globalStore } from "../../runtime/globalStore.js";
 import type { Photon } from "../../types.js";
 import { assert, assertUsage } from "../../utils/assert.js";
 import { resolvePhotonConfig } from "../../validators/coerce.js";
-import type { SupportedServers } from "../../validators/types.js";
 import { singleton } from "../utils/dedupe.js";
 import { isPhotonMetaConfig } from "../utils/entry.js";
 import { isBun } from "../utils/isBun.js";
@@ -126,7 +125,7 @@ export function devServer(config?: Photon.Config): Plugin {
         env.hot.on("photon:server-closed", () => {
           setupHMRProxyDone = false;
           assertUsage(isRunnableDevEnvironment(env), `${envName} environment is not runnable`);
-          envImportAndCheckDefaultExport(env, resolvedEntryId);
+          envImport(env, resolvedEntryId);
         });
 
         env.hot.on("photon:reloaded", () => {
@@ -232,41 +231,14 @@ export function devServer(config?: Photon.Config): Plugin {
     );
     resolvedEntryId = indexResolved.id;
     assertUsage(isRunnableDevEnvironment(env), `${envName} environment is not runnable`);
-    return envImportAndCheckDefaultExport(env, resolvedEntryId);
+    return envImport(env, resolvedEntryId);
   }
 }
 
-const photonServerSymbol = Symbol.for("photon:server");
-
-function envImportAndCheckDefaultExport(
-  env: RunnableDevEnvironment,
-  resolvedId: string,
-): Promise<{ [photonServerSymbol]: SupportedServers }>;
-function envImportAndCheckDefaultExport<T>(
-  env: RunnableDevEnvironment,
-  resolvedId: string,
-  isServer: false,
-): Promise<T>;
-function envImportAndCheckDefaultExport(env: RunnableDevEnvironment, resolvedId: string, isServer = true) {
+function envImport<T>(env: RunnableDevEnvironment, resolvedId: string): Promise<T> {
   return env.runner
     .import(resolvedId)
     .then((mod) => {
-      assertUsage(mod && "default" in mod, `Missing export default in ${JSON.stringify(resolvedId)}`);
-      assertUsage(
-        !(mod.default instanceof Promise),
-        `Replace \`export default\` by \`export default await\` in ${JSON.stringify(resolvedId)}`,
-      );
-      if (isServer) {
-        const keys = Object.keys(mod.default);
-        if (keys.length === 1 && keys[0] === "fetch") {
-          // export default { fetch }
-        } else {
-          assertUsage(
-            photonServerSymbol in mod.default,
-            `{ apply } function needs to be called before export in ${JSON.stringify(resolvedId)}`,
-          );
-        }
-      }
       return mod.default;
     })
     .catch(logRestartMessage);

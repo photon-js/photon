@@ -61,7 +61,7 @@ function serve(): Plugin[] {
           const isDev = this.environment.config.command === "serve";
           const resolved = await this.resolve(
             isDev
-              ? "virtual:photon:resolve-from-photon:@photonjs/runtime/serve-dev"
+              ? "virtual:photon:resolve-from-photon:@photonjs/runtime/serve/dev"
               : "virtual:photon:resolve-from-photon:@photonjs/runtime/serve",
             undefined,
             {
