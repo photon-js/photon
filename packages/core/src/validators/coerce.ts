@@ -86,7 +86,7 @@ const resolver = Validators.PhotonConfig.transform((c) => {
     },
     defaultBuildEnv: c.defaultBuildEnv ?? "ssr",
     hmr: c.hmr ?? (isBun || isDeno ? "prefer-restart" : true),
-    target: c.target ?? "node",
+    target: c.target,
   });
 });
 
@@ -150,7 +150,12 @@ export function mergePhotonConfig(configs: Photon.Config[]): Photon.Config {
     if (config.defaultBuildEnv) {
       resolving.defaultBuildEnv = config.defaultBuildEnv;
     }
+
+    if (config.target) {
+      resolving.target = config.target;
+    }
   }
+
   return resolving;
 }
 

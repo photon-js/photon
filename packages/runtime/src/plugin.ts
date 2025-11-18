@@ -21,7 +21,6 @@ function fallback(): Plugin {
               id,
               resolvedId: id,
               type: "server",
-              server: "srvx",
             },
           },
         };
@@ -34,17 +33,14 @@ function fallback(): Plugin {
       },
       handler() {
         //language=ts
-        return `import { apply, serve } from 'virtual:photon:resolve-from-photon:@photonjs/srvx'
+        return `import { apply } from "virtual:photon:resolve-from-photon:@photonjs/srvx";
 
-        const port = process.env.PORT ? Number.parseInt(process.env.PORT, 10) : undefined;
+const app = apply();
 
-        function startServer() {
-          const app = apply()
-          return serve(app, { port })
-        }
-
-        export default startServer()
-        `;
+export default {
+  fetch: app,
+};
+`;
       },
     },
   };
@@ -103,7 +99,7 @@ function serve(): Plugin[] {
           const envName = this.environment.name;
           const photon = this.environment.config.photon;
 
-          if (photon.defaultBuildEnv === envName && nodeTargets.has(photon.target)) {
+          if (photon.defaultBuildEnv === envName && (!photon.target || nodeTargets.has(photon.target))) {
             this.emitFile({
               type: "chunk",
               fileName: "node.js",

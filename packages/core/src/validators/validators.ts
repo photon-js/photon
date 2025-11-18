@@ -110,5 +110,5 @@ export const PhotonConfigResolved = z.looseObject({
       autoServe: z.boolean(),
     }),
   ]),
-  target: z.string(),
+  target: z.string().optional(),
 });

@@ -15,8 +15,10 @@ export default defineConfig([
     ...commonOptions,
     platform: "neutral",
     entry: {
-      // serve (noop)
+      // serve
       serve: "./src/serve.ts",
+      // serve (edge)
+      "serve.edge": "./src/serve-edge.ts",
       // apply (edge)
       "apply.edge": "./src/apply-edge.ts",
     },

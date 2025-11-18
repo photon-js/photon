@@ -26,7 +26,12 @@
       "import": "./dist/apply.js",
       "default": "./dist/apply.js"
     },
-    "./serve": "./dist/serve.js"
+    "./serve": {
+      "workerd": "./dist/serve.edge.js",
+      "worker": "./dist/serve.edge.js",
+      "import": "./dist/serve.js",
+      "default": "./dist/serve.js"
+    }
   },
   "scripts": {
     "dev": "tsdown --watch",
