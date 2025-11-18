@@ -1,10 +1,9 @@
 import userServerEntry from "virtual:photon:server-entry";
 import { isBun, isDeno, nodeServe, srvxServe } from "./serve-utils.js";
+import { assertServerEntry } from "./utils.js";
 
 async function startServer() {
-  if (!userServerEntry) {
-    throw new Error("Missing export default in virtual:photon:server-entry");
-  }
+  assertServerEntry(userServerEntry);
 
   if (isBun || isDeno || !userServerEntry.server?.nodeHandler) {
     const server = await srvxServe(userServerEntry);

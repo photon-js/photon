@@ -9,7 +9,9 @@ export const devServerMiddleware = (() =>
       const nodeReq: IncomingMessage | undefined =
         "req" in runtime && runtime.req
           ? runtime.req
-          : // biome-ignore lint/suspicious/noExplicitAny: srvx request
+          : // TODO When using srvx to serve(), and then use Hono, the `runtime` extracted by UM only comes from Hono,
+            //      but it should be a merged runtime of both hono and srvx.
+            // biome-ignore lint/suspicious/noExplicitAny: srvx request
             (request as any)?.runtime?.node?.req;
 
       if (nodeReq) {
