@@ -1,3 +1,4 @@
+import type { IncomingMessage, ServerResponse } from "node:http";
 import type { NodeHandler, ServeReturn, ServerOptionsBase } from "@photonjs/core/serve";
 import type { App as FastifyApp } from "@universal-middleware/fastify";
 import { bold, yellow } from "ansis";
@@ -17,6 +18,14 @@ export function serve<App extends FastifyApp>(app: App, options: ServerOptionsBa
     }
   }
 
+  let nodeHandler: NodeHandler = (req, res) => {
+    app.ready().then(() => {
+      // cache handler once ready
+      nodeHandler = app.routing as NodeHandler;
+      app.routing(req as IncomingMessage, res as ServerResponse);
+    });
+  };
+
   return {
     // @ts-expect-error throw
     get fetch() {
@@ -29,7 +38,7 @@ export function serve<App extends FastifyApp>(app: App, options: ServerOptionsBa
       app,
       options,
       get nodeHandler() {
-        return app.routing as NodeHandler;
+        return nodeHandler;
       },
     },
   };

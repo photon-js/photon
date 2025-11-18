@@ -1,8 +1,9 @@
+import type { ServeReturn } from "@photonjs/core/serve";
 import { apply, serve } from "@photonjs/express";
 import awesomeFramework from "awesome-framework/universal-middleware";
 import express, { type Express } from "express";
 
-function startServer(): Express {
+function startServer(): ServeReturn<Express> {
   const app = express();
 
   apply(
