@@ -534,9 +534,6 @@ importers:
       '@photonjs/srvx':
         specifier: workspace:^
         version: link:../srvx
-      crossws:
-        specifier: ^0.4.1
-        version: 0.4.1(srvx@0.9.1)
       srvx:
         specifier: ^0.9.1
         version: 0.9.1
@@ -6995,10 +6992,6 @@ snapshots:
   crossws@0.4.1(srvx@0.8.16):
     optionalDependencies:
       srvx: 0.8.16
-
-  crossws@0.4.1(srvx@0.9.1):
-    optionalDependencies:
-      srvx: 0.9.1
 
   csstype@3.1.3: {}
 

@@ -6,7 +6,11 @@ import { globalStore } from "../runtime/globalStore.js";
 export const devServerMiddleware = (() =>
   enhance(
     async (request, context, runtime) => {
-      const nodeReq: IncomingMessage | undefined = "req" in runtime ? runtime.req : undefined;
+      const nodeReq: IncomingMessage | undefined =
+        "req" in runtime && runtime.req
+          ? runtime.req
+          : // biome-ignore lint/suspicious/noExplicitAny: srvx request
+            (request as any)?.runtime?.node?.req;
 
       if (nodeReq) {
         const needsUpgrade = globalStore.setupHMRProxy(nodeReq);

@@ -18,7 +18,6 @@ import nodeHTTP2 from "node:http2";
 import type { createServer as createServerHTTPS, ServerOptions as ServerOptionsHTTPS } from "node:https";
 import type { Socket } from "node:net";
 import type { ServeReturn } from "@photonjs/core/serve";
-import { plugin as ws } from "crossws/server";
 import type { Server as SrvxServer, ServerOptions as SrvxServerOptions } from "srvx";
 import { serve as serveBun } from "srvx/bun";
 import { serve as serveDeno } from "srvx/deno";
@@ -118,7 +117,10 @@ export function nodeServe(options: ServerOptions, handler: NodeHandler): ServerT
 }
 
 export function srvxServe(options: ServeReturn) {
-  const srvxOptions: SrvxServerOptions = { fetch: options.fetch, manual: true, plugins: [ws({})] };
+  const srvxOptions: SrvxServerOptions = {
+    fetch: options.fetch,
+    manual: true,
+  };
   const serverOptions = options.server?.options;
   const port = getPort(serverOptions);
 
