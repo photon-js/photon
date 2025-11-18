@@ -1,24 +1,8 @@
-import { getPort, installServerHMR, onReady, type ServerOptionsBase } from "@photonjs/core/serve";
+import type { NodeHandler, ServeReturn, ServerOptionsBase } from "@photonjs/core/serve";
 import type { App as FastifyApp } from "@universal-middleware/fastify";
 import { bold, yellow } from "ansis";
-import type { FastifyListenOptions } from "fastify";
 
-export function serve<App extends FastifyApp>(app: App, options: ServerOptionsBase = {}) {
-  const _serve = () => {
-    const port = getPort(options);
-    app.listen(
-      {
-        port,
-        host: options?.hostname,
-      } as FastifyListenOptions,
-      onReady({ ...options, port }),
-    );
-    const server = app.server;
-    // onCreate hook
-    options.onCreate?.(server);
-    return server;
-  };
-
+export function serve<App extends FastifyApp>(app: App, options: ServerOptionsBase = {}): ServeReturn<App> {
   if (import.meta.hot) {
     const optionsSymbol = Object.getOwnPropertySymbols(app).find((s) => s.toString() === "Symbol(fastify.options)");
     // biome-ignore lint/suspicious/noExplicitAny: any
@@ -31,11 +15,22 @@ export function serve<App extends FastifyApp>(app: App, options: ServerOptionsBa
         ),
       );
     }
-
-    installServerHMR(_serve);
-  } else {
-    _serve();
   }
 
-  return app;
+  return {
+    // @ts-expect-error throw
+    get fetch() {
+      throw new Error(
+        "Fastify does not support the `fetch` interface. Prefer servers like Hono that support edge runtimes",
+      );
+    },
+    server: {
+      name: "fastify",
+      app,
+      options,
+      get nodeHandler() {
+        return app.routing as NodeHandler;
+      },
+    },
+  };
 }
