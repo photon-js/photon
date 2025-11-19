@@ -198,7 +198,6 @@ export function installServerHMR(
   const previousServerClosing: Promise<void> = import.meta.hot!.data.previousServerClosing ?? Promise.resolve();
 
   previousServerClosing.then(() => {
-    console.log("previousServerClosing.then");
     const server = serve();
     // biome-ignore lint/style/noNonNullAssertion: asserted by wrapping function, and e2e tested
     import.meta.hot!.data.previousServerClosing = _installServerHMR(server);
