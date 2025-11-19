@@ -1,80 +1,15 @@
-import type {
-  createServer as createServerHTTP,
-  IncomingMessage,
-  Server,
-  ServerOptions as ServerOptionsHTTP,
-  ServerResponse,
-} from "node:http";
 import nodeHTTP from "node:http";
-import type {
-  createSecureServer as createServerHTTP2,
-  Http2SecureServer,
-  Http2Server,
-  Http2ServerRequest,
-  Http2ServerResponse,
-  SecureServerOptions as ServerOptionsHTTP2,
-} from "node:http2";
 import nodeHTTP2 from "node:http2";
-import type { createServer as createServerHTTPS, ServerOptions as ServerOptionsHTTPS } from "node:https";
 import type { Socket } from "node:net";
 import { PhotonBugError } from "@photonjs/core/errors";
-import type { ServeReturn } from "@photonjs/core/serve";
+import type { NodeHandler, ServeReturn, ServerOptions, ServerType } from "@photonjs/core/serve";
 import type { Server as SrvxServer, ServerOptions as SrvxServerOptions } from "srvx";
 import { serve as serveBun } from "srvx/bun";
 import { serve as serveDeno } from "srvx/deno";
 import { serve as serveNode } from "srvx/node";
 
-export type ServerType = Server | Http2Server | Http2SecureServer;
 // biome-ignore lint/suspicious/noExplicitAny: type
 export type Servers = ServerType | SrvxServer | Bun.Server<any> | Deno.HttpServer;
-
-export type ServerOptions = ServerOptionsBase &
-  (ServerOptionsHTTPBase | ServerOptionsHTTPSBase | ServerOptionsHTTP2Base);
-
-interface ServerOptionsHTTPBase {
-  createServer?: typeof createServerHTTP;
-  serverOptions?: ServerOptionsHTTP;
-}
-
-interface ServerOptionsHTTPSBase {
-  createServer?: typeof createServerHTTPS;
-  serverOptions?: ServerOptionsHTTPS;
-}
-
-interface ServerOptionsHTTP2Base {
-  createServer?: typeof createServerHTTP2;
-  serverOptions?: ServerOptionsHTTP2;
-}
-
-export interface ServerOptionsBase {
-  /**
-   * Server port
-   */
-  port?: number;
-  /**
-   * Server hostname. Defaults to the server default value.
-   */
-  hostname?: string;
-  /**
-   * Callback triggered when the server is listening for connections.
-   * By default, it prints a message to the console.
-   * Can be disabled by setting this to `false`
-   */
-  onReady?: Callback;
-  /**
-   * Called when the server is created.
-   * Only triggered when running on non-serverless environments.
-   */
-  // biome-ignore lint/suspicious/noExplicitAny: type
-  onCreate?<Server extends ServerType | Deno.HttpServer | Bun.Server<any>>(server?: Server): void;
-  bun?: Omit<Parameters<typeof Bun.serve>[0], "fetch" | "port">;
-  deno?: Omit<Deno.ServeTcpOptions | (Deno.ServeTcpOptions & Deno.TlsCertifiedKeyPem), "port" | "handler">;
-}
-
-export interface NodeHandler {
-  (req: IncomingMessage, res: ServerResponse, next?: (err?: unknown) => void): void | Promise<void>;
-  (req: Http2ServerRequest, res: Http2ServerResponse, next?: (err?: unknown) => void): void | Promise<void>;
-}
 
 // biome-ignore lint/suspicious/noExplicitAny: any
 export type Callback = boolean | (() => any);
