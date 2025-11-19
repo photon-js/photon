@@ -1,5 +1,3 @@
-import { isBun } from "../plugin/utils/isBun.js";
-import { isDeno } from "../plugin/utils/isDeno.js";
 import { asPhotonEntryId } from "../plugin/utils/virtual.js";
 import type { Photon } from "../types.js";
 import { assert, PhotonConfigError } from "../utils/assert.js";
@@ -85,7 +83,7 @@ const resolver = Validators.PhotonConfig.transform((c) => {
       target: c.codeSplitting?.target ?? false,
     },
     defaultBuildEnv: c.defaultBuildEnv ?? "ssr",
-    hmr: c.hmr ?? (isBun || isDeno ? "prefer-restart" : true),
+    hmr: c.hmr ?? true,
     target: c.target,
   });
 });

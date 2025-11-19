@@ -1,4 +1,3 @@
-import type { IncomingMessage, Server } from "node:http";
 import { cyan } from "ansis";
 import type {
   DevEnvironment,
@@ -14,12 +13,10 @@ import { assert, assertUsage } from "../../utils/assert.js";
 import { resolvePhotonConfig } from "../../validators/coerce.js";
 import { singleton } from "../utils/dedupe.js";
 import { isPhotonMetaConfig } from "../utils/entry.js";
-import { isBun } from "../utils/isBun.js";
 import { logViteInfo } from "../utils/logVite.js";
 
 let fixApplied = false;
 
-const VITE_HMR_PATH = "/__vite_hmr";
 const RESTART_EXIT_CODE = 33;
 const IS_RESTARTER_SET_UP = "__PHOTON__IS_RESTARTER_SET_UP";
 
@@ -30,9 +27,7 @@ export function isRunnableDevEnvironment(environment: Environment): environment 
 
 export function devServer(config?: Photon.Config): Plugin {
   let resolvedEntryId: string;
-  let HMRServer: Server | undefined;
   let viteDevServer: ViteDevServer;
-  let setupHMRProxyDone = false;
 
   if (config?.devServer === false) {
     return {
@@ -54,27 +49,21 @@ export function devServer(config?: Photon.Config): Plugin {
       async handler(userConfig) {
         const resolvedPhotonConfig = resolvePhotonConfig(userConfig.photon);
         if (resolvedPhotonConfig.devServer === false) return;
-        // FIXME
-        if (isBun) {
+
+        if (resolvedPhotonConfig.hmr === false) {
           return {
             appType: "custom",
             server: {
               middlewareMode: true,
+              hmr: false,
             },
           };
         }
 
-        const { createServer } = await import("node:http");
-
-        HMRServer = createServer();
         return {
           appType: "custom",
           server: {
             middlewareMode: true,
-            hmr: {
-              server: HMRServer,
-              path: VITE_HMR_PATH,
-            },
           },
         };
       },
@@ -123,7 +112,6 @@ export function devServer(config?: Photon.Config): Plugin {
 
         // Once existing server is closed and invalidated, reimport its updated entry file
         env.hot.on("photon:server-closed", () => {
-          setupHMRProxyDone = false;
           assertUsage(isRunnableDevEnvironment(env), `${envName} environment is not runnable`);
           envImport(env, resolvedEntryId);
         });
@@ -136,7 +124,6 @@ export function devServer(config?: Photon.Config): Plugin {
 
       viteDevServer = vite;
       globalStore.viteDevServer = vite;
-      globalStore.setupHMRProxy = setupHMRProxy;
       if (!fixApplied) {
         fixApplied = true;
         // FIXME properly test this before enabling it, it currently swallows errors
@@ -170,32 +157,6 @@ export function devServer(config?: Photon.Config): Plugin {
       // Always invalidate server entry so that
       env.moduleGraph.invalidateModule(entryModule, invalidatedModules, timestamp, isHmr);
     }
-  }
-
-  function setupHMRProxy(req: IncomingMessage) {
-    if (setupHMRProxyDone || isBun) {
-      return false;
-    }
-
-    setupHMRProxyDone = true;
-    // biome-ignore lint/suspicious/noExplicitAny: any
-    const server = (req.socket as any).server as Server;
-    server.on("upgrade", (clientReq, clientSocket, wsHead) => {
-      if (isHMRProxyRequest(clientReq)) {
-        assert(HMRServer);
-        HMRServer.emit("upgrade", clientReq, clientSocket, wsHead);
-      }
-    });
-    // true if we need to send an empty Response waiting for the upgrade
-    return isHMRProxyRequest(req);
-  }
-
-  function isHMRProxyRequest(req: IncomingMessage) {
-    if (req.url === undefined) {
-      return false;
-    }
-    const url = new URL(req.url, "http://example.com");
-    return url.pathname === VITE_HMR_PATH;
   }
 
   function isImported(modules: EnvironmentModuleNode[]): { module: EnvironmentModuleNode } | undefined {

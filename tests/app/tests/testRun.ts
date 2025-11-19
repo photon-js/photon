@@ -18,7 +18,10 @@ import { runCommandThatThrows } from "./utils.js";
 
 export { testRun, testRunUnsupported };
 
-function testRun(cmd: `pnpm run ${string}` | `bun --bun --silent run ${string}`, options?: { hmr?: boolean }) {
+function testRun(
+  cmd: `pnpm run ${string}` | `bun --bun --silent run ${string}`,
+  options?: { hmr?: boolean | "prefer-restart" },
+) {
   run(cmd, {
     // Preview => builds app which takes a long time
     additionalTimeout: 120 * 1000,
@@ -67,7 +70,9 @@ function testRun(cmd: `pnpm run ${string}` | `bun --bun --silent run ${string}`,
 
       await sleep(300);
       await autoRetry(async () => {
-        expectLog("[vite] program reload");
+        if (options.hmr === true) {
+          expectLog("[vite] program reload");
+        }
         expect(await getHmrText()).toBe("AFTER HMR");
       });
 
@@ -75,7 +80,9 @@ function testRun(cmd: `pnpm run ${string}` | `bun --bun --silent run ${string}`,
 
       await sleep(300);
       await autoRetry(async () => {
-        expectLog("[vite] program reload");
+        if (options.hmr === true) {
+          expectLog("[vite] program reload");
+        }
         expect(await getHmrText()).toBe("BEFORE HMR");
       });
     });
