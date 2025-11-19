@@ -141,7 +141,9 @@ async function onServerClose(serverP: Servers | Promise<Servers>) {
       }
       server = server.deno.server;
     }
-  } else if ("shutdown" in server) {
+  }
+
+  if ("shutdown" in server) {
     // Deno
     if (denoAbortController) {
       return function destroy(cb: () => void) {
