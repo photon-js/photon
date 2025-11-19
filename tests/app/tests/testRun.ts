@@ -3,7 +3,8 @@ import { runCommandThatThrows } from "./utils.js";
 
 export { testRun, testRunUnsupported };
 
-function testRun(cmd: `pnpm run ${string}` | `bun --bun --silent run ${string}`) {
+function testRun(cmd: `pnpm run ${string}` | `bun --bun --silent run ${string}`, options?: { hmr?: boolean }) {
+  const isPreview = cmd.includes("preview");
   run(cmd, {
     // Preview => builds app which takes a long time
     additionalTimeout: 120 * 1000,
@@ -25,6 +26,9 @@ function testRun(cmd: `pnpm run ${string}` | `bun --bun --silent run ${string}`)
     const text = await fetchHtml("/standalone");
     expect(text).toContain("standalone");
   });
+
+  if (options?.hmr) {
+  }
 }
 
 async function testRunUnsupported(cmd: `pnpm run ${string}`) {

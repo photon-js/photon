@@ -1,14 +1,15 @@
 import { createRouter } from "@hattip/router";
 import { apply, serve } from "@photonjs/hattip";
-import awesomeFramework from "awesome-framework/universal-middleware";
+import { hmrRoute } from "./hmr-route.js";
 
 function startServer() {
   const app = createRouter();
 
+  // Auto applies `awesomeFramework`
   apply(
     app,
-    // Adds the framework's middlewares
-    awesomeFramework,
+    // HMR route
+    [hmrRoute],
   );
 
   return serve(app);

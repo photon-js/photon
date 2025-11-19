@@ -1,14 +1,15 @@
 import { apply, serve } from "@photonjs/elysia";
-import awesomeFramework from "awesome-framework/universal-middleware";
 import { Elysia } from "elysia";
+import { hmrRoute } from "./hmr-route.js";
 
 function startServer() {
   const app = new Elysia();
 
+  // Auto applies `awesomeFramework`
   apply(
     app,
-    // Adds the framework's middlewares
-    awesomeFramework,
+    // HMR route
+    [hmrRoute],
   );
 
   return serve(app);
