@@ -15,7 +15,6 @@ export function serve<App extends HonoApp>(app: App, options: MergedHonoServerOp
       if (nodeHandler && honoHandler !== nodeHandler)
         return nodeHandler(incoming as IncomingMessage, outgoing as ServerResponse);
       try {
-        // FIXME when built on userland, this should be included into bundle only if it is installed (falling back to dummy module?)
         const { getRequestListener } = await import("@hono/node-server");
         const listener = getRequestListener(app.fetch, options);
         // cache nodeHandler

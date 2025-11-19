@@ -43,10 +43,14 @@
     "@universal-middleware/hono": "^0.4.17"
   },
   "peerDependencies": {
-    "vite": ">=7.1"
+    "vite": ">=7.1",
+    "@hono/node-server": "^1"
   },
   "peerDependenciesMeta": {
     "vite": {
+      "optional": true
+    },
+    "@hono/node-server": {
       "optional": true
     }
   },
