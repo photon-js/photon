@@ -17,6 +17,8 @@ export type Callback = boolean | (() => any);
 export const isBun = typeof Bun !== "undefined";
 export const isDeno = typeof Deno !== "undefined";
 
+const controllerMap = new WeakMap<AbortSignal, AbortController>();
+
 export function onReady(options: { port: number; isHttps?: boolean; onReady?: Callback }) {
   return () => {
     if (import.meta.hot) {
@@ -77,9 +79,21 @@ export function srvxServe(options: ServeReturn) {
     }
     server = serveBun(srvxOptions);
   } else if (isDeno) {
-    // TODO AbortController to force close connections
-    // biome-ignore lint/suspicious/noExplicitAny: cast
-    srvxOptions.deno = serverOptions?.deno as any;
+    const controller = new AbortController();
+
+    if (serverOptions?.deno?.signal) {
+      // Forward abort signal if specified by user
+      serverOptions.deno.signal.addEventListener("abort", () => {
+        controller.abort();
+      });
+    }
+
+    srvxOptions.deno = {
+      ...serverOptions?.deno,
+      signal: controller.signal,
+      // biome-ignore lint/suspicious/noExplicitAny: cast
+    } as any;
+    controllerMap.set(controller.signal, controller);
     isHttps = serverOptions?.deno && "cert" in serverOptions.deno ? Boolean(serverOptions.deno.cert) : false;
     if (isHttps) {
       srvxOptions.protocol = "https";
@@ -112,6 +126,7 @@ export function getPort(options?: ServerOptions) {
  */
 async function onServerClose(serverP: Servers | Promise<Servers>) {
   let server = await serverP;
+  let denoAbortController: AbortController | undefined;
 
   if (!("shutdown" in server) && !("stop" in server) && !("on" in server)) {
     // srvx close(true) uses closeAllConnections which does not always properly close websocket connections
@@ -121,11 +136,20 @@ async function onServerClose(serverP: Servers | Promise<Servers>) {
     } else if (server.bun?.server) {
       server = server.bun.server;
     } else if (server.deno?.server) {
+      if (server.options.deno?.signal) {
+        denoAbortController = controllerMap.get(server.options.deno.signal);
+      }
       server = server.deno.server;
     }
   } else if ("shutdown" in server) {
     // Deno
-    // TODO use AbortController
+    if (denoAbortController) {
+      return function destroy(cb: () => void) {
+        denoAbortController?.abort("hmr");
+        (server as Deno.HttpServer).finished.finally(cb);
+      };
+    }
+
     throw new PhotonBugError(
       "server-side HMR is not supported for Deno. You can disable it by settings `photon.hmr = 'prefer-restart'`",
     );
