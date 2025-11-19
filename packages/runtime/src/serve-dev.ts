@@ -5,12 +5,15 @@ import { assertServerEntry } from "./utils.js";
 async function startServer() {
   assertServerEntry(userServerEntry);
 
-  if (isBun || isDeno || !userServerEntry.server?.nodeHandler) {
-    const server = await srvxServe(userServerEntry);
-    installServerHMR(() => server.serve());
-    return server;
-  }
-  return nodeServe(userServerEntry.server?.options ?? {}, userServerEntry.server.nodeHandler);
+  const _serve =
+    isBun || isDeno || !userServerEntry.server?.nodeHandler
+      ? // biome-ignore lint/style/noNonNullAssertion: already asserted
+        () => srvxServe(userServerEntry!)
+      : () =>
+          // biome-ignore lint/style/noNonNullAssertion: already asserted
+          nodeServe(userServerEntry!.server?.options ?? {}, userServerEntry!.server!.nodeHandler!);
+
+  return installServerHMR(_serve);
 }
 
 await startServer();

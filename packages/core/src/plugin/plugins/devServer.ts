@@ -128,10 +128,10 @@ export function devServer(config?: Photon.Config): Plugin {
           envImport(env, resolvedEntryId);
         });
 
-        env.hot.on("photon:reloaded", () => {
-          // TODO do not full reload the client?
-          vite.environments.client.hot.send({ type: "full-reload" });
-        });
+        // Uncomment to forward full-reload to client
+        // env.hot.on("photon:reloaded", () => {
+        //   vite.environments.client.hot.send({ type: "full-reload" });
+        // });
       }
 
       viteDevServer = vite;
