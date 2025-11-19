@@ -1,10 +1,24 @@
-import { autoRetry, expect, expectLog, fetchHtml, getServerUrl, page, run, test } from "@brillout/test-e2e";
+import { fileURLToPath } from "node:url";
+import {
+  autoRetry,
+  editFile,
+  editFileRevert,
+  expect,
+  expectLog,
+  fetch,
+  fetchHtml,
+  getServerUrl,
+  page,
+  run,
+  sleep,
+  test,
+} from "@brillout/test-e2e";
+import { findFile } from "pkg-types";
 import { runCommandThatThrows } from "./utils.js";
 
 export { testRun, testRunUnsupported };
 
 function testRun(cmd: `pnpm run ${string}` | `bun --bun --silent run ${string}`, options?: { hmr?: boolean }) {
-  const isPreview = cmd.includes("preview");
   run(cmd, {
     // Preview => builds app which takes a long time
     additionalTimeout: 120 * 1000,
@@ -28,6 +42,43 @@ function testRun(cmd: `pnpm run ${string}` | `bun --bun --silent run ${string}`,
   });
 
   if (options?.hmr) {
+    const entry = findFile("hmr-route.ts", {
+      startingFrom: fileURLToPath(import.meta.url),
+    });
+
+    test("vite hmr websocket", async () => {
+      await page.goto(`${getServerUrl()}/`);
+
+      // Wait for the connection message
+      await autoRetry(async () => {
+        expectLog("[vite] connected.");
+      });
+    });
+
+    test("server-side HMR", async () => {
+      const getHmrText = async () => {
+        const response = await fetch(`${getServerUrl()}/hmr`);
+        return response.text();
+      };
+
+      expect(await getHmrText()).toBe("BEFORE HMR");
+
+      editFile(await entry, (content) => content.replaceAll("BEFORE", "AFTER"));
+
+      await sleep(300);
+      await autoRetry(async () => {
+        expectLog("[vite] program reload");
+        expect(await getHmrText()).toBe("AFTER HMR");
+      });
+
+      editFileRevert();
+
+      await sleep(300);
+      await autoRetry(async () => {
+        expectLog("[vite] program reload");
+        expect(await getHmrText()).toBe("BEFORE HMR");
+      });
+    });
   }
 }
 

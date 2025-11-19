@@ -20,7 +20,7 @@
   "dependencies": {
     "@photonjs/core": "workspace:^",
     "@photonjs/srvx": "workspace:^",
-    "srvx": "^0.9.1"
+    "srvx": "^0.9.6"
   },
   "peerDependencies": {
     "vite": ">=7.1"

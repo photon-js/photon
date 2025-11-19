@@ -17,13 +17,16 @@ import type {
 import nodeHTTP2 from "node:http2";
 import type { createServer as createServerHTTPS, ServerOptions as ServerOptionsHTTPS } from "node:https";
 import type { Socket } from "node:net";
+import { PhotonBugError } from "@photonjs/core/errors";
 import type { ServeReturn } from "@photonjs/core/serve";
 import type { Server as SrvxServer, ServerOptions as SrvxServerOptions } from "srvx";
 import { serve as serveBun } from "srvx/bun";
 import { serve as serveDeno } from "srvx/deno";
 import { serve as serveNode } from "srvx/node";
 
-export type ServerType = import("node:http").Server | Http2Server | Http2SecureServer;
+export type ServerType = Server | Http2Server | Http2SecureServer;
+// biome-ignore lint/suspicious/noExplicitAny: type
+export type Servers = ServerType | SrvxServer | Bun.Server<any> | Deno.HttpServer;
 
 export type ServerOptions = ServerOptionsBase &
   (ServerOptionsHTTPBase | ServerOptionsHTTPSBase | ServerOptionsHTTP2Base);
@@ -62,7 +65,8 @@ export interface ServerOptionsBase {
    * Called when the server is created.
    * Only triggered when running on non-serverless environments.
    */
-  onCreate?<Server extends ServerType | Deno.HttpServer | import("bun").Server>(server?: Server): void;
+  // biome-ignore lint/suspicious/noExplicitAny: type
+  onCreate?<Server extends ServerType | Deno.HttpServer | Bun.Server<any>>(server?: Server): void;
   bun?: Omit<Parameters<typeof Bun.serve>[0], "fetch" | "port">;
   deno?: Omit<Deno.ServeTcpOptions | (Deno.ServeTcpOptions & Deno.TlsCertifiedKeyPem), "port" | "handler">;
 }
@@ -119,6 +123,7 @@ export function nodeServe(options: ServerOptions, handler: NodeHandler): ServerT
 export function srvxServe(options: ServeReturn) {
   const srvxOptions: SrvxServerOptions = {
     fetch: options.fetch,
+    gracefulShutdown: false,
   };
   const serverOptions = options.server?.options;
   const port = getPort(serverOptions);
@@ -137,7 +142,9 @@ export function srvxServe(options: ServeReturn) {
     }
     server = serveBun(srvxOptions);
   } else if (isDeno) {
-    srvxOptions.deno = serverOptions?.deno;
+    // TODO AbortController to force close connections
+    // biome-ignore lint/suspicious/noExplicitAny: cast
+    srvxOptions.deno = serverOptions?.deno as any;
     isHttps = serverOptions?.deno && "cert" in serverOptions.deno ? Boolean(serverOptions.deno.cert) : false;
     if (isHttps) {
       srvxOptions.protocol = "https";
@@ -168,46 +175,73 @@ export function getPort(options?: ServerOptions) {
  * server.close() does not close existing connections.
  * The returned function forces all connections to close while closing the server.
  */
-function onServerClose(server: Server | Http2Server | Http2SecureServer | Promise<SrvxServer>) {
-  if ("on" in server) {
-    const connections: Set<Socket> = new Set();
+async function onServerClose(serverP: Servers | Promise<Servers>) {
+  let server = await serverP;
 
-    server.on("connection", (conn: Socket) => {
-      connections.add(conn);
-      conn.on("close", () => {
-        connections.delete(conn);
-      });
-    });
-
-    const closeAllConnections = () =>
-      connections.forEach((c) => {
-        c.destroy();
-      });
-
+  if (!("shutdown" in server) && !("stop" in server) && !("on" in server)) {
+    // srvx close(true) uses closeAllConnections which does not always properly close websocket connections
+    // srvx
+    if (server.node?.server) {
+      server = server.node.server;
+    } else if (server.bun?.server) {
+      server = server.bun.server;
+    } else if (server.deno?.server) {
+      server = server.deno.server;
+    }
+  } else if ("shutdown" in server) {
+    // Deno
+    // TODO use AbortController
+    throw new PhotonBugError(
+      "server-side HMR is not supported for Deno. You can disable it by settings `photon.hmr = 'prefer-restart'`",
+    );
+  } else if ("stop" in server) {
+    // Bun
     return function destroy(cb: () => void) {
-      server.close(cb);
-      closeAllConnections();
-    };
-  } else {
-    return function destroy(cb: () => void) {
-      server.then((s) => s.close(true)).then(cb);
+      (server as Bun.Server<unknown>).stop(true).finally(cb);
     };
   }
+
+  if (!("on" in server)) {
+    throw new PhotonBugError(
+      "server-side HMR is not supported for this server. You can disable it by settings `photon.hmr = 'prefer-restart'`",
+    );
+  }
+
+  const connections: Set<Socket> = new Set();
+
+  server.on("connection", (conn: Socket) => {
+    connections.add(conn);
+    conn.on("close", () => {
+      connections.delete(conn);
+    });
+  });
+
+  const closeAllConnections = () =>
+    connections.forEach((c) => {
+      c.destroy();
+    });
+
+  return function destroy(cb: () => void) {
+    server.close(cb);
+    closeAllConnections();
+  };
 }
 
 // biome-ignore lint/suspicious/noConfusingVoidType: keep void
-function _installServerHMR(server: Server | Http2Server | Http2SecureServer | Promise<SrvxServer> | void) {
+function _installServerHMR(server: Servers | Promise<Servers> | void) {
   if (!server) return;
   if (import.meta.hot) {
-    const destroy = onServerClose(server);
+    const destroyP = onServerClose(server);
 
     return new Promise<void>((resolve) => {
       const callback = () => {
-        destroy(() => {
-          resolve();
-          // Signal that the server is properly closed, so that we can continue the hot-reload process
-          // @ts-expect-error conflict between bun and vite types
-          import.meta.hot?.send("photon:server-closed");
+        destroyP.then((destroy) => {
+          destroy(() => {
+            resolve();
+            // Signal that the server is properly closed, so that we can continue the hot-reload process
+            // @ts-expect-error conflict between bun and vite types
+            import.meta.hot?.send("photon:server-closed");
+          });
         });
       };
 
@@ -223,12 +257,13 @@ function _installServerHMR(server: Server | Http2Server | Http2SecureServer | Pr
 
 export function installServerHMR(
   // biome-ignore lint/suspicious/noConfusingVoidType: keep void
-  serve: () => Server | Http2Server | Http2SecureServer | Promise<SrvxServer> | void,
+  serve: () => Servers | Promise<Servers> | void,
 ) {
   // biome-ignore lint/style/noNonNullAssertion: asserted by wrapping function, and e2e tested
   const previousServerClosing: Promise<void> = import.meta.hot!.data.previousServerClosing ?? Promise.resolve();
 
   previousServerClosing.then(() => {
+    console.log("previousServerClosing.then");
     const server = serve();
     // biome-ignore lint/style/noNonNullAssertion: asserted by wrapping function, and e2e tested
     import.meta.hot!.data.previousServerClosing = _installServerHMR(server);

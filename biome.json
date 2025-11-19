@@ -6,7 +6,8 @@
       "**",
       "!**/.vercel",
       "!**/.wrangler",
-      "!**/worker-configuration.d.ts"
+      "!**/worker-configuration.d.ts",
+      "!**/lib.deno.d.ts"
     ]
   },
   "overrides": [
