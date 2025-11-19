@@ -25,7 +25,7 @@
   "scripts": {
     "dev": "tsdown --watch",
     "build": "tsdown",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "test:types": "tsc --noEmit"
   },
   "peerDependencies": {
     "vite": ">=7.1",

@@ -32,6 +32,7 @@ jobs:
       - run: pnpm exec playwright install chromium
       - run: pnpm run build
       - run: pnpm run test
+      - run: pnpm run test:types
 
   lint:
     name: Biome check

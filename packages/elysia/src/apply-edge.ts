@@ -5,7 +5,8 @@ import { type App, apply as applyAdapter } from "@universal-middleware/elysia";
 
 export const apply: <T extends App>(app: T, additionalMiddlewares?: UniversalMiddleware[]) => T = createApply(
   "elysia",
-  applyAdapter,
+  // biome-ignore lint/suspicious/noExplicitAny: ignore cast error
+  applyAdapter as any,
   getUniversalEntries,
   getUniversalMiddlewares,
 );

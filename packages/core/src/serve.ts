@@ -53,7 +53,8 @@ export interface ServerOptionsBase {
    * Called when the server is created.
    * Only triggered when running on non-serverless environments.
    */
-  onCreate?<Server extends ServerType | Deno.HttpServer | import("bun").Server>(server?: Server): void;
+  // biome-ignore lint/suspicious/noExplicitAny: Bun server
+  onCreate?<Server extends ServerType | Deno.HttpServer | Bun.Server<any> | unknown>(server?: Server): void;
   bun?: Omit<Parameters<typeof Bun.serve>[0], "fetch" | "port">;
   deno?: Omit<Deno.ServeTcpOptions | (Deno.ServeTcpOptions & Deno.TlsCertifiedKeyPem), "port" | "handler">;
 }

@@ -6,6 +6,7 @@
     "build:awesome-framework": "pnpm --filter {example/awesome-framework} run build",
     "========= Test": "",
     "test": "test-e2e",
+    "test:types": "pnpm -r test:types",
     "========= Docs": "",
     "// Develop website https://photonjs.dev locally": "",
     "docs": "cd docs/ && pnpm run dev",

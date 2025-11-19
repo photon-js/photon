@@ -35,7 +35,8 @@
   },
   "scripts": {
     "dev": "tsdown --watch",
-    "build": "tsdown"
+    "build": "tsdown",
+    "test:types": "tsc --noEmit"
   },
   "dependencies": {
     "@photonjs/core": "workspace:^",
