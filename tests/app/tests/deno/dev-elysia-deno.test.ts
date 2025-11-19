@@ -1,8 +1,8 @@
 import { testRun } from "../testRun.js";
 
 process.env.TARGET = "deno";
-process.env.SERVER = "hono";
+process.env.SERVER = "elysia";
 
 testRun("deno run -A -q dev", {
-  hmr: "prefer-restart",
+  hmr: true,
 });

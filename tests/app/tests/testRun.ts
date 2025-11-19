@@ -19,12 +19,13 @@ import { runCommandThatThrows } from "./utils.js";
 export { testRun, testRunUnsupported };
 
 function testRun(
-  cmd: `pnpm run ${string}` | `bun --bun --silent run ${string}`,
-  options?: { hmr?: boolean | "prefer-restart" },
+  cmd: `pnpm run ${string}` | `bun --bun --silent run ${string}` | `deno run -A -q ${string}`,
+  options?: { hmr?: boolean | "prefer-restart" } & Parameters<typeof run>[1],
 ) {
   run(cmd, {
     // Preview => builds app which takes a long time
     additionalTimeout: 120 * 1000,
+    ...options,
   });
 
   test("page content is rendered to HTML", async () => {
@@ -89,21 +90,33 @@ function testRun(
   }
 }
 
-async function testRunUnsupported(cmd: `pnpm run ${string}`) {
-  const error = "is not supported while targetting";
+async function testRunUnsupported(
+  cmd: `pnpm run ${string}` | `bun --bun --silent run ${string}` | `deno run -A -q ${string}`,
+  {
+    error = "is not supported while targetting",
+    errorAtStart = false,
+  }: { error?: string; errorAtStart?: boolean } = {},
+) {
   const isPreview = cmd.includes("preview");
 
   if (isPreview) {
     await runCommandThatThrows(cmd, error);
+  } else if (errorAtStart) {
+    run(cmd, {
+      additionalTimeout: 120 * 1000,
+      serverIsReadyMessage: "VITE",
+    });
+
+    test("server crashes at start", async () => {
+      expectLog(error, { allLogs: true });
+    });
   } else {
     run(cmd, {
-      // Preview => builds app which takes a long time
       additionalTimeout: 120 * 1000,
     });
 
     test("page crashes with error message", async () => {
       await fetchHtml("/");
-      expectLog("Internal server error", { allLogs: true });
       expectLog(error, { allLogs: true });
     });
   }
