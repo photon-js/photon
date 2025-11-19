@@ -1,9 +1,6 @@
 import { testRun } from "../testRun.js";
 
-process.env.TARGET = "deno";
-process.env.SERVER = "elysia";
-
-testRun("deno run -A -q preview", {
+testRun("deno", "preview", "elysia", {
   // exit code 1
   tolerateError: true,
 });

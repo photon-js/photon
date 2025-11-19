@@ -18,11 +18,37 @@ import { runCommandThatThrows } from "./utils.js";
 
 export { testRun, testRunUnsupported };
 
+type Runtimes = "node" | "bun" | "deno" | "cloudflare" | "vercel";
+type Modes = "dev" | "preview";
+type Servers = "elysia" | "express" | "fastify" | "fetch" | "srvx" | "h3" | "hono" | "hattip";
+
+function getCmd(runtime: Runtimes, mode: Modes, server: Servers) {
+  process.env.TARGET = runtime;
+  process.env.SERVER = server;
+  switch (runtime) {
+    case "node":
+      return `pnpm run ${mode}`;
+    case "bun":
+      return `bun --bun --silent run ${mode}`;
+    case "deno":
+      return `deno run -A -q ${mode}`;
+    case "cloudflare":
+      if (mode === "dev") return "pnpm run dev --strictPort --port 3000";
+      return "pnpm run preview:vite --strictPort --port 3000";
+    case "vercel":
+      // Currently only dev is used for vercel tests
+      if (mode === "dev") return "pnpm run dev --strictPort --port 3000";
+      return "pnpm run preview:vite --strictPort --port 3000";
+  }
+}
+
 function testRun(
-  cmd: `pnpm run ${string}` | `bun --bun --silent run ${string}` | `deno run -A -q ${string}`,
+  runtime: Runtimes,
+  mode: Modes,
+  server: Servers,
   options?: { hmr?: boolean | "prefer-restart" } & Parameters<typeof run>[1],
 ) {
-  run(cmd, {
+  run(getCmd(runtime, mode, server), {
     // Preview => builds app which takes a long time
     additionalTimeout: 120 * 1000,
     ...options,
@@ -91,13 +117,15 @@ function testRun(
 }
 
 async function testRunUnsupported(
-  cmd: `pnpm run ${string}` | `bun --bun --silent run ${string}` | `deno run -A -q ${string}`,
-  {
-    error = "is not supported while targetting",
-    errorAtStart = false,
-  }: { error?: string; errorAtStart?: boolean } = {},
+  runtime: Runtimes,
+  mode: Modes,
+  server: Servers,
+  options: { error?: string; errorAtStart?: boolean } = {},
 ) {
-  const isPreview = cmd.includes("preview");
+  const cmd = getCmd(runtime, mode, server);
+  const { error = "is not supported while targetting", errorAtStart = false } = options;
+
+  const isPreview = mode === "preview";
 
   if (isPreview) {
     await runCommandThatThrows(cmd, error);

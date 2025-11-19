@@ -1,8 +1,3 @@
 import { testRun } from "../testRun.js";
 
-process.env.TARGET = "deno";
-process.env.SERVER = "hono";
-
-testRun("deno run -A -q dev", {
-  hmr: "prefer-restart",
-});
+testRun("deno", "dev", "hono", { hmr: true });

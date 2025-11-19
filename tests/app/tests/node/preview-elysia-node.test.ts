@@ -1,6 +1,3 @@
 import { testRun } from "../testRun.js";
 
-process.env.TARGET = "node";
-process.env.SERVER = "elysia";
-
-testRun("pnpm run preview");
+testRun("node", "preview", "elysia");

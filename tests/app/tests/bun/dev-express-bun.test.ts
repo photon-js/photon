@@ -1,9 +1,6 @@
 import { testRunUnsupported } from "../testRun.js";
 
-process.env.TARGET = "bun";
-process.env.SERVER = "express";
-
-await testRunUnsupported("bun --bun --silent run dev", {
+await testRunUnsupported("bun", "dev", "express", {
   error: "Express does not support the `fetch` interface",
   errorAtStart: true,
 });

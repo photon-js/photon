@@ -1,8 +1,3 @@
 import { testRun } from "../testRun.js";
 
-process.env.TARGET = "bun";
-process.env.SERVER = "elysia";
-
-testRun("bun --bun --silent run dev", {
-  hmr: true,
-});
+testRun("bun", "dev", "elysia", { hmr: true });

@@ -1,6 +1,3 @@
 import { testRun } from "../testRun.js";
 
-process.env.TARGET = "node";
-process.env.SERVER = "hono";
-
-testRun("pnpm run dev", { hmr: true });
+testRun("node", "dev", "hono", { hmr: true });
