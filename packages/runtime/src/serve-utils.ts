@@ -20,12 +20,12 @@ export const isDeno = typeof Deno !== "undefined";
 export function onReady(options: { port: number; isHttps?: boolean; onReady?: Callback }) {
   return () => {
     if (import.meta.hot) {
-      if (import.meta.hot.data.vikeServerStarted) {
+      if (import.meta.hot.data.photonServerStarted) {
         // @ts-expect-error conflict between bun and vite types
         import.meta.hot.send("photon:reloaded");
         return;
       }
-      import.meta.hot.data.vikeServerStarted = true;
+      import.meta.hot.data.photonServerStarted = true;
     }
     if (options?.onReady === true || options?.onReady === undefined) {
       console.log(`Server running at ${options.isHttps ? "https" : "http"}://localhost:${options.port}`);
