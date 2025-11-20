@@ -1,6 +1,6 @@
 import type { Photon } from "@photonjs/core";
 import { resolvePhotonConfig } from "@photonjs/core/api";
-import { singleton } from "@photonjs/core/api/internal";
+import { resolveFirst, singleton } from "@photonjs/core/api/internal";
 import { photon as corePhoton, type InstallPhotonCoreOptions, installPhotonCore } from "@photonjs/core/vite";
 import type { Plugin } from "vite";
 
@@ -34,7 +34,46 @@ function fallback(): Plugin {
         id: re_photonFallback,
       },
       handler() {
-        //language=ts
+        // Compatibility with frameworks exposing a `{ fetch }` entry under `rollupOptions.input.index` in 'ssr' env
+        if (this.environment.name === "ssr" && this.environment.config.build.rollupOptions.input) {
+          const input = this.environment.config.build.rollupOptions.input;
+          const inputStr =
+            typeof input === "string"
+              ? input
+              : Array.isArray(input) && input.length > 0
+                ? (input[0] as string)
+                : input && "index" in input
+                  ? (input.index as string)
+                  : undefined;
+          if (inputStr) {
+            //language=js
+            return `import { apply } from "virtual:photon:resolve-from-photon:@photonjs/srvx";
+import { assertServerEntry } from "virtual:photon:resolve-from-photon:@photonjs/runtime/internal"
+import { enhance } from "virtual:photon:resolve-from-photon:@universal-middleware/core";
+
+import ssrEntry from ${JSON.stringify(input)};
+
+assertServerEntry(ssrEntry);
+
+const app = apply([
+  enhance(
+    ssrEntry.fetch,
+    {
+      name: "photon:catch-all",
+      path: "/**",
+      method: ["GET", "POST"],
+    }
+  )
+]);
+
+export default {
+  fetch: app,
+};
+`;
+          }
+        }
+
+        //language=js
         return `import { apply } from "virtual:photon:resolve-from-photon:@photonjs/srvx";
 
 const app = apply();
@@ -59,17 +98,15 @@ function serve(): Plugin[] {
         filter: {
           id: re_photonServe,
         },
-        async handler(id) {
+        async handler(id, importer) {
           const isDev = this.environment.config.command === "serve";
-          const resolved = await this.resolve(
-            isDev
-              ? "virtual:photon:resolve-from-photon:@photonjs/runtime/serve/dev"
-              : "virtual:photon:resolve-from-photon:@photonjs/runtime/serve",
-            undefined,
-            {
-              isEntry: true,
-            },
-          );
+          const source = isDev ? "@photonjs/runtime/serve/dev" : "@photonjs/runtime/serve";
+          const opts = { isEntry: true };
+          const resolved = await resolveFirst(this, [
+            { source: `virtual:photon:resolve-from-photon:${source}`, opts },
+            { source: `virtual:photon:resolve-from-photon:${source}`, importer, opts },
+          ]);
+
           if (!resolved) {
             throw new Error(`Cannot find server entry ${JSON.stringify(id)}`);
           }

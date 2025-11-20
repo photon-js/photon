@@ -18,6 +18,7 @@ export default defineConfig([
       plugin: "./src/plugin.ts",
       serve: "./src/serve.ts",
       "serve-dev": "./src/serve-dev.ts",
+      internal: "./src/internal.ts",
       index: "./src/index.ts",
     },
   },

@@ -8,6 +8,46 @@ export interface InstallPhotonBaseOptions {
   resolveMiddlewares?: GetPhotonCondition;
 }
 
+export function simplePhotonResolver(): Plugin {
+  return {
+    name: `photon:resolve-from-photon`,
+    enforce: "pre",
+
+    resolveId(id, importer, opts) {
+      return ifPhotonModule("resolve-from-photon", id, async ({ module: actualId }) => {
+        if (opts.custom?.photonScope !== undefined && opts.custom.photonScope !== name) return;
+
+        const foundPhotonRuntime = await resolveFirst(this, [
+          { source: "@photonjs/runtime", importer: undefined, opts },
+          { source: "@photonjs/runtime", importer, opts },
+        ]);
+
+        if (foundPhotonRuntime) {
+          const resolved = await this.resolve(actualId, foundPhotonRuntime.id, opts);
+          if (resolved) {
+            return resolved;
+          }
+        }
+
+        const foundPhotonCore = await resolveFirst(
+          this,
+          [
+            { source: "@photonjs/core", importer: undefined, opts },
+            { source: "@photonjs/core", importer, opts },
+            foundPhotonRuntime ? { source: "@photonjs/core", importer: foundPhotonRuntime.id, opts } : null,
+          ].filter(Boolean),
+        );
+
+        if (foundPhotonCore) {
+          return this.resolve(actualId, foundPhotonCore.id, opts);
+        }
+      });
+    },
+
+    sharedDuringBuild: true,
+  };
+}
+
 export function installPhotonResolver(name: string, options?: InstallPhotonBaseOptions): Plugin[] {
   let resolvedName: Awaited<ReturnType<typeof resolveFirst>>;
 

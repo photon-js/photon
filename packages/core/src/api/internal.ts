@@ -18,3 +18,4 @@ export function defineFetchLazy<App>(
 }
 
 export { singleton } from "../plugin/utils/dedupe.js";
+export { resolveFirst } from "../plugin/utils/resolve.js";

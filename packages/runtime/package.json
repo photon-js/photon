@@ -6,6 +6,7 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": "./dist/index.js",
+    "./internal": "./dist/internal.js",
     "./vite": "./dist/plugin.js",
     "./serve": "./dist/serve.js",
     "./serve/dev": "./dist/serve-dev.js",
