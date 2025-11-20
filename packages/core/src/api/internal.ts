@@ -16,3 +16,5 @@ export function defineFetchLazy<App>(
     },
   });
 }
+
+export { singleton } from "../plugin/utils/dedupe.js";

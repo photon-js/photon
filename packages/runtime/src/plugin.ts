@@ -1,4 +1,6 @@
 import type { Photon } from "@photonjs/core";
+import { resolvePhotonConfig } from "@photonjs/core/api";
+import { singleton } from "@photonjs/core/api/internal";
 import { photon as corePhoton, type InstallPhotonCoreOptions, installPhotonCore } from "@photonjs/core/vite";
 import type { Plugin } from "vite";
 
@@ -6,7 +8,7 @@ const re_photonFallback = /^virtual:photon:fallback-entry$/;
 const re_photonServe = /^virtual:photon:serve-entry$/;
 
 function fallback(): Plugin {
-  return {
+  return singleton({
     name: "photon:fallback",
 
     resolveId: {
@@ -43,14 +45,14 @@ export default {
 `;
       },
     },
-  };
+  });
 }
 
 // Creates a server and listens for connections in Node/Deno/Bun
 function serve(): Plugin[] {
   const nodeTargets = new Set<string>(["node", "bun", "deno"]);
   return [
-    {
+    singleton({
       name: "photon:serve",
 
       resolveId: {
@@ -86,31 +88,38 @@ function serve(): Plugin[] {
           };
         },
       },
-    },
-    {
+    }),
+    singleton({
       name: "photon:serve:emit",
 
       apply: "build",
       enforce: "post",
 
-      buildStart: {
+      config: {
         order: "post",
-        handler() {
-          const envName = this.environment.name;
-          const photon = this.environment.config.photon;
+        handler(config) {
+          const photon = resolvePhotonConfig(config.photon);
 
-          if (photon.defaultBuildEnv === envName && (!photon.target || nodeTargets.has(photon.target))) {
-            this.emitFile({
-              type: "chunk",
-              fileName: "node.js",
-              id: `virtual:photon:serve-entry`,
-            });
+          if (!photon.target || nodeTargets.has(photon.target)) {
+            return {
+              environments: {
+                [photon.defaultBuildEnv]: {
+                  build: {
+                    rollupOptions: {
+                      input: {
+                        index: "virtual:photon:serve-entry",
+                      },
+                    },
+                  },
+                },
+              },
+            };
           }
         },
       },
 
       sharedDuringBuild: true,
-    },
+    }),
   ];
 }
 

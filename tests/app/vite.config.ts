@@ -26,4 +26,7 @@ export default defineConfig({
     target === "vercel" && vercel(),
     awesomeFramework(),
   ],
+  build: {
+    emptyOutDir: true,
+  },
 });

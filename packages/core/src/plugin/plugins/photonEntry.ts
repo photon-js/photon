@@ -2,7 +2,6 @@ import { walk } from "estree-walker";
 import MagicString from "magic-string";
 import type { Plugin } from "vite";
 import { assert, assertUsage } from "../../utils/assert.js";
-import { resolvePhotonConfig } from "../../validators/coerce.js";
 import { singleton } from "../utils/dedupe.js";
 import { importsToServer } from "../utils/servers.js";
 import { asPhotonEntryId, ifPhotonModule, virtualModules, virtualModulesRegex } from "../utils/virtual.js";
@@ -17,60 +16,6 @@ function cleanImport(imp: string) {
 
 export function photonEntry(): Plugin[] {
   return [
-    singleton({
-      name: "photon:set-input",
-      apply: "build",
-      enforce: "post",
-
-      applyToEnvironment(env) {
-        return env.config.consumer === "server";
-      },
-
-      config: {
-        order: "post",
-        handler(config) {
-          const { server } = resolvePhotonConfig(config.photon);
-          const input: Record<string, string> = { index: server.id };
-
-          return {
-            environments: {
-              ssr: {
-                build: {
-                  rollupOptions: {
-                    input,
-                  },
-                },
-              },
-            },
-          };
-        },
-      },
-
-      resolveId: {
-        filter: {
-          id: [virtualModulesRegex["dynamic-entry"]],
-        },
-        handler(id) {
-          return {
-            id,
-            moduleSideEffects: "no-treeshake",
-          };
-        },
-      },
-
-      load: {
-        filter: {
-          id: [virtualModulesRegex["dynamic-entry"]],
-        },
-        handler(id) {
-          return ifPhotonModule("dynamic-entry", id, async ({ entry }) => {
-            return `await import(${JSON.stringify(entry)});`;
-          });
-        },
-      },
-
-      sharedDuringBuild: true,
-    }),
     singleton({
       name: "photon:resolve-importer",
       enforce: "pre",
