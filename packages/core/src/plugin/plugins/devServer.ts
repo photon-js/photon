@@ -126,8 +126,6 @@ export function devServer(config?: Photon.Config): Plugin {
       globalStore.viteDevServer = vite;
       if (!fixApplied) {
         fixApplied = true;
-        // FIXME properly test this before enabling it, it currently swallows errors
-        // setupErrorStackRewrite(vite)
         setupErrorHandlers();
       }
       patchViteServer(vite);
@@ -210,30 +208,6 @@ function logRestartMessage(err?: unknown) {
     console.error(err);
   }
   logViteInfo('Server crash: Update a server file or type "r+enter" to restart the server.');
-}
-
-// biome-ignore lint/correctness/noUnusedVariables: needed once usage uncommented
-function setupErrorStackRewrite(vite: ViteDevServer) {
-  const rewroteStacktraces = new WeakSet();
-
-  const _prepareStackTrace = Error.prepareStackTrace;
-  Error.prepareStackTrace = function prepareStackTrace(error: Error, stack: NodeJS.CallSite[]) {
-    let ret = _prepareStackTrace?.(error, stack);
-    if (!ret) return ret;
-    try {
-      ret = vite.ssrRewriteStacktrace(ret);
-      rewroteStacktraces.add(error);
-    } catch (e) {
-      console.debug("Failed to apply Vite SSR stack trace fix:", e);
-    }
-    return ret;
-  };
-
-  const _ssrFixStacktrace = vite.ssrFixStacktrace;
-  vite.ssrFixStacktrace = function ssrFixStacktrace(e) {
-    if (rewroteStacktraces.has(e)) return;
-    _ssrFixStacktrace(e);
-  };
 }
 
 function setupErrorHandlers() {
