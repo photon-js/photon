@@ -10,7 +10,7 @@ export function regexGroups<T extends object>(regex: RegExp) {
   };
 }
 
-const virtualModules = {
+export const virtualModules = {
   "virtual-entry": regexGroups<{ uniqueId: string; entry: string }>(
     /^virtual:photon:virtual-entry:(?<uniqueId>.+?):(?<entry>.+)/,
   ),
@@ -19,7 +19,6 @@ const virtualModules = {
   "server-entry-with-entry": regexGroups<{ condition: string; entry: string }>(
     /^virtual:photon:server-entry-with-entry:(?<condition>.+?):(?<entry>.+)/,
   ),
-  "dynamic-entry": regexGroups<{ entry: string }>(/^virtual:photon:dynamic-entry:(?<entry>.+)/),
   "fallback-entry": regexGroups(/^virtual:photon:fallback-entry/),
   "resolve-from-photon": regexGroups<{ module: string }>(/^virtual:photon:resolve-from-photon:(?<module>.+)/),
   "get-middlewares": regexGroups<{ condition: string; server: string; handler?: string }>(

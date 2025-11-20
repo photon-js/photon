@@ -1,10 +1,11 @@
 import { apply, serve } from "@photonjs/srvx";
-import awesomeFramework from "awesome-framework/universal-middleware";
+import { hmrRoute } from "./hmr-route.js";
 
 function startServer() {
+  // Auto applies `awesomeFramework`
   const app = apply(
-    // Adds the framework's middlewares
-    awesomeFramework,
+    // HMR route
+    [hmrRoute],
   );
 
   return serve(app);

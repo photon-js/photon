@@ -6,8 +6,16 @@
       "**",
       "!**/.vercel",
       "!**/.wrangler",
-      "!**/worker-configuration.d.ts"
+      "!**/.tanstack",
+      "!**/*.gen.ts",
+      "!**/worker-configuration.d.ts",
+      "!**/lib.deno.d.ts"
     ]
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
   },
   "overrides": [
     {

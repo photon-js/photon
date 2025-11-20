@@ -7,7 +7,7 @@ const commonOptions: TsdownOptions = {
   outDir: "dist",
   treeshake: true,
   nodeProtocol: true,
-  external: [/^@photonjs\/core/, /^@photonjs\/hono/, /^virtual:photon:get-middlewares:/, "hono"],
+  external: [/^@photonjs\/core/, /^@photonjs\/hono/, /^virtual:photon:get-middlewares:/, "virtual:photon:server-entry"],
 };
 
 export default defineConfig([
@@ -16,7 +16,11 @@ export default defineConfig([
     platform: "node",
     entry: {
       plugin: "./src/plugin.ts",
+      serve: "./src/serve.ts",
+      "serve-dev": "./src/serve-dev.ts",
+      internal: "./src/internal.ts",
       index: "./src/index.ts",
+      sirv: "./src/sirv.ts",
     },
   },
 ]);

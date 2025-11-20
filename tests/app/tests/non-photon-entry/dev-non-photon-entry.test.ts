@@ -8,5 +8,5 @@ run("pnpm run dev", {
 });
 
 test("server launches with error message", async () => {
-  expectLog("{ apply } function needs to be called before export");
+  expectLog("Server entry default export must be an object");
 });

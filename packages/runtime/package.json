@@ -5,19 +5,27 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
-    "./vite": "./dist/plugin.js",
     ".": "./dist/index.js",
+    "./internal": "./dist/internal.js",
+    "./sirv": "./dist/sirv.js",
+    "./vite": "./dist/plugin.js",
+    "./serve": "./dist/serve.js",
+    "./serve/dev": "./dist/serve-dev.js",
     "./virtual": {
       "types": "./virtual.d.ts"
     }
   },
   "scripts": {
     "dev": "tsdown --watch",
-    "build": "tsdown"
+    "build": "tsdown",
+    "test:types": "tsc --noEmit"
   },
   "dependencies": {
     "@photonjs/core": "workspace:^",
-    "@photonjs/srvx": "workspace:^"
+    "@photonjs/srvx": "workspace:^",
+    "@universal-middleware/core": "^0.4.13",
+    "@universal-middleware/sirv": "^0.1.23",
+    "srvx": "^0.9.6"
   },
   "peerDependencies": {
     "vite": ">=7.1"
@@ -29,7 +37,6 @@
   },
   "devDependencies": {
     "@types/node": "^22.18.10",
-    "srvx": "^0.9.1",
     "tsdown": "^0.15.9",
     "typescript": "^5.9.3",
     "vite": "^7.1.12"

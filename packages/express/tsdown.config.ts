@@ -15,16 +15,14 @@ export default defineConfig([
     ...commonOptions,
     platform: "neutral",
     entry: {
-      // serve (noop)
-      serve: "./src/serve-noop.ts",
+      // serve
+      serve: "./src/serve.ts",
     },
   },
   {
     ...commonOptions,
     platform: "node",
     entry: {
-      // serve (node)
-      "serve.node": "./src/serve-node.ts",
       // apply (dev)
       "apply.dev": "./src/apply-dev.ts",
       // apply (node)

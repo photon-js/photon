@@ -8,3 +8,5 @@ export type ModuleInfo = Parameters<Extract<Plugin["moduleParsed"], (...args: ne
 
 // biome-ignore lint/suspicious/noExplicitAny: any
 export type LoadResult = Awaited<ReturnType<Extract<Plugin["load"], (...args: never) => any>>>;
+
+export type ResolvedId = Awaited<ReturnType<PluginContext["resolve"]>>;

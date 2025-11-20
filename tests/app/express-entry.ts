@@ -1,14 +1,16 @@
+import type { ServeReturn } from "@photonjs/core/serve";
 import { apply, serve } from "@photonjs/express";
-import awesomeFramework from "awesome-framework/universal-middleware";
 import express, { type Express } from "express";
+import { hmrRoute } from "./hmr-route.js";
 
-function startServer(): Express {
+function startServer(): ServeReturn<Express> {
   const app = express();
 
+  // Auto applies `awesomeFramework`
   apply(
     app,
-    // Adds the framework's middlewares
-    awesomeFramework,
+    // HMR route
+    [hmrRoute],
   );
 
   return serve(app);

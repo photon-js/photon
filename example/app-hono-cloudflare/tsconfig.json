@@ -5,7 +5,7 @@
     "target": "ES2022",
     "verbatimModuleSyntax": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "types": ["vite/client", "node"],
+    "types": ["vite/client"],
     "esModuleInterop": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,

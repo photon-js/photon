@@ -3,7 +3,7 @@ import type { Photon } from "../types.js";
 import { commonConfig } from "./plugins/commonConfig.js";
 import { devServer } from "./plugins/devServer.js";
 import { getMiddlewaresPlugin } from "./plugins/getMiddlewaresPlugin.js";
-import { type InstallPhotonBaseOptions, installPhotonResolver } from "./plugins/installPhoton.js";
+import { type InstallPhotonBaseOptions, installPhotonResolver, simplePhotonResolver } from "./plugins/installPhoton.js";
 import { mirrorMeta } from "./plugins/mirrorMeta.js";
 import { photonEntry } from "./plugins/photonEntry.js";
 import { resolvePhotonConfigPlugin } from "./plugins/resolvePhotonConfigPlugin.js";
@@ -24,6 +24,7 @@ function photon(config?: Photon.Config): Plugin[] {
   return [
     ...commonConfig(),
     ...resolvePhotonConfigPlugin(config),
+    simplePhotonResolver(),
     ...photonEntry(),
     ...mirrorMeta(),
 

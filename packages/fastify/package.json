@@ -16,20 +16,12 @@
       "import": "./dist/apply.js",
       "default": "./dist/apply.js"
     },
-    "./serve": {
-      "types": "./dist/serve.d.ts",
-      "node": {
-        "types": "./dist/serve.node.d.ts",
-        "import": "./dist/serve.node.js",
-        "default": "./dist/serve.node.js"
-      },
-      "import": "./dist/serve.js",
-      "default": "./dist/serve.js"
-    }
+    "./serve": "./dist/serve.js"
   },
   "scripts": {
     "dev": "tsdown --watch",
-    "build": "tsdown"
+    "build": "tsdown",
+    "test:types": "tsc --noEmit"
   },
   "dependencies": {
     "@photonjs/core": "workspace:^",

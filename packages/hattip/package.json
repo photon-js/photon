@@ -26,43 +26,14 @@
       "import": "./dist/apply.js",
       "default": "./dist/apply.js"
     },
-    "./serve": {
-      "types": "./dist/serve.d.ts",
-      "deno": {
-        "types": "./dist/serve.deno.d.ts",
-        "import": "./dist/serve.deno.js",
-        "default": "./dist/serve.deno.js"
-      },
-      "bun": {
-        "types": "./dist/serve.bun.d.ts",
-        "import": "./dist/serve.bun.js",
-        "default": "./dist/serve.bun.js"
-      },
-      "workerd": {
-        "types": "./dist/serve.d.ts",
-        "import": "./dist/serve.js",
-        "default": "./dist/serve.js"
-      },
-      "worker": {
-        "types": "./dist/serve.d.ts",
-        "import": "./dist/serve.js",
-        "default": "./dist/serve.js"
-      },
-      "node": {
-        "types": "./dist/serve.node.d.ts",
-        "import": "./dist/serve.node.js",
-        "default": "./dist/serve.node.js"
-      },
-      "import": "./dist/serve.js",
-      "default": "./dist/serve.js"
-    }
+    "./serve": "./dist/serve.js"
   },
   "scripts": {
     "dev": "tsdown --watch",
-    "build": "tsdown"
+    "build": "tsdown",
+    "test:types": "tsc --noEmit"
   },
   "dependencies": {
-    "@hattip/adapter-node": "^0.0.49",
     "@photonjs/core": "workspace:^",
     "@universal-middleware/hattip": "^0.4.13"
   },

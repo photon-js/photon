@@ -3,6 +3,7 @@
 import cloudflare from '@photonjs/cloudflare'
 */
 import { cloudflare } from "@photonjs/cloudflare/vite";
+import { vercel } from "@photonjs/vercel/vite";
 import { awesomeFramework } from "awesome-framework/vite";
 import { defineConfig } from "vite";
 
@@ -22,6 +23,10 @@ export default defineConfig({
       cloudflare({
         inspectorPort: false,
       }), // not needed when using @photonjs/auto
+    target === "vercel" && vercel(),
     awesomeFramework(),
   ],
+  build: {
+    emptyOutDir: true,
+  },
 });

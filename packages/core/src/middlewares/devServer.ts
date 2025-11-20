@@ -1,4 +1,3 @@
-import type { IncomingMessage } from "node:http";
 import { enhance, type Get, type UniversalMiddleware } from "@universal-middleware/core";
 import { handleViteDevServer } from "../runtime/adapters/handleViteDevServer.js";
 import { globalStore } from "../runtime/globalStore.js";
@@ -6,17 +5,6 @@ import { globalStore } from "../runtime/globalStore.js";
 export const devServerMiddleware = (() =>
   enhance(
     async (request, context, runtime) => {
-      const nodeReq: IncomingMessage | undefined = "req" in runtime ? runtime.req : undefined;
-
-      if (nodeReq) {
-        const needsUpgrade = globalStore.setupHMRProxy(nodeReq);
-
-        if (needsUpgrade) {
-          // Early response for HTTP connection upgrade
-          return new Response(null);
-        }
-      }
-
       // Can be disabled, or can be running on a different environment
       if (!globalStore.viteDevServer) return;
 

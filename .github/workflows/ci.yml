@@ -22,10 +22,19 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node_version }}
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.2
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
       - run: pnpm install
       - run: pnpm exec playwright install chromium
       - run: pnpm run build
       - run: pnpm run test
+        env:
+          LANG: en_US
+      - run: pnpm run test:types
 
   lint:
     name: Biome check

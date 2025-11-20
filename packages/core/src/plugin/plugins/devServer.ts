@@ -1,15 +1,3 @@
-import type { IncomingMessage, Server } from "node:http";
-import {
-  enhance,
-  getUniversalProp,
-  type HttpMethod,
-  methodSymbol,
-  nameSymbol,
-  orderSymbol,
-  pathSymbol,
-  type UniversalHandler,
-  type UniversalMiddleware,
-} from "@universal-middleware/core";
 import { cyan } from "ansis";
 import type {
   DevEnvironment,
@@ -23,15 +11,12 @@ import { globalStore } from "../../runtime/globalStore.js";
 import type { Photon } from "../../types.js";
 import { assert, assertUsage } from "../../utils/assert.js";
 import { resolvePhotonConfig } from "../../validators/coerce.js";
-import type { PhotonEntryUniversalHandler, SupportedServers } from "../../validators/types.js";
 import { singleton } from "../utils/dedupe.js";
 import { isPhotonMetaConfig } from "../utils/entry.js";
-import { isBun } from "../utils/isBun.js";
 import { logViteInfo } from "../utils/logVite.js";
 
 let fixApplied = false;
 
-const VITE_HMR_PATH = "/__vite_hmr";
 const RESTART_EXIT_CODE = 33;
 const IS_RESTARTER_SET_UP = "__PHOTON__IS_RESTARTER_SET_UP";
 
@@ -40,68 +25,9 @@ export function isRunnableDevEnvironment(environment: Environment): environment 
   return "runner" in environment;
 }
 
-// TODO cleanup or reuse?
-// biome-ignore lint/correctness/noUnusedVariables: TODO
-async function importMiddleware(vite: ViteDevServer, middleware: string) {
-  const envName = vite.config.photon.devServer ? vite.config.photon.devServer.env : "ssr";
-  const env = vite.environments[envName];
-  assertUsage(env, `Environment ${envName} not found`);
-  assertUsage(isRunnableDevEnvironment(env), `Environment ${envName} is not runnable`);
-
-  return envImportAndCheckDefaultExport<UniversalMiddleware | UniversalMiddleware[]>(env, middleware, false);
-}
-
-// biome-ignore lint/correctness/noUnusedVariables: TODO
-async function importHandler(vite: ViteDevServer, handler: PhotonEntryUniversalHandler) {
-  const envName = handler.env ?? "ssr";
-  const env = vite.environments[envName];
-  assertUsage(env, `Environment ${envName} not found`);
-  assertUsage(isRunnableDevEnvironment(env), `Environment ${envName} is not runnable`);
-
-  const handlerResolved = await env.pluginContainer.resolveId(handler.id, undefined, {
-    isEntry: true,
-  });
-  assertUsage(
-    handlerResolved?.id,
-    `Cannot find handler ${pc.cyan(handler.id)}. Make sure its path is relative to the root of your project.`,
-  );
-
-  return envImportAndCheckDefaultExport<UniversalHandler>(env, handlerResolved.id, false).then((defaultExport) => {
-    const name = getUniversalProp(defaultExport, nameSymbol);
-    const path = getUniversalProp(defaultExport, pathSymbol);
-    const order = getUniversalProp(defaultExport, orderSymbol);
-    const method = getUniversalProp(defaultExport, methodSymbol);
-    const toEnhance: { path?: string; method?: HttpMethod[] | HttpMethod; name?: string; order?: number } = {};
-    if (handler.route) {
-      toEnhance.path = handler.route;
-      toEnhance.method = ["GET", "POST"];
-    } else if (path) {
-      toEnhance.path = path;
-    }
-    if (!name) {
-      toEnhance.name = handlerResolved.id;
-    } else {
-      toEnhance.name = name;
-    }
-    if (order) {
-      toEnhance.order = order;
-    }
-    if (method) {
-      toEnhance.method = method;
-    }
-    return enhance((request, context, runtime) => {
-      context.photon ??= {};
-      context.photon.handler = handler;
-      return defaultExport(request, context, runtime);
-    }, toEnhance);
-  });
-}
-
 export function devServer(config?: Photon.Config): Plugin {
   let resolvedEntryId: string;
-  let HMRServer: Server | undefined;
   let viteDevServer: ViteDevServer;
-  let setupHMRProxyDone = false;
 
   if (config?.devServer === false) {
     return {
@@ -123,27 +49,21 @@ export function devServer(config?: Photon.Config): Plugin {
       async handler(userConfig) {
         const resolvedPhotonConfig = resolvePhotonConfig(userConfig.photon);
         if (resolvedPhotonConfig.devServer === false) return;
-        // FIXME
-        if (isBun) {
+
+        if (resolvedPhotonConfig.hmr === false) {
           return {
             appType: "custom",
             server: {
               middlewareMode: true,
+              hmr: false,
             },
           };
         }
 
-        const { createServer } = await import("node:http");
-
-        HMRServer = createServer();
         return {
           appType: "custom",
           server: {
             middlewareMode: true,
-            hmr: {
-              server: HMRServer,
-              path: VITE_HMR_PATH,
-            },
           },
         };
       },
@@ -192,24 +112,20 @@ export function devServer(config?: Photon.Config): Plugin {
 
         // Once existing server is closed and invalidated, reimport its updated entry file
         env.hot.on("photon:server-closed", () => {
-          setupHMRProxyDone = false;
           assertUsage(isRunnableDevEnvironment(env), `${envName} environment is not runnable`);
-          envImportAndCheckDefaultExport(env, resolvedEntryId);
+          envImport(env, resolvedEntryId);
         });
 
-        env.hot.on("photon:reloaded", () => {
-          // TODO do not full reload the client?
-          vite.environments.client.hot.send({ type: "full-reload" });
-        });
+        // Uncomment to forward full-reload to client
+        // env.hot.on("photon:reloaded", () => {
+        //   vite.environments.client.hot.send({ type: "full-reload" });
+        // });
       }
 
       viteDevServer = vite;
       globalStore.viteDevServer = vite;
-      globalStore.setupHMRProxy = setupHMRProxy;
       if (!fixApplied) {
         fixApplied = true;
-        // FIXME properly test this before enabling it, it currently swallows errors
-        // setupErrorStackRewrite(vite)
         setupErrorHandlers();
       }
       patchViteServer(vite);
@@ -241,32 +157,6 @@ export function devServer(config?: Photon.Config): Plugin {
     }
   }
 
-  function setupHMRProxy(req: IncomingMessage) {
-    if (setupHMRProxyDone || isBun) {
-      return false;
-    }
-
-    setupHMRProxyDone = true;
-    // biome-ignore lint/suspicious/noExplicitAny: any
-    const server = (req.socket as any).server as Server;
-    server.on("upgrade", (clientReq, clientSocket, wsHead) => {
-      if (isHMRProxyRequest(clientReq)) {
-        assert(HMRServer);
-        HMRServer.emit("upgrade", clientReq, clientSocket, wsHead);
-      }
-    });
-    // true if we need to send an empty Response waiting for the upgrade
-    return isHMRProxyRequest(req);
-  }
-
-  function isHMRProxyRequest(req: IncomingMessage) {
-    if (req.url === undefined) {
-      return false;
-    }
-    const url = new URL(req.url, "http://example.com");
-    return url.pathname === VITE_HMR_PATH;
-  }
-
   function isImported(modules: EnvironmentModuleNode[]): { module: EnvironmentModuleNode } | undefined {
     const modulesSet = new Set(modules);
     for (const module of modulesSet.values()) {
@@ -291,7 +181,7 @@ export function devServer(config?: Photon.Config): Plugin {
     assertUsage(env, `Environment ${envName} does not exists`);
 
     const index = vite.config.photon.server;
-    const indexResolved = await env.pluginContainer.resolveId(index.id, undefined, {
+    const indexResolved = await env.pluginContainer.resolveId("virtual:photon:serve-entry", undefined, {
       isEntry: true,
     });
     assertUsage(
@@ -300,36 +190,14 @@ export function devServer(config?: Photon.Config): Plugin {
     );
     resolvedEntryId = indexResolved.id;
     assertUsage(isRunnableDevEnvironment(env), `${envName} environment is not runnable`);
-    return envImportAndCheckDefaultExport(env, resolvedEntryId);
+    return envImport(env, resolvedEntryId);
   }
 }
 
-const photonServerSymbol = Symbol.for("photon:server");
-
-function envImportAndCheckDefaultExport(
-  env: RunnableDevEnvironment,
-  resolvedId: string,
-): Promise<{ [photonServerSymbol]: SupportedServers }>;
-function envImportAndCheckDefaultExport<T>(
-  env: RunnableDevEnvironment,
-  resolvedId: string,
-  isServer: false,
-): Promise<T>;
-function envImportAndCheckDefaultExport(env: RunnableDevEnvironment, resolvedId: string, isServer = true) {
+function envImport<T>(env: RunnableDevEnvironment, resolvedId: string): Promise<T> {
   return env.runner
     .import(resolvedId)
     .then((mod) => {
-      assertUsage(mod && "default" in mod, `Missing export default in ${JSON.stringify(resolvedId)}`);
-      assertUsage(
-        !(mod.default instanceof Promise),
-        `Replace \`export default\` by \`export default await\` in ${JSON.stringify(resolvedId)}`,
-      );
-      if (isServer) {
-        assertUsage(
-          photonServerSymbol in mod.default,
-          `{ apply } function needs to be called before export in ${JSON.stringify(resolvedId)}`,
-        );
-      }
       return mod.default;
     })
     .catch(logRestartMessage);
@@ -340,30 +208,6 @@ function logRestartMessage(err?: unknown) {
     console.error(err);
   }
   logViteInfo('Server crash: Update a server file or type "r+enter" to restart the server.');
-}
-
-// biome-ignore lint/correctness/noUnusedVariables: needed once usage uncommented
-function setupErrorStackRewrite(vite: ViteDevServer) {
-  const rewroteStacktraces = new WeakSet();
-
-  const _prepareStackTrace = Error.prepareStackTrace;
-  Error.prepareStackTrace = function prepareStackTrace(error: Error, stack: NodeJS.CallSite[]) {
-    let ret = _prepareStackTrace?.(error, stack);
-    if (!ret) return ret;
-    try {
-      ret = vite.ssrRewriteStacktrace(ret);
-      rewroteStacktraces.add(error);
-    } catch (e) {
-      console.debug("Failed to apply Vite SSR stack trace fix:", e);
-    }
-    return ret;
-  };
-
-  const _ssrFixStacktrace = vite.ssrFixStacktrace;
-  vite.ssrFixStacktrace = function ssrFixStacktrace(e) {
-    if (rewroteStacktraces.has(e)) return;
-    _ssrFixStacktrace(e);
-  };
 }
 
 function setupErrorHandlers() {

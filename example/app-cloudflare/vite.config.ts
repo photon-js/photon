@@ -1,7 +1,4 @@
 /// <reference types="@photonjs/runtime" />
-/* The Vite plugin cloudflare() will be replaced by this:
-import cloudflare from '@photonjs/cloudflare'
-*/
 import { cloudflare } from "@photonjs/cloudflare/vite";
 import { awesomeFramework } from "awesome-framework/vite";
 import { defineConfig } from "vite";

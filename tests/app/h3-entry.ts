@@ -1,14 +1,15 @@
 import { apply, serve } from "@photonjs/h3";
-import awesomeFramework from "awesome-framework/universal-middleware";
 import { createApp } from "h3";
+import { hmrRoute } from "./hmr-route.js";
 
 async function startServer() {
   const app = createApp();
 
+  // Auto applies `awesomeFramework`
   apply(
     app,
-    // Adds the framework's middlewares
-    awesomeFramework,
+    // HMR route
+    [hmrRoute],
   );
 
   return serve(app);

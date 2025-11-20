@@ -1,13 +1,7 @@
-import type { IncomingMessage } from "node:http";
 import type { ViteDevServer } from "vite";
 
 // @ts-expect-error
 // biome-ignore lint/suspicious/noAssignInExpressions: allowed
-export const globalStore = (globalThis.__vikeNode ||= {
-  // This is overridden in devServerPlugin
-  // in production it's a no-op
-  setupHMRProxy: () => {},
-}) as {
+export const globalStore = (globalThis.__vikeNode ||= {}) as {
   viteDevServer?: ViteDevServer | false;
-  setupHMRProxy: (req: IncomingMessage) => boolean;
 };
