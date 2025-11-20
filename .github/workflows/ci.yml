@@ -33,7 +33,7 @@ jobs:
       - run: pnpm run build
       - run: pnpm run test
         env:
-          LC_ALL: en_US
+          LANG: en_US
       - run: pnpm run test:types
 
   lint:
