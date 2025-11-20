@@ -3,9 +3,6 @@ import type { Plugin } from "vite";
 
 export function photonPlugin(): Plugin[] {
   return installPhoton("awesome-framework", {
-    // Enables full installation of all Photon plugins
-    fullInstall: true,
-
     // Disables code-splitting functionality for testing purposes
     codeSplitting: {
       framework: false,

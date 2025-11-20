@@ -20,6 +20,7 @@ export default defineConfig([
       "serve-dev": "./src/serve-dev.ts",
       internal: "./src/internal.ts",
       index: "./src/index.ts",
+      sirv: "./src/sirv.ts",
     },
   },
 ]);

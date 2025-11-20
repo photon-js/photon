@@ -1,4 +1,3 @@
-import fs from "node:fs";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { useCallback, useState } from "react";
@@ -15,33 +14,36 @@ const loggedServerFunction = createServerFn({ method: "GET" }).middleware([
 ]);
 */
 
-const TODOS_FILE = "todos.json";
+const STATE = {
+  todos: [
+    { id: 1, name: "Get groceries" },
+    { id: 2, name: "Buy a new phone" },
+  ],
+};
 
-async function readTodos() {
-  return JSON.parse(
-    await fs.promises.readFile(TODOS_FILE, "utf-8").catch(() =>
-      JSON.stringify(
-        [
-          { id: 1, name: "Get groceries" },
-          { id: 2, name: "Buy a new phone" },
-        ],
-        null,
-        2,
-      ),
-    ),
-  );
+// biome-ignore lint/suspicious/noExplicitAny: store
+(globalThis as any).STATE ||= STATE;
+
+function readTodos() {
+  // biome-ignore lint/suspicious/noExplicitAny: store
+  return (globalThis as any).STATE.todos;
+}
+
+function saveTodos(todos: (typeof STATE)["todos"]) {
+  // biome-ignore lint/suspicious/noExplicitAny: store
+  (globalThis as any).STATE.todos = todos;
 }
 
 const getTodos = createServerFn({
   method: "GET",
-}).handler(async () => await readTodos());
+}).handler(() => readTodos());
 
 const addTodo = createServerFn({ method: "POST" })
   .inputValidator((d: string) => d)
   .handler(async ({ data }) => {
-    const todos = await readTodos();
+    const todos = readTodos();
     todos.push({ id: todos.length + 1, name: data });
-    await fs.promises.writeFile(TODOS_FILE, JSON.stringify(todos, null, 2));
+    saveTodos(todos);
     return todos;
   });
 
@@ -71,7 +73,7 @@ function Home() {
     >
       <div className="w-full max-w-2xl p-8 rounded-xl backdrop-blur-md bg-black/50 shadow-xl border-8 border-black/10">
         <h1 className="text-2xl mb-4">Start Server Functions - Todo Example</h1>
-        <ul className="mb-4 space-y-2">
+        <ul className="mb-4 space-y-2" id="ul">
           {todos?.map((t) => (
             <li key={t.id} className="bg-white/10 border border-white/20 rounded-lg p-3 backdrop-blur-sm shadow-md">
               <span className="text-lg text-white">{t.name}</span>
