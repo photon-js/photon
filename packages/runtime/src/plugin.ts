@@ -9,6 +9,7 @@ interface PhotonPluginOptions {
    * Set this to true if you're using a framework that doesn’t integrate
    * with Photon directly but provides an SSR entry that exports
    * `default { fetch }`. Photon will automatically wrap that entry for you.
+   * @experimental
    */
   autoWrapEntry?: boolean | string;
 }
