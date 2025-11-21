@@ -120,14 +120,14 @@ async function testRunUnsupported(
   runtime: Runtimes,
   mode: Modes,
   server: Servers,
-  options: { error?: string; errorAtStart?: boolean } = {},
+  options: { error?: string; errorAtStart?: boolean; throwAtStart?: boolean } = {},
 ) {
   const cmd = getCmd(runtime, mode, server);
-  const { error = "is not supported while targetting", errorAtStart = false } = options;
+  const { error = "is not supported while targetting", errorAtStart = false, throwAtStart = false } = options;
 
   const isPreview = mode === "preview";
 
-  if (isPreview) {
+  if (isPreview || throwAtStart) {
     await runCommandThatThrows(cmd, error);
   } else if (errorAtStart) {
     run(cmd, {
@@ -137,6 +137,7 @@ async function testRunUnsupported(
 
     test("server crashes at start", async () => {
       expectLog(error, { allLogs: true });
+      expectLog("", { allLogs: true });
     });
   } else {
     run(cmd, {

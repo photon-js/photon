@@ -1,3 +1,5 @@
 import { testRunUnsupported } from "../testRun.js";
 
-await testRunUnsupported("cloudflare", "dev", "fastify");
+await testRunUnsupported("cloudflare", "dev", "fastify", {
+  throwAtStart: true,
+});

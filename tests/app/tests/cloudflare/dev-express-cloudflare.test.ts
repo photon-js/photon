@@ -1,3 +1,5 @@
 import { testRunUnsupported } from "../testRun.js";
 
-await testRunUnsupported("cloudflare", "dev", "express");
+await testRunUnsupported("cloudflare", "dev", "express", {
+  throwAtStart: true,
+});
