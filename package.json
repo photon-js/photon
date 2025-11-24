@@ -22,7 +22,7 @@
     "========= Only allow pnpm; forbid yarn & npm": "",
     "preinstall": "npx only-allow pnpm",
     "========= Release": "",
-    "release": "pnpm run build:photon && changeset version && pnpm i && pnpm publish -r"
+    "release": "pnpm run build:photon && changeset version && pnpm i && pnpm publish -r --no-git-checks"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.7",
