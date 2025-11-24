@@ -111,7 +111,7 @@ export function srvxServe(options: ServeReturn) {
     server = serveNode(srvxOptions);
   }
   serverOptions?.onCreate?.(server);
-  server.ready().then(onReady({ isHttps, ...options, port }));
+  server.ready().then(onReady({ isHttps, onReady: serverOptions?.onReady, port }));
 
   return server.ready();
 }
