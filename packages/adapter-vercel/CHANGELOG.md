@@ -1,5 +1,11 @@
 # @photonjs/vercel
 
+## 0.1.12
+
+### Patch Changes
+
+- b861a04: fix: srvx + edge should still be wrapped
+
 ## 0.1.11
 
 ### Patch Changes
