@@ -1,5 +1,11 @@
 # @photonjs/vercel
 
+## 0.1.13
+
+### Patch Changes
+
+- d1c8ded: fix: bump @universal-middleware/vercel
+
 ## 0.1.12
 
 ### Patch Changes
