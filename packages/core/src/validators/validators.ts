@@ -2,13 +2,15 @@ import type { ViteDevServer } from "vite";
 import * as z from "zod";
 import type { PluginContext } from "../plugin/utils/rollupTypes.js";
 
+// biome-ignore lint/suspicious/noConfusingVoidType: prefer void
+type GetPhotonConditionReturn = string | string[] | undefined | null | void;
+
 // FIXME should server be optional?
 export type GetPhotonCondition = (
   this: ViteDevServer | PluginContext,
   condition: "dev" | "edge" | "node",
   server: string,
-  // biome-ignore lint/suspicious/noConfusingVoidType: prefer void
-) => string | string[] | undefined | null | void;
+) => GetPhotonConditionReturn | Promise<GetPhotonConditionReturn>;
 
 export const SupportedServers = z.enum(["hono", "hattip", "elysia", "express", "fastify", "h3", "srvx"]);
 

@@ -21,8 +21,11 @@ async function getAllPhotonMiddlewares(
   const middlewares =
     metaHandler?.compositionMode === "isolated"
       ? []
-      : getMiddlewares
-          .map((m) => m.call(pluginContext, condition as "dev" | "node" | "edge", server))
+      : (
+          await Promise.all(
+            getMiddlewares.map((m) => m.call(pluginContext, condition as "dev" | "node" | "edge", server)),
+          )
+        )
           .filter((x) => typeof x === "string" || Array.isArray(x))
           .flat(1);
 

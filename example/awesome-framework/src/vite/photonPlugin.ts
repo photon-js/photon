@@ -9,7 +9,7 @@ export function photonPlugin(): Plugin[] {
     },
 
     // Always use those middlewares for all entries defined by Photon
-    resolveMiddlewares() {
+    async resolveMiddlewares() {
       return "awesome-framework/universal-middleware";
     },
 
