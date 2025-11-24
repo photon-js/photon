@@ -132,7 +132,7 @@ importers:
         specifier: ^0.1.7
         version: link:../../packages/runtime
       '@photonjs/vercel':
-        specifier: ^0.1.9
+        specifier: ^0.1.10
         version: link:../../packages/adapter-vercel
       typescript:
         specifier: ^5.9.3
