@@ -1,5 +1,15 @@
 ## [0.0.3](https://github.com/photon-js/photon/compare/@photonjs/core@0.0.2...@photonjs/core@0.0.3) (2025-08-20)
 
+## 0.1.9
+
+### Patch Changes
+
+- 0d3faed: feat: do not generate `bun-index.js` whem compiling with bun --bun
+- 0d3faed: feat(experimental): add support for frameworks defining ssr.rollupOptions.entry
+- 0d3faed: feat(hmr): do not forward HMR WS requests through photon server
+- 0d3faed: feat: support `{ fetch }` entries
+- 0d3faed: feat: HMR support for Deno and Bun
+
 ## 0.1.8
 
 ### Patch Changes

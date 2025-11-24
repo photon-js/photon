@@ -1,5 +1,19 @@
 # @photonjs/h3
 
+## 0.1.7
+
+### Patch Changes
+
+- 0d3faed: feat(hmr): do not forward HMR WS requests through photon server
+- 0d3faed: feat: support `{ fetch }` entries
+- 0d3faed: feat: HMR support for Deno and Bun
+- Updated dependencies [0d3faed]
+- Updated dependencies [0d3faed]
+- Updated dependencies [0d3faed]
+- Updated dependencies [0d3faed]
+- Updated dependencies [0d3faed]
+  - @photonjs/core@0.1.9
+
 ## 0.1.6
 
 ### Patch Changes
