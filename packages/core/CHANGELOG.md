@@ -1,5 +1,12 @@
 ## [0.0.3](https://github.com/photon-js/photon/compare/@photonjs/core@0.0.2...@photonjs/core@0.0.3) (2025-08-20)
 
+## 0.1.12
+
+### Patch Changes
+
+- e062fec: fix: ensure that dev server middleware is compatible with srvx
+- cc7b79d: fix: bump @universal-middleware/express
+
 ## 0.1.11
 
 ### Patch Changes

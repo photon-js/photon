@@ -1,5 +1,14 @@
 # @photonjs/vercel
 
+## 0.1.9
+
+### Patch Changes
+
+- cc7b79d: fix: bump @universal-middleware/express
+- Updated dependencies [e062fec]
+- Updated dependencies [cc7b79d]
+  - @photonjs/core@0.1.12
+
 ## 0.1.8
 
 ### Patch Changes
