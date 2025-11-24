@@ -1,5 +1,11 @@
 ## [0.0.3](https://github.com/photon-js/photon/compare/@photonjs/core@0.0.2...@photonjs/core@0.0.3) (2025-08-20)
 
+## 0.1.11
+
+### Patch Changes
+
+- 0defb4b: fix: server-side HMR was sometimes not working as intended
+
 ## 0.1.10
 
 ### Patch Changes

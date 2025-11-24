@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@photonjs/cloudflare": "^0.1.8",
-    "@photonjs/core": "^0.1.10",
+    "@photonjs/core": "^0.1.11",
     "@photonjs/runtime": "^0.1.7",
     "typescript": "^5.9.3",
     "vite": "^7.2.4",
