@@ -70,7 +70,7 @@ importers:
         specifier: ^0.1.8
         version: link:../../packages/adapter-cloudflare
       '@photonjs/core':
-        specifier: ^0.1.12
+        specifier: ^0.1.13
         version: link:../../packages/core
       '@photonjs/runtime':
         specifier: ^0.1.7
@@ -98,7 +98,7 @@ importers:
         specifier: ^0.1.8
         version: link:../../packages/adapter-cloudflare
       '@photonjs/core':
-        specifier: ^0.1.12
+        specifier: ^0.1.13
         version: link:../../packages/core
       '@photonjs/hono':
         specifier: ^0.1.7
@@ -126,13 +126,13 @@ importers:
         version: link:../awesome-framework
     devDependencies:
       '@photonjs/core':
-        specifier: ^0.1.12
+        specifier: ^0.1.13
         version: link:../../packages/core
       '@photonjs/runtime':
         specifier: ^0.1.7
         version: link:../../packages/runtime
       '@photonjs/vercel':
-        specifier: ^0.1.13
+        specifier: ^0.1.14
         version: link:../../packages/adapter-vercel
       typescript:
         specifier: ^5.9.3
@@ -147,7 +147,7 @@ importers:
   example/awesome-framework:
     dependencies:
       '@photonjs/core':
-        specifier: ^0.1.12
+        specifier: ^0.1.13
         version: link:../../packages/core
       '@photonjs/runtime':
         specifier: ^0.1.7
