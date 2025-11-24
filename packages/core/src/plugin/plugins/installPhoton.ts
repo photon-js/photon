@@ -15,8 +15,6 @@ export function simplePhotonResolver(): Plugin {
 
     resolveId(id, importer, opts) {
       return ifPhotonModule("resolve-from-photon", id, async ({ module: actualId }) => {
-        if (opts.custom?.photonScope !== undefined && opts.custom.photonScope !== name) return;
-
         const foundPhotonRuntime = await resolveFirst(this, [
           { source: "@photonjs/runtime", importer: undefined, opts },
           { source: "@photonjs/runtime", importer, opts },
