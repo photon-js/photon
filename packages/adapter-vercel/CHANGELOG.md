@@ -1,5 +1,13 @@
 # @photonjs/vercel
 
+## 0.1.14
+
+### Patch Changes
+
+- 42c36e7: fix: bump @universal-middleware/vercel
+- Updated dependencies [20ec533]
+  - @photonjs/core@0.1.13
+
 ## 0.1.13
 
 ### Patch Changes
