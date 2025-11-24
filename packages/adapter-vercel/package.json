@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.19.25",
-    "@universal-middleware/express": "^0.4.21",
+    "@universal-middleware/express": "^0.4.22",
     "@vercel/node": "^5.5.8",
     "rollup": "^4.53.3",
     "tsdown": "^0.15.12",

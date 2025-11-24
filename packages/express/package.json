@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@photonjs/core": "workspace:^",
-    "@universal-middleware/express": "^0.4.21"
+    "@universal-middleware/express": "^0.4.22"
   },
   "peerDependencies": {
     "vite": ">=7.1"
