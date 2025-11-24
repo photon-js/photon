@@ -12,7 +12,7 @@ import type { Photon } from "../../types.js";
 import { assert, assertUsage } from "../../utils/assert.js";
 import { resolvePhotonConfig } from "../../validators/coerce.js";
 import { singleton } from "../utils/dedupe.js";
-import { isPhotonMetaConfig } from "../utils/entry.js";
+import { isPhotonMeta, isPhotonMetaConfig } from "../utils/entry.js";
 import { logViteInfo } from "../utils/logVite.js";
 
 let fixApplied = false;
@@ -160,14 +160,15 @@ export function devServer(config?: Photon.Config): Plugin {
   function isImported(modules: EnvironmentModuleNode[]): { module: EnvironmentModuleNode } | undefined {
     const modulesSet = new Set(modules);
     for (const module of modulesSet.values()) {
-      if (module.file === resolvedEntryId)
+      if (
+        module.file === resolvedEntryId ||
+        (isPhotonMeta(module.info?.meta) && module.info.meta.photon.type === "server") ||
+        (isPhotonMetaConfig(module.info?.meta) && module.info.meta.photonConfig.isGlobal)
+      ) {
         return {
           module,
         };
-      if (isPhotonMetaConfig(module.info?.meta) && module.info.meta.photonConfig.isGlobal)
-        return {
-          module,
-        };
+      }
       module.importers.forEach((importer) => {
         modulesSet.add(importer);
       });
