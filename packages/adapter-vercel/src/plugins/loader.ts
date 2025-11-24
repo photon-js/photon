@@ -144,7 +144,7 @@ export function loaderPlugin(pluginConfig: ViteVercelConfig): Plugin[] {
         }
 
         // Extract server at runtime, or default to { fetch } syntax
-        if (isServerEntry && !entry.server) {
+        if (isServerEntry && (!entry.server || entry.server === "srvx")) {
           //language=javascript
           return `import servers from "virtual:photon:resolve-from-photon:@universal-middleware/vercel/${isEdge ? "edge" : "node"}/servers";
 import fetchable from "${entry.resolvedId ?? entry.id}";
