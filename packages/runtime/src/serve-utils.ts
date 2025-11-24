@@ -117,7 +117,7 @@ export function srvxServe(options: ServeReturn) {
 }
 
 export function getPort(options?: ServerOptions) {
-  return options?.port ?? 3000;
+  return options?.port ?? (process.env.PORT ? Number.parseInt(process.env.PORT, 10) : 3000);
 }
 
 /**
