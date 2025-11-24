@@ -149,8 +149,10 @@ export function loaderPlugin(pluginConfig: ViteVercelConfig): Plugin[] {
           return `import servers from "virtual:photon:resolve-from-photon:@universal-middleware/vercel/${isEdge ? "edge" : "node"}/servers";
 import fetchable from "${entry.resolvedId ?? entry.id}";
 
-const exportDefault = fetchable?.server?.name ?
-    servers[fetchable.server.name].${fn}(fetchable.server.app) :
+const serverName = fetchable?.server?.name;
+
+const exportDefault = serverName && serverName !== "srvx" ?
+    servers[serverName].${fn}(fetchable.server.app) :
     { fetch: fetchable.fetch };
 
 export default exportDefault;
