@@ -1,5 +1,11 @@
 # @photonjs/vercel
 
+## 0.1.11
+
+### Patch Changes
+
+- b370ef5: feat: simpler vercel adapter if using srvx
+
 ## 0.1.10
 
 ### Patch Changes
