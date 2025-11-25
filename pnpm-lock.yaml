@@ -73,7 +73,7 @@ importers:
         specifier: ^0.1.13
         version: link:../../packages/core
       '@photonjs/runtime':
-        specifier: ^0.1.9
+        specifier: ^0.1.10
         version: link:../../packages/runtime
       typescript:
         specifier: ^5.9.3
@@ -104,7 +104,7 @@ importers:
         specifier: ^0.1.7
         version: link:../../packages/hono
       '@photonjs/runtime':
-        specifier: ^0.1.9
+        specifier: ^0.1.10
         version: link:../../packages/runtime
       typescript:
         specifier: ^5.9.3
@@ -129,7 +129,7 @@ importers:
         specifier: ^0.1.13
         version: link:../../packages/core
       '@photonjs/runtime':
-        specifier: ^0.1.9
+        specifier: ^0.1.10
         version: link:../../packages/runtime
       '@photonjs/vercel':
         specifier: ^0.1.14
@@ -150,7 +150,7 @@ importers:
         specifier: ^0.1.13
         version: link:../../packages/core
       '@photonjs/runtime':
-        specifier: ^0.1.9
+        specifier: ^0.1.10
         version: link:../../packages/runtime
       '@universal-middleware/core':
         specifier: ^0.4.13
@@ -175,7 +175,7 @@ importers:
         specifier: ^0.1.8
         version: link:../../packages/adapter-cloudflare
       '@photonjs/runtime':
-        specifier: ^0.1.9
+        specifier: ^0.1.10
         version: link:../../packages/runtime
       '@tailwindcss/vite':
         specifier: ^4.1.17
