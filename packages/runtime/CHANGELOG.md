@@ -1,5 +1,11 @@
 # @photonjs/runtime
 
+## 0.1.9
+
+### Patch Changes
+
+- 423373a: feat: new `standalone` option
+
 ## 0.1.8
 
 ### Patch Changes
