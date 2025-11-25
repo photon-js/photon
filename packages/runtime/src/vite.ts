@@ -153,6 +153,7 @@ export default {
 // Creates a server and listens for connections in Node/Deno/Bun
 function serve(): Plugin[] {
   const nodeTargets = new Set<string>(["node", "bun", "deno"]);
+  let userPort: number | undefined;
   return [
     singleton({
       name: "photon:serve",
@@ -186,6 +187,29 @@ function serve(): Plugin[] {
               },
             },
           };
+        },
+      },
+    }),
+    singleton({
+      name: "photon:serve:transform-dev",
+      apply: "serve",
+
+      applyToEnvironment(env) {
+        return env.config.consumer === "server";
+      },
+
+      config(userConfig) {
+        userPort = userConfig.server?.port;
+      },
+
+      transform: {
+        filter: {
+          code: [/process\.env\.PORT/],
+        },
+        handler(code) {
+          if (userPort) {
+            return code.replaceAll("process.env.PORT", JSON.stringify(String(userPort)));
+          }
         },
       },
     }),
