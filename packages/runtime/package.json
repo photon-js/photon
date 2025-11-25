@@ -8,7 +8,7 @@
     ".": "./dist/index.js",
     "./internal": "./dist/internal.js",
     "./sirv": "./dist/sirv.js",
-    "./vite": "./dist/plugin.js",
+    "./vite": "./dist/vite.js",
     "./serve": "./dist/serve.js",
     "./serve/dev": "./dist/serve-dev.js",
     "./virtual": {
@@ -25,7 +25,8 @@
     "@photonjs/srvx": "workspace:^",
     "@universal-middleware/core": "^0.4.13",
     "@universal-middleware/sirv": "^0.1.23",
-    "srvx": "^0.9.6"
+    "srvx": "^0.9.6",
+    "standaloner": "^0.1.8"
   },
   "peerDependencies": {
     "vite": ">=7.1"

@@ -2,6 +2,7 @@ import type { Photon } from "@photonjs/core";
 import { resolvePhotonConfig } from "@photonjs/core/api";
 import { resolveFirst, singleton } from "@photonjs/core/api/internal";
 import { photon as corePhoton, type InstallPhotonCoreOptions, installPhotonCore } from "@photonjs/core/vite";
+import standaloner from "standaloner/vite";
 import type { Plugin } from "vite";
 
 interface PhotonPluginOptions {
@@ -12,6 +13,11 @@ interface PhotonPluginOptions {
    * @experimental
    */
   autoWrapEntry?: boolean | string;
+  /**
+   * Create self-contained, deployable Node.js applications by bundling your code and including necessary dependencies.
+   * @see {@link https://github.com/nitedani/standaloner/tree/main/standaloner}
+   */
+  standalone?: boolean | Parameters<typeof standaloner>[0];
 }
 
 const re_photonFallback = /^virtual:photon:fallback-entry$/;
@@ -241,6 +247,10 @@ export function photon(config?: Photon.Config & PhotonPluginOptions): Plugin[] {
 
   if (config?.autoWrapEntry) {
     plugins.push(wrapSsrEntry(config));
+  }
+
+  if (config?.standalone) {
+    plugins.push(...standaloner(typeof config.standalone === "object" ? config.standalone : {}));
   }
 
   return plugins;
