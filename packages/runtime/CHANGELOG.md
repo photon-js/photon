@@ -1,5 +1,11 @@
 # @photonjs/runtime
 
+## 0.1.10
+
+### Patch Changes
+
+- 608f084: feat: forward --port to server in dev
+
 ## 0.1.9
 
 ### Patch Changes
