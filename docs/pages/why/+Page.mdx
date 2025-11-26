@@ -35,12 +35,13 @@ With `standalone: true`, the build output directory ([`dist/`](https://vite.dev/
 
 Skipping `node_modules/` massively reduces disk usage in production, which can be important, for example to [reduce the size of Docker images](https://github.com/photon-js/photon/issues/42#issuecomment-3549657194).
 
-> It's an advanced feature (a lot more powerful than just using a bundler) and supports:
-> - Native dependencies
-> - File references (e.g. `fs.readFile()`)
-> - Multiple versions of same package
-> - All known `node_modules/` hierarchies (npm, pnpm, Bun, yarn)
-> It uses [Vercel's `nft`](https://github.com/vercel/nft) to trace dependencies, [Rolldown](https://github.com/rolldown/rolldown) to bundle code, while preserving `node_modules/` hierarchy (needed for multiple version support).
+> It's an advanced feature — more powerful than just using a bundler — and supports:
+> - Native dependencies.
+> - File references (e.g. `fs.readFile()`).
+> - Multiple versions of the same package.
+> - All known `node_modules/` hierarchies (npm, pnpm, Bun, yarn).
+>
+> It uses [Vercel's `nft`](https://github.com/vercel/nft) to trace dependencies, [Rolldown](https://github.com/rolldown/rolldown) to bundle code, while preserving the `node_modules/` hierarchy (needed for multiple version support).
 
 ### HMR
 
