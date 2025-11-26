@@ -19,15 +19,21 @@ Photon is jam-packed with features:
   [Srvx](https://srvx.h3.dev/),
   [Hattip](https://github.com/hattipjs/hattip).
 - **Any deployment**: Cloudflare, Vercel, self-hosting (e.g. AWS and VPS), and more is work-in-progress.
-- **HMR**: No more full server reload required.
+- **HMR**: No more full server reload needed.
 - **Vite Environment API**: Develop against production runtimes (e.g. Cloudflare's `workerd`).
 - **Code-splitting**: Per-route deployment to separate edge workers.
 - **Zero-config**: Integrate your server and deployment with minimal configuration.
 - **Built-in server**: Photon comes with a built-in server for zero-config use (users can use their own instead).
-- **Bun-ready**: Runs natively through Bun’s `Bun.serve`.
-- **Deno-ready**: Runs natively through Deno’s built-in HTTP server.
-- **Standalone**: Produces one self-contained Node-runnable bundle you can copy or deploy anywhere.
-- **TypeScript**: First-class TypeScript support.
+- **Bun**: First-class support (runs natively through Bun’s `Bun.serve`).
+- **Deno**: First-class support (runs natively through Deno’s built-in HTTP server).
+- **Standalone**: Self-contained `dist/` (no `node_modules/` needed), massively reducing disk usage (important for Docker images).
+- **TypeScript**: First-class support.
+
+### Standalone
+
+With `standalone: true`, the build output directory ([`dist/`](https://vite.dev/config/build-options.html#build-outdir)) contains everything needed for deployment. This means that, in production, only the `dist/` directory is required (you can remove `node_modules/` and skip `$ npm install`).
+
+Skipping `node_modules/` massively reduces disk usage in production, which can be important, for example to [reduce the size of Docker images](https://github.com/photon-js/photon/issues/42#issuecomment-3549657194).
 
 ### HMR
 
