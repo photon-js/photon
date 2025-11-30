@@ -1,5 +1,15 @@
 # @photonjs/runtime
 
+## 0.1.11
+
+### Patch Changes
+
+- e98e935: fix: do not load all srvx runtimes to avoid unwanted side-effects
+- 668c4f7: fix: upgrade dependencies
+- Updated dependencies [668c4f7]
+  - @photonjs/core@0.1.14
+  - @photonjs/srvx@0.1.8
+
 ## 0.1.10
 
 ### Patch Changes

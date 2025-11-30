@@ -9,10 +9,10 @@
     "test:types": "tsc --noEmit"
   },
   "devDependencies": {
-    "@photonjs/cloudflare": "^0.1.8",
-    "@photonjs/core": "^0.1.13",
-    "@photonjs/hono": "^0.1.7",
-    "@photonjs/runtime": "^0.1.10",
+    "@photonjs/cloudflare": "^0.1.9",
+    "@photonjs/core": "^0.1.14",
+    "@photonjs/hono": "^0.1.8",
+    "@photonjs/runtime": "^0.1.11",
     "typescript": "^5.9.3",
     "vite": "^7.2.4",
     "wrangler": "^4.51.0"

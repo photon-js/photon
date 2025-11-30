@@ -1,5 +1,13 @@
 # @photonjs/express
 
+## 0.1.9
+
+### Patch Changes
+
+- 668c4f7: fix: upgrade dependencies
+- Updated dependencies [668c4f7]
+  - @photonjs/core@0.1.14
+
 ## 0.1.8
 
 ### Patch Changes
