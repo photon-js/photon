@@ -1,4 +1,4 @@
-import { defineConfig, type Options as TsdownOptions } from "tsdown";
+import { defineConfig, type UserConfig as TsdownOptions } from "tsdown";
 
 const commonOptions = {
   format: ["esm"],
@@ -7,6 +7,7 @@ const commonOptions = {
   outDir: "dist",
   treeshake: true,
   nodeProtocol: true,
+  fixedExtension: false,
   external: [/^virtual:photon:get-middlewares:/, /^@photonjs\/core\/dev/, /^@photonjs\/cloudflare/],
 } satisfies TsdownOptions;
 

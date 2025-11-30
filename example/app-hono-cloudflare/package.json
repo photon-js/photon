@@ -15,10 +15,10 @@
     "@photonjs/runtime": "^0.1.10",
     "typescript": "^5.9.3",
     "vite": "^7.2.4",
-    "wrangler": "^4.50.0"
+    "wrangler": "^4.51.0"
   },
   "dependencies": {
     "awesome-framework": "0.0.0",
-    "hono": "^4.10.6"
+    "hono": "^4.10.7"
   }
 }
