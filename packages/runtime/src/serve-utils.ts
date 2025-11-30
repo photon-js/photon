@@ -4,9 +4,7 @@ import type { Socket } from "node:net";
 import { PhotonBugError } from "@photonjs/core/errors";
 import type { NodeHandler, ServeReturn, ServerOptions, ServerType } from "@photonjs/core/serve";
 import type { Server as SrvxServer, ServerOptions as SrvxServerOptions } from "srvx";
-import { serve as serveBun } from "srvx/bun";
-import { serve as serveDeno } from "srvx/deno";
-import { serve as serveNode } from "srvx/node";
+import { serve as serveSrvx } from "srvx";
 
 // biome-ignore lint/suspicious/noExplicitAny: type
 export type Servers = ServerType | SrvxServer | Bun.Server<any> | Deno.HttpServer;
@@ -69,15 +67,10 @@ export function srvxServe(options: ServeReturn) {
   if (serverOptions?.hostname) {
     srvxOptions.hostname = serverOptions.hostname;
   }
-  let server: SrvxServer;
   let isHttps: boolean;
   if (isBun) {
     srvxOptions.bun = serverOptions?.bun;
     isHttps = serverOptions?.bun && "tls" in serverOptions.bun ? Boolean(serverOptions.bun) : false;
-    if (isHttps) {
-      srvxOptions.protocol = "https";
-    }
-    server = serveBun(srvxOptions);
   } else if (isDeno) {
     const controller = new AbortController();
 
@@ -95,21 +88,19 @@ export function srvxServe(options: ServeReturn) {
     } as any;
     controllerMap.set(controller.signal, controller);
     isHttps = serverOptions?.deno && "cert" in serverOptions.deno ? Boolean(serverOptions.deno.cert) : false;
-    if (isHttps) {
-      srvxOptions.protocol = "https";
-    }
-    server = serveDeno(srvxOptions);
   } else {
     isHttps = Boolean(serverOptions?.createServer) && nodeHTTP.createServer !== serverOptions?.createServer;
     srvxOptions.node = {
       ...serverOptions?.serverOptions,
       http2: nodeHTTP2.createSecureServer === serverOptions?.createServer,
     };
-    if (isHttps) {
-      srvxOptions.protocol = "https";
-    }
-    server = serveNode(srvxOptions);
   }
+  if (isHttps) {
+    srvxOptions.protocol = "https";
+  }
+  // Rely on srvx "exports" conditions to load only the necessary runtime.
+  // For instance, `srvx/node` overrides the global Request, which we want to avoid when running with Bun.
+  const server = serveSrvx(srvxOptions);
   serverOptions?.onCreate?.(server);
   server.ready().then(onReady({ isHttps, onReady: serverOptions?.onReady, port }));
 
