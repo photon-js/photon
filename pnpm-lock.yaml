@@ -67,13 +67,13 @@ importers:
         version: link:../awesome-framework
     devDependencies:
       '@photonjs/cloudflare':
-        specifier: ^0.1.8
+        specifier: ^0.1.9
         version: link:../../packages/adapter-cloudflare
       '@photonjs/core':
-        specifier: ^0.1.13
+        specifier: ^0.1.14
         version: link:../../packages/core
       '@photonjs/runtime':
-        specifier: ^0.1.10
+        specifier: ^0.1.11
         version: link:../../packages/runtime
       typescript:
         specifier: ^5.9.3
@@ -95,16 +95,16 @@ importers:
         version: 4.10.7
     devDependencies:
       '@photonjs/cloudflare':
-        specifier: ^0.1.8
+        specifier: ^0.1.9
         version: link:../../packages/adapter-cloudflare
       '@photonjs/core':
-        specifier: ^0.1.13
+        specifier: ^0.1.14
         version: link:../../packages/core
       '@photonjs/hono':
-        specifier: ^0.1.7
+        specifier: ^0.1.8
         version: link:../../packages/hono
       '@photonjs/runtime':
-        specifier: ^0.1.10
+        specifier: ^0.1.11
         version: link:../../packages/runtime
       typescript:
         specifier: ^5.9.3
@@ -126,13 +126,13 @@ importers:
         version: link:../awesome-framework
     devDependencies:
       '@photonjs/core':
-        specifier: ^0.1.13
+        specifier: ^0.1.14
         version: link:../../packages/core
       '@photonjs/runtime':
-        specifier: ^0.1.10
+        specifier: ^0.1.11
         version: link:../../packages/runtime
       '@photonjs/vercel':
-        specifier: ^0.1.14
+        specifier: ^0.1.15
         version: link:../../packages/adapter-vercel
       typescript:
         specifier: ^5.9.3
@@ -147,10 +147,10 @@ importers:
   example/awesome-framework:
     dependencies:
       '@photonjs/core':
-        specifier: ^0.1.13
+        specifier: ^0.1.14
         version: link:../../packages/core
       '@photonjs/runtime':
-        specifier: ^0.1.10
+        specifier: ^0.1.11
         version: link:../../packages/runtime
       '@universal-middleware/core':
         specifier: ^0.4.13
@@ -172,10 +172,10 @@ importers:
   example/tanstack-start:
     dependencies:
       '@photonjs/cloudflare':
-        specifier: ^0.1.8
+        specifier: ^0.1.9
         version: link:../../packages/adapter-cloudflare
       '@photonjs/runtime':
-        specifier: ^0.1.10
+        specifier: ^0.1.11
         version: link:../../packages/runtime
       '@tailwindcss/vite':
         specifier: ^4.1.17
