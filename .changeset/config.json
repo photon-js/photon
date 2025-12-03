@@ -11,6 +11,7 @@
     "awesome-framework",
     "app-hono-cloudflare",
     "app-cloudflare",
+    "app-netlify",
     "app-vercel",
     "tests-app",
     "tanstack",

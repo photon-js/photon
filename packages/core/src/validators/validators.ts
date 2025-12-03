@@ -89,6 +89,7 @@ export const PhotonConfig = z.looseObject({
     ])
     .optional(),
   target: z.string().optional(),
+  emitEntry: z.boolean().optional(),
 });
 
 export const PhotonConfigResolved = z.looseObject({
@@ -113,4 +114,5 @@ export const PhotonConfigResolved = z.looseObject({
     }),
   ]),
   target: z.string().optional(),
+  emitEntry: z.boolean(),
 });

@@ -1,11 +1,9 @@
+import indexHtml from "virtual:awesome-plugin:index-js";
 import { enhance } from "@universal-middleware/core";
-import { renderUrl } from "../../renderUrl.js";
 
 export const ssrMiddleware = enhance(
-  async (request: Request) => {
-    const html = renderUrl(request.url);
-
-    return new Response(html, {
+  async (_request: Request) => {
+    return new Response(indexHtml, {
       status: 200,
       headers: {
         "Content-Type": "text/html",

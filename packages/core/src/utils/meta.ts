@@ -27,7 +27,7 @@ export async function getPhotonMeta<T extends "handler-entry" | "server-entry" |
     }
   }
 
-  const resolved = await pluginContext.resolve(actualId, undefined, { isEntry: true });
+  const resolved = await pluginContext.resolve(actualId);
   assertUsage(resolved, `Could not resolve ${actualId}`);
 
   if (isPhotonMeta(resolved.meta)) {

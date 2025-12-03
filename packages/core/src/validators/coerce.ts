@@ -85,6 +85,7 @@ const resolver = Validators.PhotonConfig.transform((c) => {
     defaultBuildEnv: c.defaultBuildEnv ?? "ssr",
     hmr: c.hmr ?? true,
     target: c.target,
+    emitEntry: c.emitEntry ?? true,
   });
 });
 
@@ -151,6 +152,10 @@ export function mergePhotonConfig(configs: Photon.Config[]): Photon.Config {
 
     if (config.target) {
       resolving.target = config.target;
+    }
+
+    if (typeof config.emitEntry === "boolean") {
+      resolving.emitEntry = config.emitEntry;
     }
   }
 
