@@ -271,17 +271,22 @@ function input() {
   return singleton({
     name: "photon:set-input",
     configResolved(config) {
-      const env = config.environments[config.photon.defaultBuildEnv];
-      assert(env);
-      const input = env.build.rollupOptions.input;
-      if (
-        !input ||
-        (Array.isArray(input) && input.length === 0) ||
-        (typeof input === "object" && Object.keys(input).length === 0)
-      ) {
-        env.build.rollupOptions.input = {
-          index: "virtual:photon:server-entry",
-        };
+      const envs = new Set([config.photon.defaultBuildEnv, "ssr"]);
+      for (const envName of envs) {
+        const env = config.environments[envName];
+        if (envName === "ssr" && !env) continue;
+        assert(env);
+        const input = env.build.rollupOptions.input;
+        if (
+          !input ||
+          (Array.isArray(input) && input.length === 0) ||
+          (typeof input === "object" && !Object.keys(input).includes("index"))
+        ) {
+          env.build.rollupOptions.input = {
+            ...(input && typeof input === "object" ? input : {}),
+            index: "virtual:photon:server-entry",
+          };
+        }
       }
     },
   });
