@@ -172,7 +172,7 @@ export default {
 
 See the example applications:
 - [Basic Cloudflare App](../../example/app-cloudflare)
-- [Hono + Cloudflare App](../../example/app-hono-cloudflare)
+- [Hono + Cloudflare App](../../example/app-hono)
 
 ## Deployment
 

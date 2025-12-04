@@ -6,6 +6,7 @@ import { defineConfig } from "vite";
 export default defineConfig({
   // No photon server entry is defined, it will fallback to a virtual entry
   photon: {
+    server: "server.ts",
     entries: {
       // foo entry declares its route with `enhance` directly inside the file
       foo: "src/middlewares/foo.ts",

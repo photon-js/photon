@@ -65,31 +65,6 @@ importers:
       awesome-framework:
         specifier: 0.0.0
         version: link:../awesome-framework
-    devDependencies:
-      '@photonjs/cloudflare':
-        specifier: ^0.1.9
-        version: link:../../packages/adapter-cloudflare
-      '@photonjs/core':
-        specifier: ^0.1.14
-        version: link:../../packages/core
-      '@photonjs/runtime':
-        specifier: ^0.1.11
-        version: link:../../packages/runtime
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-      vite:
-        specifier: ^7.2.4
-        version: 7.2.4(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.2)
-      wrangler:
-        specifier: ^4.51.0
-        version: 4.51.0(@cloudflare/workers-types@4.20251128.0)
-
-  example/app-hono-cloudflare:
-    dependencies:
-      awesome-framework:
-        specifier: 0.0.0
-        version: link:../awesome-framework
       hono:
         specifier: ^4.10.7
         version: 4.10.7
@@ -115,6 +90,31 @@ importers:
       wrangler:
         specifier: ^4.51.0
         version: 4.51.0(@cloudflare/workers-types@4.20251128.0)
+
+  example/app-hono:
+    dependencies:
+      awesome-framework:
+        specifier: 0.0.0
+        version: link:../awesome-framework
+      hono:
+        specifier: ^4.10.7
+        version: 4.10.7
+    devDependencies:
+      '@photonjs/core':
+        specifier: ^0.1.14
+        version: link:../../packages/core
+      '@photonjs/hono':
+        specifier: ^0.1.8
+        version: link:../../packages/hono
+      '@photonjs/runtime':
+        specifier: ^0.1.11
+        version: link:../../packages/runtime
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vite:
+        specifier: ^7.2.4
+        version: 7.2.4(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.2)
 
   example/app-netlify:
     dependencies:

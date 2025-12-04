@@ -125,4 +125,4 @@ app.onError((err, c) => {
 })
 ```
 
-See [examples](../../example/app-hono-cloudflare) for more.
+See [examples](../../example/app-hono) for more.

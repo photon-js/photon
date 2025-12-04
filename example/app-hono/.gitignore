@@ -21,7 +21,3 @@ dist
 *.njsproj
 *.sln
 *.sw?
-
-# Build artifacts
-.wrangler/
-.vercel/

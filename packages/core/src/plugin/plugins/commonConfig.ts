@@ -138,5 +138,18 @@ function commonConfig(): Plugin[] {
         },
       },
     }),
+    ...(isDeno
+      ? [
+          singleton({
+            name: "photon:deno-config",
+            enforce: "pre",
+            resolveId(source) {
+              if (builtinModules.includes(source)) {
+                return { id: `node:${source}`, external: true };
+              }
+            },
+          }),
+        ]
+      : []),
   ];
 }
