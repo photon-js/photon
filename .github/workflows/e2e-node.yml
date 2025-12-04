@@ -1,0 +1,25 @@
+name: E2E - Node
+on: pull_request
+jobs:
+  e2e:
+    strategy:
+      matrix:
+        node: [20.x, 22.x, 24.x]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: pnpm install
+      - run: pnpm exec playwright install chromium
+      - run: pnpm run build
+      - run: pnpm run build
+        working-directory: example/app-hono
+      - name: Test e2e
+        run: pnpm run test:e2e
+        working-directory: example/app-hono
+        env:
+          RUN_CMD: node dist/server/index.js
+          NODE_ENV: production

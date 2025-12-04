@@ -8,17 +8,21 @@
     "prod:node": "pnpm run build && node dist/server/index.js",
     "prod:bun": "bun run build && bun --bun dist/server/index.js",
     "prod:deno": "deno run build && deno -A dist/server/index.js",
+    "test:e2e": "playwright test",
     "test:types": "tsc --noEmit"
   },
   "devDependencies": {
     "@photonjs/core": "^0.1.14",
     "@photonjs/hono": "^0.1.8",
     "@photonjs/runtime": "^0.1.11",
+    "e2e": "workspace:",
+    "playwright": "^1.57.0",
     "typescript": "^5.9.3",
     "vite": "^7.2.4"
   },
   "dependencies": {
     "awesome-framework": "0.0.0",
+    "@universal-middleware/core": "^0.4.13",
     "hono": "^4.10.7"
   }
 }
