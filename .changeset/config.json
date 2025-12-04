@@ -15,6 +15,7 @@
     "app-vercel",
     "tests-app",
     "tanstack",
+    "e2e",
     "photonjs-docs"
   ]
 }

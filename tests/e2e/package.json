@@ -1,0 +1,26 @@
+{
+  "name": "e2e",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.57.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.1",
+    "playwright": "^1.57.0",
+    "typescript": "^5.9.3"
+  },
+  "exports": {
+    "./config": "./dist/playwright.config.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "packageManager": "pnpm@10.24.0"
+}
