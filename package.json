@@ -2,7 +2,7 @@
   "scripts": {
     "========= Build": "",
     "build": "pnpm run build:photon && pnpm run build:awesome-framework",
-    "build:photon": "pnpm --recursive --filter {packages/*} run build",
+    "build:photon": "pnpm --recursive --filter {packages/*} --filter {tests/e2e} run build",
     "build:awesome-framework": "pnpm --filter {example/awesome-framework} run build",
     "========= Test": "",
     "test": "test-e2e",
