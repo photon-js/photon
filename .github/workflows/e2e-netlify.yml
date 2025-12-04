@@ -12,8 +12,8 @@ jobs:
       - run: pnpm install
       - run: pnpm exec playwright install chromium
       - run: pnpm run build
-      - name: Wait for Netlify
-        uses: quantizor/wait-for-netlify-action@3.2.0
+      - name: Hold for Netlify
+        uses: magne4000/wait-for-netlify-action@v4
         id: waitForDeployment
         with:
           site_id: '29ffaeea-6609-40a4-8438-6e473368d3f4'
