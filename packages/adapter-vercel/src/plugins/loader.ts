@@ -58,7 +58,8 @@ export function loaderPlugin(pluginConfig: ViteVercelConfig): Plugin[] {
         },
 
         handler() {
-          return "export default {};";
+          // console.log avoids warning "Generated an empty chunk"
+          return "console.log('');export default {};";
         },
       },
     },
