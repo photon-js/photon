@@ -24,3 +24,9 @@ dist
 
 # Build artifacts
 .netlify/
+
+# E2E tests
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/

@@ -1,0 +1,28 @@
+name: E2E - Netlify
+on: pull_request
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: pnpm install
+      - run: pnpm exec playwright install chromium
+      - run: pnpm run build
+      - name: Wait for Netlify
+        uses: quantizor/wait-for-netlify-action@3.2.0
+        id: waitForDeployment
+        with:
+          site_id: '29ffaeea-6609-40a4-8438-6e473368d3f4'
+          max_timeout: 180
+        env:
+          NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
+      - name: Test e2e deployed
+        run: pnpm test:e2e
+        working-directory: example/app-netlify
+        env:
+          BASE_URL: ${{ steps.waitForDeployment.outputs.url }}
+          NODE_ENV: production

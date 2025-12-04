@@ -8,12 +8,15 @@
     "netlify:deploy": "netlify deploy --filter app-netlify --no-build -d example/app-netlify/dist/client/",
     "deploy": "vite build && pnpm run netlify:deploy",
     "deploy:ssr": "vite build && rm ./dist/client/index.html && pnpm run netlify:deploy",
+    "test:e2e": "playwright test",
     "test:types": "tsc --noEmit"
   },
   "devDependencies": {
     "@photonjs/netlify": "workspace:^",
     "@photonjs/core": "^0.1.14",
     "@photonjs/runtime": "^0.1.11",
+    "@playwright/test": "^1.57.0",
+    "playwright": "^1.57.0",
     "typescript": "^5.9.3",
     "vite": "^7.2.4",
     "wrangler": "^4.51.0"
