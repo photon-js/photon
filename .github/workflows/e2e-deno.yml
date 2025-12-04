@@ -16,7 +16,7 @@ jobs:
         uses: denoland/setup-deno@v2
         with:
           deno-version: lts
-      - run: pnpm run build
+      - run: deno run build
         working-directory: example/app-hono
       - name: Test e2e
         run: pnpm run test:e2e
