@@ -3,8 +3,12 @@ import { goto } from "./utils.js";
 
 test("page content is rendered to HTML", async ({ page }) => {
   await goto(page, "/");
-  await expect(page.locator("h1")).toHaveText("Hello Vite!");
-  await expect(page.locator("button")).toHaveId("counter");
+  const h1 = page.locator("h1");
+  await expect(h1).toHaveText("Hello Vite!");
+  await expect(h1).toHaveCSS("font-size", "51.2px");
+  const button = page.locator("button");
+  await expect(button).toHaveId("counter");
+  await expect(button).toHaveCSS("font-size", "16px");
 });
 
 test("page is rendered to the DOM and interactive", async ({ page }) => {
