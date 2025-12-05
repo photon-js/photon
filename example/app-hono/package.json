@@ -7,7 +7,7 @@
     "build": "vite build",
     "prod:node": "pnpm run build && node dist/server/index.js",
     "prod:bun": "bun run build && bun --bun dist/server/index.js",
-    "prod:deno": "deno run build && deno -A dist/server/index.js",
+    "prod:deno": "deno task build && deno -A dist/server/index.js",
     "test:e2e": "playwright test",
     "test:types": "tsc --noEmit"
   },

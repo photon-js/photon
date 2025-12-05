@@ -17,17 +17,9 @@ jobs:
       - run: pnpm install
       - run: pnpm exec playwright install chromium
       - run: pnpm run build
-      - name: Hold for Netlify
-        uses: magne4000/wait-for-netlify-action@v4
-        id: waitForDeployment
-        with:
-          site_id: '29ffaeea-6609-40a4-8438-6e473368d3f4'
-          max_timeout: 180
-        env:
-          NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
       - name: Test e2e deployed
         run: pnpm test:e2e
         working-directory: example/app-vercel
         env:
-          BASE_URL: ${{ steps.waitForDeployment.outputs.url }}
+          BASE_URL: ${{ github.event.deployment_status.environment_url }}
           NODE_ENV: production

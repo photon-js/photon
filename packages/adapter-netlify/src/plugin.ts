@@ -42,7 +42,7 @@ export * from ${JSON.stringify(id)};`,
     }),
     // Some examples in Netlify's documentation are using serverless-http for express
     // and other node-specific frameworks compatibility, but that is not recommended by Photon.
-    supportedTargetServers("cloudflare", ["hono", "h3", "srvx"]),
+    supportedTargetServers("netlify", ["hono", "h3", "srvx"]),
     ...createNetlifyPlugin({
       build: {
         enabled: true,
