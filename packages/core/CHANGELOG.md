@@ -1,5 +1,3 @@
-## [0.0.3](https://github.com/photon-js/photon/compare/@photonjs/core@0.0.2...@photonjs/core@0.0.3) (2025-08-20)
-
 ## 0.1.15
 
 ### Patch Changes
@@ -193,6 +191,9 @@
 ### Features
 
 - create a specific bun entry to avoid Bun.serve automatic call ([ea17856](https://github.com/photon-js/photon/commit/ea17856bd277ae80031bc04c863b13604cab5bf9))
+
+
+## [0.0.3](https://github.com/photon-js/photon/compare/@photonjs/core@0.0.2...@photonjs/core@0.0.3) (2025-08-20)
 
 ## [0.0.2](https://github.com/photon-js/photon/compare/@photonjs/core@0.0.1...@photonjs/core@0.0.2) (2025-08-20)
 
