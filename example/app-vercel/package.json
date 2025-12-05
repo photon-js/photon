@@ -10,7 +10,7 @@
   "devDependencies": {
     "@photonjs/core": "^0.1.14",
     "@photonjs/runtime": "^0.1.11",
-    "@photonjs/vercel": "^0.1.15",
+    "@photonjs/vercel": "^0.1.16",
     "typescript": "^5.9.3",
     "vite": "^7.2.4",
     "wrangler": "^4.51.0"
