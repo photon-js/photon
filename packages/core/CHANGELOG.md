@@ -1,5 +1,11 @@
 ## 0.1.15
 
+## 0.1.16
+
+### Patch Changes
+
+- 8815d51: stable release
+
 ### Patch Changes
 
 - 525d541: feat: better compatibility with Bun and Deno
@@ -191,7 +197,6 @@
 ### Features
 
 - create a specific bun entry to avoid Bun.serve automatic call ([ea17856](https://github.com/photon-js/photon/commit/ea17856bd277ae80031bc04c863b13604cab5bf9))
-
 
 ## [0.0.3](https://github.com/photon-js/photon/compare/@photonjs/core@0.0.2...@photonjs/core@0.0.3) (2025-08-20)
 

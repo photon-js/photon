@@ -1,5 +1,14 @@
 # @photonjs/runtime
 
+## 0.1.13
+
+### Patch Changes
+
+- 8815d51: stable release
+- Updated dependencies [8815d51]
+  - @photonjs/core@0.1.16
+  - @photonjs/srvx@0.1.10
+
 ## 0.1.12
 
 ### Patch Changes

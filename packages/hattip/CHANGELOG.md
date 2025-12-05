@@ -1,5 +1,13 @@
 # @photonjs/hattip
 
+## 0.1.10
+
+### Patch Changes
+
+- 8815d51: stable release
+- Updated dependencies [8815d51]
+  - @photonjs/core@0.1.16
+
 ## 0.1.9
 
 ### Patch Changes

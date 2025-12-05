@@ -1,5 +1,14 @@
 # @photonjs/vercel
 
+## 0.1.18
+
+### Patch Changes
+
+- 8815d51: stable release
+- Updated dependencies [8815d51]
+  - @photonjs/core@0.1.16
+  - @photonjs/runtime@0.1.13
+
 ## 0.1.17
 
 ### Patch Changes
