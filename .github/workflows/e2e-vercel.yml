@@ -3,7 +3,10 @@ on:
   deployment_status:
 jobs:
   e2e:
-    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
+    if: |
+      github.event_name == 'deployment_status' && 
+      github.event.deployment_status.state == 'success' &&
+      contains(github.event.deployment_status.environment_url, 'vercel.app')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
