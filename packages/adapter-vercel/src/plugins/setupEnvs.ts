@@ -58,6 +58,7 @@ export function setupEnvs(pluginConfig: ViteVercelConfig): Plugin[] {
             vercel_client: {
               build: {
                 outDir: path.join(pluginConfig.outDir ?? outDir, "static"),
+                copyPublicDir: true,
                 rollupOptions: {
                   input: getDummyInput(),
                 },
@@ -163,15 +164,14 @@ export function setupEnvs(pluginConfig: ViteVercelConfig): Plugin[] {
         async handler(_opts, bundle) {
           cleanupDummy(bundle);
 
-          await cp(
-            this.environment.getTopLevelConfig().environments.client.build.outDir,
-            this.environment.config.build.outDir,
-            {
+          const clientEnv = this.environment.getTopLevelConfig().environments.client;
+          if (clientEnv) {
+            await cp(clientEnv.build.outDir, this.environment.config.build.outDir, {
               recursive: true,
               force: true,
               dereference: true,
-            },
-          );
+            });
+          }
         },
       },
 
