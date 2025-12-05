@@ -1,5 +1,12 @@
 ## [0.0.3](https://github.com/photon-js/photon/compare/@photonjs/core@0.0.2...@photonjs/core@0.0.3) (2025-08-20)
 
+## 0.1.15
+
+### Patch Changes
+
+- 525d541: feat: better compatibility with Bun and Deno
+- c3b669a: feat: add Netlify adapter
+
 ## 0.1.15-beta.0
 
 ### Patch Changes

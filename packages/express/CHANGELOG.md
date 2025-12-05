@@ -1,5 +1,14 @@
 # @photonjs/express
 
+## 0.1.10
+
+### Patch Changes
+
+- 525d541: feat: better compatibility with Bun and Deno
+- Updated dependencies [525d541]
+- Updated dependencies [c3b669a]
+  - @photonjs/core@0.1.15
+
 ## 0.1.10-beta.0
 
 ### Patch Changes

@@ -18,5 +18,6 @@
     "vike": "^0.4.247",
     "vite": "^7.2.4"
   },
-  "type": "module"
+  "type": "module",
+  "version": null
 }
