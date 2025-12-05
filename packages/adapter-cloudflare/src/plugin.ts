@@ -21,6 +21,8 @@ export function cloudflare(config?: PluginConfig): Plugin[] {
                 target: false,
               },
               defaultBuildEnv,
+              // Cloudflare emits its own index entry
+              emitEntry: false,
             },
           };
         },

@@ -6,18 +6,23 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "pnpm run build && vite preview",
+    "test:e2e": "playwright test",
     "test:types": "tsc --noEmit"
   },
   "devDependencies": {
     "@photonjs/cloudflare": "^0.1.9",
     "@photonjs/core": "^0.1.14",
+    "@photonjs/hono": "^0.1.8",
     "@photonjs/runtime": "^0.1.11",
+    "e2e": "workspace:",
+    "playwright": "^1.57.0",
     "typescript": "^5.9.3",
     "vite": "^7.2.4",
     "wrangler": "^4.51.0"
   },
   "dependencies": {
     "@universal-middleware/core": "^0.4.13",
-    "awesome-framework": "0.0.0"
+    "awesome-framework": "0.0.0",
+    "hono": "^4.10.7"
   }
 }

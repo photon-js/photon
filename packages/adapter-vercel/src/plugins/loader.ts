@@ -58,7 +58,8 @@ export function loaderPlugin(pluginConfig: ViteVercelConfig): Plugin[] {
         },
 
         handler() {
-          return "export default {};";
+          // console.log avoids warning "Generated an empty chunk"
+          return "console.log('');export default {};";
         },
       },
     },
@@ -74,6 +75,11 @@ export function loaderPlugin(pluginConfig: ViteVercelConfig): Plugin[] {
       async load(_id, { meta }) {
         const entry = meta;
         const isEdge = Boolean(entry.vercel?.edge);
+
+        // Server entry should be considered a default route
+        if (entry.id === this.environment.config.photon.server.id && !entry.route && !entry.vercel?.route) {
+          entry.route = "/**";
+        }
 
         // Generate .vc-config.json
         this.emitFile({

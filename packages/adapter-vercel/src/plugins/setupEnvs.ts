@@ -1,3 +1,4 @@
+import { cp } from "node:fs/promises";
 import path from "node:path";
 import type { OutputBundle } from "rollup";
 import stripAnsi from "strip-ansi";
@@ -58,6 +59,9 @@ export function setupEnvs(pluginConfig: ViteVercelConfig): Plugin[] {
               build: {
                 outDir: path.join(pluginConfig.outDir ?? outDir, "static"),
                 copyPublicDir: true,
+                rollupOptions: {
+                  input: getDummyInput(),
+                },
               },
               consumer: "client",
             },
@@ -145,6 +149,29 @@ export function setupEnvs(pluginConfig: ViteVercelConfig): Plugin[] {
             fileName: "config.json",
             source: JSON.stringify(getConfig(pluginConfig), undefined, 2),
           });
+        },
+      },
+
+      sharedDuringBuild: true,
+    },
+    {
+      name: "vite-plugin-vercel:setup-envs:vercel_client",
+      applyToEnvironment(env) {
+        return env.name === "vercel_client";
+      },
+
+      generateBundle: {
+        async handler(_opts, bundle) {
+          cleanupDummy(bundle);
+
+          const clientEnv = this.environment.getTopLevelConfig().environments.client;
+          if (clientEnv) {
+            await cp(clientEnv.build.outDir, this.environment.config.build.outDir, {
+              recursive: true,
+              force: true,
+              dereference: true,
+            });
+          }
         },
       },
 

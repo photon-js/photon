@@ -1,6 +1,7 @@
 import type { Photon } from "@photonjs/core";
 import { resolvePhotonConfig } from "@photonjs/core/api";
 import { resolveFirst, singleton } from "@photonjs/core/api/internal";
+import { assert } from "@photonjs/core/errors";
 import { photon as corePhoton, type InstallPhotonCoreOptions, installPhotonCore } from "@photonjs/core/vite";
 import standaloner from "standaloner/vite";
 import type { Plugin } from "vite";
@@ -150,9 +151,10 @@ export default {
   });
 }
 
+const nodeTargets = new Set<string>(["node", "bun", "deno"]);
+
 // Creates a server and listens for connections in Node/Deno/Bun
 function serve(): Plugin[] {
-  const nodeTargets = new Set<string>(["node", "bun", "deno"]);
   let userPort: number | undefined;
   return [
     singleton({
@@ -165,7 +167,7 @@ function serve(): Plugin[] {
         async handler(id, importer) {
           const isDev = this.environment.config.command === "serve";
           const source = isDev ? "@photonjs/runtime/serve/dev" : "@photonjs/runtime/serve";
-          const opts = { isEntry: true };
+          const opts = {};
           const resolved = await resolveFirst(this, [
             { source: `virtual:photon:resolve-from-photon:${source}`, opts },
             { source: `virtual:photon:resolve-from-photon:${source}`, importer, opts },
@@ -262,12 +264,41 @@ function serve(): Plugin[] {
   ];
 }
 
+/**
+ * Ensures that the default build environment has an input defined.
+ */
+function input() {
+  return singleton({
+    name: "photon:set-input",
+    configResolved(config) {
+      const envs = new Set([config.photon.defaultBuildEnv, "ssr"]);
+      for (const envName of envs) {
+        const env = config.environments[envName];
+        if (envName === "ssr" && !env) continue;
+        assert(env);
+        const input = env.build.rollupOptions.input;
+        if (
+          !input ||
+          (Array.isArray(input) && input.length === 0) ||
+          (typeof input === "object" && !Object.keys(input).includes("index"))
+        ) {
+          env.build.rollupOptions.input = {
+            ...(input && typeof input === "object" ? input : {}),
+            index: "virtual:photon:server-entry",
+          };
+        }
+      }
+    },
+  });
+}
+
 // Export photon function that includes core plugins + fallback
 export function photon(config?: Photon.Config & PhotonPluginOptions): Plugin[] {
   const plugins = [...corePhoton(config)];
 
   plugins.push(fallback());
   plugins.push(...serve());
+  plugins.push(input());
 
   if (config?.autoWrapEntry) {
     plugins.push(wrapSsrEntry(config));
@@ -288,5 +319,5 @@ export function photon(config?: Photon.Config & PhotonPluginOptions): Plugin[] {
 export function installPhoton(name: string, options?: InstallPhotonCoreOptions): Plugin[] {
   const plugins = installPhotonCore(name, options);
 
-  return [fallback(), ...serve(), ...plugins];
+  return [fallback(), ...serve(), input(), ...plugins];
 }

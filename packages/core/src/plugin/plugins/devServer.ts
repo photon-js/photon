@@ -182,9 +182,7 @@ export function devServer(config?: Photon.Config): Plugin {
     assertUsage(env, `Environment ${envName} does not exists`);
 
     const index = vite.config.photon.server;
-    const indexResolved = await env.pluginContainer.resolveId("virtual:photon:serve-entry", undefined, {
-      isEntry: true,
-    });
+    const indexResolved = await env.pluginContainer.resolveId("virtual:photon:serve-entry");
     assertUsage(
       indexResolved?.id,
       `Cannot find server entry ${cyan(index.id)}. Make sure its path is relative to the root of your project.`,

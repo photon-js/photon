@@ -5,12 +5,15 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "test:e2e": "playwright test",
     "test:types": "tsc --noEmit"
   },
   "devDependencies": {
     "@photonjs/core": "^0.1.14",
     "@photonjs/runtime": "^0.1.11",
     "@photonjs/vercel": "^0.1.16",
+    "e2e": "workspace:",
+    "playwright": "^1.57.0",
     "typescript": "^5.9.3",
     "vite": "^7.2.4",
     "wrangler": "^4.51.0"

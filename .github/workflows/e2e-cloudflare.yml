@@ -1,0 +1,35 @@
+name: E2E - Cloudflare
+on: pull_request
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: pnpm install
+      - run: pnpm exec playwright install chromium
+      - run: pnpm run build
+      - run: pnpm run build
+        working-directory: example/app-cloudflare
+      - name: Deploy
+        id: deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: versions upload
+          workingDirectory: example/app-cloudflare
+      - name: Print deployment url
+        run: |
+          echo "Deployment URL: $BASE_URL"
+        env:
+          BASE_URL: ${{ steps.deploy.outputs.deployment-url }}
+      - name: Test e2e deployed
+        run: pnpm test:e2e
+        working-directory: example/app-cloudflare
+        env:
+          BASE_URL: ${{ steps.deploy.outputs.deployment-url }}
+          NODE_ENV: production

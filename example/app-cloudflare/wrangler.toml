@@ -1,3 +1,4 @@
-name = "cloudflare-vite-get-started"
+name = "app-cloudflare-photon"
 compatibility_date = "2025-04-03"
 main = "virtual:photon:cloudflare:server-entry"
+preview_urls = true

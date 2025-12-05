@@ -73,9 +73,7 @@ export function photonEntry(): Plugin[] {
         },
         handler(id) {
           return ifPhotonModule("server-entry-with-entry", id, async ({ entry }) => {
-            const resolved = await this.resolve(this.environment.config.photon.server.id, undefined, {
-              isEntry: true,
-            });
+            const resolved = await this.resolve(this.environment.config.photon.server.id);
             assert(resolved);
 
             const loaded = await this.load({ id: resolved.id });
@@ -206,7 +204,6 @@ export function photonEntry(): Plugin[] {
 
             if (!actualId) {
               return this.resolve(this.environment.config.photon.server.id, undefined, {
-                isEntry: true,
                 custom: {
                   setPhotonMeta: entry,
                 },
@@ -215,7 +212,6 @@ export function photonEntry(): Plugin[] {
 
             const resolved = await this.resolve(actualId, undefined, {
               ...opts,
-              isEntry: true,
               skipSelf: false,
               custom: {
                 setPhotonMeta: entry,
@@ -260,7 +256,6 @@ export function photonEntry(): Plugin[] {
 
             let resolved = await this.resolve(actualId, undefined, {
               ...opts,
-              isEntry: true,
               skipSelf: false,
               custom: {
                 setPhotonMeta: entry,
@@ -273,7 +268,6 @@ export function photonEntry(): Plugin[] {
               if (handler) {
                 resolved = await this.resolve(handler.id, undefined, {
                   ...opts,
-                  isEntry: true,
                   skipSelf: false,
                   custom: {
                     setPhotonMeta: entry,

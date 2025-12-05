@@ -37,12 +37,27 @@ export function targetLoader<T extends { load: LoadHook } & Omit<Plugin, "load" 
   return [
     {
       name: `photon:target-loader:${name}:config`,
+      enforce: "pre",
       config() {
         return {
           photon: {
             target: name,
           },
         };
+      },
+
+      configResolved: {
+        order: "post",
+        handler(config) {
+          // Remove 'node' for exports conditions when using targetLoader
+          const conditions = config.environments[config.photon.defaultBuildEnv]?.resolve?.conditions;
+          if (conditions) {
+            const index = conditions.indexOf("node");
+            if (index !== -1) {
+              conditions.splice(index, 1);
+            }
+          }
+        },
       },
 
       sharedDuringBuild: true,
@@ -64,7 +79,8 @@ export function targetLoader<T extends { load: LoadHook } & Omit<Plugin, "load" 
             ["edge-light", "worker", "workerd", "edge"].includes(x),
           );
 
-          if (photon.defaultBuildEnv === envName) {
+          if (photon.defaultBuildEnv === envName && photon.emitEntry) {
+            // Emit default server entry
             this.emitFile({
               type: "chunk",
               fileName: ensureExtension(photon.server.target || photon.server.name),
@@ -72,11 +88,11 @@ export function targetLoader<T extends { load: LoadHook } & Omit<Plugin, "load" 
             });
           }
 
-          // Emit handlers, each wrapped behind the server entry
+          // Emit server entries, each wrapping either a universal handler or a server-config
           for (const entry of photon.entries) {
             if (
               (entry.env || "ssr") === envName &&
-              // if framework codeSplitting is enabled or if a target has explicitely been set, emit a new entry
+              // if framework codeSplitting is enabled or if a target has explicitly been set, emit a new entry
               (photon.codeSplitting.framework || entry.target)
             ) {
               this.emitFile({

@@ -24,24 +24,15 @@
     "./vite": "./dist/vite/index.js",
     "./standalone": "./dist/photon/entries/standalone.js",
     "./universal-middleware": {
-      "types": "./dist/photon/entries/prod.d.ts",
-      "development": {
-        "types": "./dist/photon/entries/dev.d.ts",
-        "import": "./dist/photon/entries/dev.js",
-        "default": "./dist/photon/entries/dev.js"
-      },
-      "workerd": {
-        "types": "./dist/photon/entries/edge.d.ts",
-        "import": "./dist/photon/entries/edge.js",
-        "default": "./dist/photon/entries/edge.js"
-      },
-      "worker": {
-        "types": "./dist/photon/entries/edge.d.ts",
-        "import": "./dist/photon/entries/edge.js",
-        "default": "./dist/photon/entries/edge.js"
-      },
-      "import": "./dist/photon/entries/prod.js",
-      "default": "./dist/photon/entries/prod.js"
+      "types": "./dist/photon/entries/edge.d.ts",
+      "development": "./dist/photon/entries/dev.js",
+      "workerd": "./dist/photon/entries/edge.js",
+      "worker": "./dist/photon/entries/edge.js",
+      "deno": "./dist/photon/entries/node.js",
+      "bun": "./dist/photon/entries/node.js",
+      "node": "./dist/photon/entries/node.js",
+      "import": "./dist/photon/entries/edge.js",
+      "default": "./dist/photon/entries/edge.js"
     }
   }
 }

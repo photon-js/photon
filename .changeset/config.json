@@ -9,11 +9,13 @@
   "updateInternalDependencies": "patch",
   "ignore": [
     "awesome-framework",
-    "app-hono-cloudflare",
+    "app-hono",
     "app-cloudflare",
+    "app-netlify",
     "app-vercel",
     "tests-app",
     "tanstack",
+    "e2e",
     "photonjs-docs"
   ]
 }

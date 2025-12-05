@@ -1,8 +1,7 @@
 export function renderUrl(url: string) {
-  const rootComonentHtml = renderRootComponent(url);
+  const rootComponentHtml = renderRootComponent(url);
   const indexHtml = getIndexHtml();
-  const html = indexHtml.replace("<!--app-html-->", rootComonentHtml);
-  return html;
+  return indexHtml.replace("<!--app-html-->", rootComponentHtml);
 }
 
 // A real framework would render the user's React/Vue/Solid root component

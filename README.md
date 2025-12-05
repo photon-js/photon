@@ -32,4 +32,4 @@
 - [example/awesome-framework](./example/awesome-framework) - Example of integrating Photon into a Vite-based framework
 - [example/app-cloudflare](./example/app-cloudflare) - Example app using a framework powered by Photon
 - [example/app-vercel](./example/app-vercel) - Example app using a framework powered by Photon
-- [example/app-hono-cloudflare](./example/app-hono-cloudflare) - Example app using Photon + Hono on Cloudflare
+- [example/app-hono](example/app-hono) - Example app using Photon + Hono
