@@ -76,6 +76,11 @@ export function loaderPlugin(pluginConfig: ViteVercelConfig): Plugin[] {
         const entry = meta;
         const isEdge = Boolean(entry.vercel?.edge);
 
+        // Server entry should be considered a default route
+        if (entry.id === this.environment.config.photon.server.id && !entry.route && !entry.vercel?.route) {
+          entry.route = "/**";
+        }
+
         // Generate .vc-config.json
         this.emitFile({
           type: "asset",

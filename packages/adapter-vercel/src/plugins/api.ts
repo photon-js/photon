@@ -29,7 +29,7 @@ export function apiPlugin(pluginConfig: ViteVercelConfig): Plugin {
       }
 
       for (const [key, value] of Object.entries(bundle)) {
-        if (value.type === "chunk" && value.isEntry && entryMapByDestination.has(removeExtension(key))) {
+        if (value.type === "chunk" && entryMapByDestination.has(removeExtension(key))) {
           outfiles.push({
             type: "chunk",
             root: this.environment.config.root,
