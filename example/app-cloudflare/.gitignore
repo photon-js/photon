@@ -25,3 +25,9 @@ dist
 # Build artifacts
 .wrangler/
 .vercel/
+
+# E2E tests
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/

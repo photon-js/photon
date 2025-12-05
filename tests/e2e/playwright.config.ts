@@ -6,7 +6,7 @@ if (process.env.BASE_URL) {
 } else {
   /* Run your local dev server before starting the tests */
   additionalConfig.webServer = {
-    command: process.env.RUN_CMD ?? "pnpm run dev",
+    command: process.env.RUN_CMD ?? "pnpm run dev --port 3000",
     url: "http://localhost:3000",
   };
 }

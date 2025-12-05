@@ -81,6 +81,12 @@ importers:
       '@photonjs/runtime':
         specifier: ^0.1.11
         version: link:../../packages/runtime
+      e2e:
+        specifier: 'workspace:'
+        version: link:../../tests/e2e
+      playwright:
+        specifier: ^1.57.0
+        version: 1.57.0
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
