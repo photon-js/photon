@@ -259,7 +259,8 @@ function getDummyInput(): Record<string, string> {
 }
 
 function cleanupDummy(bundle: OutputBundle) {
-  const dummy = Object.keys(bundle).find((key) => key.includes(DUMMY));
+  // Vite usually replaces __ by _
+  const dummy = Object.keys(bundle).find((key) => key.includes("_DUMMY_"));
   if (dummy) {
     delete bundle[dummy];
   }

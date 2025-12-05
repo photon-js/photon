@@ -77,6 +77,7 @@ export function loaderPlugin(pluginConfig: ViteVercelConfig): Plugin[] {
         const isEdge = Boolean(entry.vercel?.edge);
 
         // Server entry should be considered a default route
+        // FIXME
         if (entry.id === this.environment.config.photon.server.id && !entry.route && !entry.vercel?.route) {
           entry.route = "/**";
         }

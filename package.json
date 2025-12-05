@@ -23,7 +23,7 @@
     "preinstall": "npx only-allow pnpm",
     "========= Release": "",
     "release": "pnpm run build:photon && changeset version && pnpm i && pnpm publish -r --no-git-checks",
-    "release:beta": "changeset pre enter beta && changeset version && pnpm publish -r --no-git-checks --tag beta && changeset pre exit"
+    "release:beta": "changeset pre enter beta && changeset version && pnpm publish -r --no-git-checks --tag beta"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.8",
