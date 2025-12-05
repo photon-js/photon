@@ -203,7 +203,7 @@ function createVercelEnvironmentOptions(overrides?: EnvironmentOptions): Environ
         createEnvironment(name, config) {
           return new BuildEnvironment(name, config);
         },
-        outDir: path.posix.join(outDir, "_tmp"),
+        outDir: path.posix.join(process.cwd(), outDir, "_tmp"),
         copyPublicDir: false,
         rollupOptions: {
           input: getDummyInput(),
