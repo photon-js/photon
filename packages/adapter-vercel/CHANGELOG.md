@@ -1,5 +1,16 @@
 # @photonjs/vercel
 
+## 0.1.17-beta.0
+
+### Patch Changes
+
+- 525d541: feat: better compatibility with Bun and Deno
+- 3547430: fix: .vercel folder should ignore root override
+- Updated dependencies [525d541]
+- Updated dependencies [c3b669a]
+  - @photonjs/core@0.1.15-beta.0
+  - @photonjs/runtime@0.1.12-beta.0
+
 ## 0.1.16
 
 ### Patch Changes

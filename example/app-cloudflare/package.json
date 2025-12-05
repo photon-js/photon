@@ -10,10 +10,10 @@
     "test:types": "tsc --noEmit"
   },
   "devDependencies": {
-    "@photonjs/cloudflare": "^0.1.9",
-    "@photonjs/core": "^0.1.14",
-    "@photonjs/hono": "^0.1.8",
-    "@photonjs/runtime": "^0.1.11",
+    "@photonjs/cloudflare": "^0.1.10-beta.0",
+    "@photonjs/core": "^0.1.15-beta.0",
+    "@photonjs/hono": "^0.1.9-beta.0",
+    "@photonjs/runtime": "^0.1.12-beta.0",
     "e2e": "workspace:",
     "playwright": "^1.57.0",
     "typescript": "^5.9.3",

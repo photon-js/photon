@@ -12,8 +12,8 @@
   },
   "devDependencies": {
     "@photonjs/netlify": "workspace:^",
-    "@photonjs/core": "^0.1.14",
-    "@photonjs/runtime": "^0.1.11",
+    "@photonjs/core": "^0.1.15-beta.0",
+    "@photonjs/runtime": "^0.1.12-beta.0",
     "e2e": "workspace:",
     "playwright": "^1.57.0",
     "typescript": "^5.9.3",

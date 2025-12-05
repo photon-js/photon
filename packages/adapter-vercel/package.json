@@ -1,6 +1,6 @@
 {
   "name": "@photonjs/vercel",
-  "version": "0.1.16",
+  "version": "0.1.17-beta.0",
   "type": "module",
   "files": [
     "dist",

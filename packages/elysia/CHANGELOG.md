@@ -1,5 +1,14 @@
 # @photonjs/elysia
 
+## 0.1.9-beta.0
+
+### Patch Changes
+
+- 525d541: feat: better compatibility with Bun and Deno
+- Updated dependencies [525d541]
+- Updated dependencies [c3b669a]
+  - @photonjs/core@0.1.15-beta.0
+
 ## 0.1.8
 
 ### Patch Changes
