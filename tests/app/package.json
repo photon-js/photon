@@ -20,7 +20,7 @@
     "@photonjs/hono": "workspace:0.1.10",
     "@photonjs/runtime": "workspace:0.1.13",
     "@photonjs/srvx": "workspace:0.1.10",
-    "@photonjs/vercel": "workspace:0.1.19",
+    "@photonjs/vercel": "workspace:0.1.20",
     "@types/express": "^5.0.5",
     "@types/node": "^22.19.1",
     "@universal-middleware/core": "^0.4.13",

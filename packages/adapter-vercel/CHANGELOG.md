@@ -1,5 +1,11 @@
 # @photonjs/vercel
 
+## 0.1.20
+
+### Patch Changes
+
+- 866f41d: fix: ensure static files copy if root is defined
+
 ## 0.1.19
 
 ### Patch Changes
