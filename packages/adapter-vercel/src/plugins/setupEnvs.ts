@@ -167,7 +167,7 @@ export function setupEnvs(pluginConfig: ViteVercelConfig): Plugin[] {
           const topLevelConfig = this.environment.getTopLevelConfig();
           const clientEnv = topLevelConfig.environments.client;
           if (clientEnv) {
-            await cp(topLevelConfig.root, this.environment.config.build.outDir, {
+            await cp(path.join(topLevelConfig.root, clientEnv.build.outDir), this.environment.config.build.outDir, {
               recursive: true,
               force: true,
               dereference: true,
