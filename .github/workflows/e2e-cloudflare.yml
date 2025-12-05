@@ -22,6 +22,11 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: versions upload
           workingDirectory: example/app-cloudflare
+      - name: Print deployment url
+        run: |
+          echo "Deployment URL: $BASE_URL"
+        env:
+          BASE_URL: ${{ steps.deploy.outputs.deployment-url }}
       - name: Test e2e deployed
         run: pnpm test:e2e
         working-directory: example/app-cloudflare
