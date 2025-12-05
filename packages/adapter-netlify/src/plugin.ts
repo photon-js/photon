@@ -44,11 +44,11 @@ export * from ${JSON.stringify(id)};`,
     // and other node-specific frameworks compatibility, but that is not recommended by Photon.
     supportedTargetServers("netlify", ["hono", "h3", "srvx"]),
     ...createNetlifyPlugin({
+      ...config,
       build: {
         enabled: true,
         ...config?.build,
       },
-      ...config,
     }),
   ];
 }

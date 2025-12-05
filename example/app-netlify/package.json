@@ -7,7 +7,6 @@
     "build": "vite build",
     "netlify:deploy": "netlify deploy --filter app-netlify --no-build -d example/app-netlify/dist/client/",
     "deploy": "vite build && pnpm run netlify:deploy",
-    "deploy:ssr": "vite build && rm ./dist/client/index.html && pnpm run netlify:deploy",
     "test:e2e": "playwright test",
     "test:types": "tsc --noEmit"
   },
