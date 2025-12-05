@@ -1,12 +1,7 @@
-name: E2E - Vercel
-on:
-  deployment_status:
+name: E2E - Cloudflare
+on: pull_request
 jobs:
   e2e:
-    if: |
-      github.event_name == 'deployment_status' && 
-      github.event.deployment_status.state == 'success' &&
-      contains(github.event.deployment_status.environment_url, 'workers.dev')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,10 +12,19 @@ jobs:
       - run: pnpm install
       - run: pnpm exec playwright install chromium
       - run: pnpm run build
-# TODO
-#      - name: Test e2e deployed
-#        run: pnpm test:e2e
-#        working-directory: example/app-vercel
-#        env:
-#          BASE_URL: ${{ steps.waitForDeployment.outputs.url }}
-#          NODE_ENV: production
+      - run: pnpm run build
+        working-directory: example/app-cloudflare
+      - name: Deploy
+        id: deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: versions upload
+          workingDirectory: example/app-cloudflare
+      - name: Test e2e deployed
+        run: pnpm test:e2e
+        working-directory: example/app-cloudflare
+        env:
+          BASE_URL: ${{ steps.deploy.outputs.deployment-url }}
+          NODE_ENV: production
