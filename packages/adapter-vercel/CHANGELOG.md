@@ -1,5 +1,11 @@
 # @photonjs/vercel
 
+## 0.1.16
+
+### Patch Changes
+
+- 3624066: fix: .vercel folder should ignore root override
+
 ## 0.1.15
 
 ### Patch Changes
