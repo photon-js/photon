@@ -16,7 +16,7 @@ import { virtualEntry } from "../utils/const";
 import { edgeConditions } from "../utils/edge";
 import { edgeExternal } from "../utils/external";
 
-const outDir = ".vercel/output";
+const outDir = path.posix.join(process.cwd(), ".vercel/output");
 const DUMMY = "__DUMMY__";
 
 export function setupEnvs(pluginConfig: ViteVercelConfig): Plugin[] {
@@ -230,7 +230,7 @@ function createVercelEnvironmentOptions(overrides?: EnvironmentOptions): Environ
         createEnvironment(name, config) {
           return new BuildEnvironment(name, config);
         },
-        outDir: path.posix.join(process.cwd(), outDir, "_tmp"),
+        outDir: path.posix.join(outDir, "_tmp"),
         copyPublicDir: false,
         rollupOptions: {
           input: getDummyInput(),
