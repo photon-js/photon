@@ -178,7 +178,7 @@ importers:
         specifier: ^0.1.13
         version: link:../../packages/runtime
       '@photonjs/vercel':
-        specifier: ^0.1.19
+        specifier: ^0.1.20
         version: link:../../packages/adapter-vercel
       e2e:
         specifier: 'workspace:'
@@ -805,7 +805,7 @@ importers:
         specifier: workspace:0.1.10
         version: link:../../packages/srvx
       '@photonjs/vercel':
-        specifier: workspace:0.1.19
+        specifier: workspace:0.1.20
         version: link:../../packages/adapter-vercel
       '@types/express':
         specifier: ^5.0.5
