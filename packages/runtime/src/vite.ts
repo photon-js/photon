@@ -208,7 +208,7 @@ function serve(): Plugin[] {
 
       transform: {
         filter: {
-          code: [/process\.env\.PORT/, /process\.env\.HOSTNAME/],
+          code: [/process\.env\.PORT/, /process\.env\.PHOTON_HOSTNAME/],
         },
         handler(code) {
           let newCode = code;
@@ -218,7 +218,7 @@ function serve(): Plugin[] {
             replaced = true;
           }
           if (typeof userHost === "string") {
-            newCode = newCode.replaceAll("process.env.HOSTNAME", JSON.stringify(String(userHost)));
+            newCode = newCode.replaceAll("process.env.PHOTON_HOSTNAME", JSON.stringify(String(userHost)));
             replaced = true;
           }
           if (replaced) {

@@ -59,11 +59,16 @@ export function nodeServe(options: ServerOptions, handler: NodeHandler): ServerT
       return addr;
     }
 
-    if (!addr.address || !addr.port) {
+    let host = addr.address;
+    if (!host || !addr.port) {
       return undefined;
     }
-
-    return `http${isHttps ? "s" : ""}://${addr.address.includes(":") ? `[${addr.address}]` : addr.address}:${addr.port}/`;
+    if (host === "::") {
+      host = "localhost";
+    } else if (host.includes(":")) {
+      host = `[${host}]`;
+    }
+    return `http${isHttps ? "s" : ""}://${host}:${addr.port}/`;
   }
 
   if (host) {
@@ -136,7 +141,9 @@ export function srvxServe(options: ServeReturn) {
   // For instance, `srvx/node` overrides the global Request, which we want to avoid when running with Bun.
   const server = serveSrvx(srvxOptions);
   serverOptions?.onCreate?.(server);
-  server.ready().then(onReady({ onReady: serverOptions?.onReady, url: () => server.url }));
+  server
+    .ready()
+    .then(onReady({ onReady: serverOptions?.onReady, url: () => server.url?.replace("[::]", "localhost") }));
 
   return server.ready();
 }
@@ -146,7 +153,7 @@ export function getPort(options?: ServerOptions) {
 }
 
 export function getHostname(options?: ServerOptions) {
-  return options?.hostname ?? process.env.HOSTNAME;
+  return options?.hostname ?? process.env.PHOTON_HOSTNAME;
 }
 
 /**
