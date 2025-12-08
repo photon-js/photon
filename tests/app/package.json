@@ -18,7 +18,7 @@
     "@photonjs/h3": "workspace:0.1.10",
     "@photonjs/hattip": "workspace:0.1.10",
     "@photonjs/hono": "workspace:0.1.10",
-    "@photonjs/runtime": "workspace:0.1.13",
+    "@photonjs/runtime": "workspace:0.1.14",
     "@photonjs/srvx": "workspace:0.1.10",
     "@photonjs/vercel": "workspace:0.1.20",
     "@types/express": "^5.0.5",

@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@photonjs/core": "^0.1.16",
-    "@photonjs/runtime": "^0.1.13",
+    "@photonjs/runtime": "^0.1.14",
     "@universal-middleware/core": "^0.4.13",
     "@universal-middleware/sirv": "^0.1.23"
   },
