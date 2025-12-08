@@ -17,7 +17,7 @@ export const isDeno = typeof Deno !== "undefined";
 
 const controllerMap = new WeakMap<AbortSignal, AbortController>();
 
-export function onReady(options: { port: number; isHttps?: boolean; onReady?: Callback }) {
+export function onReady(options: { port: number; host: string | undefined; isHttps?: boolean; onReady?: Callback }) {
   return () => {
     if (import.meta.hot) {
       if (import.meta.hot.data.photonServerStarted) {
@@ -28,7 +28,9 @@ export function onReady(options: { port: number; isHttps?: boolean; onReady?: Ca
       import.meta.hot.data.photonServerStarted = true;
     }
     if (options?.onReady === true || options?.onReady === undefined) {
-      console.log(`Server running at ${options.isHttps ? "https" : "http"}://localhost:${options.port}`);
+      console.log(
+        `Server running at ${options.isHttps ? "https" : "http"}://${options?.host || "localhost"}:${options.port}`,
+      );
     } else if (typeof options?.onReady === "function") {
       options.onReady();
     }
@@ -46,10 +48,11 @@ export function nodeServe(options: ServerOptions, handler: NodeHandler): ServerT
 
   const isHttps = Boolean("cert" in serverOptions && serverOptions.cert);
   const port = getPort(options);
-  if (options?.hostname) {
-    server.listen(port, options.hostname, onReady({ isHttps, ...options, port }));
+  const host = getHostname(options);
+  if (host) {
+    server.listen(port, host, onReady({ isHttps, ...options, port, host }));
   } else {
-    server.listen(port, onReady({ isHttps, ...options, port }));
+    server.listen(port, onReady({ isHttps, ...options, port, host }));
   }
 
   return server;
@@ -62,10 +65,11 @@ export function srvxServe(options: ServeReturn) {
   };
   const serverOptions = options.server?.options;
   const port = getPort(serverOptions);
+  const host = getHostname(serverOptions);
 
   srvxOptions.port = port;
-  if (serverOptions?.hostname) {
-    srvxOptions.hostname = serverOptions.hostname;
+  if (host) {
+    srvxOptions.hostname = host;
   }
   let isHttps: boolean;
   if (isBun) {
@@ -102,13 +106,17 @@ export function srvxServe(options: ServeReturn) {
   // For instance, `srvx/node` overrides the global Request, which we want to avoid when running with Bun.
   const server = serveSrvx(srvxOptions);
   serverOptions?.onCreate?.(server);
-  server.ready().then(onReady({ isHttps, onReady: serverOptions?.onReady, port }));
+  server.ready().then(onReady({ isHttps, onReady: serverOptions?.onReady, port, host }));
 
   return server.ready();
 }
 
 export function getPort(options?: ServerOptions) {
   return options?.port ?? (process.env.PORT ? Number.parseInt(process.env.PORT, 10) : 3000);
+}
+
+export function getHostname(options?: ServerOptions) {
+  return options?.hostname ?? process.env.HOSTNAME;
 }
 
 /**

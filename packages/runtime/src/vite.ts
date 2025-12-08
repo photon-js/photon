@@ -156,6 +156,7 @@ const nodeTargets = new Set<string>(["node", "bun", "deno"]);
 // Creates a server and listens for connections in Node/Deno/Bun
 function serve(): Plugin[] {
   let userPort: number | undefined;
+  let userHost: string | boolean | undefined;
   return [
     singleton({
       name: "photon:serve",
@@ -202,15 +203,26 @@ function serve(): Plugin[] {
 
       config(userConfig) {
         userPort = userConfig.server?.port;
+        userHost = userConfig.server?.host;
       },
 
       transform: {
         filter: {
-          code: [/process\.env\.PORT/],
+          code: [/process\.env\.PORT/, /process\.env\.HOSTNAME/],
         },
         handler(code) {
+          let newCode = code;
+          let replaced = false;
           if (userPort) {
-            return code.replaceAll("process.env.PORT", JSON.stringify(String(userPort)));
+            newCode = newCode.replaceAll("process.env.PORT", JSON.stringify(String(userPort)));
+            replaced = true;
+          }
+          if (typeof userHost === "string") {
+            newCode = newCode.replaceAll("process.env.HOSTNAME", JSON.stringify(String(userHost)));
+            replaced = true;
+          }
+          if (replaced) {
+            return newCode;
           }
         },
       },
