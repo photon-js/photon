@@ -79,7 +79,7 @@ importers:
         specifier: ^0.1.10
         version: link:../../packages/hono
       '@photonjs/runtime':
-        specifier: ^0.1.13
+        specifier: ^0.1.14
         version: link:../../packages/runtime
       e2e:
         specifier: 'workspace:'
@@ -116,7 +116,7 @@ importers:
         specifier: ^0.1.10
         version: link:../../packages/hono
       '@photonjs/runtime':
-        specifier: ^0.1.13
+        specifier: ^0.1.14
         version: link:../../packages/runtime
       e2e:
         specifier: 'workspace:'
@@ -147,7 +147,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/adapter-netlify
       '@photonjs/runtime':
-        specifier: ^0.1.13
+        specifier: ^0.1.14
         version: link:../../packages/runtime
       e2e:
         specifier: 'workspace:'
@@ -175,7 +175,7 @@ importers:
         specifier: ^0.1.16
         version: link:../../packages/core
       '@photonjs/runtime':
-        specifier: ^0.1.13
+        specifier: ^0.1.14
         version: link:../../packages/runtime
       '@photonjs/vercel':
         specifier: ^0.1.20
@@ -202,7 +202,7 @@ importers:
         specifier: ^0.1.16
         version: link:../../packages/core
       '@photonjs/runtime':
-        specifier: ^0.1.13
+        specifier: ^0.1.14
         version: link:../../packages/runtime
       '@universal-middleware/core':
         specifier: ^0.4.13
@@ -227,7 +227,7 @@ importers:
         specifier: ^0.1.11
         version: link:../../packages/adapter-cloudflare
       '@photonjs/runtime':
-        specifier: ^0.1.13
+        specifier: ^0.1.14
         version: link:../../packages/runtime
       '@tailwindcss/vite':
         specifier: ^4.1.17
@@ -799,7 +799,7 @@ importers:
         specifier: workspace:0.1.10
         version: link:../../packages/hono
       '@photonjs/runtime':
-        specifier: workspace:0.1.13
+        specifier: workspace:0.1.14
         version: link:../../packages/runtime
       '@photonjs/srvx':
         specifier: workspace:0.1.10
