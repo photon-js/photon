@@ -70,16 +70,16 @@ importers:
         version: 4.10.7
     devDependencies:
       '@photonjs/cloudflare':
-        specifier: ^0.1.11
+        specifier: ^0.1.12-beta.0
         version: link:../../packages/adapter-cloudflare
       '@photonjs/core':
-        specifier: ^0.1.18
+        specifier: ^0.1.19-beta.0
         version: link:../../packages/core
       '@photonjs/hono':
-        specifier: ^0.1.10
+        specifier: ^0.1.11-beta.0
         version: link:../../packages/hono
       '@photonjs/runtime':
-        specifier: ^0.1.14
+        specifier: ^0.1.15-beta.0
         version: link:../../packages/runtime
       e2e:
         specifier: 'workspace:'
@@ -110,13 +110,13 @@ importers:
         version: 4.10.7
     devDependencies:
       '@photonjs/core':
-        specifier: ^0.1.18
+        specifier: ^0.1.19-beta.0
         version: link:../../packages/core
       '@photonjs/hono':
-        specifier: ^0.1.10
+        specifier: ^0.1.11-beta.0
         version: link:../../packages/hono
       '@photonjs/runtime':
-        specifier: ^0.1.14
+        specifier: ^0.1.15-beta.0
         version: link:../../packages/runtime
       e2e:
         specifier: 'workspace:'
@@ -141,13 +141,13 @@ importers:
         version: link:../awesome-framework
     devDependencies:
       '@photonjs/core':
-        specifier: ^0.1.18
+        specifier: ^0.1.19-beta.0
         version: link:../../packages/core
       '@photonjs/netlify':
         specifier: workspace:^
         version: link:../../packages/adapter-netlify
       '@photonjs/runtime':
-        specifier: ^0.1.14
+        specifier: ^0.1.15-beta.0
         version: link:../../packages/runtime
       e2e:
         specifier: 'workspace:'
@@ -172,13 +172,13 @@ importers:
         version: link:../awesome-framework
     devDependencies:
       '@photonjs/core':
-        specifier: ^0.1.18
+        specifier: ^0.1.19-beta.0
         version: link:../../packages/core
       '@photonjs/runtime':
-        specifier: ^0.1.14
+        specifier: ^0.1.15-beta.0
         version: link:../../packages/runtime
       '@photonjs/vercel':
-        specifier: ^0.1.20
+        specifier: ^0.1.21-beta.0
         version: link:../../packages/adapter-vercel
       e2e:
         specifier: 'workspace:'
@@ -199,10 +199,10 @@ importers:
   example/awesome-framework:
     dependencies:
       '@photonjs/core':
-        specifier: ^0.1.18
+        specifier: ^0.1.19-beta.0
         version: link:../../packages/core
       '@photonjs/runtime':
-        specifier: ^0.1.14
+        specifier: ^0.1.15-beta.0
         version: link:../../packages/runtime
       '@universal-middleware/core':
         specifier: ^0.4.13
@@ -224,10 +224,10 @@ importers:
   example/tanstack-start:
     dependencies:
       '@photonjs/cloudflare':
-        specifier: ^0.1.11
+        specifier: ^0.1.12-beta.0
         version: link:../../packages/adapter-cloudflare
       '@photonjs/runtime':
-        specifier: ^0.1.14
+        specifier: ^0.1.15-beta.0
         version: link:../../packages/runtime
       '@tailwindcss/vite':
         specifier: ^4.1.17
@@ -775,37 +775,37 @@ importers:
         version: 0.9.7
     devDependencies:
       '@photonjs/cloudflare':
-        specifier: workspace:0.1.11
+        specifier: workspace:0.1.12-beta.0
         version: link:../../packages/adapter-cloudflare
       '@photonjs/core':
-        specifier: workspace:0.1.18
+        specifier: workspace:0.1.19-beta.0
         version: link:../../packages/core
       '@photonjs/elysia':
-        specifier: workspace:0.1.10
+        specifier: workspace:0.1.11-beta.0
         version: link:../../packages/elysia
       '@photonjs/express':
-        specifier: workspace:0.1.11
+        specifier: workspace:0.1.12-beta.0
         version: link:../../packages/express
       '@photonjs/fastify':
-        specifier: workspace:0.1.10
+        specifier: workspace:0.1.11-beta.0
         version: link:../../packages/fastify
       '@photonjs/h3':
-        specifier: workspace:0.1.10
+        specifier: workspace:0.1.11-beta.0
         version: link:../../packages/h3
       '@photonjs/hattip':
-        specifier: workspace:0.1.10
+        specifier: workspace:0.1.11-beta.0
         version: link:../../packages/hattip
       '@photonjs/hono':
-        specifier: workspace:0.1.10
+        specifier: workspace:0.1.11-beta.0
         version: link:../../packages/hono
       '@photonjs/runtime':
-        specifier: workspace:0.1.14
+        specifier: workspace:0.1.15-beta.0
         version: link:../../packages/runtime
       '@photonjs/srvx':
-        specifier: workspace:0.1.10
+        specifier: workspace:0.1.11-beta.0
         version: link:../../packages/srvx
       '@photonjs/vercel':
-        specifier: workspace:0.1.20
+        specifier: workspace:0.1.21-beta.0
         version: link:../../packages/adapter-vercel
       '@types/express':
         specifier: ^5.0.5
