@@ -76,6 +76,7 @@ export function devServer(config?: Photon.Config): Plugin {
     },
 
     async hotUpdate(ctx) {
+      if (vite.config.photon.devServer === false) return;
       const imported = isImported(ctx.modules);
       if (imported) {
         if (this.environment.config.photon.hmr === "prefer-restart") {
