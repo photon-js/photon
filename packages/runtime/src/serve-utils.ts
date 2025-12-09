@@ -5,6 +5,7 @@ import { PhotonBugError } from "@photonjs/core/errors";
 import type { NodeHandler, ServeReturn, ServerOptions, ServerType } from "@photonjs/core/serve";
 import type { Server as SrvxServer, ServerOptions as SrvxServerOptions } from "srvx";
 import { serve as serveSrvx } from "srvx";
+import { printServerUrls, type ResolvedServerUrls, resolveServerUrls } from "./resolved-urls.js";
 
 // biome-ignore lint/suspicious/noExplicitAny: type
 export type Servers = ServerType | SrvxServer | Bun.Server<any> | Deno.HttpServer;
@@ -17,7 +18,11 @@ export const isDeno = typeof Deno !== "undefined";
 
 const controllerMap = new WeakMap<AbortSignal, AbortController>();
 
-export function onReady(options: { url(): string | undefined; onReady?: OnReady }) {
+export function onReady(options: {
+  url(): string | undefined;
+  urls(): Promise<ResolvedServerUrls | null>;
+  onReady?: OnReady;
+}) {
   return () => {
     if (import.meta.hot) {
       if (import.meta.hot.data.photonServerStarted) {
@@ -27,12 +32,24 @@ export function onReady(options: { url(): string | undefined; onReady?: OnReady 
       }
       import.meta.hot.data.photonServerStarted = true;
     }
-    const url = options.url();
-    if (url && (options.onReady === true || options?.onReady === undefined)) {
-      console.log(`Server running at ${url}`);
-    } else if (typeof options?.onReady === "function") {
-      options.onReady(url);
+    function logOneUrl() {
+      const url = options.url();
+      if (url && (options.onReady === true || options?.onReady === undefined)) {
+        console.log(`Server running at ${url}`);
+      } else if (typeof options?.onReady === "function") {
+        options.onReady(url);
+      }
     }
+    options
+      .urls()
+      .then((urls) => {
+        if (urls) {
+          printServerUrls(urls);
+        } else {
+          logOneUrl();
+        }
+      })
+      .catch(logOneUrl);
   };
 }
 
@@ -71,6 +88,11 @@ export function nodeServe(options: ServerOptions, handler: NodeHandler): ServerT
     return `http${isHttps ? "s" : ""}://${host}:${addr.port}/`;
   }
 
+  function urls() {
+    // biome-ignore lint/suspicious/noExplicitAny: cast
+    return resolveServerUrls(server, isHttps, host, serverOptions as any);
+  }
+
   if (host) {
     server.listen(
       port,
@@ -78,6 +100,7 @@ export function nodeServe(options: ServerOptions, handler: NodeHandler): ServerT
       onReady({
         ...options,
         url,
+        urls,
       }),
     );
   } else {
@@ -86,6 +109,7 @@ export function nodeServe(options: ServerOptions, handler: NodeHandler): ServerT
       onReady({
         ...options,
         url,
+        urls,
       }),
     );
   }
@@ -140,10 +164,20 @@ export function srvxServe(options: ServeReturn) {
   // Rely on srvx "exports" conditions to load only the necessary runtime.
   // For instance, `srvx/node` overrides the global Request, which we want to avoid when running with Bun.
   const server = serveSrvx(srvxOptions);
+  const underlyingServer = isBun ? server.bun?.server : isDeno ? server.deno?.server : server.node?.server;
   serverOptions?.onCreate?.(server);
-  server
-    .ready()
-    .then(onReady({ onReady: serverOptions?.onReady, url: () => server.url?.replace("[::]", "localhost") }));
+  if (serverOptions?.serverOptions && "cert" in serverOptions.serverOptions) {
+    serverOptions.serverOptions.cert;
+  }
+
+  server.ready().then(
+    onReady({
+      onReady: serverOptions?.onReady,
+      url: () => server.url?.replace("[::]", "localhost"),
+      // biome-ignore lint/suspicious/noExplicitAny: cast
+      urls: () => resolveServerUrls(underlyingServer, isHttps, host, serverOptions?.serverOptions as any),
+    }),
+  );
 
   return server.ready();
 }
