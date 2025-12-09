@@ -1,5 +1,11 @@
 ## 0.1.15
 
+## 0.1.19
+
+### Patch Changes
+
+- 5fd9297: fix: do not update conditions if target is overridden
+
 ## 0.1.19-beta.0
 
 ### Patch Changes

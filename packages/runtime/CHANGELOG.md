@@ -1,5 +1,13 @@
 # @photonjs/runtime
 
+## 0.1.15
+
+### Patch Changes
+
+- Updated dependencies [5fd9297]
+  - @photonjs/core@0.1.19
+  - @photonjs/srvx@0.1.11
+
 ## 0.1.15-beta.0
 
 ### Patch Changes

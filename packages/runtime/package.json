@@ -1,6 +1,6 @@
 {
   "name": "@photonjs/runtime",
-  "version": "0.1.15-beta.0",
+  "version": "0.1.15",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

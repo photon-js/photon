@@ -1,5 +1,12 @@
 # @photonjs/netlify
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies [5fd9297]
+  - @photonjs/core@0.1.19
+
 ## 0.1.2-beta.0
 
 ### Patch Changes
