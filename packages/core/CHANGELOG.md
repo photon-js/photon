@@ -1,5 +1,11 @@
 ## 0.1.15
 
+## 0.1.17
+
+### Patch Changes
+
+- 53056fc: fix: disable hotUpdate hook if devServer is disabled
+
 ## 0.1.16
 
 ### Patch Changes

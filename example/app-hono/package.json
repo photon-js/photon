@@ -12,7 +12,7 @@
     "test:types": "tsc --noEmit"
   },
   "devDependencies": {
-    "@photonjs/core": "^0.1.16",
+    "@photonjs/core": "^0.1.17",
     "@photonjs/hono": "^0.1.10",
     "@photonjs/runtime": "^0.1.14",
     "e2e": "workspace:",
