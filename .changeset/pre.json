@@ -1,0 +1,24 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "initialVersions": {
+    "photonjs-docs": null,
+    "awesome-framework": "0.0.0",
+    "@photonjs/cloudflare": "0.1.11",
+    "@photonjs/netlify": "0.1.1",
+    "@photonjs/vercel": "0.1.20",
+    "@photonjs/core": "0.1.18",
+    "@photonjs/elysia": "0.1.10",
+    "@photonjs/express": "0.1.11",
+    "@photonjs/fastify": "0.1.10",
+    "@photonjs/h3": "0.1.10",
+    "@photonjs/hattip": "0.1.10",
+    "@photonjs/hono": "0.1.10",
+    "@photonjs/runtime": "0.1.14",
+    "@photonjs/srvx": "0.1.10",
+    "e2e": "1.0.1"
+  },
+  "changesets": [
+    "funny-states-shake"
+  ]
+}
