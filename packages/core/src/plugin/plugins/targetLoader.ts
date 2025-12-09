@@ -49,6 +49,8 @@ export function targetLoader<T extends { load: LoadHook } & Omit<Plugin, "load" 
       configResolved: {
         order: "post",
         handler(config) {
+          // the target defined above has been overridden, so we do not update conditions
+          if (config.photon.target !== name) return;
           // Remove 'node' for exports conditions when using targetLoader
           const conditions = config.environments[config.photon.defaultBuildEnv]?.resolve?.conditions;
           if (conditions) {
