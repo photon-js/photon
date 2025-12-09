@@ -9,7 +9,7 @@
     "test:types": "tsc --noEmit"
   },
   "devDependencies": {
-    "@photonjs/core": "^0.1.17",
+    "@photonjs/core": "^0.1.18",
     "@photonjs/runtime": "^0.1.14",
     "@photonjs/vercel": "^0.1.20",
     "e2e": "workspace:",

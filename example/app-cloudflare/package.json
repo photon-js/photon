@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "@photonjs/cloudflare": "^0.1.11",
-    "@photonjs/core": "^0.1.17",
+    "@photonjs/core": "^0.1.18",
     "@photonjs/hono": "^0.1.10",
     "@photonjs/runtime": "^0.1.14",
     "e2e": "workspace:",
