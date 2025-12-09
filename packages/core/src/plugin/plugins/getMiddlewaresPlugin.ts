@@ -89,7 +89,8 @@ export function getMiddlewaresPlugin(): Plugin[] {
           id,
           moduleSideEffects: false,
           meta: {
-            photonHandler: opts.attributes.photonHandler,
+            // opts.attributes can be undefined with rolldown-vite
+            photonHandler: opts.attributes?.photonHandler,
           },
         }));
       },
