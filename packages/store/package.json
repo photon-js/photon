@@ -1,0 +1,25 @@
+{
+  "name": "@photonjs/store",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "dev": "tsdown --watch",
+    "build": "tsdown",
+    "test:types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.1",
+    "tsdown": "^0.17.0-beta.4",
+    "typescript": "^5.9.3"
+  },
+  "files": [
+    "dist/"
+  ],
+  "repository": "github:photon-js/photon",
+  "license": "MIT"
+}
