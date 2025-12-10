@@ -1,11 +1,15 @@
 export interface Store {
   /**
-   * The key represents the entry path or virtual module id.
+   * The key represents the destination path, relative to outDir.
    */
   entries: Map<string, EntryMeta>;
 }
 
 export interface EntryMeta {
+  /**
+   * Module id for this entry. Can be a filesystem path, or a virtual module.
+   */
+  id: string;
   /**
    * Can be used for debugging purposes if present.
    */

@@ -1,10 +1,9 @@
-import { walk } from "estree-walker";
-import MagicString from "magic-string";
 import type { Plugin } from "vite";
-import { assert, assertUsage } from "../../utils/assert.js";
+import { assertUsage } from "../../utils/assert.js";
 import { singleton } from "../utils/dedupe.js";
 import { importsToServer } from "../utils/servers.js";
 import { asPhotonEntryId, ifPhotonModule, virtualModules, virtualModulesRegex } from "../utils/virtual.js";
+import { store } from "@photonjs/store";
 
 const serverImports = new Set(Object.keys(importsToServer));
 const re_photonHandler = /[?&]photonHandler=/;
@@ -16,168 +15,186 @@ function cleanImport(imp: string) {
 
 export function photonEntry(): Plugin[] {
   return [
+    // singleton({
+    //   name: "photon:resolve-importer",
+    //   enforce: "pre",
+    //
+    //   resolveId: {
+    //     order: "post",
+    //     handler(id, importer, opts) {
+    //       return ifPhotonModule(["handler-entry", "server-entry"], importer, ({ entry }) => {
+    //         if (entry) {
+    //           return this.resolve(id, entry, {
+    //             ...opts,
+    //             skipSelf: false,
+    //           });
+    //         }
+    //       });
+    //     },
+    //   },
+    //   sharedDuringBuild: true,
+    // }),
+    // singleton({
+    //   name: "photon:resolve-server-with-entry",
+    //   enforce: "pre",
+    //
+    //   resolveId: {
+    //     filter: {
+    //       id: virtualModulesRegex["server-entry-with-entry"],
+    //     },
+    //     order: "post",
+    //     handler(id) {
+    //       return ifPhotonModule("server-entry-with-entry", id, async ({ entry }) => {
+    //         const handlerOrConfig = this.environment.config.photon.entries.find((e) => e.name === entry);
+    //         assertUsage(handlerOrConfig, `Unable to find entry "${entry}"`);
+    //
+    //         return {
+    //           id,
+    //           meta: {
+    //             photon: {
+    //               ...this.environment.config.photon.server,
+    //               // Additional handler meta take precedence
+    //               ...handlerOrConfig,
+    //               type: "server",
+    //               id,
+    //               resolvedId: id,
+    //             },
+    //           },
+    //           resolvedBy: "photon",
+    //         };
+    //       });
+    //     },
+    //   },
+    //
+    //   load: {
+    //     filter: {
+    //       id: virtualModulesRegex["server-entry-with-entry"],
+    //     },
+    //     handler(id) {
+    //       return ifPhotonModule("server-entry-with-entry", id, async ({ entry }) => {
+    //         const resolved = await this.resolve(this.environment.config.photon.server.id);
+    //         assert(resolved);
+    //
+    //         const loaded = await this.load({ id: resolved.id });
+    //         assert(loaded.code);
+    //
+    //         const handlerOrConfig = this.environment.config.photon.entries.find((e) => e.name === entry);
+    //         assert(handlerOrConfig);
+    //
+    //         const code = loaded.code;
+    //
+    //         // All entries are bundled in server-config entries
+    //         if (handlerOrConfig.type === "server-config") {
+    //           return { code };
+    //         }
+    //
+    //         const ast = this.parse(code);
+    //         const magicString = new MagicString(code);
+    //
+    //         walk(ast, {
+    //           enter(node) {
+    //             if (
+    //               node.type === "ImportDeclaration" &&
+    //               typeof node.source.value === "string" &&
+    //               serverImports.has(cleanImport(node.source.value))
+    //             ) {
+    //               let foundApply = false;
+    //               // Check if { apply } is among the imported specifiers
+    //               for (const specifier of node.specifiers) {
+    //                 if (
+    //                   specifier.type === "ImportSpecifier" &&
+    //                   specifier.imported &&
+    //                   "name" in specifier.imported &&
+    //                   specifier.imported.name === "apply"
+    //                 ) {
+    //                   foundApply = true;
+    //                   break;
+    //                 }
+    //               }
+    //               if (foundApply) {
+    //                 const { end } = node.source as unknown as { start: number; end: number };
+    //
+    //                 // Adding a query parameter that will be used to rewrite `photon:get-middlewares` imports
+    //                 magicString.appendRight(end - 1, `?${new URLSearchParams({ photonHandler: entry }).toString()}`);
+    //               }
+    //             }
+    //           },
+    //         });
+    //
+    //         if (!magicString.hasChanged()) return;
+    //
+    //         return {
+    //           code: magicString.toString(),
+    //           map: magicString.generateMap(),
+    //         };
+    //       });
+    //     },
+    //   },
+    //
+    //   sharedDuringBuild: true,
+    // }),
+    // singleton({
+    //   name: "photon:transform-get-middlewares-import",
+    //   enforce: "pre",
+    //
+    //   resolveId: {
+    //     filter: {
+    //       id: re_photonHandler,
+    //     },
+    //     async handler(id, importer, opts) {
+    //       const [actualId, query] = id.split("?");
+    //       // biome-ignore lint/style/noNonNullAssertion: ensured by regex
+    //       const resolved = await this.resolve(actualId!, importer, opts);
+    //       assert(resolved);
+    //
+    //       return {
+    //         id: `${resolved.id}?${query}`,
+    //         resolvedBy: "photon",
+    //       };
+    //     },
+    //   },
+    //
+    //   load: {
+    //     filter: {
+    //       id: re_photonHandler,
+    //     },
+    //     async handler(id) {
+    //       const [actualId, query] = id.split("?");
+    //       // biome-ignore lint/style/noNonNullAssertion: ensured by regex
+    //       const loaded = await this.load({ id: actualId! });
+    //       assert(loaded.code);
+    //
+    //       const handlerId = new URLSearchParams(query).get("photonHandler");
+    //       assert(handlerId);
+    //
+    //       const newCode = loaded.code
+    //         // Forward query parameters to apply imports
+    //         .replace(/@photonjs\/core\/([^/]+)\/apply/, `@photonjs/core/$1/apply?${query}`)
+    //         .replace(/@photonjs\/([^/]+)\/apply/, `@photonjs/$1/apply?${query}`)
+    //         // Transform get-middleware import
+    //         .replace(/virtual:photon:get-middlewares:(.+?):(\w+)/, `virtual:photon:get-middlewares:$1:$2:${handlerId}`);
+    //
+    //       return {
+    //         code: newCode,
+    //         map: { mappings: "" },
+    //       };
+    //     },
+    //   },
+    // }),
     singleton({
-      name: "photon:resolve-importer",
+      name: "photon:apply-store",
       enforce: "pre",
 
-      resolveId: {
+      config: {
         order: "post",
-        handler(id, importer, opts) {
-          return ifPhotonModule(["handler-entry", "server-entry"], importer, ({ entry }) => {
-            if (entry) {
-              return this.resolve(id, entry, {
-                ...opts,
-                skipSelf: false,
-              });
-            }
-          });
-        },
-      },
-      sharedDuringBuild: true,
-    }),
-    singleton({
-      name: "photon:resolve-server-with-entry",
-      enforce: "pre",
-
-      resolveId: {
-        filter: {
-          id: virtualModulesRegex["server-entry-with-entry"],
-        },
-        order: "post",
-        handler(id) {
-          return ifPhotonModule("server-entry-with-entry", id, async ({ entry }) => {
-            const handlerOrConfig = this.environment.config.photon.entries.find((e) => e.name === entry);
-            assertUsage(handlerOrConfig, `Unable to find entry "${entry}"`);
-
-            return {
-              id,
-              meta: {
-                photon: {
-                  ...this.environment.config.photon.server,
-                  // Additional handler meta take precedence
-                  ...handlerOrConfig,
-                  type: "server",
-                  id,
-                  resolvedId: id,
-                },
-              },
-              resolvedBy: "photon",
-            };
-          });
-        },
-      },
-
-      load: {
-        filter: {
-          id: virtualModulesRegex["server-entry-with-entry"],
-        },
-        handler(id) {
-          return ifPhotonModule("server-entry-with-entry", id, async ({ entry }) => {
-            const resolved = await this.resolve(this.environment.config.photon.server.id);
-            assert(resolved);
-
-            const loaded = await this.load({ id: resolved.id });
-            assert(loaded.code);
-
-            const handlerOrConfig = this.environment.config.photon.entries.find((e) => e.name === entry);
-            assert(handlerOrConfig);
-
-            const code = loaded.code;
-
-            // All entries are bundled in server-config entries
-            if (handlerOrConfig.type === "server-config") {
-              return { code };
-            }
-
-            const ast = this.parse(code);
-            const magicString = new MagicString(code);
-
-            walk(ast, {
-              enter(node) {
-                if (
-                  node.type === "ImportDeclaration" &&
-                  typeof node.source.value === "string" &&
-                  serverImports.has(cleanImport(node.source.value))
-                ) {
-                  let foundApply = false;
-                  // Check if { apply } is among the imported specifiers
-                  for (const specifier of node.specifiers) {
-                    if (
-                      specifier.type === "ImportSpecifier" &&
-                      specifier.imported &&
-                      "name" in specifier.imported &&
-                      specifier.imported.name === "apply"
-                    ) {
-                      foundApply = true;
-                      break;
-                    }
-                  }
-                  if (foundApply) {
-                    const { end } = node.source as unknown as { start: number; end: number };
-
-                    // Adding a query parameter that will be used to rewrite `photon:get-middlewares` imports
-                    magicString.appendRight(end - 1, `?${new URLSearchParams({ photonHandler: entry }).toString()}`);
-                  }
-                }
-              },
-            });
-
-            if (!magicString.hasChanged()) return;
-
-            return {
-              code: magicString.toString(),
-              map: magicString.generateMap(),
-            };
-          });
-        },
-      },
-
-      sharedDuringBuild: true,
-    }),
-    singleton({
-      name: "photon:transform-get-middlewares-import",
-      enforce: "pre",
-
-      resolveId: {
-        filter: {
-          id: re_photonHandler,
-        },
-        async handler(id, importer, opts) {
-          const [actualId, query] = id.split("?");
-          // biome-ignore lint/style/noNonNullAssertion: ensured by regex
-          const resolved = await this.resolve(actualId!, importer, opts);
-          assert(resolved);
-
+        handler() {
+          const asdasdas = store.entries;
           return {
-            id: `${resolved.id}?${query}`,
-            resolvedBy: "photon",
-          };
-        },
-      },
-
-      load: {
-        filter: {
-          id: re_photonHandler,
-        },
-        async handler(id) {
-          const [actualId, query] = id.split("?");
-          // biome-ignore lint/style/noNonNullAssertion: ensured by regex
-          const loaded = await this.load({ id: actualId! });
-          assert(loaded.code);
-
-          const handlerId = new URLSearchParams(query).get("photonHandler");
-          assert(handlerId);
-
-          const newCode = loaded.code
-            // Forward query parameters to apply imports
-            .replace(/@photonjs\/core\/([^/]+)\/apply/, `@photonjs/core/$1/apply?${query}`)
-            .replace(/@photonjs\/([^/]+)\/apply/, `@photonjs/$1/apply?${query}`)
-            // Transform get-middleware import
-            .replace(/virtual:photon:get-middlewares:(.+?):(\w+)/, `virtual:photon:get-middlewares:$1:$2:${handlerId}`);
-
-          return {
-            code: newCode,
-            map: { mappings: "" },
+            build: {
+              rollupOptions: {
+                input: {},
+              },
+            },
           };
         },
       },

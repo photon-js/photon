@@ -8,11 +8,11 @@ const storeSymbol = Symbol.for("photon:store");
 // biome-ignore lint/suspicious/noExplicitAny: cast
 export const store: Store = (globalThis as any)[storeSymbol];
 
-export function addEntry(id: string, meta?: EntryMeta) {
+export function addEntry(id: string, meta: EntryMeta) {
   if (store.entries.has(id)) {
     throw new Error(`Entry with id "${id}" already exists.`);
   }
-  store.entries.set(id, meta ?? {});
+  store.entries.set(id, meta);
 }
 
 export function setEntry(id: string, meta: EntryMeta) {
