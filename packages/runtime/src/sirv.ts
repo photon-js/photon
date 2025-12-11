@@ -11,7 +11,7 @@ function getDefaultStaticDir() {
   return join(entrypointDirAbs, "..", "client");
 }
 
-const mid = sirv(getDefaultStaticDir(), {
+const mid = sirv(process.env.PUBLIC_DIR ?? getDefaultStaticDir(), {
   etag: true,
 });
 

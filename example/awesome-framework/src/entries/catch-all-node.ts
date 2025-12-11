@@ -1,3 +1,4 @@
+import sirv from "@photonjs/runtime/sirv";
 import { pipeRoute, type UniversalHandler } from "@universal-middleware/core";
 import { createHandler } from "@universal-middleware/srvx";
 import { apiMiddleware } from "./api.js";
@@ -7,7 +8,8 @@ import { standaloneMiddleware } from "./standalone.js";
 
 const defaultExport = /* @__PURE__ */ (() => ({
   fetch: createHandler(
-    () => pipeRoute([loggerMiddleware, apiMiddleware, standaloneMiddleware, ssrMiddleware]) as UniversalHandler,
+    () =>
+      pipeRoute([loggerMiddleware, ...sirv, apiMiddleware, standaloneMiddleware, ssrMiddleware]) as UniversalHandler,
   )(),
 }))();
 

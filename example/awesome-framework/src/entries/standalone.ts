@@ -1,7 +1,7 @@
 import { enhance } from "@universal-middleware/core";
 import { createHandler } from "@universal-middleware/srvx";
 
-const standaloneMiddleware = enhance(
+export const standaloneMiddleware = enhance(
   () => {
     return new Response("The /standalone Route", {
       status: 200,

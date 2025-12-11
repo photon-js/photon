@@ -25,6 +25,14 @@
     "./standalone": "./dist/entries/standalone.js",
     "./api": "./dist/entries/api.js",
     "./ssr": "./dist/entries/ssr.js",
-    "./catch-all": "./dist/entries/catch-all.js"
+    "./catch-all": {
+      "types": "./dist/entries/catch-all.d.js",
+      "deno": "./dist/entries/catch-all-node.js",
+      "bun": "./dist/entries/catch-all-node.js",
+      "workerd": "./dist/entries/catch-all.js",
+      "browser": "./dist/entries/catch-all.js",
+      "node": "./dist/entries/catch-all-node.js",
+      "default": "./dist/entries/catch-all.js"
+    }
   }
 }
