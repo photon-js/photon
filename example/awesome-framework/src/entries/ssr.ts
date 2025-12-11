@@ -1,8 +1,9 @@
 import indexHtml from "virtual:awesome-plugin:index-js";
-import { enhance } from "@universal-middleware/core";
+import { enhance, pipe } from "@universal-middleware/core";
+import { loggerMiddleware } from "./logger.js";
 
 export const ssrMiddleware = enhance(
-  async (_request: Request) => {
+  (_request: Request) => {
     return new Response(indexHtml, {
       status: 200,
       headers: {
@@ -17,3 +18,7 @@ export const ssrMiddleware = enhance(
     method: "GET",
   },
 );
+
+export default {
+  fetch: pipe(loggerMiddleware, ssrMiddleware),
+};

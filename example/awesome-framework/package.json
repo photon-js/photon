@@ -7,8 +7,9 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@photonjs/core": "^0.1.19",
-    "@photonjs/runtime": "^0.1.15",
+    "@photonjs/core": "workspace:^",
+    "@photonjs/runtime": "workspace:^",
+    "@photonjs/store": "workspace:^",
     "@universal-middleware/core": "^0.4.13",
     "@universal-middleware/sirv": "^0.1.23"
   },
@@ -19,20 +20,10 @@
   },
   "exports": {
     ".": "./dist/vite/index.js",
-    "./entry-client": "./dist/entry-client.js",
-    "./render": "./dist/render.js",
     "./vite": "./dist/vite/index.js",
-    "./standalone": "./dist/photon/entries/standalone.js",
-    "./universal-middleware": {
-      "types": "./dist/photon/entries/edge.d.ts",
-      "development": "./dist/photon/entries/dev.js",
-      "workerd": "./dist/photon/entries/edge.js",
-      "worker": "./dist/photon/entries/edge.js",
-      "deno": "./dist/photon/entries/node.js",
-      "bun": "./dist/photon/entries/node.js",
-      "node": "./dist/photon/entries/node.js",
-      "import": "./dist/photon/entries/edge.js",
-      "default": "./dist/photon/entries/edge.js"
-    }
+    "./standalone": "./dist/entries/standalone.js",
+    "./api": "./dist/entries/api.js",
+    "./ssr": "./dist/entries/ssr.js",
+    "./catch-all": "./dist/entries/catch-all.js"
   }
 }

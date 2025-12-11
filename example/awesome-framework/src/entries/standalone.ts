@@ -1,7 +1,7 @@
 import { enhance } from "@universal-middleware/core";
 
 const standaloneMiddleware = enhance(
-  async () => {
+  () => {
     return new Response("The /standalone Route", {
       status: 200,
       headers: {
@@ -17,5 +17,6 @@ const standaloneMiddleware = enhance(
   },
 );
 
-// This middleware will be used as a standalone handler, which means it is not included by `./universal-middleware` export
-export default standaloneMiddleware;
+export default {
+  fetch: standaloneMiddleware,
+};
