@@ -16,6 +16,7 @@ export {
   installPhotonResolver,
   supportedTargetServers,
   targetLoader,
+  minimalPhoton,
   type InstallPhotonCoreOptions,
   photon as default,
 };
@@ -31,6 +32,10 @@ function photon(config?: Photon.Config): Plugin[] {
     devServer(config),
     ...getMiddlewaresPlugin(),
   ];
+}
+
+function minimalPhoton(config?: Photon.Config): Plugin[] {
+  return [...commonConfig(), ...resolvePhotonConfigPlugin(config), devServer(config)];
 }
 
 type InstallPhotonCoreOptions = InstallPhotonBaseOptions & Photon.Config;

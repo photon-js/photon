@@ -3,6 +3,10 @@ import { apiMiddleware } from "./api.js";
 import { loggerMiddleware } from "./logger.js";
 import { ssrMiddleware } from "./ssr.js";
 
-export default {
+const defaultExport = /* @__PURE__ */ (() => ({
   fetch: pipeRoute([loggerMiddleware, apiMiddleware, ssrMiddleware]),
+}))();
+
+export default {
+  fetch: defaultExport,
 };

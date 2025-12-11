@@ -18,6 +18,10 @@ export const apiMiddleware = enhance(
   },
 );
 
-export default {
+const defaultExport = /* @__PURE__ */ (() => ({
   fetch: pipe(loggerMiddleware, apiMiddleware),
+}))();
+
+export default {
+  fetch: defaultExport,
 };

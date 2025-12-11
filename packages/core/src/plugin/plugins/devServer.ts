@@ -1,4 +1,3 @@
-import { cyan } from "ansis";
 import type {
   DevEnvironment,
   Environment,
@@ -182,11 +181,10 @@ export function devServer(config?: Photon.Config): Plugin {
     const env = vite.environments[envName];
     assertUsage(env, `Environment ${envName} does not exists`);
 
-    const index = vite.config.photon.server;
     const indexResolved = await env.pluginContainer.resolveId("virtual:photon:serve-entry");
     assertUsage(
       indexResolved?.id,
-      `Cannot find server entry ${cyan(index.id)}. Make sure its path is relative to the root of your project.`,
+      `Cannot find server entry. Make sure its path is relative to the root of your project.`,
     );
     resolvedEntryId = indexResolved.id;
     assertUsage(isRunnableDevEnvironment(env), `${envName} environment is not runnable`);

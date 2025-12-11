@@ -3,6 +3,7 @@ import { resolvePhotonConfig } from "@photonjs/core/api";
 import { resolveFirst, singleton } from "@photonjs/core/api/internal";
 import { assert } from "@photonjs/core/errors";
 import { photon as corePhoton, type InstallPhotonCoreOptions, installPhotonCore } from "@photonjs/core/vite";
+import { getCatchAllEntry } from "@photonjs/store";
 import standaloner from "standaloner/vite";
 import type { Plugin } from "vite";
 
@@ -23,6 +24,7 @@ interface PhotonPluginOptions {
 
 const re_photonFallback = /^virtual:photon:fallback-entry$/;
 const re_photonServe = /^virtual:photon:serve-entry$/;
+const re_photonServer = /^virtual:photon:server-entry$/;
 const re_photonWrap = /^virtual:photon:wrap-fetch-entry:(.*)/;
 
 function fallback(): Plugin {
@@ -159,6 +161,19 @@ function serve(): Plugin[] {
   let userHost: string | boolean | undefined;
   return [
     singleton({
+      name: "photon:resolve-server-entry",
+      resolveId: {
+        filter: {
+          id: re_photonServer,
+        },
+        handler() {
+          const entry = getCatchAllEntry(this.environment.name);
+          assert(entry);
+          return this.resolve(entry.id);
+        },
+      },
+    }),
+    singleton({
       name: "photon:serve",
 
       resolveId: {
@@ -170,8 +185,8 @@ function serve(): Plugin[] {
           const source = isDev ? "@photonjs/runtime/serve/dev" : "@photonjs/runtime/serve";
           const opts = {};
           const resolved = await resolveFirst(this, [
-            { source: `virtual:photon:resolve-from-photon:${source}`, opts },
-            { source: `virtual:photon:resolve-from-photon:${source}`, importer, opts },
+            { source, opts },
+            { source, importer, opts },
           ]);
 
           if (!resolved) {
@@ -332,4 +347,8 @@ export function installPhoton(name: string, options?: InstallPhotonCoreOptions):
   const plugins = installPhotonCore(name, options);
 
   return [fallback(), ...serve(), input(), ...plugins];
+}
+
+export function minimalPhotonRuntime(): Plugin[] {
+  return [...serve()];
 }

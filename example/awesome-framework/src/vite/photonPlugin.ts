@@ -1,4 +1,6 @@
 // import { installPhoton } from "@photonjs/runtime/vite";
+import { minimalPhoton } from "@photonjs/core/vite";
+import { minimalPhotonRuntime } from "@photonjs/runtime/vite";
 import { store } from "@photonjs/store";
 import type { Plugin } from "vite";
 
@@ -32,6 +34,8 @@ export function photonPlugin(): Plugin[] {
         );
       },
     },
+    ...minimalPhoton(),
+    ...minimalPhotonRuntime(),
   ];
   // return installPhoton("awesome-framework", {
   //   // Disables code-splitting functionality for testing purposes

@@ -19,6 +19,10 @@ export const ssrMiddleware = enhance(
   },
 );
 
-export default {
+const defaultExport = /* @__PURE__ */ (() => ({
   fetch: pipe(loggerMiddleware, ssrMiddleware),
+}))();
+
+export default {
+  fetch: defaultExport,
 };

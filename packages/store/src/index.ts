@@ -8,7 +8,7 @@ const storeSymbol = Symbol.for("photon:store");
 // biome-ignore lint/suspicious/noExplicitAny: cast
 export const store: Store = (globalThis as any)[storeSymbol];
 
-export function getCatchAllEntry() {
+export function getCatchAllEntry(viteEnv = "ssr") {
   if (store.entries.length === 0) return null;
   if (store.entries.length === 1) {
     // biome-ignore lint/style/noNonNullAssertion: asserted by length === 1
@@ -16,7 +16,9 @@ export function getCatchAllEntry() {
     if (entry.isolated !== true) return entry;
     throw new Error("A fallback entry as been found, but a catch-all entry is missing");
   }
-  const entry = store.entries.find((entry) => entry.isolated !== true && !entry.pattern);
+  const entry = store.entries.find((entry) => {
+    return entry.isolated !== true && !entry.pattern && (entry.viteEnv ?? "ssr") === viteEnv;
+  });
   if (entry) return entry;
-  throw new Error("Multiple entries are defined, but a catch-all entry is missing");
+  throw new Error(`A catch-all entry is missing for viteEnv "${viteEnv}"`);
 }

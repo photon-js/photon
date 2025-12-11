@@ -1,9 +1,9 @@
+import { store } from "@photonjs/store";
 import type { Plugin } from "vite";
 import { assertUsage } from "../../utils/assert.js";
 import { singleton } from "../utils/dedupe.js";
 import { importsToServer } from "../utils/servers.js";
 import { asPhotonEntryId, ifPhotonModule, virtualModules, virtualModulesRegex } from "../utils/virtual.js";
-import { store } from "@photonjs/store";
 
 const serverImports = new Set(Object.keys(importsToServer));
 const re_photonHandler = /[?&]photonHandler=/;

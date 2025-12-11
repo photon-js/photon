@@ -17,6 +17,8 @@ const standaloneMiddleware = enhance(
   },
 );
 
-export default {
+const defaultExport = /* @__PURE__ */ (() => ({
   fetch: standaloneMiddleware,
-};
+}))();
+
+export default defaultExport;
