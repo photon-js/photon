@@ -1,4 +1,5 @@
 import { enhance, pipe } from "@universal-middleware/core";
+import { createHandler } from "@universal-middleware/srvx";
 import { loggerMiddleware } from "./logger.js";
 
 export const apiMiddleware = enhance(
@@ -19,9 +20,7 @@ export const apiMiddleware = enhance(
 );
 
 const defaultExport = /* @__PURE__ */ (() => ({
-  fetch: pipe(loggerMiddleware, apiMiddleware),
+  fetch: createHandler(() => pipe(loggerMiddleware, apiMiddleware))(),
 }))();
 
-export default {
-  fetch: defaultExport,
-};
+export default defaultExport;

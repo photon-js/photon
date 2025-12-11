@@ -1,4 +1,5 @@
 import { enhance } from "@universal-middleware/core";
+import { createHandler } from "@universal-middleware/srvx";
 
 const standaloneMiddleware = enhance(
   () => {
@@ -18,7 +19,7 @@ const standaloneMiddleware = enhance(
 );
 
 const defaultExport = /* @__PURE__ */ (() => ({
-  fetch: standaloneMiddleware,
+  fetch: createHandler(() => standaloneMiddleware)(),
 }))();
 
 export default defaultExport;

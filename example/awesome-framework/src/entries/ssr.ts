@@ -1,5 +1,6 @@
 import indexHtml from "virtual:awesome-plugin:index-js";
 import { enhance, pipe } from "@universal-middleware/core";
+import { createHandler } from "@universal-middleware/srvx";
 import { loggerMiddleware } from "./logger.js";
 
 export const ssrMiddleware = enhance(
@@ -20,9 +21,7 @@ export const ssrMiddleware = enhance(
 );
 
 const defaultExport = /* @__PURE__ */ (() => ({
-  fetch: pipe(loggerMiddleware, ssrMiddleware),
+  fetch: createHandler(() => pipe(loggerMiddleware, ssrMiddleware))(),
 }))();
 
-export default {
-  fetch: defaultExport,
-};
+export default defaultExport;

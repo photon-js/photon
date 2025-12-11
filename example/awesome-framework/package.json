@@ -11,7 +11,8 @@
     "@photonjs/runtime": "workspace:^",
     "@photonjs/store": "workspace:^",
     "@universal-middleware/core": "^0.4.13",
-    "@universal-middleware/sirv": "^0.1.23"
+    "@universal-middleware/sirv": "^0.1.23",
+    "@universal-middleware/srvx": "^0.1.1"
   },
   "devDependencies": {
     "@types/node": "^22.19.1",
