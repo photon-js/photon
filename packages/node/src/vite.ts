@@ -1,27 +1,13 @@
-import { store } from "@photonjs/store";
 import type { Plugin } from "vite";
 
-const re_photonServer = /^virtual:photon:server-entry$/;
 const re_photonNode = /^virtual:photon:node-entry$/;
 
 // Creates a server and listens for connections in Node/Deno/Bun
 export function node(): Plugin[] {
   return [
-    // Resolves virtual:photon:server-entry to its actual id
+    // Resolves virtual:photon:node-entry to its node runtime id
     {
-      name: "photon:resolve:server-entry",
-      resolveId: {
-        filter: {
-          id: re_photonServer,
-        },
-        handler() {
-          return this.resolve(store.catchAllEntry);
-        },
-      },
-    },
-    // Resolves virtual:photon:serve-entry to its node runtime id
-    {
-      name: "photon:node",
+      name: "photon:node:node-entry",
       apply: "build",
 
       resolveId: {
@@ -42,7 +28,7 @@ export function node(): Plugin[] {
     },
     // Emit the node entry
     {
-      name: "photon:mode:emit",
+      name: "photon:node:emit",
       apply: "build",
       config: {
         order: "post",
@@ -53,7 +39,7 @@ export function node(): Plugin[] {
                 build: {
                   rollupOptions: {
                     input: {
-                      index: "virtual:photon:serve-entry",
+                      index: "virtual:photon:node-entry",
                     },
                   },
                 },
