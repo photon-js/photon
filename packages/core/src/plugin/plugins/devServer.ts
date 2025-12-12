@@ -1,3 +1,5 @@
+import { store } from "@photonjs/store";
+import { createMiddleware } from "@universal-middleware/express";
 import type {
   DevEnvironment,
   Environment,
@@ -6,6 +8,7 @@ import type {
   RunnableDevEnvironment,
   ViteDevServer,
 } from "vite";
+import type { Fetchable } from "../../api/internal.js";
 import { globalStore } from "../../runtime/globalStore.js";
 import type { Photon } from "../../types.js";
 import { assert, assertUsage } from "../../utils/assert.js";
@@ -22,6 +25,34 @@ const IS_RESTARTER_SET_UP = "__PHOTON__IS_RESTARTER_SET_UP";
 // Vite's isRunnableDevEnvironment isn't reliable when multiple Vite versions are installed
 export function isRunnableDevEnvironment(environment: Environment): environment is RunnableDevEnvironment {
   return "runner" in environment;
+}
+
+export function minimalDevServer(_config?: Photon.Config): Plugin {
+  // TODO HMR
+  return {
+    name: "photon:devserver:minimal",
+    apply(_config, { command, mode }) {
+      return command === "serve" && mode !== "test";
+    },
+    configureServer(server) {
+      return () => {
+        async function devMiddleware(request: Request) {
+          const ssr = server.environments.ssr;
+
+          if (isRunnableDevEnvironment(ssr)) {
+            const resolved = await ssr.pluginContainer.resolveId(store.catchAllEntry);
+
+            assertUsage(resolved?.id, `Cannot resolved server entry ${store.catchAllEntry}`);
+
+            const mod = await envImportFetchable(ssr, resolved.id);
+            return mod.fetch(request);
+          }
+        }
+
+        server.middlewares.use(createMiddleware(() => devMiddleware)());
+      };
+    },
+  };
 }
 
 export function devServer(config?: Photon.Config): Plugin {
@@ -181,6 +212,8 @@ export function devServer(config?: Photon.Config): Plugin {
     const env = vite.environments[envName];
     assertUsage(env, `Environment ${envName} does not exists`);
 
+    console.log("initializeServerEntry", "virtual:photon:serve-entry");
+    // FIXME rename virtual:photon:serve-entry to something like adapter-node
     const indexResolved = await env.pluginContainer.resolveId("virtual:photon:serve-entry");
     assertUsage(
       indexResolved?.id,
@@ -190,6 +223,14 @@ export function devServer(config?: Photon.Config): Plugin {
     assertUsage(isRunnableDevEnvironment(env), `${envName} environment is not runnable`);
     return envImport(env, resolvedEntryId);
   }
+}
+
+function envImportFetchable(env: RunnableDevEnvironment, resolvedId: string): Promise<Fetchable> {
+  return env.runner.import(resolvedId).then((mod) => {
+    assert(mod.default && typeof mod.default === "object");
+    assert(typeof mod.default.fetch === "function");
+    return mod.default;
+  });
 }
 
 function envImport<T>(env: RunnableDevEnvironment, resolvedId: string): Promise<T> {

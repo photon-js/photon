@@ -3,7 +3,7 @@ import { resolvePhotonConfig } from "@photonjs/core/api";
 import { resolveFirst, singleton } from "@photonjs/core/api/internal";
 import { assert } from "@photonjs/core/errors";
 import { photon as corePhoton, type InstallPhotonCoreOptions, installPhotonCore } from "@photonjs/core/vite";
-import { getCatchAllEntry } from "@photonjs/store";
+import { store } from "@photonjs/store";
 import standaloner from "standaloner/vite";
 import type { Plugin } from "vite";
 
@@ -166,10 +166,10 @@ function serve(): Plugin[] {
         filter: {
           id: re_photonServer,
         },
-        handler() {
-          const entry = getCatchAllEntry(this.environment.name);
-          assert(entry);
-          return this.resolve(entry.id);
+        async handler() {
+          const resolved = await this.resolve(store.catchAllEntry);
+          console.log("resolving", store.catchAllEntry, resolved);
+          return resolved;
         },
       },
     }),
@@ -181,6 +181,7 @@ function serve(): Plugin[] {
           id: re_photonServe,
         },
         async handler(id, importer) {
+          console.log("resolving", "virtual:photon:serve-entry");
           const isDev = this.environment.config.command === "serve";
           const source = isDev ? "@photonjs/runtime/serve/dev" : "@photonjs/runtime/serve";
           const opts = {};

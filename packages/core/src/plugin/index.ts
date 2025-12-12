@@ -1,7 +1,7 @@
 import type { Plugin } from "vite";
 import type { Photon } from "../types.js";
 import { commonConfig } from "./plugins/commonConfig.js";
-import { devServer } from "./plugins/devServer.js";
+import { devServer, minimalDevServer } from "./plugins/devServer.js";
 import { getMiddlewaresPlugin } from "./plugins/getMiddlewaresPlugin.js";
 import { type InstallPhotonBaseOptions, installPhotonResolver, simplePhotonResolver } from "./plugins/installPhoton.js";
 import { mirrorMeta } from "./plugins/mirrorMeta.js";
@@ -17,6 +17,8 @@ export {
   supportedTargetServers,
   targetLoader,
   minimalPhoton,
+  devServer,
+  minimalDevServer,
   type InstallPhotonCoreOptions,
   photon as default,
 };
@@ -35,7 +37,7 @@ function photon(config?: Photon.Config): Plugin[] {
 }
 
 function minimalPhoton(config?: Photon.Config): Plugin[] {
-  return [...commonConfig(), ...resolvePhotonConfigPlugin(config), devServer(config)];
+  return [...commonConfig(), ...resolvePhotonConfigPlugin(config)];
 }
 
 type InstallPhotonCoreOptions = InstallPhotonBaseOptions & Photon.Config;

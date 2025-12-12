@@ -1,7 +1,7 @@
 // import { installPhoton } from "@photonjs/runtime/vite";
-import { minimalPhoton } from "@photonjs/core/vite";
-import { minimalPhotonRuntime } from "@photonjs/runtime/vite";
+import { minimalDevServer } from "@photonjs/core/vite";
 import { store } from "@photonjs/store";
+import { catchAll } from "@photonjs/store/catch-all";
 import type { Plugin } from "vite";
 
 export function photonPlugin(): Plugin[] {
@@ -12,30 +12,41 @@ export function photonPlugin(): Plugin[] {
         store.entries.push(
           {
             id: "awesome-framework/standalone",
-            name: "awesome-framework/standalone",
             pattern: "/standalone",
           },
           {
             id: "awesome-framework/api",
-            name: "awesome-framework/api",
             pattern: "/api",
           },
-          // fallback entry
           {
             id: "awesome-framework/ssr",
-            name: "awesome-framework/ssr",
-            isolated: true,
-          },
-          // catch-all entry
-          {
-            id: "awesome-framework/catch-all",
-            name: "awesome-framework/catch-all",
+            pattern: "/:slug*",
           },
         );
       },
     },
-    ...minimalPhoton(),
-    ...minimalPhotonRuntime(),
+    {
+      name: "awesome-framework:client-entry",
+      enforce: "pre",
+      resolveId: {
+        filter: {
+          id: /^virtual:awesome-framework:client-entry$/,
+        },
+        handler() {
+          console.log("resolving", "virtual:awesome-framework:client-entry");
+          return this.resolve("src/entry-client.ts");
+        },
+      },
+    },
+    // FIXME this is used to make devServer run on user-provided servers + fallback, with HMR
+    //  Make this an opt-in plugin
+    // devServer(),
+    // FIXME this is used to generate the default node target, and also is also required when using devServer.
+    //  Make this an opt-in plugin
+    // ...minimalPhotonRuntime(),
+    // Forwards request to server entries from a vite dev server middleware
+    minimalDevServer(),
+    catchAll(),
   ];
   // return installPhoton("awesome-framework", {
   //   // Disables code-splitting functionality for testing purposes

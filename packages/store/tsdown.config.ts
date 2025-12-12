@@ -16,6 +16,7 @@ export default defineConfig([
     platform: "neutral",
     entry: {
       index: "./src/index.ts",
+      "catch-all": "./src/catch-all.ts",
     },
   },
 ]);

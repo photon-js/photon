@@ -1,5 +1,6 @@
 export interface Store {
   entries: EntryMeta[];
+  catchAllEntry: string;
 }
 
 export interface EntryMeta {
@@ -8,41 +9,21 @@ export interface EntryMeta {
    */
   id: string;
   /**
-   * Can be used for debugging purposes if present.
-   */
-  name?: string;
-  /**
-   * If undefined, matches any method.
+   * If undefined, matches any HTTP method.
    */
   method?: HttpMethod | HttpMethod[];
   /**
-   * If undefined, acts as catch-all or fallback depending on the {@link isolated} property.
+   * Route pattern for this entry.
    *
    * Adheres to the {@link https://developer.mozilla.org/en-US/docs/Web/API/URLPattern | URLPattern API}.
    */
-  pattern?: URLPatternInput;
+  pattern: URLPatternInput;
   /**
-   * This property only matters when `pattern` is undefined.
-   * If true, this entry is isolated and does not include runtime routing information (fallback).
-   * Used for code-split entries.
-   *
-   * If false or undefined, this entry contains all routing information (catch-all).
-   *
-   * In order of importance, a framework can declare:
-   * - A catch-all entry (works everywhere, mandatory)
-   * - Entries with `pattern` (Edge support, ISR, code-splitting, etc.)
-   * - A fallback entry (handles unmatched requests; may replace catch-all when
-   *   supported by the deployment platform)
-   *
-   * @default false
-   */
-  isolated?: boolean;
-  /**
-   * Which Vite environment is used to build this entry.
+   * The Vite environment this entry belongs to.
    *
    * @default ssr
    */
-  viteEnv?: string;
+  environment?: string;
 }
 
 interface URLPatternInit {
