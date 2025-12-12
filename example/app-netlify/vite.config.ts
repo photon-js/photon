@@ -17,7 +17,7 @@ export default defineConfig({
   //   },
   // },
   plugins: [
-    // Can be replace by ...minimalNodeRuntime() to target node/bun/deno instead
+    // Can be replaced by @photonjs/node/vite to target node/bun/deno instead
     netlify(),
     awesomeFramework(),
   ],

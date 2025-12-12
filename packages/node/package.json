@@ -1,0 +1,42 @@
+{
+  "name": "@photonjs/node",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./serve": "./dist/serve.js",
+    "./vite": "./dist/vite.js"
+  },
+  "scripts": {
+    "dev": "tsdown --watch",
+    "build": "tsdown",
+    "test:types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@photonjs/store": "workspace:^",
+    "@universal-middleware/sirv": "^0.1.23",
+    "srvx": "^0.9.7"
+  },
+  "peerDependencies": {
+    "vite": ">=7.1"
+  },
+  "peerDependenciesMeta": {
+    "vite": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@photonjs/core": "workspace:^",
+    "@types/node": "^22.19.1",
+    "tsdown": "^0.17.0-beta.4",
+    "typescript": "^5.9.3",
+    "vite": "^7.2.4"
+  },
+  "files": [
+    "dist/"
+  ],
+  "repository": "github:photon-js/photon",
+  "license": "MIT"
+}

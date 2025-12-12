@@ -33,7 +33,7 @@
     "@photonjs/runtime": "workspace:^"
   },
   "devDependencies": {
-    "@types/node": "^20.19.25",
+    "@types/node": "^22.19.1",
     "@universal-middleware/express": "^0.4.22",
     "@vercel/node": "^5.5.13",
     "rollup": "^4.53.3",
