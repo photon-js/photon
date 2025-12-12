@@ -1,8 +1,10 @@
 import indexHtml from "virtual:awesome-plugin:index-js";
-import { enhance } from "@universal-middleware/core";
+import { enhance, pipe } from "@universal-middleware/core";
+import { createHandler } from "@universal-middleware/srvx";
+import { loggerMiddleware } from "./logger.js";
 
 export const ssrMiddleware = enhance(
-  async (_request: Request) => {
+  (_request: Request) => {
     return new Response(indexHtml, {
       status: 200,
       headers: {
@@ -17,3 +19,9 @@ export const ssrMiddleware = enhance(
     method: "GET",
   },
 );
+
+const defaultExport = /* @__PURE__ */ (() => ({
+  fetch: createHandler(() => pipe(loggerMiddleware, ssrMiddleware))(),
+}))();
+
+export default defaultExport;

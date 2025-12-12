@@ -93,10 +93,11 @@ export function nodeServe(options: ServerOptions, handler: NodeHandler): ServerT
   return server;
 }
 
-export function srvxServe(options: ServeReturn) {
+export function srvxServe(options: ServeReturn & Pick<SrvxServerOptions, "middleware">) {
   const srvxOptions: SrvxServerOptions = {
     fetch: options.fetch,
     gracefulShutdown: false,
+    middleware: options.middleware,
   };
   const serverOptions = options.server?.options;
   const port = getPort(serverOptions);

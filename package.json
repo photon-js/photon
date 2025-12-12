@@ -32,5 +32,10 @@
     "@vikejs/biome-config": "^2.0.1",
     "playwright": "^1.57.0"
   },
+  "pnpm": {
+    "overrides": {
+      "@types/node": "^22.19.1"
+    }
+  },
   "packageManager": "pnpm@10.24.0"
 }

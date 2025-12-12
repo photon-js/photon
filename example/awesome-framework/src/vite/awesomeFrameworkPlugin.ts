@@ -1,4 +1,4 @@
-import type { Plugin } from "vite";
+import type { Plugin, ViteDevServer } from "vite";
 import { renderUrl } from "../renderUrl.js";
 
 const virtualIndex = "virtual:awesome-plugin:index.html";
@@ -6,6 +6,7 @@ const virtualIndexSsr = "virtual:awesome-plugin:index-js";
 
 let clientHtml = "";
 export function awesomeFrameworkPlugin(): Plugin[] {
+  let server: ViteDevServer | undefined;
   return [
     {
       name: "awesome-framework",
@@ -64,13 +65,16 @@ export function awesomeFrameworkPlugin(): Plugin[] {
           return html;
         },
       },
+      configureServer(devServer) {
+        server = devServer;
+      },
       async load(id) {
         if (id === "index.html") {
           return renderUrl("/");
         }
         if (id === virtualIndexSsr) {
           if (this.environment.config.command === "serve") {
-            clientHtml = renderUrl("/");
+            await server!.transformIndexHtml("/", renderUrl("/"));
           }
           return `export default ${JSON.stringify(clientHtml)};`;
         }

@@ -8,7 +8,7 @@ const commonOptions: TsdownOptions = {
   treeshake: true,
   nodeProtocol: true,
   fixedExtension: false,
-  external: [/^@photonjs\/core/, /^@photonjs\/hono/, /^virtual:photon:get-middlewares:/, "virtual:photon:server-entry"],
+  external: ["virtual:photon:server-entry"],
 };
 
 export default defineConfig([
@@ -18,12 +18,7 @@ export default defineConfig([
     entry: {
       vite: "./src/vite.ts",
       serve: "./src/serve.ts",
-      "serve-dev": "./src/serve-dev.ts",
-      // FIXME rename
-      "serve-minimal-prod": "./src/serve-minimal-prod.ts",
-      internal: "./src/internal.ts",
       index: "./src/index.ts",
-      sirv: "./src/sirv.ts",
     },
   },
 ]);
