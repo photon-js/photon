@@ -4,11 +4,16 @@ import { store } from "@photonjs/store";
 import { catchAll } from "@photonjs/store/catch-all";
 import type { Plugin } from "vite";
 
+// The vite config file can be loaded multiple times (once per env + 1),
+// meaning that the `config` hook of all plugins can run multiple times.
+let injected = false;
 export function photonPlugin(): Plugin[] {
   return [
     {
       name: "awesome-framework:photon",
       config() {
+        if (injected) return;
+        injected = true;
         store.entries.push(
           {
             id: "awesome-framework/standalone",

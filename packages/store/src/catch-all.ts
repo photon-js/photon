@@ -36,18 +36,28 @@ export function catchAll(): Plugin {
         const router = createRouter<string>();
 
         let i = 0;
+        const seen = new Set<string>();
+        const duplicates = new Set<string>();
         for (const meta of store.entries.values()) {
           const resolved = await this.resolve(meta.id);
           if (!resolved) {
             throw new Error(`Failed to resolve ${meta.id}`);
           }
-
-          // FIXME testing with rou3 patterns for now, but this will need transformation from actual URLPatternInit
-          const rou3Path = meta.pattern as string;
-          // TODO dedupe + warn
-          imports.push(`import m${i} from ${JSON.stringify(resolved.id)};`);
-          routesByKey.push(`m${i}`);
-          addRoute(router, "", rou3Path, `m${i++}`);
+          if (seen.has(resolved.id)) {
+            duplicates.add(resolved.id);
+          } else {
+            seen.add(resolved.id);
+            // FIXME testing with rou3 patterns for now, but this will need transformation from actual URLPatternInit
+            const rou3Path = meta.pattern as string;
+            imports.push(`import m${i} from ${JSON.stringify(resolved.id)};`);
+            routesByKey.push(`m${i}`);
+            addRoute(router, "", rou3Path, `m${i++}`);
+          }
+        }
+        if (duplicates.size > 0) {
+          console.warn(
+            `\nDuplicate entries detected in virtual:photon:catch-all. \nDuplicates:\n - ${Array.from(duplicates.values()).join("\n - ")}`,
+          );
         }
 
         // const findRoute=(m, p) => {}
