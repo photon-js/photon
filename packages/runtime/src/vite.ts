@@ -1,6 +1,6 @@
 import type { Photon } from "@photonjs/core";
 import { resolvePhotonConfig } from "@photonjs/core/api";
-import { resolveFirst, singleton } from "@photonjs/core/api/internal";
+import { singleton } from "@photonjs/core/api/internal";
 import { assert } from "@photonjs/core/errors";
 import { photon as corePhoton, type InstallPhotonCoreOptions, installPhotonCore } from "@photonjs/core/vite";
 import { store } from "@photonjs/store";
@@ -160,135 +160,166 @@ function serve(): Plugin[] {
   let userPort: number | undefined;
   let userHost: string | boolean | undefined;
   return [
+    // Resolves virtual:photon:server-entry to its actual id
     singleton({
       name: "photon:resolve-server-entry",
       resolveId: {
         filter: {
           id: re_photonServer,
         },
-        async handler() {
-          const resolved = await this.resolve(store.catchAllEntry);
-          console.log("resolving", store.catchAllEntry, resolved);
-          return resolved;
+        handler() {
+          return this.resolve(store.catchAllEntry);
         },
       },
     }),
+    // Resolves virtual:photon:serve-entry to its node runtime id
     singleton({
       name: "photon:serve",
+      // FIXME For Photon, it must also run in dev
+      apply: "build",
 
       resolveId: {
         filter: {
           id: re_photonServe,
         },
-        async handler(id, importer) {
-          console.log("resolving", "virtual:photon:serve-entry");
-          const isDev = this.environment.config.command === "serve";
-          const source = isDev ? "@photonjs/runtime/serve/dev" : "@photonjs/runtime/serve";
-          const opts = {};
-          const resolved = await resolveFirst(this, [
-            { source, opts },
-            { source, importer, opts },
-          ]);
+        async handler(id, _importer) {
+          // TODO Plug back photon serve functions
+          // console.log("resolving", "virtual:photon:serve-entry");
+          // const isDev = this.environment.config.command === "serve";
+          // const source = isDev ? "@photonjs/runtime/serve/dev" : "@photonjs/runtime/serve";
+          // const opts = {};
+          // const resolved = await resolveFirst(this, [
+          //   { source, opts },
+          //   { source, importer, opts },
+          // ]);
 
+          const resolved = await this.resolve("@photonjs/runtime/serve/minimal-prod");
           if (!resolved) {
             throw new Error(`Cannot find server entry ${JSON.stringify(id)}`);
           }
 
           return {
             id: resolved.id,
-            meta: {
-              photon: {
-                id,
-                resolvedId: resolved.id,
-              },
-              photonConfig: {
-                isTargetEntry: true,
+            // FIXME Photon specific meta, probably not usefull anymore
+            // meta: {
+            //   photon: {
+            //     id,
+            //     resolvedId: resolved.id,
+            //   },
+            //   photonConfig: {
+            //     isTargetEntry: true,
+            //   },
+            // },
+          };
+        },
+      },
+    }),
+    // FIXME Photon plugin
+    // singleton({
+    //   name: "photon:serve:transform-dev",
+    //   apply: "serve",
+    //
+    //   applyToEnvironment(env) {
+    //     return env.config.consumer === "server";
+    //   },
+    //
+    //   config(userConfig) {
+    //     userPort = userConfig.server?.port;
+    //     userHost = userConfig.server?.host;
+    //   },
+    //
+    //   transform: {
+    //     filter: {
+    //       code: [/process\.env\.PORT/, /process\.env\.PHOTON_HOSTNAME/],
+    //     },
+    //     handler(code) {
+    //       let newCode = code;
+    //       let replaced = false;
+    //       if (userPort) {
+    //         newCode = newCode.replaceAll("process.env.PORT", JSON.stringify(String(userPort)));
+    //         replaced = true;
+    //       }
+    //       if (typeof userHost === "string") {
+    //         newCode = newCode.replaceAll("process.env.PHOTON_HOSTNAME", JSON.stringify(String(userHost)));
+    //         replaced = true;
+    //       }
+    //       if (replaced) {
+    //         return newCode;
+    //       }
+    //     },
+    //   },
+    // }),
+
+    // Emit the node entry
+    {
+      name: "photon:serve:emit-minimal",
+      apply: "build",
+      config: {
+        order: "post",
+        handler() {
+          return {
+            environments: {
+              ssr: {
+                build: {
+                  rollupOptions: {
+                    input: {
+                      index: "virtual:photon:serve-entry",
+                    },
+                  },
+                },
               },
             },
           };
         },
       },
-    }),
-    singleton({
-      name: "photon:serve:transform-dev",
-      apply: "serve",
-
-      applyToEnvironment(env) {
-        return env.config.consumer === "server";
-      },
-
-      config(userConfig) {
-        userPort = userConfig.server?.port;
-        userHost = userConfig.server?.host;
-      },
-
-      transform: {
-        filter: {
-          code: [/process\.env\.PORT/, /process\.env\.PHOTON_HOSTNAME/],
-        },
-        handler(code) {
-          let newCode = code;
-          let replaced = false;
-          if (userPort) {
-            newCode = newCode.replaceAll("process.env.PORT", JSON.stringify(String(userPort)));
-            replaced = true;
-          }
-          if (typeof userHost === "string") {
-            newCode = newCode.replaceAll("process.env.PHOTON_HOSTNAME", JSON.stringify(String(userHost)));
-            replaced = true;
-          }
-          if (replaced) {
-            return newCode;
-          }
-        },
-      },
-    }),
-    singleton({
-      name: "photon:serve:emit",
-
-      apply: "build",
-      enforce: "post",
-
-      config: {
-        order: "post",
-        handler(config) {
-          const photon = resolvePhotonConfig(config.photon);
-
-          if (!photon.target || nodeTargets.has(photon.target)) {
-            return {
-              environments: {
-                [photon.defaultBuildEnv]: {
-                  build: {
-                    rollupOptions: {
-                      input: {
-                        index: "virtual:photon:serve-entry",
-                      },
-                    },
-                  },
-                },
-              },
-            };
-          }
-        },
-      },
-
-      configResolved({ photon }) {
-        // Add sirv middleware when targeting node, but only when fetchable entry is extracted from rollupOptions
-        if (
-          photon.server.id.includes("virtual:photon:wrap-fetch-entry:") &&
-          (!photon.target || nodeTargets.has(photon.target))
-        ) {
-          photon.middlewares ??= [];
-          photon.middlewares.push((condition) => {
-            if (condition === "node") {
-              return "@photonjs/runtime/sirv";
-            }
-          });
-        }
-      },
-
-      sharedDuringBuild: true,
-    }),
+    },
+    // FIXME Photon specific plugin
+    // singleton({
+    //   name: "photon:serve:emit",
+    //
+    //   apply: "build",
+    //   enforce: "post",
+    //
+    //   config: {
+    //     order: "post",
+    //     handler(config) {
+    //       const photon = resolvePhotonConfig(config.photon);
+    //
+    //       if (!photon.target || nodeTargets.has(photon.target)) {
+    //         return {
+    //           environments: {
+    //             [photon.defaultBuildEnv]: {
+    //               build: {
+    //                 rollupOptions: {
+    //                   input: {
+    //                     index: "virtual:photon:serve-entry",
+    //                   },
+    //                 },
+    //               },
+    //             },
+    //           },
+    //         };
+    //       }
+    //     },
+    //   },
+    //
+    //   configResolved({ photon }) {
+    //     // Add sirv middleware when targeting node, but only when fetchable entry is extracted from rollupOptions
+    //     if (
+    //       photon.server.id.includes("virtual:photon:wrap-fetch-entry:") &&
+    //       (!photon.target || nodeTargets.has(photon.target))
+    //     ) {
+    //       photon.middlewares ??= [];
+    //       photon.middlewares.push((condition) => {
+    //         if (condition === "node") {
+    //           return "@photonjs/runtime/sirv";
+    //         }
+    //       });
+    //     }
+    //   },
+    //
+    //   sharedDuringBuild: true,
+    // }),
   ];
 }
 
@@ -350,6 +381,6 @@ export function installPhoton(name: string, options?: InstallPhotonCoreOptions):
   return [fallback(), ...serve(), input(), ...plugins];
 }
 
-export function minimalPhotonRuntime(): Plugin[] {
+export function minimalNodeRuntime(): Plugin[] {
   return [...serve()];
 }

@@ -11,6 +11,7 @@
     "./vite": "./dist/vite.js",
     "./serve": "./dist/serve.js",
     "./serve/dev": "./dist/serve-dev.js",
+    "./serve/minimal-prod": "./dist/serve-minimal-prod.js",
     "./virtual": {
       "types": "./virtual.d.ts"
     }

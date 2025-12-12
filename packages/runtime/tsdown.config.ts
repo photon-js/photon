@@ -19,6 +19,8 @@ export default defineConfig([
       vite: "./src/vite.ts",
       serve: "./src/serve.ts",
       "serve-dev": "./src/serve-dev.ts",
+      // FIXME rename
+      "serve-minimal-prod": "./src/serve-minimal-prod.ts",
       internal: "./src/internal.ts",
       index: "./src/index.ts",
       sirv: "./src/sirv.ts",

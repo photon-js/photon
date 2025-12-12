@@ -27,6 +27,7 @@ export function isRunnableDevEnvironment(environment: Environment): environment 
   return "runner" in environment;
 }
 
+// FIXME proper separation between this and a full-fledged Photon dev server
 export function minimalDevServer(_config?: Photon.Config): Plugin {
   // TODO HMR
   return {

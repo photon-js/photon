@@ -38,6 +38,7 @@ export function catchAll(): Plugin {
 
           // FIXME testing with rou3 patterns for now, but this will need transformation from actual URLPatternInit
           const rou3Path = meta.pattern as string;
+          // TODO dedupe + warn
           imports.push(`import m${i} from ${JSON.stringify(resolved.id)};`);
           routesByKey.push(`m${i}`);
           addRoute(router, "", rou3Path, `m${i++}`);
