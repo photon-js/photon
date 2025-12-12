@@ -1,4 +1,3 @@
-import { singleton } from "@photonjs/core/api/internal";
 import { store } from "@photonjs/store";
 import type { Plugin } from "vite";
 
@@ -9,7 +8,7 @@ const re_photonServer = /^virtual:photon:server-entry$/;
 export function node(): Plugin[] {
   return [
     // Resolves virtual:photon:server-entry to its actual id
-    singleton({
+    {
       name: "photon:resolve-server-entry",
       resolveId: {
         filter: {
@@ -19,9 +18,9 @@ export function node(): Plugin[] {
           return this.resolve(store.catchAllEntry);
         },
       },
-    }),
+    },
     // Resolves virtual:photon:serve-entry to its node runtime id
-    singleton({
+    {
       name: "photon:serve",
       apply: "build",
 
@@ -40,7 +39,7 @@ export function node(): Plugin[] {
           };
         },
       },
-    }),
+    },
     // Emit the node entry
     {
       name: "photon:serve:emit-minimal",
