@@ -1,6 +1,7 @@
 import { addRoute, createRouter } from "rou3";
 import { compileRouterToString } from "rou3/compiler";
 import type { Plugin } from "vite";
+import { catchAllId } from "./const.js";
 import { store } from "./index.js";
 
 // A virtual module aggregating all routes defined in the store
@@ -13,7 +14,7 @@ const re_photonServer = /^virtual:photon:server-entry$/;
 // Also perhaps replace the rou3/compiler by a unique concatenated regex matcher (See https://github.com/honojs/hono/blob/57f214663ec63666d5a86620928f90af472e95a4/src/router/reg-exp-router/prepared-router.ts#L156).
 export function catchAll(): Plugin {
   return {
-    name: "photon:catch-all",
+    name: catchAllId,
     resolveId: {
       filter: {
         id: {
@@ -21,9 +22,7 @@ export function catchAll(): Plugin {
         },
       },
       async handler(id, importer) {
-        return id === "virtual:photon:catch-all"
-          ? id
-          : this.resolve(store.catchAllEntry, importer, { skipSelf: false });
+        return id.match(re_catchAll) ? id : this.resolve(store.catchAllEntry, importer, { skipSelf: false });
       },
     },
     load: {

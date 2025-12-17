@@ -1,5 +1,6 @@
 import type { Plugin } from "vite";
 import { store } from "./index.js";
+import { dependsOn } from "./utils.js";
 
 let added = false;
 
@@ -41,5 +42,7 @@ export function compat(config?: { entry?: string }): Plugin {
         });
       },
     },
+
+    ...dependsOn("photon:catch-all"),
   };
 }
