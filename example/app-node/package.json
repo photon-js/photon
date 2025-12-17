@@ -1,0 +1,21 @@
+{
+  "name": "app-node",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "test:e2e": "playwright test",
+    "test:types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@photonjs/node": "workspace:^",
+    "e2e": "workspace:",
+    "playwright": "^1.57.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.2.4"
+  },
+  "dependencies": {
+    "awesome-framework": "0.0.0"
+  }
+}

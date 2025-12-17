@@ -15,7 +15,9 @@
   },
   "dependencies": {
     "@netlify/vite-plugin": "^2.7.14",
-    "@photonjs/core": "workspace:^"
+    "@photonjs/core": "workspace:^",
+    "@photonjs/store": "workspace:^",
+    "rou3": "^0.7.11"
   },
   "devDependencies": {
     "tsdown": "^0.17.0-beta.4",

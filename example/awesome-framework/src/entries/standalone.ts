@@ -1,7 +1,8 @@
 import { enhance } from "@universal-middleware/core";
+import { createHandler } from "@universal-middleware/srvx";
 
-const standaloneMiddleware = enhance(
-  async () => {
+export const standaloneMiddleware = enhance(
+  () => {
     return new Response("The /standalone Route", {
       status: 200,
       headers: {
@@ -17,5 +18,8 @@ const standaloneMiddleware = enhance(
   },
 );
 
-// This middleware will be used as a standalone handler, which means it is not included by `./universal-middleware` export
-export default standaloneMiddleware;
+const defaultExport = /* @__PURE__ */ (() => ({
+  fetch: createHandler(() => standaloneMiddleware)(),
+}))();
+
+export default defaultExport;

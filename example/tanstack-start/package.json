@@ -7,12 +7,12 @@
     "dev:cloudflare": "vite dev --port 3000 -c vite.cloudflare.config.ts",
     "build": "vite build",
     "preview": "vite build && node dist/server/index.js",
-    "preview:cloudflare": "vite build -c vite.cloudflare.config.ts && vite preview -c vite.cloudflare.config.ts",
-    "test": "vitest run"
+    "preview:cloudflare": "vite build -c vite.cloudflare.config.ts && vite preview -c vite.cloudflare.config.ts"
   },
   "dependencies": {
-    "@photonjs/cloudflare": "^0.1.12",
-    "@photonjs/runtime": "^0.1.15",
+    "@photonjs/cloudflare": "workspace:^",
+    "@photonjs/node": "workspace:^",
+    "@photonjs/store": "workspace:^",
     "@tailwindcss/vite": "^4.1.17",
     "@tanstack/react-devtools": "^0.7.11",
     "@tanstack/react-router": "^1.139.0",
@@ -37,7 +37,6 @@
     "jsdom": "^27.2.0",
     "typescript": "^5.9.3",
     "vite": "^7.2.4",
-    "vitest": "^3.2.4",
     "web-vitals": "^5.1.0"
   },
   "version": null

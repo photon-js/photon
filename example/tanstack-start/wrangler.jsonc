@@ -3,5 +3,7 @@
   "name": "tanstack-start-app",
   "compatibility_date": "2025-09-02",
   "compatibility_flags": ["nodejs_compat"],
-  "main": "virtual:photon:cloudflare:server-entry"
+  // Points to the virtual catch‑all entry registered by the compat plugin,
+  // which resolves to TanStack’s SSR server entry.
+  "main": "virtual:photon:catch-all"
 }

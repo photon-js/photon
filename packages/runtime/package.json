@@ -11,6 +11,7 @@
     "./vite": "./dist/vite.js",
     "./serve": "./dist/serve.js",
     "./serve/dev": "./dist/serve-dev.js",
+    "./serve/minimal-prod": "./dist/serve-minimal-prod.js",
     "./virtual": {
       "types": "./virtual.d.ts"
     }
@@ -23,6 +24,7 @@
   "dependencies": {
     "@photonjs/core": "workspace:^",
     "@photonjs/srvx": "workspace:^",
+    "@photonjs/store": "workspace:^",
     "@universal-middleware/core": "^0.4.13",
     "@universal-middleware/sirv": "^0.1.23",
     "srvx": "^0.9.7",

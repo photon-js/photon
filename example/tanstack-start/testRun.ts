@@ -6,6 +6,13 @@ function testRun(cmd: `pnpm run ${string}`) {
   run(cmd, {
     // Preview => builds app which takes a long time
     additionalTimeout: 120 * 1000,
+    serverIsReadyMessage: "http://localhost:3000/",
+    tolerateError({ logText }) {
+      // srvx
+      if (logText.includes("Shutting down server")) return true;
+      if (logText.includes("Server closed")) return true;
+      return;
+    },
   });
 
   test("page content is rendered to HTML", async () => {
