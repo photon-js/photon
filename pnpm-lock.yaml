@@ -258,11 +258,14 @@ importers:
   example/tanstack-start:
     dependencies:
       '@photonjs/cloudflare':
-        specifier: ^0.1.12
+        specifier: workspace:^
         version: link:../../packages/adapter-cloudflare
-      '@photonjs/runtime':
-        specifier: ^0.1.15
-        version: link:../../packages/runtime
+      '@photonjs/node':
+        specifier: workspace:^
+        version: link:../../packages/node
+      '@photonjs/store':
+        specifier: workspace:^
+        version: link:../../packages/store
       '@tailwindcss/vite':
         specifier: ^4.1.17
         version: 4.1.17(vite@7.2.4(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.2))

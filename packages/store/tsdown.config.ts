@@ -17,6 +17,7 @@ export default defineConfig([
     entry: {
       index: "./src/index.ts",
       "catch-all": "./src/catch-all.ts",
+      compat: "./src/rollup-entries-compat.ts",
     },
   },
 ]);

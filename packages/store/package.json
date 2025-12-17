@@ -6,7 +6,8 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": "./dist/index.js",
-    "./catch-all": "./dist/catch-all.js"
+    "./catch-all": "./dist/catch-all.js",
+    "./compat": "./dist/compat.js"
   },
   "scripts": {
     "dev": "tsdown --watch",
