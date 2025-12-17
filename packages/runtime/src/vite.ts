@@ -3,7 +3,7 @@ import { resolvePhotonConfig } from "@photonjs/core/api";
 import { singleton } from "@photonjs/core/api/internal";
 import { assert } from "@photonjs/core/errors";
 import { photon as corePhoton, type InstallPhotonCoreOptions, installPhotonCore } from "@photonjs/core/vite";
-import { store } from "@photonjs/store";
+import { catchAllEntry } from "@photonjs/store";
 import standaloner from "standaloner/vite";
 import type { Plugin } from "vite";
 
@@ -168,7 +168,7 @@ function serve(): Plugin[] {
           id: re_photonServer,
         },
         handler() {
-          return this.resolve(store.catchAllEntry);
+          return this.resolve(catchAllEntry);
         },
       },
     }),

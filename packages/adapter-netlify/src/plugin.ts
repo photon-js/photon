@@ -1,5 +1,5 @@
 import createNetlifyPlugin, { type NetlifyPluginOptions } from "@netlify/vite-plugin";
-import { store } from "@photonjs/store";
+import { catchAllEntry } from "@photonjs/store";
 import type { Plugin } from "vite";
 
 const moduleId = "photon:netlify";
@@ -57,7 +57,7 @@ export function netlify(config?: NetlifyPluginOptions): Plugin[] {
             build: {
               rollupOptions: {
                 input: {
-                  index: store.catchAllEntry,
+                  index: catchAllEntry,
                 },
               },
             },

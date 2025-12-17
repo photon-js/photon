@@ -2,11 +2,11 @@ import { addRoute, createRouter } from "rou3";
 import { compileRouterToString } from "rou3/compiler";
 import type { Plugin } from "vite";
 import { catchAllId } from "./const.js";
-import { store } from "./index.js";
+import { catchAllEntry } from "./index.js";
 
 // A virtual module aggregating all routes defined in the store
 const re_catchAll = /^virtual:photon:catch-all$/;
-// Resolves to store.catchAllEntry
+// Resolves to catchAllEntry
 const re_photonServer = /^virtual:photon:server-entry$/;
 
 // Current version compiles with rou3/compiler.
@@ -22,7 +22,7 @@ export function catchAll(): Plugin {
         },
       },
       async handler(id, importer) {
-        return id.match(re_catchAll) ? id : this.resolve(store.catchAllEntry, importer, { skipSelf: false });
+        return id.match(re_catchAll) ? id : this.resolve(catchAllEntry, importer, { skipSelf: false });
       },
     },
     load: {

@@ -1,6 +1,5 @@
 export interface Store {
   entries: EntryMeta[];
-  catchAllEntry: string;
 }
 
 export interface EntryMeta {

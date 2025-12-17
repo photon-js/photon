@@ -1,4 +1,4 @@
-import { store } from "@photonjs/store";
+import { catchAllEntry } from "@photonjs/store";
 import { createMiddleware } from "@universal-middleware/express";
 import type {
   DevEnvironment,
@@ -41,9 +41,9 @@ export function minimalDevServer(_config?: Photon.Config): Plugin {
           const ssr = server.environments.ssr;
 
           if (isRunnableDevEnvironment(ssr)) {
-            const resolved = await ssr.pluginContainer.resolveId(store.catchAllEntry);
+            const resolved = await ssr.pluginContainer.resolveId(catchAllEntry);
 
-            assertUsage(resolved?.id, `Cannot resolved server entry ${store.catchAllEntry}`);
+            assertUsage(resolved?.id, `Cannot resolved server entry ${catchAllEntry}`);
 
             const mod = await envImportFetchable(ssr, resolved.id);
             return mod.fetch(request);

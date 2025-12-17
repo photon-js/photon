@@ -43,12 +43,9 @@ export function photonPlugin(): Plugin[] {
         },
       },
     },
-    // FIXME this is used to make devServer run on user-provided servers + fallback, with HMR
-    //  Make this an opt-in plugin
-    // devServer(),
     // Forwards request to server entries from a vite dev server middleware
     minimalDevServer(),
-    // Required for other plugin to work
+    // Required for other plugins to work
     catchAll(),
   ];
   // return installPhoton("awesome-framework", {
