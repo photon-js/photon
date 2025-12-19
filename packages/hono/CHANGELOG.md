@@ -1,5 +1,13 @@
 # @photonjs/hono
 
+## 0.1.12
+
+### Patch Changes
+
+- 9e4534b: fix: upgrade dependencies
+- Updated dependencies [9e4534b]
+  - @photonjs/core@0.1.20
+
 ## 0.1.11
 
 ### Patch Changes

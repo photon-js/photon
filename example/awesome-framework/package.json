@@ -7,8 +7,8 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@photonjs/core": "^0.1.19",
-    "@photonjs/runtime": "^0.1.15",
+    "@photonjs/core": "^0.1.20",
+    "@photonjs/runtime": "^0.1.16",
     "@universal-middleware/core": "^0.4.14",
     "@universal-middleware/sirv": "^0.1.24"
   },

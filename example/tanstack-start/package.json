@@ -11,8 +11,8 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@photonjs/cloudflare": "^0.1.12",
-    "@photonjs/runtime": "^0.1.15",
+    "@photonjs/cloudflare": "^0.1.13",
+    "@photonjs/runtime": "^0.1.16",
     "@tailwindcss/vite": "^4.1.17",
     "@tanstack/react-devtools": "^0.7.11",
     "@tanstack/react-router": "^1.139.0",

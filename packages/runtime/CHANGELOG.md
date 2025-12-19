@@ -1,5 +1,14 @@
 # @photonjs/runtime
 
+## 0.1.16
+
+### Patch Changes
+
+- 9e4534b: fix: upgrade dependencies
+- Updated dependencies [9e4534b]
+  - @photonjs/core@0.1.20
+  - @photonjs/srvx@0.1.12
+
 ## 0.1.15
 
 ### Patch Changes

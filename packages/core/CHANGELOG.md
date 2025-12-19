@@ -1,5 +1,11 @@
 ## 0.1.15
 
+## 0.1.20
+
+### Patch Changes
+
+- 9e4534b: fix: upgrade dependencies
+
 ## 0.1.19
 
 ### Patch Changes
