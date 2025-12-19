@@ -21,22 +21,22 @@
     "@photonjs/runtime": "workspace:0.1.15",
     "@photonjs/srvx": "workspace:0.1.11",
     "@photonjs/vercel": "workspace:0.1.21",
-    "@types/express": "^5.0.5",
+    "@types/express": "^5.0.6",
     "@types/node": "^22.19.1",
-    "@universal-middleware/core": "^0.4.13",
+    "@universal-middleware/core": "^0.4.14",
     "pkg-types": "^2.3.0",
     "typescript": "^5.9.3",
     "vite": "^7.2.4",
-    "wrangler": "^4.51.0"
+    "wrangler": "^4.56.0"
   },
   "dependencies": {
     "@hattip/router": "^0.0.49",
     "awesome-framework": "workspace:",
-    "elysia": "^1.4.16",
-    "express": "^5.1.0",
+    "elysia": "^1.4.19",
+    "express": "^5.2.1",
     "fastify": "^5.6.2",
     "h3": "^1.15.4",
-    "hono": "^4.10.7",
-    "srvx": "^0.9.7"
+    "hono": "^4.11.1",
+    "srvx": "^0.9.8"
   }
 }

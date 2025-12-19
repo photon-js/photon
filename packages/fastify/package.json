@@ -37,10 +37,10 @@
   },
   "devDependencies": {
     "@types/node": "^22.19.1",
-    "@universal-middleware/core": "^0.4.13",
+    "@universal-middleware/core": "^0.4.14",
     "ansis": "^4.2.0",
     "fastify": "^5.6.2",
-    "tsdown": "^0.17.0-beta.4",
+    "tsdown": "^0.18.1",
     "typescript": "^5.9.3",
     "vite": "^7.2.4"
   },

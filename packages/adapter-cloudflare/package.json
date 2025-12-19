@@ -17,13 +17,13 @@
     "test:types": "tsc --noEmit"
   },
   "dependencies": {
-    "@cloudflare/vite-plugin": "^1.15.3",
+    "@cloudflare/vite-plugin": "^1.19.0",
     "@photonjs/core": "workspace:^",
     "@universal-middleware/cloudflare": "^0.4.10"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20251128.0",
-    "tsdown": "^0.17.0-beta.4",
+    "@cloudflare/workers-types": "^4.20251219.0",
+    "tsdown": "^0.18.1",
     "typescript": "^5.9.3",
     "vite": "^7.2.4"
   },
