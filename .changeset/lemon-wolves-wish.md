@@ -10,6 +10,7 @@
 "@photonjs/hono": patch
 "@photonjs/srvx": patch
 "@photonjs/h3": patch
+"@photonjs/netlify": patch
 ---
 
 fix: upgrade dependencies
