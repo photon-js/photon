@@ -14,11 +14,11 @@
     "test:types": "tsc --noEmit"
   },
   "dependencies": {
-    "@netlify/vite-plugin": "^2.7.14",
+    "@netlify/vite-plugin": "^2.7.17",
     "@photonjs/core": "workspace:^"
   },
   "devDependencies": {
-    "tsdown": "^0.17.0-beta.4",
+    "tsdown": "^0.18.1",
     "typescript": "^5.9.3",
     "vite": "^7.2.4"
   },

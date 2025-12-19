@@ -18,7 +18,7 @@
     "playwright": "^1.57.0",
     "typescript": "^5.9.3",
     "vite": "^7.2.4",
-    "wrangler": "^4.51.0"
+    "wrangler": "^4.56.0"
   },
   "dependencies": {
     "@universal-middleware/core": "^0.4.14",
