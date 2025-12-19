@@ -60,14 +60,14 @@ importers:
   example/app-cloudflare:
     dependencies:
       '@universal-middleware/core':
-        specifier: ^0.4.13
-        version: 0.4.13(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+        specifier: ^0.4.14
+        version: 0.4.14(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
       awesome-framework:
         specifier: 0.0.0
         version: link:../awesome-framework
       hono:
-        specifier: ^4.10.7
-        version: 4.10.7
+        specifier: ^4.11.1
+        version: 4.11.1
     devDependencies:
       '@photonjs/cloudflare':
         specifier: ^0.1.12
@@ -95,19 +95,19 @@ importers:
         version: 7.2.4(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.2)
       wrangler:
         specifier: ^4.51.0
-        version: 4.51.0(@cloudflare/workers-types@4.20251128.0)
+        version: 4.51.0(@cloudflare/workers-types@4.20251219.0)
 
   example/app-hono:
     dependencies:
       '@universal-middleware/core':
-        specifier: ^0.4.13
-        version: 0.4.13(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+        specifier: ^0.4.14
+        version: 0.4.14(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
       awesome-framework:
         specifier: 0.0.0
         version: link:../awesome-framework
       hono:
-        specifier: ^4.10.7
-        version: 4.10.7
+        specifier: ^4.11.1
+        version: 4.11.1
     devDependencies:
       '@photonjs/core':
         specifier: ^0.1.19
@@ -134,8 +134,8 @@ importers:
   example/app-netlify:
     dependencies:
       '@universal-middleware/core':
-        specifier: ^0.4.13
-        version: 0.4.13(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+        specifier: ^0.4.14
+        version: 0.4.14(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
       awesome-framework:
         specifier: 0.0.0
         version: link:../awesome-framework
@@ -165,8 +165,8 @@ importers:
   example/app-vercel:
     dependencies:
       '@universal-middleware/core':
-        specifier: ^0.4.13
-        version: 0.4.13(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+        specifier: ^0.4.14
+        version: 0.4.14(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
       awesome-framework:
         specifier: 0.0.0
         version: link:../awesome-framework
@@ -194,7 +194,7 @@ importers:
         version: 7.2.4(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.2)
       wrangler:
         specifier: ^4.51.0
-        version: 4.51.0(@cloudflare/workers-types@4.20251128.0)
+        version: 4.51.0(@cloudflare/workers-types@4.20251219.0)
 
   example/awesome-framework:
     dependencies:
@@ -205,11 +205,11 @@ importers:
         specifier: ^0.1.15
         version: link:../../packages/runtime
       '@universal-middleware/core':
-        specifier: ^0.4.13
-        version: 0.4.13(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+        specifier: ^0.4.14
+        version: 0.4.14(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
       '@universal-middleware/sirv':
-        specifier: ^0.1.23
-        version: 0.1.23
+        specifier: ^0.1.24
+        version: 0.1.24
     devDependencies:
       '@types/node':
         specifier: ^22.19.1
@@ -307,17 +307,17 @@ importers:
     dependencies:
       '@cloudflare/vite-plugin':
         specifier: ^1.15.3
-        version: 1.15.3(vite@7.2.4(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.2))(workerd@1.20251125.0)(wrangler@4.51.0(@cloudflare/workers-types@4.20251128.0))
+        version: 1.15.3(vite@7.2.4(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.2))(workerd@1.20251125.0)(wrangler@4.51.0(@cloudflare/workers-types@4.20251219.0))
       '@photonjs/core':
         specifier: workspace:^
         version: link:../core
       '@universal-middleware/cloudflare':
         specifier: ^0.4.10
-        version: 0.4.10(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+        version: 0.4.10(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
     devDependencies:
       '@cloudflare/workers-types':
-        specifier: ^4.20251128.0
-        version: 4.20251128.0
+        specifier: ^4.20251219.0
+        version: 4.20251219.0
       tsdown:
         specifier: ^0.17.0-beta.4
         version: 0.17.0-beta.4(typescript@5.9.3)
@@ -362,11 +362,11 @@ importers:
         specifier: workspace:^
         version: link:../runtime
       '@universal-middleware/core':
-        specifier: ^0.4.13
-        version: 0.4.13(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+        specifier: ^0.4.14
+        version: 0.4.14(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
       '@universal-middleware/vercel':
         specifier: ^0.4.29
-        version: 0.4.29(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(@universal-middleware/h3@0.4.14(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7))(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(express@5.1.0)(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+        version: 0.4.29(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(@universal-middleware/h3@0.4.15(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7))(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(express@5.1.0)(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
       '@vercel/build-utils':
         specifier: ^13.2.1
         version: 13.2.1
@@ -406,7 +406,7 @@ importers:
         version: 20.19.25
       '@universal-middleware/express':
         specifier: ^0.4.22
-        version: 0.4.22(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+        version: 0.4.22(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
       '@vercel/node':
         specifier: ^5.5.13
         version: 5.5.13(@swc/core@1.13.5)(rollup@4.53.3)
@@ -430,19 +430,19 @@ importers:
         version: 0.7.15
       '@universal-middleware/cloudflare':
         specifier: ^0.4.10
-        version: 0.4.10(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+        version: 0.4.10(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
       '@universal-middleware/compress':
         specifier: ^0.2.34
         version: 0.2.34
       '@universal-middleware/core':
-        specifier: ^0.4.13
-        version: 0.4.13(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+        specifier: ^0.4.14
+        version: 0.4.14(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
       '@universal-middleware/express':
         specifier: ^0.4.22
-        version: 0.4.22(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+        version: 0.4.22(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
       '@universal-middleware/sirv':
-        specifier: ^0.1.23
-        version: 0.1.23
+        specifier: ^0.1.24
+        version: 0.1.24
       estree-walker:
         specifier: ^3.0.3
         version: 3.0.3
@@ -490,12 +490,12 @@ importers:
         specifier: workspace:^
         version: link:../core
       '@universal-middleware/elysia':
-        specifier: ^0.6.1
-        version: 0.6.1(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+        specifier: ^0.6.2
+        version: 0.6.2(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
     devDependencies:
       '@elysiajs/node':
         specifier: ^1.4.2
-        version: 1.4.2(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))
+        version: 1.4.2(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))
       '@types/bun':
         specifier: ^1.3.3
         version: 1.3.3
@@ -506,11 +506,11 @@ importers:
         specifier: ^22.19.1
         version: 22.19.1
       '@universal-middleware/core':
-        specifier: ^0.4.13
-        version: 0.4.13(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+        specifier: ^0.4.14
+        version: 0.4.14(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
       elysia:
-        specifier: ^1.4.16
-        version: 1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3)
+        specifier: ^1.4.19
+        version: 1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3)
       tsdown:
         specifier: ^0.17.0-beta.4
         version: 0.17.0-beta.4(typescript@5.9.3)
@@ -528,14 +528,14 @@ importers:
         version: link:../core
       '@universal-middleware/express':
         specifier: ^0.4.22
-        version: 0.4.22(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+        version: 0.4.22(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
     devDependencies:
       '@types/node':
         specifier: ^22.19.1
         version: 22.19.1
       '@universal-middleware/core':
-        specifier: ^0.4.13
-        version: 0.4.13(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+        specifier: ^0.4.14
+        version: 0.4.14(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
       express:
         specifier: ^5.1.0
         version: 5.1.0
@@ -556,14 +556,14 @@ importers:
         version: link:../core
       '@universal-middleware/fastify':
         specifier: ^0.5.22
-        version: 0.5.22(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+        version: 0.5.22(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
     devDependencies:
       '@types/node':
         specifier: ^22.19.1
         version: 22.19.1
       '@universal-middleware/core':
-        specifier: ^0.4.13
-        version: 0.4.13(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+        specifier: ^0.4.14
+        version: 0.4.14(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
       ansis:
         specifier: ^4.2.0
         version: 4.2.0
@@ -586,8 +586,8 @@ importers:
         specifier: workspace:^
         version: link:../core
       '@universal-middleware/h3':
-        specifier: ^0.4.14
-        version: 0.4.14(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+        specifier: ^0.4.15
+        version: 0.4.15(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
     devDependencies:
       '@types/bun':
         specifier: ^1.3.3
@@ -599,8 +599,8 @@ importers:
         specifier: ^22.19.1
         version: 22.19.1
       '@universal-middleware/core':
-        specifier: ^0.4.13
-        version: 0.4.13(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+        specifier: ^0.4.14
+        version: 0.4.14(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
       h3:
         specifier: ^1.15.4
         version: 1.15.4
@@ -620,8 +620,8 @@ importers:
         specifier: workspace:^
         version: link:../core
       '@universal-middleware/hattip':
-        specifier: ^0.4.13
-        version: 0.4.13(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+        specifier: ^0.4.14
+        version: 0.4.14(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
     devDependencies:
       '@types/bun':
         specifier: ^1.3.3
@@ -633,8 +633,8 @@ importers:
         specifier: ^22.19.1
         version: 22.19.1
       '@universal-middleware/core':
-        specifier: ^0.4.13
-        version: 0.4.13(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+        specifier: ^0.4.14
+        version: 0.4.14(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
       tsdown:
         specifier: ^0.17.0-beta.4
         version: 0.17.0-beta.4(typescript@5.9.3)
@@ -651,12 +651,12 @@ importers:
         specifier: workspace:^
         version: link:../core
       '@universal-middleware/hono':
-        specifier: ^0.4.17
-        version: 0.4.17(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+        specifier: ^0.4.18
+        version: 0.4.18(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
     devDependencies:
       '@hono/node-server':
         specifier: ^1.19.6
-        version: 1.19.6(hono@4.10.7)
+        version: 1.19.6(hono@4.11.1)
       '@types/bun':
         specifier: ^1.3.3
         version: 1.3.3
@@ -667,8 +667,8 @@ importers:
         specifier: ^22.19.1
         version: 22.19.1
       '@universal-middleware/core':
-        specifier: ^0.4.13
-        version: 0.4.13(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+        specifier: ^0.4.14
+        version: 0.4.14(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
       tsdown:
         specifier: ^0.17.0-beta.4
         version: 0.17.0-beta.4(typescript@5.9.3)
@@ -688,11 +688,11 @@ importers:
         specifier: workspace:^
         version: link:../srvx
       '@universal-middleware/core':
-        specifier: ^0.4.13
-        version: 0.4.13(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+        specifier: ^0.4.14
+        version: 0.4.14(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
       '@universal-middleware/sirv':
-        specifier: ^0.1.23
-        version: 0.1.23
+        specifier: ^0.1.24
+        version: 0.1.24
       srvx:
         specifier: ^0.9.7
         version: 0.9.7
@@ -720,7 +720,7 @@ importers:
         version: link:../core
       '@universal-middleware/srvx':
         specifier: ^0.1.1
-        version: 0.1.1(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+        version: 0.1.1(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
     devDependencies:
       '@types/bun':
         specifier: ^1.3.3
@@ -732,8 +732,8 @@ importers:
         specifier: ^22.19.1
         version: 22.19.1
       '@universal-middleware/core':
-        specifier: ^0.4.13
-        version: 0.4.13(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+        specifier: ^0.4.14
+        version: 0.4.14(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
       srvx:
         specifier: ^0.9.7
         version: 0.9.7
@@ -756,8 +756,8 @@ importers:
         specifier: 'workspace:'
         version: link:../../example/awesome-framework
       elysia:
-        specifier: ^1.4.16
-        version: 1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3)
+        specifier: ^1.4.19
+        version: 1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3)
       express:
         specifier: ^5.1.0
         version: 5.1.0
@@ -768,8 +768,8 @@ importers:
         specifier: ^1.15.4
         version: 1.15.4
       hono:
-        specifier: ^4.10.7
-        version: 4.10.7
+        specifier: ^4.11.1
+        version: 4.11.1
       srvx:
         specifier: ^0.9.7
         version: 0.9.7
@@ -814,8 +814,8 @@ importers:
         specifier: ^22.19.1
         version: 22.19.1
       '@universal-middleware/core':
-        specifier: ^0.4.13
-        version: 0.4.13(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+        specifier: ^0.4.14
+        version: 0.4.14(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
       pkg-types:
         specifier: ^2.3.0
         version: 2.3.0
@@ -827,7 +827,7 @@ importers:
         version: 7.2.4(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.2)
       wrangler:
         specifier: ^4.51.0
-        version: 4.51.0(@cloudflare/workers-types@4.20251128.0)
+        version: 4.51.0(@cloudflare/workers-types@4.20251219.0)
 
   tests/e2e:
     dependencies:
@@ -1284,8 +1284,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@cloudflare/workers-types@4.20251128.0':
-    resolution: {integrity: sha512-gQxQvxLRsFb+mDlaBKGoJwEHWt+ox9telZZEuRMbNUAD6v78XYqZepTI4yPDdKhkRTlqYcDqDhIdAI3HrsGk7w==}
+  '@cloudflare/workers-types@4.20251219.0':
+    resolution: {integrity: sha512-qwuvc3ZDdCfcK9dJrBSFHOsX8kL72sypfBilzEWbbb+slB2NiggjsHeGMV2ZQiQc1zyBMQPjIvsVeE7Apxp7hw==}
 
   '@colors/colors@1.6.0':
     resolution: {integrity: sha512-Ir+AOibqzrIsL6ajt3Rz3LskB7OiMVHqltZmspbW/TJuTVuyOMirVqAkjfY6JISiLHgyNqicAC8AyHHGzNd/dA==}
@@ -1381,9 +1381,6 @@ packages:
 
   '@emnapi/core@1.5.0':
     resolution: {integrity: sha512-sbP8GzB1WDzacS8fgNPpHlp6C9VZe+SJP3F90W9rLemaQj2PzIuTEl1qDOYQf58YIpyjViI24y9aPWCjEzY2cg==}
-
-  '@emnapi/runtime@1.5.0':
-    resolution: {integrity: sha512-97/BJ3iXHww3djw6hYIfErCZFee7qCtrneuLa20UXFCOTCfBM2cvQHjWJ2EG0s0MtdNwInarqCTz35i4wWXHsQ==}
 
   '@emnapi/runtime@1.7.1':
     resolution: {integrity: sha512-PVtJr5CmLwYAU9PZDMITZoR5iAOShYREoR45EyyLrbntV50mdePTgUn4AmOw90Ifcj+x2kRjdzr1HP3RrNiHGA==}
@@ -3774,17 +3771,17 @@ packages:
   '@universal-middleware/compress@0.2.34':
     resolution: {integrity: sha512-zpLaiHHEfx1ouahZ+NKc5UScsiRAsEn+wiwWMH55JAEeUQ73zymw3e1kZg45Tr/oQh8X3PL0YrRKXDdc5Lt8WA==}
 
-  '@universal-middleware/core@0.4.13':
-    resolution: {integrity: sha512-k2zv5/zLWPUBxIZp/QTxkiVkG4EyqO+X6ABszBKg8ZmZpTp5ljd8uiIWdnMpSDDIN72R99RxtaMi0/vXNB75/w==}
+  '@universal-middleware/core@0.4.14':
+    resolution: {integrity: sha512-yomLeaMdh0YYnIWA5wt71+znX1oTf+olO+XnsvEEids8FexxsAxyjkjGaIeRYr4Vc5CviKEriTe6ewkpLRtdgQ==}
     peerDependencies:
-      '@cloudflare/workers-types': ^4.20251014.0
+      '@cloudflare/workers-types': ^4.20251213.0
       '@hattip/core': ^0.0.49
       '@types/express': ^4 || ^5
       '@webroute/route': ^0.8.0
-      elysia: ^1.4.11
-      fastify: ^5.6.1
+      elysia: ^1.4.19
+      fastify: ^5.6.2
       h3: ^1.15.4
-      hono: ^4.10.2
+      hono: ^4.11.1
       srvx: ^0.8 || ^0.9
     peerDependenciesMeta:
       '@cloudflare/workers-types':
@@ -3806,8 +3803,8 @@ packages:
       srvx:
         optional: true
 
-  '@universal-middleware/elysia@0.6.1':
-    resolution: {integrity: sha512-7E/ZK9YP7YmmSJ7zwgDxq2og3pqajoi9aQoTH95XsrOEUndB8sZYrmRFHw095B65IybkOlfKWqDnDT73erubLA==}
+  '@universal-middleware/elysia@0.6.2':
+    resolution: {integrity: sha512-2sYpGd07iHqiyezCtWX7JB36Cd33kIIaferkm/CiAlTqx/N5tjK0rg3ounY1BWnezcluqSe1lBQu8JztJ/dSWQ==}
 
   '@universal-middleware/express@0.4.22':
     resolution: {integrity: sha512-4aIrnK52NJmYKokZnwpWja/vT2m/HoZ8zxQyYLdokkSQdx0B1k1VsmYGeWENvpDQBgLjnfyvDzyaxch6Tib/hA==}
@@ -3815,17 +3812,17 @@ packages:
   '@universal-middleware/fastify@0.5.22':
     resolution: {integrity: sha512-6axgXhhi69V4RHh6DjUxRmWnRN8U9cW/Ro/1lB0weTe4Y07pI/9603XGcg9iNltbqEhjRvK+Jch3WwwIfVdIBg==}
 
-  '@universal-middleware/h3@0.4.14':
-    resolution: {integrity: sha512-O4Nyv+92uPFsFcN7/cQBc5q99PoDU5GhxlCmHhRZiJ5oHyIhdcsmpOR7yIdA7o1KVb9XkDxiX3EogSD+VfMESA==}
+  '@universal-middleware/h3@0.4.15':
+    resolution: {integrity: sha512-IdoQ9cHSQEh7R1MtUppstuOrKLo//6hFv1AdVx0fyqCOELk0+rGH63VJ2MjnA26/xqysqrbjkiNQilBucAyfxw==}
 
-  '@universal-middleware/hattip@0.4.13':
-    resolution: {integrity: sha512-YZcdvwdsESGKFeANb5Y20mkoAk8Hb4wYutVbj9ETHQAmxS0XyXA2IB6fUACq9pxNAFyk7lzGMWYh33X/vVgMkQ==}
+  '@universal-middleware/hattip@0.4.14':
+    resolution: {integrity: sha512-8goLMiH5TeDLjNF8687j+GxWnokfq0dMSfEJjWT9BvvRmyMs4p42UztewPx103xjgOw9BO5fGBKu4Fmq0I5FBw==}
 
-  '@universal-middleware/hono@0.4.17':
-    resolution: {integrity: sha512-NKO42xEv4oQ/fvMg4NN3je+bhBymIHi5mFWjyxAtb5ewbtkCZs9eb+aBNO+Ai1FEy2jQpkBEJMvclW5eohFw9g==}
+  '@universal-middleware/hono@0.4.18':
+    resolution: {integrity: sha512-RpnX8hKh2zx7hwVYzI32DjvH7KBYpt7MLIHWYw9QBSEzpD1ErqL+SpkvvlJaINjFs+sYJKH5IOoL53uHCL5alw==}
 
-  '@universal-middleware/sirv@0.1.23':
-    resolution: {integrity: sha512-Lh3Xc/NvwnfQ3/zabID5/OjKdwQcNyELEUxGaSk6R6j4KReGtXQYtP4ej8Jhq77df4wF39CQaEv5S+9h8ZPAyQ==}
+  '@universal-middleware/sirv@0.1.24':
+    resolution: {integrity: sha512-BshKQ6hsb3mbgIyFguyf6QEjqAFGW2KGLd3j/N1aK2b1bicD2elsWOD5UYSb0b84VHglGmISqOu30FbfMWhMgg==}
 
   '@universal-middleware/srvx@0.1.1':
     resolution: {integrity: sha512-nTy4BZvaEI+rFO8sWEVvZrZWwFuqEXlXPNvIBAfl16+nKcorwiwm1x+qzuDrSqLd/kr5LSsGR3/KenTvESS9dQ==}
@@ -4486,8 +4483,8 @@ packages:
     resolution: {integrity: sha512-yki5XnKuf750l50uGTllt6kKILY4nQ1eNIQatoXEByZ5dWgnKqbnqmTrBE5B4N7lrMJKQ2ytWMiTO2o0v6Ew/w==}
     engines: {node: '>= 0.6'}
 
-  cookie@1.0.2:
-    resolution: {integrity: sha512-9Kr/j4O16ISv8zBBhJoi4bXOYNTkFLOqSL3UDB0njXxCXNezjeyVrJyGOWtgfs/q2km1gwBcfH8q1yEGoMYunA==}
+  cookie@1.1.1:
+    resolution: {integrity: sha512-ei8Aos7ja0weRpFzJnEA9UHJ/7XQmqglbRwnf2ATjcB9Wq874VKH9kfjjirM6UhU2/E5fFYadylyhFldcqSidQ==}
     engines: {node: '>=18'}
 
   copy-file@11.1.0:
@@ -4769,8 +4766,8 @@ packages:
   electron-to-chromium@1.5.237:
     resolution: {integrity: sha512-icUt1NvfhGLar5lSWH3tHNzablaA5js3HVHacQimfP8ViEBOQv+L7DKEuHdbTZ0SKCO1ogTJTIL1Gwk9S6Qvcg==}
 
-  elysia@1.4.16:
-    resolution: {integrity: sha512-KZtKN160/bdWVKg2hEgyoNXY8jRRquc+m6PboyisaLZL891I+Ufb7Ja6lDAD7vMQur8sLEWIcidZOzj5lWw9UA==}
+  elysia@1.4.19:
+    resolution: {integrity: sha512-DZb9y8FnWyX5IuqY44SvqAV0DjJ15NeCWHrLdgXrKgTPDPsl3VNwWHqrEr9bmnOCpg1vh6QUvAX/tcxNj88jLA==}
     peerDependencies:
       '@sinclair/typebox': '>= 0.34.0 < 1'
       '@types/bun': '>= 1.2.0'
@@ -5428,8 +5425,8 @@ packages:
   hastscript@9.0.1:
     resolution: {integrity: sha512-g7df9rMFX/SPi34tyGCyUBREQoKkapwdY/T04Qn9TDWfHhAYt4/I0gMVirzK5wEzeUqIjEB+LXC/ypb7Aqno5w==}
 
-  hono@4.10.7:
-    resolution: {integrity: sha512-icXIITfw/07Q88nLSkB9aiUrd8rYzSweK681Kjo/TSggaGbOX4RRyxxm71v+3PC8C/j+4rlxGeoTRxQDkaJkUw==}
+  hono@4.11.1:
+    resolution: {integrity: sha512-KsFcH0xxHes0J4zaQgWbYwmz3UPOOskdqZmItstUG93+Wk1ePBLkLGwbP9zlmh1BFUiL8Qp+Xfu9P7feJWpGNg==}
     engines: {node: '>=16.9.0'}
 
   hookable@5.5.3:
@@ -8625,7 +8622,7 @@ snapshots:
     optionalDependencies:
       workerd: 1.20251125.0
 
-  '@cloudflare/vite-plugin@1.15.3(vite@7.2.4(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.2))(workerd@1.20251125.0)(wrangler@4.51.0(@cloudflare/workers-types@4.20251128.0))':
+  '@cloudflare/vite-plugin@1.15.3(vite@7.2.4(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.2))(workerd@1.20251125.0)(wrangler@4.51.0(@cloudflare/workers-types@4.20251219.0))':
     dependencies:
       '@cloudflare/unenv-preset': 2.7.11(unenv@2.0.0-rc.24)(workerd@1.20251125.0)
       '@remix-run/node-fetch-server': 0.8.1
@@ -8635,7 +8632,7 @@ snapshots:
       tinyglobby: 0.2.15
       unenv: 2.0.0-rc.24
       vite: 7.2.4(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.2)
-      wrangler: 4.51.0(@cloudflare/workers-types@4.20251128.0)
+      wrangler: 4.51.0(@cloudflare/workers-types@4.20251219.0)
       ws: 8.18.0
     transitivePeerDependencies:
       - bufferutil
@@ -8657,7 +8654,7 @@ snapshots:
   '@cloudflare/workerd-windows-64@1.20251125.0':
     optional: true
 
-  '@cloudflare/workers-types@4.20251128.0': {}
+  '@cloudflare/workers-types@4.20251219.0': {}
 
   '@colors/colors@1.6.0': {}
 
@@ -8726,20 +8723,15 @@ snapshots:
     dependencies:
       '@edge-runtime/primitives': 4.1.0
 
-  '@elysiajs/node@1.4.2(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))':
+  '@elysiajs/node@1.4.2(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))':
     dependencies:
       crossws: 0.4.1(srvx@0.9.7)
-      elysia: 1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3)
+      elysia: 1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3)
       srvx: 0.9.7
 
   '@emnapi/core@1.5.0':
     dependencies:
       '@emnapi/wasi-threads': 1.1.0
-      tslib: 2.8.1
-    optional: true
-
-  '@emnapi/runtime@1.5.0':
-    dependencies:
       tslib: 2.8.1
     optional: true
 
@@ -9179,9 +9171,9 @@ snapshots:
       '@hattip/compose': 0.0.49
       '@hattip/core': 0.0.49
 
-  '@hono/node-server@1.19.6(hono@4.10.7)':
+  '@hono/node-server@1.19.6(hono@4.11.1)':
     dependencies:
-      hono: 4.10.7
+      hono: 4.11.1
 
   '@humanwhocodes/momoa@2.0.4': {}
 
@@ -9335,7 +9327,7 @@ snapshots:
 
   '@img/sharp-wasm32@0.33.5':
     dependencies:
-      '@emnapi/runtime': 1.5.0
+      '@emnapi/runtime': 1.7.1
     optional: true
 
   '@img/sharp-wasm32@0.34.5':
@@ -9496,7 +9488,7 @@ snapshots:
   '@napi-rs/wasm-runtime@1.0.7':
     dependencies:
       '@emnapi/core': 1.5.0
-      '@emnapi/runtime': 1.5.0
+      '@emnapi/runtime': 1.7.1
       '@tybys/wasm-util': 0.10.1
     optional: true
 
@@ -9734,7 +9726,7 @@ snapshots:
     dependencies:
       '@netlify/dev-utils': 4.3.2
       '@netlify/redirect-parser': 15.0.3
-      cookie: 1.0.2
+      cookie: 1.1.1
       jsonwebtoken: 9.0.2
       netlify-redirector: 0.5.0
 
@@ -10940,9 +10932,9 @@ snapshots:
 
   '@ungap/structured-clone@1.3.0': {}
 
-  '@universal-middleware/cloudflare@0.4.10(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)':
+  '@universal-middleware/cloudflare@0.4.10(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)':
     dependencies:
-      '@universal-middleware/core': 0.4.13(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+      '@universal-middleware/core': 0.4.14(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@hattip/core'
@@ -10956,23 +10948,23 @@ snapshots:
 
   '@universal-middleware/compress@0.2.34': {}
 
-  '@universal-middleware/core@0.4.13(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)':
+  '@universal-middleware/core@0.4.14(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)':
     dependencies:
       regexparam: 3.0.0
       tough-cookie: 6.0.0
     optionalDependencies:
-      '@cloudflare/workers-types': 4.20251128.0
+      '@cloudflare/workers-types': 4.20251219.0
       '@hattip/core': 0.0.49
       '@types/express': 5.0.5
-      elysia: 1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3)
+      elysia: 1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3)
       fastify: 5.6.2
       h3: 1.15.4
-      hono: 4.10.7
+      hono: 4.11.1
       srvx: 0.9.7
 
-  '@universal-middleware/elysia@0.6.1(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)':
+  '@universal-middleware/elysia@0.6.2(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)':
     dependencies:
-      '@universal-middleware/core': 0.4.13(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+      '@universal-middleware/core': 0.4.14(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@hattip/core'
@@ -10984,9 +10976,9 @@ snapshots:
       - hono
       - srvx
 
-  '@universal-middleware/express@0.4.22(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)':
+  '@universal-middleware/express@0.4.22(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)':
     dependencies:
-      '@universal-middleware/core': 0.4.13(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+      '@universal-middleware/core': 0.4.14(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@hattip/core'
@@ -10998,10 +10990,10 @@ snapshots:
       - hono
       - srvx
 
-  '@universal-middleware/fastify@0.5.22(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)':
+  '@universal-middleware/fastify@0.5.22(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)':
     dependencies:
-      '@universal-middleware/core': 0.4.13(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
-      '@universal-middleware/express': 0.4.22(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+      '@universal-middleware/core': 0.4.14(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
+      '@universal-middleware/express': 0.4.22(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
       fastify-raw-body: 5.0.0
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
@@ -11014,9 +11006,9 @@ snapshots:
       - hono
       - srvx
 
-  '@universal-middleware/h3@0.4.14(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)':
+  '@universal-middleware/h3@0.4.15(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)':
     dependencies:
-      '@universal-middleware/core': 0.4.13(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+      '@universal-middleware/core': 0.4.14(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@hattip/core'
@@ -11028,9 +11020,9 @@ snapshots:
       - hono
       - srvx
 
-  '@universal-middleware/hattip@0.4.13(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)':
+  '@universal-middleware/hattip@0.4.14(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)':
     dependencies:
-      '@universal-middleware/core': 0.4.13(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+      '@universal-middleware/core': 0.4.14(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@hattip/core'
@@ -11042,9 +11034,9 @@ snapshots:
       - hono
       - srvx
 
-  '@universal-middleware/hono@0.4.17(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)':
+  '@universal-middleware/hono@0.4.18(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)':
     dependencies:
-      '@universal-middleware/core': 0.4.13(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+      '@universal-middleware/core': 0.4.14(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@hattip/core'
@@ -11056,14 +11048,14 @@ snapshots:
       - hono
       - srvx
 
-  '@universal-middleware/sirv@0.1.23':
+  '@universal-middleware/sirv@0.1.24':
     dependencies:
       mrmime: 2.0.1
       totalist: 3.0.1
 
-  '@universal-middleware/srvx@0.1.1(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)':
+  '@universal-middleware/srvx@0.1.1(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)':
     dependencies:
-      '@universal-middleware/core': 0.4.13(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+      '@universal-middleware/core': 0.4.14(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@hattip/core'
@@ -11075,18 +11067,18 @@ snapshots:
       - hono
       - srvx
 
-  '@universal-middleware/vercel@0.4.29(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(@universal-middleware/h3@0.4.14(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7))(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(express@5.1.0)(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)':
+  '@universal-middleware/vercel@0.4.29(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(@universal-middleware/h3@0.4.15(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7))(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(express@5.1.0)(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)':
     dependencies:
-      '@universal-middleware/core': 0.4.13(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
-      '@universal-middleware/express': 0.4.22(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
+      '@universal-middleware/core': 0.4.14(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
+      '@universal-middleware/express': 0.4.22(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
     optionalDependencies:
       '@hattip/core': 0.0.49
-      '@universal-middleware/h3': 0.4.14(@cloudflare/workers-types@4.20251128.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.10.7)(srvx@0.9.7)
-      elysia: 1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3)
+      '@universal-middleware/h3': 0.4.15(@cloudflare/workers-types@4.20251219.0)(@hattip/core@0.0.49)(@types/express@5.0.5)(elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.6.2)(h3@1.15.4)(hono@4.11.1)(srvx@0.9.7)
+      elysia: 1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3)
       express: 5.1.0
       fastify: 5.6.2
       h3: 1.15.4
-      hono: 4.10.7
+      hono: 4.11.1
       srvx: 0.9.7
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
@@ -11866,7 +11858,7 @@ snapshots:
 
   cookie@0.7.2: {}
 
-  cookie@1.0.2: {}
+  cookie@1.1.1: {}
 
   copy-file@11.1.0:
     dependencies:
@@ -12152,10 +12144,10 @@ snapshots:
 
   electron-to-chromium@1.5.237: {}
 
-  elysia@1.4.16(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3):
+  elysia@1.4.19(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3):
     dependencies:
       '@sinclair/typebox': 0.34.41
-      cookie: 1.0.2
+      cookie: 1.1.1
       exact-mirror: 0.2.2(@sinclair/typebox@0.34.41)
       fast-decode-uri-component: 1.0.1
       file-type: 21.0.0
@@ -13049,7 +13041,7 @@ snapshots:
       property-information: 7.1.0
       space-separated-tokens: 2.0.2
 
-  hono@4.10.7: {}
+  hono@4.11.1: {}
 
   hookable@5.5.3: {}
 
@@ -13496,7 +13488,7 @@ snapshots:
 
   light-my-request@6.6.0:
     dependencies:
-      cookie: 1.0.2
+      cookie: 1.1.1
       process-warning: 4.0.1
       set-cookie-parser: 2.7.1
 
@@ -15957,7 +15949,7 @@ snapshots:
       '@cloudflare/workerd-linux-arm64': 1.20251125.0
       '@cloudflare/workerd-windows-64': 1.20251125.0
 
-  wrangler@4.51.0(@cloudflare/workers-types@4.20251128.0):
+  wrangler@4.51.0(@cloudflare/workers-types@4.20251219.0):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.4.1
       '@cloudflare/unenv-preset': 2.7.11(unenv@2.0.0-rc.24)(workerd@1.20251125.0)
@@ -15968,7 +15960,7 @@ snapshots:
       unenv: 2.0.0-rc.24
       workerd: 1.20251125.0
     optionalDependencies:
-      '@cloudflare/workers-types': 4.20251128.0
+      '@cloudflare/workers-types': 4.20251219.0
       fsevents: 2.3.3
     transitivePeerDependencies:
       - bufferutil
@@ -16054,7 +16046,7 @@ snapshots:
       '@poppinss/colors': 4.1.5
       '@poppinss/dumper': 0.6.4
       '@speed-highlight/core': 1.2.7
-      cookie: 1.0.2
+      cookie: 1.1.1
       youch-core: 0.3.3
 
   zip-stream@6.0.1:

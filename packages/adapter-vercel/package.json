@@ -46,7 +46,7 @@
     "@manypkg/find-root": "^3.1.0",
     "@photonjs/core": "workspace:^",
     "@photonjs/runtime": "workspace:^",
-    "@universal-middleware/core": "^0.4.13",
+    "@universal-middleware/core": "^0.4.14",
     "@universal-middleware/vercel": "^0.4.29",
     "@vercel/build-utils": "^13.2.1",
     "@vercel/nft": "^1.1.1",

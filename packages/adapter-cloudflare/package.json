@@ -22,7 +22,7 @@
     "@universal-middleware/cloudflare": "^0.4.10"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20251128.0",
+    "@cloudflare/workers-types": "^4.20251219.0",
     "tsdown": "^0.17.0-beta.4",
     "typescript": "^5.9.3",
     "vite": "^7.2.4"
