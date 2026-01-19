@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "@photonjs/cloudflare": "workspace:0.1.13",
-    "@photonjs/core": "workspace:0.1.20",
+    "@photonjs/core": "workspace:0.1.21",
     "@photonjs/elysia": "workspace:0.1.12",
     "@photonjs/express": "workspace:0.1.13",
     "@photonjs/fastify": "workspace:0.1.12",

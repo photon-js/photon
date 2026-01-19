@@ -1,5 +1,11 @@
 ## 0.1.15
 
+## 0.1.21
+
+### Patch Changes
+
+- 6873eff: fix: Properly close servers when calling viteDevServer.restart()
+
 ## 0.1.20
 
 ### Patch Changes
