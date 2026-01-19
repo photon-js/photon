@@ -76,7 +76,7 @@ importers:
         specifier: ^0.1.13
         version: link:../../packages/adapter-cloudflare
       '@photonjs/core':
-        specifier: ^0.1.20
+        specifier: ^0.1.21
         version: link:../../packages/core
       '@photonjs/hono':
         specifier: ^0.1.12
@@ -113,7 +113,7 @@ importers:
         version: 4.11.1
     devDependencies:
       '@photonjs/core':
-        specifier: ^0.1.20
+        specifier: ^0.1.21
         version: link:../../packages/core
       '@photonjs/hono':
         specifier: ^0.1.12
@@ -144,7 +144,7 @@ importers:
         version: link:../awesome-framework
     devDependencies:
       '@photonjs/core':
-        specifier: ^0.1.20
+        specifier: ^0.1.21
         version: link:../../packages/core
       '@photonjs/netlify':
         specifier: workspace:^
@@ -175,7 +175,7 @@ importers:
         version: link:../awesome-framework
     devDependencies:
       '@photonjs/core':
-        specifier: ^0.1.20
+        specifier: ^0.1.21
         version: link:../../packages/core
       '@photonjs/runtime':
         specifier: ^0.1.16
@@ -202,7 +202,7 @@ importers:
   example/awesome-framework:
     dependencies:
       '@photonjs/core':
-        specifier: ^0.1.20
+        specifier: ^0.1.21
         version: link:../../packages/core
       '@photonjs/runtime':
         specifier: ^0.1.16
@@ -781,7 +781,7 @@ importers:
         specifier: workspace:0.1.13
         version: link:../../packages/adapter-cloudflare
       '@photonjs/core':
-        specifier: workspace:0.1.20
+        specifier: workspace:0.1.21
         version: link:../../packages/core
       '@photonjs/elysia':
         specifier: workspace:0.1.12
