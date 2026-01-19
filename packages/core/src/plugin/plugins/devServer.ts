@@ -143,10 +143,10 @@ export function devServer(config?: Photon.Config): Plugin {
     // @ts-expect-error
     vite.listen = () => {};
     vite.printUrls = () => {};
-    const originalRestart = vite.restart.bind(vite);
+    const _restart = vite.restart.bind(vite);
     // Trigger vite:beforeFullReload before server restart, so that servers can be closed
     vite.restart = () => {
-      if (vite.config.photon.devServer === false) return originalRestart();
+      if (vite.config.photon.devServer === false) return _restart();
       const envName = vite.config.photon.devServer.env;
       const env = vite.environments[envName];
       assertUsage(env, `Environment ${envName} does not exists`);
@@ -154,7 +154,7 @@ export function devServer(config?: Photon.Config): Plugin {
 
       return new Promise((res, rej) => {
         process.nextTick(() => {
-          originalRestart().then(res).catch(rej);
+          _restart().then(res).catch(rej);
         });
       });
     };
