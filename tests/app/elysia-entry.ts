@@ -1,16 +1,21 @@
 import { apply, serve } from "@photonjs/elysia";
+import awesomeMiddlewares from "awesome-framework/middlewares";
+import awesomeEntry from "awesome-framework/server-entry";
 import { Elysia } from "elysia";
-import { hmrRoute } from "./hmr-route.js";
 
 function startServer() {
   const app = new Elysia();
 
-  // Auto applies `awesomeFramework`
-  apply(
-    app,
-    // HMR route
-    [hmrRoute],
-  );
+  apply(app, [...awesomeMiddlewares, awesomeEntry.fetch]);
+
+  app.get("/serverid", () => {
+    return new Response("elysia", {
+      status: 200,
+      headers: {
+        "Content-Type": "text/plain",
+      },
+    });
+  });
 
   return serve(app);
 }

@@ -1,12 +1,9 @@
 import { apply, serve } from "@photonjs/srvx";
-import { hmrRoute } from "./hmr-route.js";
+import awesomeMiddlewares from "awesome-framework/middlewares";
+import awesomeEntry from "awesome-framework/server-entry";
 
 function startServer() {
-  // Auto applies `awesomeFramework`
-  const app = apply(
-    // HMR route
-    [hmrRoute],
-  );
+  const app = apply([...awesomeMiddlewares, awesomeEntry.fetch]);
 
   return serve(app);
 }

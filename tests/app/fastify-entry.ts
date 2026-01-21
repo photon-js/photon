@@ -1,7 +1,8 @@
 import type { ServeReturn } from "@photonjs/core/serve";
 import { apply, serve } from "@photonjs/fastify";
+import awesomeMiddlewares from "awesome-framework/middlewares";
+import awesomeEntry from "awesome-framework/server-entry";
 import fastify, { type FastifyInstance } from "fastify";
-import { hmrRoute } from "./hmr-route.js";
 
 async function startServer(): Promise<ServeReturn<FastifyInstance>> {
   const app = fastify({
@@ -9,12 +10,11 @@ async function startServer(): Promise<ServeReturn<FastifyInstance>> {
     forceCloseConnections: true,
   });
 
-  // Auto applies `awesomeFramework`
-  await apply(
-    app,
-    // HMR route
-    [hmrRoute],
-  );
+  await apply(app, [...awesomeMiddlewares, awesomeEntry.fetch]);
+
+  app.get("/serverid", (_, reply) => {
+    reply.send("fastify");
+  });
 
   return serve(app);
 }

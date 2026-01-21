@@ -8,6 +8,15 @@ function startServer() {
 
   apply(app, [...awesomeMiddlewares, awesomeEntry.fetch]);
 
+  app.get("/serverid", () => {
+    return new Response("hono", {
+      status: 200,
+      headers: {
+        "Content-Type": "text/plain",
+      },
+    });
+  });
+
   return serve(app);
 }
 
