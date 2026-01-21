@@ -1,6 +1,6 @@
+import awesomeEntry from "virtual:ud:catch-all?default";
 import { apply, serve } from "@photonjs/h3";
 import awesomeMiddlewares from "awesome-framework/middlewares";
-import awesomeEntry from "awesome-framework/server-entry";
 import { createApp } from "h3";
 
 async function startServer() {

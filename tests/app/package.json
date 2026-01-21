@@ -21,7 +21,7 @@
     "@photonjs/srvx": "workspace:0.1.12",
     "@types/express": "^5.0.6",
     "@types/node": "^22.19.1",
-    "@universal-deploy/store": "^0.0.2",
+    "@universal-deploy/store": "^0.0.5",
     "@universal-middleware/core": "^0.4.14",
     "pkg-types": "^2.3.0",
     "typescript": "^5.9.3",
@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@hattip/router": "^0.0.49",
+    "@universal-middleware/hono": "^0.4.20",
     "awesome-framework": "workspace:",
     "elysia": "^1.4.19",
     "express": "^5.2.1",

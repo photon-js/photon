@@ -1,7 +1,7 @@
+import awesomeEntry from "virtual:ud:catch-all?default";
 import type { ServeReturn } from "@photonjs/core/serve";
 import { apply, serve } from "@photonjs/fastify";
 import awesomeMiddlewares from "awesome-framework/middlewares";
-import awesomeEntry from "awesome-framework/server-entry";
 import fastify, { type FastifyInstance } from "fastify";
 
 async function startServer(): Promise<ServeReturn<FastifyInstance>> {

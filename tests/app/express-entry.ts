@@ -1,7 +1,7 @@
+import awesomeEntry from "virtual:ud:catch-all?default";
 import type { ServeReturn } from "@photonjs/core/serve";
 import { apply, serve } from "@photonjs/express";
 import awesomeMiddlewares from "awesome-framework/middlewares";
-import awesomeEntry from "awesome-framework/server-entry";
 import express, { type Express } from "express";
 
 function startServer(): ServeReturn<Express> {

@@ -1,6 +1,6 @@
+import awesomeEntry from "virtual:ud:catch-all?default";
 import { apply, serve } from "@photonjs/elysia";
 import awesomeMiddlewares from "awesome-framework/middlewares";
-import awesomeEntry from "awesome-framework/server-entry";
 import { Elysia } from "elysia";
 
 function startServer() {

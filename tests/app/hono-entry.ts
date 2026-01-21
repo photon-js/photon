@@ -1,12 +1,11 @@
-import { apply, serve } from "@photonjs/hono";
+import awesomeEntry from "virtual:ud:catch-all?default";
+import { serve } from "@photonjs/hono";
+import { apply } from "@universal-middleware/hono";
 import awesomeMiddlewares from "awesome-framework/middlewares";
-import awesomeEntry from "awesome-framework/server-entry";
 import { Hono } from "hono";
 
 function startServer() {
   const app = new Hono();
-
-  apply(app, [...awesomeMiddlewares, awesomeEntry.fetch]);
 
   app.get("/serverid", () => {
     return new Response("hono", {
@@ -16,6 +15,8 @@ function startServer() {
       },
     });
   });
+
+  apply(app, [...awesomeMiddlewares, awesomeEntry.fetch]);
 
   return serve(app);
 }

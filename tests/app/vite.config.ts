@@ -22,6 +22,22 @@ export default defineConfig({
     //   }), // not needed when using @photonjs/auto
     // target === "vercel" && vercel(),
     awesomeFramework(),
+    {
+      name: "resolve-local-entry",
+      resolveId: {
+        order: "pre",
+        filter: {
+          id: {
+            include: [/^virtual:ud:catch-all$/],
+          },
+        },
+        async handler(_, importer, opts) {
+          const res = await this.resolve(`./${server}-entry.ts`, importer, opts);
+          console.log(server, res);
+          return res;
+        },
+      },
+    },
   ],
   build: {
     emptyOutDir: true,

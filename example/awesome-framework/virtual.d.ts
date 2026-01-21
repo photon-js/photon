@@ -3,9 +3,3 @@ declare module "virtual:awesome-plugin:*" {
   const handler: any;
   export default handler;
 }
-
-declare module "virtual:ud:catch-all" {
-  export default {
-    fetch(request: Request): Response | Promise<Response> {},
-  };
-}

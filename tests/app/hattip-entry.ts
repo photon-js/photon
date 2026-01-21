@@ -1,7 +1,7 @@
+import awesomeEntry from "virtual:ud:catch-all?default";
 import { createRouter } from "@hattip/router";
 import { apply, serve } from "@photonjs/hattip";
 import awesomeMiddlewares from "awesome-framework/middlewares";
-import awesomeEntry from "awesome-framework/server-entry";
 
 function startServer() {
   const app = createRouter();
