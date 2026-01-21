@@ -6,26 +6,6 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": "./dist/index.js",
-    "./apply": {
-      "types": "./dist/apply.d.ts",
-      "development": {
-        "types": "./dist/apply.dev.d.ts",
-        "import": "./dist/apply.dev.js",
-        "default": "./dist/apply.dev.js"
-      },
-      "workerd": {
-        "types": "./dist/apply.edge.d.ts",
-        "import": "./dist/apply.edge.js",
-        "default": "./dist/apply.edge.js"
-      },
-      "worker": {
-        "types": "./dist/apply.edge.d.ts",
-        "import": "./dist/apply.edge.js",
-        "default": "./dist/apply.edge.js"
-      },
-      "import": "./dist/apply.js",
-      "default": "./dist/apply.js"
-    },
     "./serve": "./dist/serve.js"
   },
   "scripts": {

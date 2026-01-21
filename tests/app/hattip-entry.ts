@@ -1,12 +1,11 @@
 import awesomeEntry from "virtual:ud:catch-all?default";
 import { createRouter } from "@hattip/router";
-import { apply, serve } from "@photonjs/hattip";
+import { serve } from "@photonjs/hattip";
+import { apply } from "@universal-middleware/hattip";
 import awesomeMiddlewares from "awesome-framework/middlewares";
 
 function startServer() {
   const app = createRouter();
-
-  apply(app, [...awesomeMiddlewares, awesomeEntry.fetch]);
 
   app.get("/serverid", () => {
     return new Response("hattip", {
@@ -16,6 +15,8 @@ function startServer() {
       },
     });
   });
+
+  apply(app, [...awesomeMiddlewares, awesomeEntry.fetch]);
 
   return serve(app);
 }

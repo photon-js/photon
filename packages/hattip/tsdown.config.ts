@@ -8,7 +8,7 @@ const commonOptions: TsdownOptions = {
   treeshake: true,
   nodeProtocol: true,
   fixedExtension: false,
-  external: [/^virtual:photon:get-middlewares:/, /^@photonjs\/core/, /^@photonjs\/hattip/],
+  external: [/^@photonjs\/core/, /^@photonjs\/hattip/],
 };
 
 export default defineConfig([
@@ -18,18 +18,6 @@ export default defineConfig([
     entry: {
       // serve
       serve: "./src/serve.ts",
-      // apply (edge)
-      "apply.edge": "./src/apply-edge.ts",
-    },
-  },
-  {
-    ...commonOptions,
-    platform: "node",
-    entry: {
-      // apply (dev)
-      "apply.dev": "./src/apply-dev.ts",
-      // apply (node)
-      apply: "./src/apply-node.ts",
     },
   },
   {
