@@ -1,5 +1,6 @@
 // import { cloudflare } from "@photonjs/cloudflare/vite";
 // import { vercel } from "@photonjs/vercel/vite";
+import { serve } from "@photonjs/runtime/vite";
 import { store } from "@universal-deploy/store";
 import { awesomeFramework } from "awesome-framework/vite";
 import { defineConfig } from "vite";
@@ -21,6 +22,7 @@ export default defineConfig({
     //     inspectorPort: false,
     //   }), // not needed when using @photonjs/auto
     // target === "vercel" && vercel(),
+    target === "node" && serve(),
     awesomeFramework(),
     {
       name: "resolve-local-entry",

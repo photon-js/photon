@@ -1,7 +1,6 @@
 import nodeHTTP from "node:http";
 import nodeHTTP2 from "node:http2";
 import type { Socket } from "node:net";
-import { PhotonBugError } from "@photonjs/core/errors";
 import type { NodeHandler, ServeReturn, ServerOptions, ServerType } from "@photonjs/core/serve";
 import type { Server as SrvxServer, ServerOptions as SrvxServerOptions } from "srvx";
 import { serve as serveSrvx } from "srvx";
@@ -188,7 +187,7 @@ async function onServerClose(serverP: Servers | Promise<Servers>) {
       };
     }
 
-    throw new PhotonBugError(
+    throw new Error(
       "server-side HMR is not supported for Deno. You can disable it by settings `photon.hmr = 'prefer-restart'`",
     );
   } else if ("stop" in server) {
@@ -199,7 +198,7 @@ async function onServerClose(serverP: Servers | Promise<Servers>) {
   }
 
   if (!("on" in server)) {
-    throw new PhotonBugError(
+    throw new Error(
       "server-side HMR is not supported for this server. You can disable it by settings `photon.hmr = 'prefer-restart'`",
     );
   }

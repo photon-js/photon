@@ -19,7 +19,6 @@
     "test:types": "tsc --noEmit"
   },
   "dependencies": {
-    "@photonjs/core": "workspace:^",
     "@universal-middleware/hono": "^0.4.18"
   },
   "peerDependencies": {

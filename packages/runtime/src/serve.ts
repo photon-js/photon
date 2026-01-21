@@ -1,14 +1,14 @@
-import userServerEntry from "virtual:photon:server-entry";
-import { isBun, isDeno, nodeServe, srvxServe } from "./serve-utils.js";
+import maybeServerEntry from "virtual:ud:catch-all";
+import { isBun, isDeno, nodeServe } from "./serve-utils.js";
 import { assertServerEntry } from "./utils.js";
 
-function startServer() {
-  assertServerEntry(userServerEntry);
+async function startServer() {
+  assertServerEntry(maybeServerEntry);
 
-  if (isBun || isDeno || !userServerEntry.server?.nodeHandler) {
-    return srvxServe(userServerEntry);
+  if (isBun || isDeno || !maybeServerEntry.server?.nodeHandler) {
+    return await import("@universal-deploy/node/serve");
   }
-  return nodeServe(userServerEntry.server?.options ?? {}, userServerEntry.server.nodeHandler);
+  return nodeServe(maybeServerEntry.server?.options ?? {}, maybeServerEntry.server.nodeHandler);
 }
 
 await startServer();

@@ -1,5 +1,4 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { PhotonDependencyError } from "@photonjs/core/errors";
 import type { NodeHandler, ServeReturn } from "@photonjs/core/serve";
 import type { App as HonoApp } from "@universal-middleware/hono";
 import type { MergedHonoServerOptions } from "./types.js";
@@ -21,7 +20,7 @@ export function serve<App extends HonoApp>(app: App, options: MergedHonoServerOp
         nodeHandler = listener;
         return listener(incoming, outgoing);
       } catch (e) {
-        throw new PhotonDependencyError(`Missing @hono/node-server package. Add it to your dependencies`, { cause: e });
+        throw new Error(`Missing @hono/node-server package. Add it to your dependencies`, { cause: e });
       }
     };
     nodeHandler = honoHandler;

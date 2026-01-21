@@ -4,7 +4,7 @@ declare module "virtual:photon:fallback-entry" {
   export default handler;
 }
 
-declare module "virtual:photon:server-entry" {
+declare module "virtual:ud:catch-all" {
   const handler: undefined | import("@photonjs/core/serve").ServeReturn;
   export default handler;
 }

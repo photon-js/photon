@@ -17,10 +17,8 @@ export default defineConfig([
     platform: "node",
     entry: {
       plugin: "./src/plugin/index.ts",
-      api: "./src/api.ts",
       internal: "./src/api/internal.ts",
       dev: "./src/dev.ts",
-      assert: "./src/utils/assert.ts",
       index: "./src/index.ts",
     },
   },
@@ -29,7 +27,6 @@ export default defineConfig([
     platform: "neutral",
     entry: {
       // utils
-      apply: "./src/apply.ts",
       serve: "./src/serve.ts",
     },
   },
