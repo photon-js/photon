@@ -8,7 +8,7 @@ const commonOptions: TsdownOptions = {
   treeshake: true,
   nodeProtocol: true,
   fixedExtension: false,
-  external: ["express", /^virtual:photon:get-middlewares:/, /^@photonjs\/core/, /^@photonjs\/express/],
+  external: ["express", /^@photonjs\/core/, /^@photonjs\/express/],
 };
 
 export default defineConfig([
@@ -18,16 +18,6 @@ export default defineConfig([
     entry: {
       // serve
       serve: "./src/serve.ts",
-    },
-  },
-  {
-    ...commonOptions,
-    platform: "node",
-    entry: {
-      // apply (dev)
-      "apply.dev": "./src/apply-dev.ts",
-      // apply (node)
-      apply: "./src/apply-node.ts",
     },
   },
   {
