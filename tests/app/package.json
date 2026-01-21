@@ -10,7 +10,6 @@
     "test:types": "tsc --noEmit"
   },
   "devDependencies": {
-    "@photonjs/cloudflare": "workspace:0.1.13",
     "@photonjs/core": "workspace:0.1.21",
     "@photonjs/elysia": "workspace:0.1.12",
     "@photonjs/express": "workspace:0.1.13",
@@ -20,9 +19,9 @@
     "@photonjs/hono": "workspace:0.1.12",
     "@photonjs/runtime": "workspace:0.1.16",
     "@photonjs/srvx": "workspace:0.1.12",
-    "@photonjs/vercel": "workspace:0.1.22",
     "@types/express": "^5.0.6",
     "@types/node": "^22.19.1",
+    "@universal-deploy/store": "^0.0.2",
     "@universal-middleware/core": "^0.4.14",
     "pkg-types": "^2.3.0",
     "typescript": "^5.9.3",

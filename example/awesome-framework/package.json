@@ -14,6 +14,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.19.1",
+    "@universal-deploy/store": "^0.0.2",
     "typescript": "^5.9.3",
     "vite": "^7.2.4"
   },
@@ -22,17 +23,9 @@
     "./entry-client": "./dist/entry-client.js",
     "./render": "./dist/render.js",
     "./vite": "./dist/vite/index.js",
-    "./standalone": "./dist/photon/entries/standalone.js",
-    "./universal-middleware": {
-      "types": "./dist/photon/entries/edge.d.ts",
-      "development": "./dist/photon/entries/dev.js",
-      "workerd": "./dist/photon/entries/edge.js",
-      "worker": "./dist/photon/entries/edge.js",
-      "deno": "./dist/photon/entries/node.js",
-      "bun": "./dist/photon/entries/node.js",
-      "node": "./dist/photon/entries/node.js",
-      "import": "./dist/photon/entries/edge.js",
-      "default": "./dist/photon/entries/edge.js"
-    }
+    "./entries/api": "./dist/photon/entries/api.js",
+    "./entries/ssr": "./dist/photon/entries/ssr.js",
+    "./server-entry": "./dist/photon/entries/virtual.js",
+    "./middlewares": "./dist/photon/middlewares/index.js"
   }
 }

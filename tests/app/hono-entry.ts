@@ -1,16 +1,12 @@
 import { apply, serve } from "@photonjs/hono";
+import awesomeMiddlewares from "awesome-framework/middlewares";
+import awesomeEntry from "awesome-framework/server-entry";
 import { Hono } from "hono";
-import { hmrRoute } from "./hmr-route.js";
 
 function startServer() {
   const app = new Hono();
 
-  // Auto applies `awesomeFramework`
-  apply(
-    app,
-    // HMR route
-    [hmrRoute],
-  );
+  apply(app, [...awesomeMiddlewares, awesomeEntry.fetch]);
 
   return serve(app);
 }

@@ -1,3 +1,4 @@
+import { store } from "@universal-deploy/store";
 import type { Plugin } from "vite";
 import { renderUrl } from "../renderUrl.js";
 
@@ -5,11 +6,26 @@ const virtualIndex = "virtual:awesome-plugin:index.html";
 const virtualIndexSsr = "virtual:awesome-plugin:index-js";
 
 let clientHtml = "";
+let injected = false;
 export function awesomeFrameworkPlugin(): Plugin[] {
   return [
     {
       name: "awesome-framework",
       config() {
+        if (!injected) {
+          injected = true;
+          store.entries.push({
+            id: "awesome-framework/entries/api",
+            pattern: "/api",
+            method: "GET",
+          });
+          store.entries.push({
+            id: "awesome-framework/entries/ssr",
+            pattern: "/**",
+            method: "GET",
+          });
+        }
+
         return {
           ssr: {
             noExternal: ["awesome-framework"],
