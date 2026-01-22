@@ -62,7 +62,7 @@ export function serve(): Plugin[] {
 
           const compiledEnhance = compileEnhance("mod.fetch", {
             path: "/**",
-            method: "GET",
+            method: ["GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
           });
 
           return `
