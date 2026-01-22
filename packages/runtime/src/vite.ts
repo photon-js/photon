@@ -67,7 +67,9 @@ export function serve(): Plugin[] {
             method: "GET",
           });
 
-          return `import mod from ${JSON.stringify(wrappedModule)};
+          return `
+export * from ${JSON.stringify(wrappedModule)};
+import mod from ${JSON.stringify(wrappedModule)};
 ${compiledEnhance}
 export default mod;
           `;
