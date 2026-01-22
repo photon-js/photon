@@ -22,6 +22,14 @@ export default defineConfig([
   },
   {
     ...commonOptions,
+    platform: "node",
+    entry: {
+      // serve
+      "serve.node": "./src/serve.node.ts",
+    },
+  },
+  {
+    ...commonOptions,
     platform: "neutral",
     entry: {
       // index

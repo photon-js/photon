@@ -1,5 +1,8 @@
 import type { Plugin } from "vite";
 
+const re_enhanced = /[?&]enhanced\b/;
+const re_catchAll = /^virtual:ud:catch-all\?default$/;
+
 // Creates a server and listens for connections in Node/Deno/Bun
 export function serve(): Plugin[] {
   let userPort: number | undefined;
@@ -23,6 +26,46 @@ export function serve(): Plugin[] {
           return {
             id: resolved.id,
           };
+        },
+      },
+    },
+    {
+      name: "photon:wrap-enhance",
+      enforce: "pre",
+
+      resolveId: {
+        filter: {
+          id: [re_enhanced, /^virtual:ud:catch-all\?default$/],
+        },
+        async handler(id, importer) {
+          if (importer?.match(re_enhanced)) return;
+          if (id.match(re_catchAll)) {
+            const resolved = await this.resolve(id, importer, { skipSelf: true });
+            if (resolved) {
+              return `\0${resolved.id}&enhanced`;
+            }
+          }
+          return `\0${id}`;
+        },
+      },
+      load: {
+        filter: {
+          id: [/^\0.*[?&]enhanced\b/],
+        },
+        // TODO create an util in UM to compile enhance
+        async handler(id) {
+          const wrappedModule = id.slice(1).replace(re_enhanced, "");
+
+          if (!wrappedModule.match(re_catchAll)) {
+            this.warn('?enhanced only supported by "virtual:ud:catch-all?default"');
+            return;
+          }
+
+          return `import mod from ${JSON.stringify(wrappedModule)};
+mod.fetch[Symbol.for("unPath")] = ${JSON.stringify("/**")};
+mod.fetch[Symbol.for("unMethod")] = ${JSON.stringify("GET")};
+export default mod;
+          `;
         },
       },
     },

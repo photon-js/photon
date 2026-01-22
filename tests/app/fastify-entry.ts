@@ -1,6 +1,7 @@
 import awesomeEntry from "virtual:ud:catch-all?default";
 import type { ServeReturn } from "@photonjs/core/serve";
-import { apply, serve } from "@photonjs/fastify";
+import { serve } from "@photonjs/fastify";
+import { apply } from "@universal-middleware/fastify";
 import awesomeMiddlewares from "awesome-framework/middlewares";
 import fastify, { type FastifyInstance } from "fastify";
 
@@ -10,11 +11,11 @@ async function startServer(): Promise<ServeReturn<FastifyInstance>> {
     forceCloseConnections: true,
   });
 
-  await apply(app, [...awesomeMiddlewares, awesomeEntry.fetch]);
-
   app.get("/serverid", (_, reply) => {
     reply.send("fastify");
   });
+
+  await apply(app, [...awesomeMiddlewares, awesomeEntry.fetch]);
 
   return serve(app);
 }

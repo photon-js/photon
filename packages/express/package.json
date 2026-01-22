@@ -6,7 +6,16 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": "./dist/index.js",
-    "./serve": "./dist/serve.js"
+    "./serve": {
+      "types": "./dist/serve.d.ts",
+      "workerd": "./dist/serve.js",
+      "worker": "./dist/serve.js",
+      "deno": "./dist/serve.node.js",
+      "bun": "./dist/serve.node.js",
+      "node": "./dist/serve.node.js",
+      "import": "./dist/serve.js",
+      "default": "./dist/serve.js"
+    }
   },
   "scripts": {
     "dev": "tsdown --watch",
@@ -29,9 +38,10 @@
     "@types/node": "^22.19.1",
     "@universal-middleware/core": "^0.4.14",
     "express": "^5.2.1",
+    "srvx": "^0.9.8",
     "tsdown": "^0.18.1",
     "typescript": "^5.9.3",
-    "vite": "^7.2.4"
+    "vite": "^7.3.1"
   },
   "files": [
     "dist/"
