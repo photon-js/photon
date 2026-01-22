@@ -50,10 +50,11 @@ export function serve(): Plugin[] {
       },
       load: {
         filter: {
-          id: [/^\0.*[?&]enhanced\b/],
+          // biome-ignore lint/suspicious/noControlCharactersInRegex: ok
+          id: [/^\x00.*[?&]enhanced\b/],
         },
         // TODO create an util in UM to compile enhance
-        async handler(id) {
+        handler(id) {
           const wrappedModule = id.slice(1).replace(re_enhanced, "");
 
           if (!wrappedModule.match(re_catchAll)) {
