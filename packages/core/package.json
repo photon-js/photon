@@ -26,7 +26,7 @@
     "@brillout/vite-plugin-server-entry": "^0.7.15",
     "@universal-middleware/cloudflare": "^0.4.10",
     "@universal-middleware/compress": "^0.2.34",
-    "@universal-middleware/core": "^0.4.14",
+    "@universal-middleware/core": "^0.4.16",
     "@universal-middleware/express": "^0.4.22",
     "@universal-middleware/sirv": "^0.1.24",
     "estree-walker": "^3.0.3",

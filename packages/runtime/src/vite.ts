@@ -1,3 +1,4 @@
+import { compileEnhance } from "@universal-middleware/core";
 import type { Plugin } from "vite";
 
 const re_enhanced = /[?&]enhanced\b/;
@@ -62,9 +63,13 @@ export function serve(): Plugin[] {
             return;
           }
 
+          const compiledEnhance = compileEnhance("mod.fetch", {
+            path: "/**",
+            method: "GET",
+          });
+
           return `import mod from ${JSON.stringify(wrappedModule)};
-mod.fetch[Symbol.for("unPath")] = ${JSON.stringify("/**")};
-mod.fetch[Symbol.for("unMethod")] = ${JSON.stringify("GET")};
+${compiledEnhance}
 export default mod;
           `;
         },

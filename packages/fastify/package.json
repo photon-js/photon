@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.19.1",
-    "@universal-middleware/core": "^0.4.14",
+    "@universal-middleware/core": "^0.4.16",
     "ansis": "^4.2.0",
     "fastify": "^5.6.2",
     "srvx": "^0.9.8",
