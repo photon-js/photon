@@ -36,7 +36,7 @@ export function serve(): Plugin[] {
 
       resolveId: {
         filter: {
-          id: [re_enhanced, /^virtual:ud:catch-all\?default$/],
+          id: [re_enhanced, re_catchAll],
         },
         async handler(id, importer) {
           if (importer?.match(re_enhanced)) return;
@@ -54,7 +54,6 @@ export function serve(): Plugin[] {
           // biome-ignore lint/suspicious/noControlCharactersInRegex: ok
           id: [/^\x00.*[?&]enhanced\b/],
         },
-        // TODO create an util in UM to compile enhance
         handler(id) {
           const wrappedModule = id.slice(1).replace(re_enhanced, "");
 
