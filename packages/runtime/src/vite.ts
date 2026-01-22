@@ -6,8 +6,6 @@ const re_catchAll = /^virtual:ud:catch-all\?default$/;
 
 // Creates a server and listens for connections in Node/Deno/Bun
 export function serve(): Plugin[] {
-  let userPort: number | undefined;
-  let userHost: string | boolean | undefined;
   return [
     {
       name: "photon:node:node-entry",
