@@ -1,12 +1,11 @@
 import awesomeEntry from "virtual:ud:catch-all?default";
-import { apply, serve } from "@photonjs/h3";
+import { serve } from "@photonjs/h3";
+import { apply } from "@universal-middleware/h3";
 import awesomeMiddlewares from "awesome-framework/middlewares";
 import { createApp } from "h3";
 
-async function startServer() {
+function startServer() {
   const app = createApp();
-
-  apply(app, [...awesomeMiddlewares, awesomeEntry.fetch]);
 
   app.use("/serverid", () => {
     return new Response("h3", {
@@ -17,5 +16,9 @@ async function startServer() {
     });
   });
 
+  apply(app, [...awesomeMiddlewares, awesomeEntry.fetch]);
+
   return serve(app);
 }
+
+export default startServer();
