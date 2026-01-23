@@ -23,7 +23,6 @@
     "test:types": "tsc --noEmit"
   },
   "dependencies": {
-    "@photonjs/core": "workspace:^",
     "@universal-middleware/express": "^0.4.22"
   },
   "peerDependencies": {
@@ -35,6 +34,7 @@
     }
   },
   "devDependencies": {
+    "@photonjs/core": "workspace:^",
     "@types/node": "^22.19.1",
     "@universal-middleware/core": "^0.4.16",
     "express": "^5.2.1",

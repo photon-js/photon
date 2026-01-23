@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "@hono/node-server": "^1.19.7",
+    "@photonjs/core": "workspace:^",
     "@types/bun": "^1.3.3",
     "@types/deno": "^2.5.0",
     "@types/node": "^22.19.1",

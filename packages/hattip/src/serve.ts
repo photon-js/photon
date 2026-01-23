@@ -1,4 +1,4 @@
-import type { ServeReturn, ServerOptions } from "@photonjs/core/serve";
+import type { ServeReturn, ServerOptions } from "@photonjs/core";
 import type { App as HattipApp } from "@universal-middleware/hattip";
 import { defineFetchLazy } from "./utils.js";
 

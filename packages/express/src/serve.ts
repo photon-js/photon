@@ -1,4 +1,4 @@
-import type { ServeReturn, ServerOptions } from "@photonjs/core/serve";
+import type { ServeReturn, ServerOptions } from "@photonjs/core";
 import type { App as ExpressApp } from "@universal-middleware/express";
 
 export function serve<App extends ExpressApp>(app: App, options: ServerOptions = {}): ServeReturn<App> {

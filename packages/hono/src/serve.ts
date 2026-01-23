@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
-import type { NodeHandler, ServeReturn } from "@photonjs/core/serve";
+import type { NodeHandler, ServeReturn } from "@photonjs/core";
 import type { App as HonoApp } from "@universal-middleware/hono";
 import type { MergedHonoServerOptions } from "./types.js";
 

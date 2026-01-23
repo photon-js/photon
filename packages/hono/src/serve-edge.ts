@@ -1,4 +1,4 @@
-import type { ServeReturn } from "@photonjs/core/serve";
+import type { ServeReturn } from "@photonjs/core";
 import type { App as HonoApp } from "@universal-middleware/hono";
 import type { MergedHonoServerOptions } from "./types.js";
 
