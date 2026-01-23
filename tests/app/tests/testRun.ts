@@ -20,7 +20,7 @@ export { testRun, testRunUnsupported };
 
 type Runtimes = "node" | "bun" | "deno" | "cloudflare" | "vercel";
 type Modes = "dev" | "preview";
-type Servers = "elysia" | "express" | "fastify" | "fetch" | "srvx" | "h3" | "hono" | "hattip";
+type Servers = "elysia" | "express" | "fastify" | "srvx" | "h3" | "hono" | "hattip";
 
 function getCmd(runtime: Runtimes, mode: Modes, server: Servers) {
   process.env.TARGET = runtime;
@@ -66,9 +66,14 @@ function testRun(
     await testCounter();
   });
 
-  test("framework standalone handler is rendered", async () => {
+  test("/standalone", async () => {
     const text = await fetchHtml("/standalone");
     expect(text).toContain("standalone");
+  });
+
+  test("/serverid", async () => {
+    const text = await fetchHtml("/serverid");
+    expect(text).toContain(server);
   });
 
   if (options?.hmr) {
