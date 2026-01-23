@@ -27,7 +27,7 @@
   "devDependencies": {
     "@photonjs/core": "workspace:^",
     "@types/node": "^22.19.1",
-    "h3": "^1.15.4",
+    "h3": "^1.15.5",
     "tsdown": "^0.18.1",
     "typescript": "^5.9.3",
     "vite": "^7.3.1"
