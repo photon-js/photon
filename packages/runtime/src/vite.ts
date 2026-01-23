@@ -4,9 +4,9 @@ import type { Plugin } from "vite";
 const re_enhanced = /[?&]enhanced\b/;
 const re_catchAll = /^virtual:ud:catch-all\?default$/;
 
-// Creates a server and listens for connections in Node/Deno/Bun
-export function serve(): Plugin[] {
+export function photon(): Plugin[] {
   return [
+    // Node compat
     {
       name: "photon:node:node-entry",
       apply: "build",

@@ -22,6 +22,7 @@
     "@photonjs/srvx": "workspace:^",
     "@types/express": "^5.0.6",
     "@types/node": "^22.19.1",
+    "@universal-deploy/node": "^0.0.1",
     "@universal-deploy/store": "^0.0.5",
     "@universal-middleware/core": "^0.4.16",
     "pkg-types": "^2.3.0",
