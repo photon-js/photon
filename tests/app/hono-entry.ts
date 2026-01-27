@@ -1,10 +1,11 @@
 import awesomeEntry from "virtual:ud:catch-all?default";
+import type { ServeReturn } from "@photonjs/core";
 import { serve } from "@photonjs/hono";
-import { apply } from "@universal-middleware/hono";
+import { type App, apply } from "@universal-middleware/hono";
 import awesomeMiddlewares from "awesome-framework/middlewares";
 import { Hono } from "hono";
 
-function startServer() {
+function startServer(): ServeReturn<App> {
   const app = new Hono();
 
   app.get("/serverid", () => {
