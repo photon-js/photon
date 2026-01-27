@@ -29,7 +29,7 @@ export function nodeServe(options: ServerOptions, handler: NodeHandler): ServerT
 
   const isHttps = Boolean("cert" in serverOptions && serverOptions.cert);
   const port = getPort(options);
-  const host = options?.hostname;
+  const host = getHostname(options);
 
   function url() {
     const addr = server.address();
@@ -77,4 +77,8 @@ export function nodeServe(options: ServerOptions, handler: NodeHandler): ServerT
 
 export function getPort(options?: ServerOptions) {
   return options?.port ?? (process.env.PORT ? Number.parseInt(process.env.PORT, 10) : 3000);
+}
+
+export function getHostname(options?: ServerOptions) {
+  return options?.hostname ?? process.env.PHOTON_HOSTNAME;
 }
