@@ -6,6 +6,7 @@ async function startServer() {
   assertServerEntry(maybeServerEntry);
 
   if (isBun || isDeno || !maybeServerEntry.server?.nodeHandler) {
+    // TODO pass options to vite dev server
     return await import("@universal-deploy/node/serve");
   }
   return nodeServe(maybeServerEntry.server?.options ?? {}, maybeServerEntry.server.nodeHandler);

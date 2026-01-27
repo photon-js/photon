@@ -1,20 +1,24 @@
 import awesomeEntry from "virtual:ud:catch-all?default";
+import type { ServeReturn } from "@photonjs/core";
 import { serve } from "@photonjs/h3";
 import { apply } from "@universal-middleware/h3";
 import awesomeMiddlewares from "awesome-framework/middlewares";
-import { createApp } from "h3";
+import { type App, createApp, eventHandler } from "h3";
 
-function startServer() {
+function startServer(): ServeReturn<App> {
   const app = createApp();
 
-  app.use("/serverid", () => {
-    return new Response("h3", {
-      status: 200,
-      headers: {
-        "Content-Type": "text/plain",
-      },
-    });
-  });
+  app.use(
+    "/serverid",
+    eventHandler(() => {
+      return new Response("h3", {
+        status: 200,
+        headers: {
+          "Content-Type": "text/plain",
+        },
+      });
+    }),
+  );
 
   apply(app, [...awesomeMiddlewares, awesomeEntry.fetch]);
 

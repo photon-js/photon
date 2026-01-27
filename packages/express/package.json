@@ -10,8 +10,8 @@
       "types": "./dist/serve.d.ts",
       "workerd": "./dist/serve.js",
       "worker": "./dist/serve.js",
-      "deno": "./dist/serve.node.js",
-      "bun": "./dist/serve.node.js",
+      "deno": "./dist/serve.js",
+      "bun": "./dist/serve.js",
       "node": "./dist/serve.node.js",
       "import": "./dist/serve.js",
       "default": "./dist/serve.js"

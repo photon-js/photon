@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port 3000",
     "build": "vite build",
     "preview": "vite -l silent build && node dist/server/index.js",
     "preview:vite": "pnpm run build && vite preview",

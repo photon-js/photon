@@ -25,7 +25,7 @@ export default defineConfig({
         inspectorPort: false,
       }),
     target === "vercel" && vercel(),
-    target === "node" && node(),
+    (target === "node" || target === "bun" || target === "deno") && node(),
     awesomeFramework(),
     {
       name: "resolve-local-entry",
