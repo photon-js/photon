@@ -22,6 +22,9 @@ export default defineConfig({
     photon({ entry: `./${server}-entry.ts` }),
     target === "cloudflare" &&
       cloudflare({
+        viteEnvironment: {
+          name: "ssr",
+        },
         inspectorPort: false,
       }),
     target === "vercel" && vercel(),
