@@ -2,9 +2,10 @@ import { compileEnhance } from "@universal-middleware/core";
 import type { Plugin } from "vite";
 
 const re_enhanced = /[?&]enhanced\b/;
-const re_catchAll = /^virtual:ud:catch-all\?default$/;
+const re_catchAll = /^virtual:ud:catch-all$/;
+const re_catchAllDefault = /^virtual:ud:catch-all\?default$/;
 
-export function photon(): Plugin[] {
+export function photon(options: { entry: string }): Plugin[] {
   let userPort: number | undefined;
   let userHost: string | boolean | undefined;
   return [
@@ -27,6 +28,28 @@ export function photon(): Plugin[] {
           return {
             id: resolved.id,
           };
+        },
+      },
+
+      config() {
+        return {
+          ssr: {
+            // Do not mark import("@universal-deploy/node/server") as external as it contains a virtual module
+            noExternal: ["@universal-deploy/node"],
+          },
+        };
+      },
+    },
+    {
+      name: "photon:node:resolve-local-entry",
+      resolveId: {
+        order: "pre",
+        filter: {
+          id: re_catchAll,
+        },
+        handler() {
+          // Will resolve the entry from the users project root
+          return this.resolve(options.entry);
         },
       },
     },
@@ -70,11 +93,11 @@ export function photon(): Plugin[] {
 
       resolveId: {
         filter: {
-          id: [re_enhanced, re_catchAll],
+          id: [re_enhanced, re_catchAllDefault],
         },
         async handler(id, importer) {
           if (importer?.match(re_enhanced)) return;
-          if (id.match(re_catchAll)) {
+          if (id.match(re_catchAllDefault)) {
             const resolved = await this.resolve(id, importer, { skipSelf: true });
             if (resolved) {
               return `\0${resolved.id}&enhanced`;
@@ -91,7 +114,7 @@ export function photon(): Plugin[] {
         handler(id) {
           const wrappedModule = id.slice(1).replace(re_enhanced, "");
 
-          if (!wrappedModule.match(re_catchAll)) {
+          if (!wrappedModule.match(re_catchAllDefault)) {
             this.warn('?enhanced only supported by "virtual:ud:catch-all?default"');
             return;
           }

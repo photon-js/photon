@@ -19,7 +19,7 @@ if (!store.entries.some((e) => e.id === "./hmr-route.ts")) {
 
 export default defineConfig({
   plugins: [
-    photon(),
+    photon({ entry: `./${server}-entry.ts` }),
     target === "cloudflare" &&
       cloudflare({
         inspectorPort: false,
@@ -27,20 +27,6 @@ export default defineConfig({
     target === "vercel" && vercel(),
     (target === "node" || target === "bun" || target === "deno") && node(),
     awesomeFramework(),
-    {
-      name: "resolve-local-entry",
-      resolveId: {
-        order: "pre",
-        filter: {
-          id: {
-            include: [/^virtual:ud:catch-all$/],
-          },
-        },
-        handler(_, importer, opts) {
-          return this.resolve(`./${server}-entry.ts`, importer, opts);
-        },
-      },
-    },
   ],
   build: {
     emptyOutDir: true,
