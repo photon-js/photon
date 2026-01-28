@@ -1,4 +1,4 @@
-import awesomeEntry from "virtual:ud:catch-all?default";
+import awesomeEntry from "virtual:photon:entry";
 import { serve } from "@photonjs/elysia";
 import { apply } from "@universal-middleware/elysia";
 import awesomeMiddlewares from "awesome-framework/middlewares";
@@ -21,4 +21,4 @@ function startServer() {
   return serve(app);
 }
 
-export default startServer();
+export default startServer() as unknown;

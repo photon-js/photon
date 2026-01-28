@@ -1,4 +1,4 @@
-import awesomeEntry from "virtual:ud:catch-all?default";
+import awesomeEntry from "virtual:photon:entry";
 import type { ServeReturn } from "@photonjs/core";
 import { serve } from "@photonjs/srvx";
 import { enhance } from "@universal-middleware/core";

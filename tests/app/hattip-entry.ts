@@ -1,4 +1,4 @@
-import awesomeEntry from "virtual:ud:catch-all?default";
+import awesomeEntry from "virtual:photon:entry";
 import { createRouter, type Router } from "@hattip/router";
 import type { ServeReturn } from "@photonjs/core";
 import { serve } from "@photonjs/hattip";

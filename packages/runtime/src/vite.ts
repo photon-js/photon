@@ -1,7 +1,11 @@
+import { store } from "@universal-deploy/store";
 import { compileEnhance } from "@universal-middleware/core";
 import type { Plugin } from "vite";
+import { transformStoreInPlace } from "./store-proxy.js";
 
 const re_enhanced = /[?&]enhanced\b/;
+const re_photonEntry = /^virtual:photon:entry$/;
+const re_photonWrap = /[?&]photonEntry\b/;
 const re_catchAll = /^virtual:ud:catch-all$/;
 const re_catchAllDefault = /^virtual:ud:catch-all\?default$/;
 
@@ -50,6 +54,73 @@ export function photon(options: { entry: string }): Plugin[] {
         handler() {
           // Will resolve the entry from the users project root
           return this.resolve(options.entry);
+        },
+      },
+    },
+    // This plugin resolves to
+    //  - "virtual:ud:catch-all?default" when target support a unique entrypoint
+    //  - an entry from UD, if importer contains "?entry=<entryId>"
+    {
+      name: "photon:resolve-entry",
+      enforce: "pre",
+      config() {
+        // TODO opt-in or out for some targets
+        transformStoreInPlace(store, (entry) => ({
+          ...entry,
+          id: `${options.entry}?photonEntry=${entry.id}`,
+        }));
+
+        setTimeout(() => {
+          console.log("store", JSON.parse(JSON.stringify(store)));
+        }, 2000);
+      },
+      resolveId: {
+        filter: {
+          id: [re_photonEntry, re_photonWrap],
+        },
+        async handler(id, importer) {
+          // Wrap current store entry with user entry, meaning that virtual:photon:entry needs to be replaced
+          if (id.match(re_photonWrap)) {
+            console.log("IMPORTER WRAP", { id, importer });
+            const [parent, child] = id.split("?photonEntry=");
+            const resolvedParent = await this.resolve(parent!, importer);
+            if (!resolvedParent || resolvedParent.external) return resolvedParent;
+
+            const resolvedChild = await this.resolve(child!, resolvedParent.id);
+            if (!resolvedChild || resolvedChild.external) return resolvedChild;
+            return {
+              ...resolvedParent,
+              // FIXME the string ends with .js, and Vite seems to assume that the type of the file is JS instead of its actual type
+              id: `${resolvedParent.id}?photonEntry=${btoa(resolvedChild.id)}`,
+            };
+          }
+          console.log("DEFAULT", { id, importer });
+          return this.resolve("virtual:ud:catch-all?default", importer);
+        },
+      },
+    },
+    {
+      name: "photon:resolve-importer",
+      enforce: "pre",
+      resolveId: {
+        order: "pre",
+        handler(id, importer) {
+          if (importer?.match(re_photonWrap) && id === "virtual:photon:entry") {
+            const [parent, child] = importer.split("?photonEntry=");
+            console.log("YEESSSSS", { id, importer, child });
+            return atob(child!);
+          }
+        },
+      },
+    },
+    {
+      name: "photon:transform-test",
+      transform: {
+        filter: {
+          id: [re_photonWrap],
+        },
+        handler(code, id) {
+          console.log("TRASNFORM", { id, code });
         },
       },
     },
