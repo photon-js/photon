@@ -1,14 +1,7 @@
-import { enhance } from "@universal-middleware/core";
-
-export const hmrRoute = enhance(
-  async () => {
+export default {
+  fetch() {
     return new Response("BEFORE HMR", {
       status: 200,
     });
   },
-  {
-    name: "photon-test:hmr",
-    path: "/hmr",
-    method: "GET",
-  },
-);
+};

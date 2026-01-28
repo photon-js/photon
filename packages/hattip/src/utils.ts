@@ -1,4 +1,3 @@
-import { defineFetchLazy as defineFetchLazyCore, type Fetchable } from "@photonjs/core/api/internal";
 import type { App as HattipApp } from "@universal-middleware/hattip";
 
 export function defineFetchLazy<App extends HattipApp>(app: App): asserts app is App & Fetchable {
@@ -24,5 +23,24 @@ export function defineFetchLazy<App extends HattipApp>(app: App): asserts app is
         },
       });
     };
+  });
+}
+
+type FetchHandler = (request: Request) => Response | Promise<Response>;
+type Fetchable = { fetch: FetchHandler };
+
+function defineFetchLazyCore<App>(
+  app: App,
+  getFetchHandler: (app: App) => FetchHandler,
+): asserts app is App & Fetchable {
+  let fetchHandler: FetchHandler | null = null;
+  Object.defineProperty(app, "fetch", {
+    enumerable: true,
+    get: () => {
+      if (!fetchHandler) {
+        fetchHandler = getFetchHandler(app);
+      }
+      return fetchHandler;
+    },
   });
 }

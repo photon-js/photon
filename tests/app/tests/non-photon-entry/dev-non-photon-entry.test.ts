@@ -1,4 +1,4 @@
-import { expectLog, run, test } from "@brillout/test-e2e";
+import { expectLog, fetchHtml, run, test } from "@brillout/test-e2e";
 
 process.env.TARGET = "node";
 process.env.SERVER = "tests/non-photon-entry/express";
@@ -8,5 +8,6 @@ run("pnpm run dev", {
 });
 
 test("server launches with error message", async () => {
-  expectLog("Server entry default export must be an object");
+  await fetchHtml("/");
+  expectLog("must include a { fetch() } function");
 });

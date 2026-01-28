@@ -1,9 +1,0 @@
-{
-  "extends": "../../tsconfig.base.json",
-  "include": ["**/*"],
-  "compilerOptions": {
-    "composite": true,
-    "types": ["vite/client"],
-    "outDir": "./dist/"
-  }
-}

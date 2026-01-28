@@ -6,17 +6,16 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": "./dist/index.js",
-    "./apply": {
-      "types": "./dist/apply.d.ts",
-      "development": {
-        "types": "./dist/apply.dev.d.ts",
-        "import": "./dist/apply.dev.js",
-        "default": "./dist/apply.dev.js"
-      },
-      "import": "./dist/apply.js",
-      "default": "./dist/apply.js"
-    },
-    "./serve": "./dist/serve.js"
+    "./serve": {
+      "types": "./dist/serve.d.ts",
+      "workerd": "./dist/serve.js",
+      "worker": "./dist/serve.js",
+      "deno": "./dist/serve.js",
+      "bun": "./dist/serve.js",
+      "node": "./dist/serve.node.js",
+      "import": "./dist/serve.js",
+      "default": "./dist/serve.js"
+    }
   },
   "scripts": {
     "dev": "tsdown --watch",
@@ -24,7 +23,6 @@
     "test:types": "tsc --noEmit"
   },
   "dependencies": {
-    "@photonjs/core": "workspace:^",
     "@universal-middleware/express": "^0.4.22"
   },
   "peerDependencies": {
@@ -36,12 +34,13 @@
     }
   },
   "devDependencies": {
+    "@photonjs/core": "workspace:^",
     "@types/node": "^22.19.1",
-    "@universal-middleware/core": "^0.4.14",
     "express": "^5.2.1",
+    "srvx": "^0.9.8",
     "tsdown": "^0.18.1",
     "typescript": "^5.9.3",
-    "vite": "^7.2.4"
+    "vite": "^7.3.1"
   },
   "files": [
     "dist/"

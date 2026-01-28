@@ -2,6 +2,7 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import type { NodeHandler, ServeReturn, ServerOptionsBase } from "@photonjs/core";
 import type { App as FastifyApp } from "@universal-middleware/fastify";
 import { bold, yellow } from "ansis";
+import { toFetchHandler } from "srvx/node";
 
 export function serve<App extends FastifyApp>(app: App, options: ServerOptionsBase = {}): ServeReturn<App> {
   if (import.meta.hot) {
@@ -27,12 +28,8 @@ export function serve<App extends FastifyApp>(app: App, options: ServerOptionsBa
   };
 
   return {
-    // @ts-expect-error throw
-    get fetch() {
-      throw new Error(
-        "Fastify does not support the `fetch` interface. Prefer servers like Hono that support edge runtimes",
-      );
-    },
+    // biome-ignore lint/suspicious/noExplicitAny: cast
+    fetch: toFetchHandler(nodeHandler as any),
     server: {
       name: "fastify",
       app,

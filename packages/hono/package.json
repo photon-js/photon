@@ -6,26 +6,6 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": "./dist/index.js",
-    "./apply": {
-      "types": "./dist/apply.d.ts",
-      "development": {
-        "types": "./dist/apply.dev.d.ts",
-        "import": "./dist/apply.dev.js",
-        "default": "./dist/apply.dev.js"
-      },
-      "workerd": {
-        "types": "./dist/apply.edge.d.ts",
-        "import": "./dist/apply.edge.js",
-        "default": "./dist/apply.edge.js"
-      },
-      "worker": {
-        "types": "./dist/apply.edge.d.ts",
-        "import": "./dist/apply.edge.js",
-        "default": "./dist/apply.edge.js"
-      },
-      "import": "./dist/apply.js",
-      "default": "./dist/apply.js"
-    },
     "./serve": {
       "workerd": "./dist/serve.edge.js",
       "worker": "./dist/serve.edge.js",
@@ -37,10 +17,6 @@
     "dev": "tsdown --watch",
     "build": "tsdown",
     "test:types": "tsc --noEmit"
-  },
-  "dependencies": {
-    "@photonjs/core": "workspace:^",
-    "@universal-middleware/hono": "^0.4.18"
   },
   "peerDependencies": {
     "vite": ">=7.1",
@@ -54,15 +30,16 @@
       "optional": true
     }
   },
+  "dependencies": {
+    "@universal-middleware/hono": "^0.4.18"
+  },
   "devDependencies": {
     "@hono/node-server": "^1.19.7",
-    "@types/bun": "^1.3.3",
-    "@types/deno": "^2.5.0",
+    "@photonjs/core": "workspace:^",
     "@types/node": "^22.19.1",
-    "@universal-middleware/core": "^0.4.14",
     "tsdown": "^0.18.1",
     "typescript": "^5.9.3",
-    "vite": "^7.2.4"
+    "vite": "^7.3.1"
   },
   "files": [
     "dist/"
