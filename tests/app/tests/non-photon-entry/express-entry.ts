@@ -1,9 +1,7 @@
 import express, { type Express } from "express";
 
 function startServer(): Express {
-  const app = express();
-
-  return app;
+  return express();
 }
 
 export default startServer();
