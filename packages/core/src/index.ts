@@ -1,3 +1,4 @@
+import type { Stats } from "node:fs";
 import type {
   createServer as createServerHTTP,
   IncomingMessage,
@@ -62,6 +63,24 @@ export interface ServerOptionsBase {
   bun?: Omit<Parameters<typeof Bun.serve>[0], "fetch" | "port">;
   // @ts-expect-error Bun/Deno
   deno?: Omit<Deno.ServeTcpOptions | (Deno.ServeTcpOptions & Deno.TlsCertifiedKeyPem), "port" | "handler">;
+  sirv?: boolean | (SirvOptions & { dir?: string });
+}
+
+// Extracted from sirv
+type Arrayable<T> = T | T[];
+export interface SirvOptions {
+  dev?: boolean;
+  etag?: boolean;
+  maxAge?: number;
+  immutable?: boolean;
+  single?: string | boolean;
+  ignores?: false | Arrayable<string | RegExp>;
+  extensions?: string[];
+  dotfiles?: boolean;
+  brotli?: boolean;
+  gzip?: boolean;
+  onNoMatch?: (req: IncomingMessage, res: ServerResponse) => void;
+  setHeaders?: (res: ServerResponse, pathname: string, stats: Stats) => void;
 }
 
 export interface NodeHandler {

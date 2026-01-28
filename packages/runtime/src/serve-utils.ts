@@ -1,5 +1,8 @@
 import nodeHTTP from "node:http";
+import { dirname, isAbsolute, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import type { NodeHandler, ServerOptions, ServerType } from "@photonjs/core";
+import sirv from "sirv";
 
 // biome-ignore lint/suspicious/noExplicitAny: any
 export type OnReady = boolean | ((url: string | undefined) => any);
@@ -23,7 +26,18 @@ export function nodeServe(options: ServerOptions, handler: NodeHandler): ServerT
   const serverOptions = options.serverOptions ?? {};
   // biome-ignore lint/suspicious/noExplicitAny: any
   const createServer: any = options.createServer;
-  const server: ServerType = createServer(serverOptions, handler);
+
+  const finalHandler =
+    options.sirv === false || options.sirv === null
+      ? handler
+      : options.sirv === true || options.sirv === undefined
+        ? combine(sirv(getDefaultStaticDir(), { etag: true }) as NodeHandler, handler)
+        : combine(
+            sirv(options.sirv.dir ?? getDefaultStaticDir(), { etag: true, ...options.sirv }) as NodeHandler,
+            handler,
+          );
+
+  const server: ServerType = createServer(serverOptions, finalHandler);
   // onCreate hook
   options.onCreate?.(server);
 
@@ -75,10 +89,36 @@ export function nodeServe(options: ServerOptions, handler: NodeHandler): ServerT
   return server;
 }
 
+function getDefaultStaticDir() {
+  const argv1 = process.argv[1];
+  const entrypointDirAbs = argv1
+    ? dirname(isAbsolute(argv1) ? argv1 : join(process.cwd(), argv1))
+    : dirname(fileURLToPath(import.meta.url));
+  return join(entrypointDirAbs, "..", "client");
+}
+
 export function getPort(options?: ServerOptions) {
   return options?.port ?? (process.env.PORT ? Number.parseInt(process.env.PORT, 10) : 3000);
 }
 
 export function getHostname(options?: ServerOptions) {
   return options?.hostname ?? process.env.PHOTON_HOSTNAME;
+}
+
+export function combine(h1: NodeHandler, h2: NodeHandler): NodeHandler {
+  return function combined(req, res, next) {
+    function runSecond(): void {
+      // biome-ignore lint/suspicious/noExplicitAny: cast
+      h2(req as any, res as any, next);
+    }
+
+    // biome-ignore lint/suspicious/noExplicitAny: cast
+    const maybe = h1(req as any, res as any, runSecond);
+
+    if (maybe instanceof Promise) {
+      maybe.catch((err) => {
+        throw err;
+      });
+    }
+  };
 }
