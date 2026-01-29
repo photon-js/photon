@@ -66,6 +66,9 @@ importers:
       '@universal-middleware/core':
         specifier: ^0.4.16
         version: 0.4.16(@hattip/core@0.0.49)(@types/express@5.0.6)(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(srvx@0.9.8)
+      '@universal-middleware/hono':
+        specifier: ^0.4.18
+        version: 0.4.20(@hattip/core@0.0.49)(@types/express@5.0.6)(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(srvx@0.9.8)
       awesome-framework:
         specifier: 0.0.0
         version: link:../awesome-framework
@@ -73,6 +76,9 @@ importers:
         specifier: ^4.11.5
         version: 4.11.5
     devDependencies:
+      '@cloudflare/vite-plugin':
+        specifier: ^1.21.2
+        version: 1.21.2(vite@7.3.1(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.2))(workerd@1.20260120.0)(wrangler@4.60.0)
       '@photonjs/core':
         specifier: ^0.1.21
         version: link:../../packages/core
@@ -82,6 +88,9 @@ importers:
       '@photonjs/runtime':
         specifier: ^0.1.16
         version: link:../../packages/runtime
+      '@universal-deploy/store':
+        specifier: ^0.0.5
+        version: 0.0.5(@hattip/core@0.0.49)(@types/express@5.0.6)(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(srvx@0.9.8)
       e2e:
         specifier: 'workspace:'
         version: link:../../tests/e2e
@@ -103,6 +112,9 @@ importers:
       '@universal-middleware/core':
         specifier: ^0.4.16
         version: 0.4.16(@hattip/core@0.0.49)(@types/express@5.0.6)(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(srvx@0.9.8)
+      '@universal-middleware/hono':
+        specifier: ^0.4.18
+        version: 0.4.20(@hattip/core@0.0.49)(@types/express@5.0.6)(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(srvx@0.9.8)
       awesome-framework:
         specifier: 0.0.0
         version: link:../awesome-framework
@@ -119,6 +131,12 @@ importers:
       '@photonjs/runtime':
         specifier: ^0.1.16
         version: link:../../packages/runtime
+      '@universal-deploy/node':
+        specifier: ^0.0.1
+        version: 0.0.1(@hattip/core@0.0.49)(@types/express@5.0.6)(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(vite@7.3.1(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.2))
+      '@universal-deploy/store':
+        specifier: ^0.0.5
+        version: 0.0.5(@hattip/core@0.0.49)(@types/express@5.0.6)(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(srvx@0.9.8)
       e2e:
         specifier: 'workspace:'
         version: link:../../tests/e2e
