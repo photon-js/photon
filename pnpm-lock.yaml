@@ -236,8 +236,8 @@ importers:
         specifier: ^7.3.1
         version: 7.3.1(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.2)
       vite-plugin-vercel:
-        specifier: ^11.0.0-beta.8
-        version: 11.0.0-beta.8(@hattip/core@0.0.49)(@types/express@5.0.6)(@universal-middleware/h3@0.4.16(@hattip/core@0.0.49)(@types/express@5.0.6)(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(srvx@0.9.8))(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(express@5.2.1)(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(rollup@4.53.5)(srvx@0.9.8)(vite@7.3.1(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.2))
+        specifier: ^11.0.0-beta.9
+        version: 11.0.0-beta.9(@hattip/core@0.0.49)(@types/express@5.0.6)(@universal-middleware/h3@0.4.16(@hattip/core@0.0.49)(@types/express@5.0.6)(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(srvx@0.9.8))(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(express@5.2.1)(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(rollup@4.53.5)(srvx@0.9.8)(vite@7.3.1(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.2))
       wrangler:
         specifier: ^4.60.0
         version: 4.60.0
@@ -694,8 +694,8 @@ importers:
         specifier: ^7.3.1
         version: 7.3.1(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.2)
       vite-plugin-vercel:
-        specifier: ^11.0.0-beta.8
-        version: 11.0.0-beta.8(@hattip/core@0.0.49)(@types/express@5.0.6)(@universal-middleware/h3@0.4.16(@hattip/core@0.0.49)(@types/express@5.0.6)(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(srvx@0.9.8))(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(express@5.2.1)(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(rollup@4.53.5)(srvx@0.9.8)(vite@7.3.1(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.2))
+        specifier: ^11.0.0-beta.9
+        version: 11.0.0-beta.9(@hattip/core@0.0.49)(@types/express@5.0.6)(@universal-middleware/h3@0.4.16(@hattip/core@0.0.49)(@types/express@5.0.6)(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(srvx@0.9.8))(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(express@5.2.1)(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(rollup@4.53.5)(srvx@0.9.8)(vite@7.3.1(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.2))
       wrangler:
         specifier: ^4.60.0
         version: 4.60.0
@@ -2331,6 +2331,125 @@ packages:
   '@oxc-project/types@0.98.0':
     resolution: {integrity: sha512-Vzmd6FsqVuz5HQVcRC/hrx7Ujo3WEVeQP7C2UNP5uy1hUY4SQvMB+93jxkI1KRHz9a/6cni3glPOtvteN+zpsw==}
 
+  '@oxc-transform/binding-android-arm-eabi@0.108.0':
+    resolution: {integrity: sha512-lvIu578kM6558Ynz0+QyJCpAEwyqjU2RdB0ppyzCbN8wJRGTlDirr+THtETiq/hbRk/M5yhfAO2kro+70AvgAA==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm]
+    os: [android]
+
+  '@oxc-transform/binding-android-arm64@0.108.0':
+    resolution: {integrity: sha512-2mIcrNI1PMUuNvp7nJ7TGEcllJiC7qq7G1J/eCS4CRUGHLuaMuiqds79gSJBR9gG4UzzP7thWjws9goMq5UICQ==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm64]
+    os: [android]
+
+  '@oxc-transform/binding-darwin-arm64@0.108.0':
+    resolution: {integrity: sha512-09P6IRBoOYj9HZ8ZR1i60Gk274xeSW2HO8VmMGJbV+Z1HURiO1hn/z6iCDmWhVgz9I3F2vqXFfVk8IeWY+KN3g==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@oxc-transform/binding-darwin-x64@0.108.0':
+    resolution: {integrity: sha512-bVf2wNwpMP2PX3hRbm8C9gRhdKLiqUIpLhsVhtyHgNwd5G4FgPtNgdFJogIFJ/07E0uYC2F+ag+CoSD76lEI0Q==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [x64]
+    os: [darwin]
+
+  '@oxc-transform/binding-freebsd-x64@0.108.0':
+    resolution: {integrity: sha512-BoP/itmIqHuZ4yOk6kSh1WAk7Muh/IykUVfBtH4D8ZZzcpiDNRndSKc+IISLDQ3AqtaAsl4A8DYa3S+SqEUJzQ==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [x64]
+    os: [freebsd]
+
+  '@oxc-transform/binding-linux-arm-gnueabihf@0.108.0':
+    resolution: {integrity: sha512-KtPotqF+MsXBo81xwmuPCkK+N/jX8ZsjCKOH3s7p1XfQanwCGLRFHel06o5JjH1klIlrdA1R+8YoorKwKDAfmQ==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm]
+    os: [linux]
+
+  '@oxc-transform/binding-linux-arm-musleabihf@0.108.0':
+    resolution: {integrity: sha512-Yf/lUkWqgRF8Ab1nqL1iAnrGP+IJO6H0k9c7Vnpg/fUfG5e8MOB+NPtWdbMMBUXTLPRWSh6Gmrr6rLnn2o7KWw==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm]
+    os: [linux]
+
+  '@oxc-transform/binding-linux-arm64-gnu@0.108.0':
+    resolution: {integrity: sha512-84hqyO4xdvy6WfYkiFdQLVQK9gchrZvL6OuWYGXjqHwDcUU2Ll9YodHC4sEkQagKX5FKJjjRZ1YYmEKgq6bpkg==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm64]
+    os: [linux]
+
+  '@oxc-transform/binding-linux-arm64-musl@0.108.0':
+    resolution: {integrity: sha512-0utnCDANwZoJDAtwRyj5z0MLhzXPEr5p7pXf+Q/ef96ggwii2SVbSQdGge/+s/i4IWH3t3DbPGeIzXF7ab2gDw==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm64]
+    os: [linux]
+
+  '@oxc-transform/binding-linux-ppc64-gnu@0.108.0':
+    resolution: {integrity: sha512-9s8muvWbTtxlvcwMZr643WXeAU5iRxKFxAeeHMwci952muR8AXaQvxTWeRyKUaKyjmtX/gCQSCTKL7ER0dx9Qw==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [ppc64]
+    os: [linux]
+
+  '@oxc-transform/binding-linux-riscv64-gnu@0.108.0':
+    resolution: {integrity: sha512-84EAYsC7oawGVTz6Gq7UzxOw9auZSAgqcT0itAI1k5m3k01ZJ5NNQyby16wmL6K1uetEz7t8vN0BWHhFPZAVBw==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [riscv64]
+    os: [linux]
+
+  '@oxc-transform/binding-linux-riscv64-musl@0.108.0':
+    resolution: {integrity: sha512-YsVyPd3/bHybHki5z06vToTB4MeiUgDOOQH+BNst462Mzim4gwyAG45k2XBJCR3vsDep04da7OtRQQoXe1mSqg==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [riscv64]
+    os: [linux]
+
+  '@oxc-transform/binding-linux-s390x-gnu@0.108.0':
+    resolution: {integrity: sha512-aW9bQpvKBShYRtoG561uO+6788eciMl6IN7yWiLqGEHxV8azIbx7EK0GgvWdKH52CJq2LrM/gcfoXRfOgCjRUA==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [s390x]
+    os: [linux]
+
+  '@oxc-transform/binding-linux-x64-gnu@0.108.0':
+    resolution: {integrity: sha512-APOYvs7APzLHfIop9RQYqP9YkY9g7kQOnOE4KHhodlqOmUYDHpZYeA2QAs7is8KuTo0JETP3fTipG5HiSFJdWg==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [x64]
+    os: [linux]
+
+  '@oxc-transform/binding-linux-x64-musl@0.108.0':
+    resolution: {integrity: sha512-vPtmOmBvXCCB1ms68Ne8WoTv97mpDTDY2vgeT4E4NL5OFk9ZT6YVS6cXaJqCBHZNqljL5uIKuAF8gy6ywV1mUA==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [x64]
+    os: [linux]
+
+  '@oxc-transform/binding-openharmony-arm64@0.108.0':
+    resolution: {integrity: sha512-iWD38lrG1hQVMPjTAuxci+h8rr6xh17EfEQNiumnbiFjMmhWeMFTtyPyXwTpS6aPxf6Tcx/SUXHwRzKs+dKHDg==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm64]
+    os: [openharmony]
+
+  '@oxc-transform/binding-wasm32-wasi@0.108.0':
+    resolution: {integrity: sha512-lr+pGcVrKCoZWZi5bH+3LE5OZq1FJ7vbWgXhbK0MGT0LAOXzqtMFcpbsZR/CPYQCXl4xl1FcAtXan0lNFAt4bQ==}
+    engines: {node: '>=14.0.0'}
+    cpu: [wasm32]
+
+  '@oxc-transform/binding-win32-arm64-msvc@0.108.0':
+    resolution: {integrity: sha512-R7X4Qbmq6TRWeEaxWpFx7n7n6t9rWcz9Q1hNOewxCBYNKXlH2Or5COPmKZGCuYByvN4TiDua5rudDgE6rf8RIA==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm64]
+    os: [win32]
+
+  '@oxc-transform/binding-win32-ia32-msvc@0.108.0':
+    resolution: {integrity: sha512-msSIfa3g/AX2zudSmjAskxG074MQd+YDzBNaeDs/+6192pfR/N+Adn/zCt4HOcNiqTbWmbikAM7B7pPFb5yr0A==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [ia32]
+    os: [win32]
+
+  '@oxc-transform/binding-win32-x64-msvc@0.108.0':
+    resolution: {integrity: sha512-k+7tuCMULfB7zr57jb68sVzxbyleZBasyr1h1Ieiu1U95XHYe64pbSrwHmlaSmiNHqV91ikM3809+ps68jZZhw==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [x64]
+    os: [win32]
+
   '@parcel/watcher-android-arm64@2.5.6':
     resolution: {integrity: sha512-YQxSS34tPF/6ZG7r/Ih9xy+kP/WwediEUsqmtf0cuCV5TPPKw/PQHRhueUo6JdeFJaqV3pyjm0GdYjZotbRt/A==}
     engines: {node: '>= 10.0.0'}
@@ -3520,8 +3639,8 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@vercel/nft@1.1.1':
-    resolution: {integrity: sha512-mKMGa7CEUcXU75474kOeqHbtvK1kAcu4wiahhmlUenB5JbTQB8wVlDI8CyHR3rpGo0qlzoRWqcDzI41FUoBJCA==}
+  '@vercel/nft@1.3.0':
+    resolution: {integrity: sha512-i4EYGkCsIjzu4vorDUbqglZc5eFtQI2syHb++9ZUDm6TU4edVywGpVnYDein35x9sevONOn9/UabfQXuNXtuzQ==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -5838,6 +5957,10 @@ packages:
     resolution: {integrity: sha512-qFOyK5PjiWZd+QQIh+1jhdb9LpxTF0qs7Pm8o5QHYZ0M3vKqSqzsZaEB6oWlxZ+q2sJBMI/Ktgd2N5ZwQoRHfg==}
     engines: {node: '>= 0.4'}
 
+  oxc-transform@0.108.0:
+    resolution: {integrity: sha512-9fPqjhT8leeIa+s8kh+lwR3AZWPZRYDsND/kgKU5zDDkgrrkWuJLmLDP2LQsevSErIpX3cZQ+8QrXZXUqYRVww==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+
   p-event@6.0.1:
     resolution: {integrity: sha512-Q6Bekk5wpzW5qIyUP4gdMEujObYstZl6DMMOSenwBvV0BlE5LkDwkjs5yHbZmdCEq2o4RJx4tE1vwxFVf2FG1w==}
     engines: {node: '>=16.17'}
@@ -6676,11 +6799,6 @@ packages:
   tar-stream@3.1.7:
     resolution: {integrity: sha512-qJj60CXt7IU1Ffyc3NJMjh6EkuCFej46zUqJ4J7pqYlThyd9bO0XBTmcOIhSzZJVWfsLks0+nle/j538YAW9RQ==}
 
-  tar@7.5.1:
-    resolution: {integrity: sha512-nlGpxf+hv0v7GkWBK2V9spgactGOp0qvfWRxUMjqHyzrt3SgwE48DIv/FhqPHJYLHpgW1opq3nERbz5Anq7n1g==}
-    engines: {node: '>=18'}
-    deprecated: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exhorbitant rates) by contacting i@izs.me
-
   tar@7.5.7:
     resolution: {integrity: sha512-fov56fJiRuThVFXD6o6/Q354S7pnWMJIVlDBYijsTNx6jKSE4pvrDTs6lUnmGvNyfJwFQQwWy3owKz1ucIhveQ==}
     engines: {node: '>=18'}
@@ -7101,8 +7219,8 @@ packages:
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
 
-  vite-plugin-vercel@11.0.0-beta.8:
-    resolution: {integrity: sha512-RfJuOWX2tU3prUbmU1j0jSu3PAAvYY7WGChNwK7da2aYH3fWZsUBlDaPl//asn1OaG+wC2tGXnOQ6Vy4Viqxsw==}
+  vite-plugin-vercel@11.0.0-beta.9:
+    resolution: {integrity: sha512-QsWGW+KLMlRbLNJAuo5hvpVIIQT9n3AKbHa9YNi4X6qQN26YfmW0vAqwzu4sKCsf8BPaj7gfRbr3NlGAkNMGkw==}
     peerDependencies:
       vite: '>=7.1'
 
@@ -8621,7 +8739,7 @@ snapshots:
       node-fetch: 2.7.0
       nopt: 8.1.0
       semver: 7.7.3
-      tar: 7.5.1
+      tar: 7.5.7
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -9102,6 +9220,68 @@ snapshots:
   '@oxc-project/types@0.110.0': {}
 
   '@oxc-project/types@0.98.0': {}
+
+  '@oxc-transform/binding-android-arm-eabi@0.108.0':
+    optional: true
+
+  '@oxc-transform/binding-android-arm64@0.108.0':
+    optional: true
+
+  '@oxc-transform/binding-darwin-arm64@0.108.0':
+    optional: true
+
+  '@oxc-transform/binding-darwin-x64@0.108.0':
+    optional: true
+
+  '@oxc-transform/binding-freebsd-x64@0.108.0':
+    optional: true
+
+  '@oxc-transform/binding-linux-arm-gnueabihf@0.108.0':
+    optional: true
+
+  '@oxc-transform/binding-linux-arm-musleabihf@0.108.0':
+    optional: true
+
+  '@oxc-transform/binding-linux-arm64-gnu@0.108.0':
+    optional: true
+
+  '@oxc-transform/binding-linux-arm64-musl@0.108.0':
+    optional: true
+
+  '@oxc-transform/binding-linux-ppc64-gnu@0.108.0':
+    optional: true
+
+  '@oxc-transform/binding-linux-riscv64-gnu@0.108.0':
+    optional: true
+
+  '@oxc-transform/binding-linux-riscv64-musl@0.108.0':
+    optional: true
+
+  '@oxc-transform/binding-linux-s390x-gnu@0.108.0':
+    optional: true
+
+  '@oxc-transform/binding-linux-x64-gnu@0.108.0':
+    optional: true
+
+  '@oxc-transform/binding-linux-x64-musl@0.108.0':
+    optional: true
+
+  '@oxc-transform/binding-openharmony-arm64@0.108.0':
+    optional: true
+
+  '@oxc-transform/binding-wasm32-wasi@0.108.0':
+    dependencies:
+      '@napi-rs/wasm-runtime': 1.1.1
+    optional: true
+
+  '@oxc-transform/binding-win32-arm64-msvc@0.108.0':
+    optional: true
+
+  '@oxc-transform/binding-win32-ia32-msvc@0.108.0':
+    optional: true
+
+  '@oxc-transform/binding-win32-x64-msvc@0.108.0':
+    optional: true
 
   '@parcel/watcher-android-arm64@2.5.6':
     optional: true
@@ -10435,7 +10615,7 @@ snapshots:
       - rollup
       - supports-color
 
-  '@vercel/nft@1.1.1(rollup@4.53.5)':
+  '@vercel/nft@1.3.0(rollup@4.53.5)':
     dependencies:
       '@mapbox/node-pre-gyp': 2.0.0
       '@rollup/pluginutils': 5.3.0(rollup@4.53.5)
@@ -13341,6 +13521,29 @@ snapshots:
       object-keys: 1.1.1
       safe-push-apply: 1.0.0
 
+  oxc-transform@0.108.0:
+    optionalDependencies:
+      '@oxc-transform/binding-android-arm-eabi': 0.108.0
+      '@oxc-transform/binding-android-arm64': 0.108.0
+      '@oxc-transform/binding-darwin-arm64': 0.108.0
+      '@oxc-transform/binding-darwin-x64': 0.108.0
+      '@oxc-transform/binding-freebsd-x64': 0.108.0
+      '@oxc-transform/binding-linux-arm-gnueabihf': 0.108.0
+      '@oxc-transform/binding-linux-arm-musleabihf': 0.108.0
+      '@oxc-transform/binding-linux-arm64-gnu': 0.108.0
+      '@oxc-transform/binding-linux-arm64-musl': 0.108.0
+      '@oxc-transform/binding-linux-ppc64-gnu': 0.108.0
+      '@oxc-transform/binding-linux-riscv64-gnu': 0.108.0
+      '@oxc-transform/binding-linux-riscv64-musl': 0.108.0
+      '@oxc-transform/binding-linux-s390x-gnu': 0.108.0
+      '@oxc-transform/binding-linux-x64-gnu': 0.108.0
+      '@oxc-transform/binding-linux-x64-musl': 0.108.0
+      '@oxc-transform/binding-openharmony-arm64': 0.108.0
+      '@oxc-transform/binding-wasm32-wasi': 0.108.0
+      '@oxc-transform/binding-win32-arm64-msvc': 0.108.0
+      '@oxc-transform/binding-win32-ia32-msvc': 0.108.0
+      '@oxc-transform/binding-win32-x64-msvc': 0.108.0
+
   p-event@6.0.1:
     dependencies:
       p-timeout: 6.1.4
@@ -14357,14 +14560,6 @@ snapshots:
       - bare-abort-controller
       - react-native-b4a
 
-  tar@7.5.1:
-    dependencies:
-      '@isaacs/fs-minipass': 4.0.1
-      chownr: 3.0.0
-      minipass: 7.1.2
-      minizlib: 3.1.0
-      yallist: 5.0.0
-
   tar@7.5.7:
     dependencies:
       '@isaacs/fs-minipass': 4.0.1
@@ -14747,20 +14942,21 @@ snapshots:
       - tsx
       - yaml
 
-  vite-plugin-vercel@11.0.0-beta.8(@hattip/core@0.0.49)(@types/express@5.0.6)(@universal-middleware/h3@0.4.16(@hattip/core@0.0.49)(@types/express@5.0.6)(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(srvx@0.9.8))(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(express@5.2.1)(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(rollup@4.53.5)(srvx@0.9.8)(vite@7.3.1(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.2)):
+  vite-plugin-vercel@11.0.0-beta.9(@hattip/core@0.0.49)(@types/express@5.0.6)(@universal-middleware/h3@0.4.16(@hattip/core@0.0.49)(@types/express@5.0.6)(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(srvx@0.9.8))(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(express@5.2.1)(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(rollup@4.53.5)(srvx@0.9.8)(vite@7.3.1(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.2)):
     dependencies:
       '@manypkg/find-root': 3.1.0
       '@universal-deploy/store': 0.0.5(@hattip/core@0.0.49)(@types/express@5.0.6)(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(srvx@0.9.8)
       '@universal-middleware/core': 0.4.16(@hattip/core@0.0.49)(@types/express@5.0.6)(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(srvx@0.9.8)
       '@universal-middleware/vercel': 0.4.29(@hattip/core@0.0.49)(@types/express@5.0.6)(@universal-middleware/h3@0.4.16(@hattip/core@0.0.49)(@types/express@5.0.6)(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(srvx@0.9.8))(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(express@5.2.1)(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(srvx@0.9.8)
       '@vercel/build-utils': 13.2.4
-      '@vercel/nft': 1.1.1(rollup@4.53.5)
+      '@vercel/nft': 1.3.0(rollup@4.53.5)
       '@vercel/routing-utils': 5.3.1
       '@vite-plugin-vercel/schemas': 1.0.0
       convert-route: 1.0.0
       fast-glob: 3.3.3
       magicast: 0.5.1
       nf3: 0.3.6
+      oxc-transform: 0.108.0
       p-limit: 7.2.0
       path-to-regexp: 8.3.0
       rolldown: 1.0.0-rc.1
