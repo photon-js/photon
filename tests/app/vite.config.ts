@@ -9,7 +9,8 @@ import { vercel } from "vite-plugin-vercel/vite";
 const target = process.env.TARGET ?? "node";
 const server = process.env.SERVER ?? "hono";
 
-if (!store.entries.some((e) => e.id === "./hmr-route.ts")) {
+if (!(store as any)[Symbol.for("photon:test")]) {
+  (store as any)[Symbol.for("photon:test")] = true;
   store.entries.push({
     id: "./hmr-route.ts",
     method: "GET",
@@ -19,7 +20,7 @@ if (!store.entries.some((e) => e.id === "./hmr-route.ts")) {
 
 export default defineConfig({
   plugins: [
-    photon({ entry: `./${server}-entry.ts`, routingMode: "delegated" }),
+    photon({ entry: `./${server}-entry.ts` }),
     target === "cloudflare" &&
       cloudflare({
         viteEnvironment: {

@@ -1,4 +1,4 @@
-import awesomeEntry from "virtual:ud:catch-all?default";
+import awesomeEntry from "virtual:photon:entry";
 import { serve } from "@photonjs/hono";
 import { apply } from "@universal-middleware/hono";
 import awesomeMiddlewares from "awesome-framework/middlewares";

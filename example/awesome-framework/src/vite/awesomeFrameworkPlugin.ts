@@ -40,12 +40,16 @@ export function awesomeFrameworkPlugin(): Plugin[] {
           },
         };
       },
-      configEnvironment(_name, config) {
-        if (config.consumer === "server") {
+      configEnvironment(name, config) {
+        if (config.consumer === "server" || name === "ssr") {
           return {
             optimizeDeps: {
               // awesome-framework is an ESM package, so no need to optimize it
               exclude: ["awesome-framework"],
+            },
+            build: {
+              outDir: config.build?.outDir ?? "./dist/server",
+              emptyOutDir: false,
             },
           };
         }
@@ -56,6 +60,7 @@ export function awesomeFrameworkPlugin(): Plugin[] {
                 index: virtualIndex,
               },
             },
+            outDir: config.build?.outDir ?? "./dist/client",
           },
         };
       },
