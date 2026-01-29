@@ -22,7 +22,7 @@
     }
   },
   "dependencies": {
-    "@universal-middleware/hattip": "^0.4.14"
+    "@universal-middleware/hattip": "^0.4.15"
   },
   "devDependencies": {
     "@photonjs/core": "workspace:^",
