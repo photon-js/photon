@@ -19,7 +19,7 @@ if (!store.entries.some((e) => e.id === "./hmr-route.ts")) {
 
 export default defineConfig({
   plugins: [
-    photon({ entry: `./${server}-entry.ts` }),
+    photon({ entry: `./${server}-entry.ts`, routingMode: "delegated" }),
     target === "cloudflare" &&
       cloudflare({
         viteEnvironment: {

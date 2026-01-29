@@ -1,1 +1,1 @@
-export { photon } from "./vite.js";
+export { photon } from "./vite/index.js";

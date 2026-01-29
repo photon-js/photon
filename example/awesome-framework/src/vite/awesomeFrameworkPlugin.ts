@@ -40,31 +40,24 @@ export function awesomeFrameworkPlugin(): Plugin[] {
           },
         };
       },
-      configEnvironment(name) {
-        if (name === "ssr") {
+      configEnvironment(_name, config) {
+        if (config.consumer === "server") {
           return {
             optimizeDeps: {
               // awesome-framework is an ESM package, so no need to optimize it
               exclude: ["awesome-framework"],
             },
-            build: {
-              outDir: "./dist/server",
-              emptyOutDir: false,
-            },
           };
         }
-        if (name === "client") {
-          return {
-            build: {
-              rollupOptions: {
-                input: {
-                  index: virtualIndex,
-                },
+        return {
+          build: {
+            rollupOptions: {
+              input: {
+                index: virtualIndex,
               },
-              outDir: "./dist/client",
             },
-          };
-        }
+          },
+        };
       },
       resolveId(id) {
         if (id === virtualIndex) {

@@ -1,54 +1,46 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: cast */
 import type { EntryMeta, Store } from "@universal-deploy/store";
 
 type EntryTransformer = (entry: EntryMeta) => EntryMeta;
+
+const MUTATING_ARRAY_METHODS = new Set([
+  "copyWithin",
+  "fill",
+  "pop",
+  "push",
+  "reverse",
+  "shift",
+  "sort",
+  "splice",
+  "unshift",
+]);
 
 export function transformStoreInPlace(store: Store, transformer: EntryTransformer): void {
   if ((store as any)[Symbol.for("photon:transformed")]) return;
   (store as any)[Symbol.for("photon:transformed")] = true;
 
-  // Intercept future modifications using Proxy
-  // Transform existing entries in-place
-  for (let i = 0; i < store.entries.length; i++) {
-    store.entries[i] = transformer(store.entries[i]!);
-  }
+  const rawEntries = store.entries;
 
-  // Create a proxied array
-  const proxiedArray = new Proxy(store.entries, {
-    get(arr, arrProp) {
-      const value = arr[arrProp as any];
+  store.entries = new Proxy(rawEntries, {
+    get(arr, prop, receiver) {
+      const value = Reflect.get(arr, prop, receiver);
 
-      // Intercept array mutation methods
-      if (arrProp === "push") {
-        return (...items: EntryMeta[]) => {
-          return Array.prototype.push.apply(arr, items.map(transformer));
-        };
+      // Intercept ALL mutating array methods
+      if (typeof prop === "string" && MUTATING_ARRAY_METHODS.has(prop)) {
+        return (...args: any[]) => Array.prototype[prop as keyof any[]].apply(arr, args);
       }
 
-      if (arrProp === "unshift") {
-        return (...items: EntryMeta[]) => {
-          return Array.prototype.unshift.apply(arr, items.map(transformer));
-        };
-      }
-
-      if (arrProp === "splice") {
-        return (start: number, deleteCount?: number, ...items: EntryMeta[]) => {
-          return Array.prototype.splice.apply(arr, [start, deleteCount, ...items.map(transformer)] as any);
-        };
+      // Transform on read for numeric indices
+      if (typeof prop === "string" && !Number.isNaN(Number(prop))) {
+        return value != null ? transformer(value) : value;
       }
 
       return value;
     },
-    set(arr, index, value) {
-      // Transform direct array assignments
-      if (typeof index === "string" && !isNaN(Number(index))) {
-        arr[index as any] = transformer(value);
-        return true;
-      }
-      arr[index as any] = value;
-      return true;
+
+    set(arr, prop, value, receiver) {
+      // Store raw values only
+      return Reflect.set(arr, prop, value, receiver);
     },
   });
-
-  // Replace the entries array with the proxied version
-  store.entries = proxiedArray;
 }
