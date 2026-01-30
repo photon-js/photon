@@ -14,7 +14,7 @@
     "@photonjs/core": "^0.1.21",
     "@photonjs/runtime": "^0.1.16",
     "@universal-deploy/netlify": "^0.0.1",
-    "@universal-deploy/store": "^0.0.5",
+    "@universal-deploy/store": "^0.0.6",
     "e2e": "workspace:",
     "playwright": "^1.57.0",
     "typescript": "^5.9.3",

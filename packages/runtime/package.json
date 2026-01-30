@@ -23,7 +23,7 @@
   "dependencies": {
     "@photonjs/srvx": "workspace:^",
     "@universal-deploy/node": "^0.0.1",
-    "@universal-deploy/store": "^0.0.5",
+    "@universal-deploy/store": "^0.0.6",
     "@universal-middleware/core": "^0.4.16",
     "@universal-middleware/sirv": "^0.1.24",
     "sirv": "^3.0.2",
