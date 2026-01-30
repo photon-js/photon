@@ -20,7 +20,8 @@ export function photonMultiEntryPlugin(options: PhotonPluginOptions): Plugin {
       // FIXME use same format as srvx for serve option and nodeHandler ?
       transformStoreInPlace(store, (entry) => ({
         ...entry,
-        id: `${options.entry}?${p_photonEntryRaw.param}=${entry.id}`,
+        // ?γ=0 is to avoid overriding the entry extension
+        id: `${options.entry}?${p_photonEntryRaw.param}=${encodeURIComponent(`${entry.id}?γ`)}`,
       }));
     },
     resolveId: {
@@ -32,8 +33,7 @@ export function photonMultiEntryPlugin(options: PhotonPluginOptions): Plugin {
         if (importer?.match(p_photonEntryResolved.re) && id.match(re_photonEntry)) {
           const params = new URLSearchParams(importer.split("?")[1]);
           // biome-ignore lint/style/noNonNullAssertion: ok
-          const photonEntry = params.get(p_photonEntryResolved.param)!;
-          return atob(photonEntry);
+          return params.get(p_photonEntryResolved.param)!;
         }
 
         // Resolves both parent and child entries
@@ -46,13 +46,13 @@ export function photonMultiEntryPlugin(options: PhotonPluginOptions): Plugin {
             this.resolve(parent, importer),
             this.resolve(photonEntry),
           ]);
-          if (!resolvedParent || !resolvedChild) return null;
+          if (!resolvedParent || !resolvedChild) {
+            return null;
+          }
 
           return {
             ...resolvedParent,
-            // Vite uses the module extension internally to guess the parser,
-            // so we need to make sure that this extension is not overridden by the child entry.
-            id: `${resolvedParent.id}?${p_photonEntryResolved.param}=${btoa(resolvedChild.id)}`,
+            id: `${resolvedParent.id}?${p_photonEntryResolved.param}=${encodeURIComponent(resolvedChild.id)}`,
           };
         }
 
