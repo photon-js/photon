@@ -3,15 +3,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite dev --port 3000",
+    "dev": "vite dev --port 3000 -c vite.node.config.ts",
     "dev:cloudflare": "vite dev --port 3000 -c vite.cloudflare.config.ts",
-    "build": "vite build",
-    "preview": "vite build && node dist/server/index.js",
-    "preview:cloudflare": "vite build -c vite.cloudflare.config.ts && vite preview -c vite.cloudflare.config.ts",
-    "test": "vitest run"
+    "build": "vite build -c vite.node.config.ts",
+    "preview": "vite build -c vite.node.config.ts && node dist/server/index.js",
+    "preview:cloudflare": "vite build -c vite.cloudflare.config.ts && vite preview -c vite.cloudflare.config.ts"
   },
   "dependencies": {
-    "@photonjs/cloudflare": "^0.1.13",
+    "@photonjs/hono": "^0.1.12",
     "@photonjs/runtime": "^0.1.16",
     "@tailwindcss/vite": "^4.1.17",
     "@tanstack/react-devtools": "^0.7.11",
@@ -20,6 +19,7 @@
     "@tanstack/react-router-ssr-query": "^1.139.0",
     "@tanstack/react-start": "^1.139.0",
     "@tanstack/router-plugin": "^1.139.0",
+    "@universal-middleware/hono": "^0.4.20",
     "lucide-react": "^0.554.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
@@ -27,17 +27,21 @@
     "vite-tsconfig-paths": "^5.1.4"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.21.2",
     "@tanstack/devtools-vite": "^0.3.11",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/react": "^16.3.0",
     "@types/node": "^22.19.1",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
+    "@universal-deploy/node": "^0.0.1",
+    "@universal-deploy/store": "^0.0.5",
     "@vitejs/plugin-react": "^5.1.1",
+    "hono": "^4.11.5",
     "jsdom": "^27.2.0",
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
-    "vitest": "^3.2.4",
+    "vite-plugin-inspect": "^11.3.3",
     "web-vitals": "^5.1.0"
   },
   "version": null

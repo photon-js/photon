@@ -45,6 +45,9 @@ export function photonEnhancePlugin(): Plugin {
         return `
 export * from ${JSON.stringify(wrappedModule)};
 import mod from ${JSON.stringify(wrappedModule)};
+
+console.log("enhanced catchall", ${JSON.stringify(wrappedModule)}, mod);
+
 ${compiledEnhance}
 export default mod;
           `;
