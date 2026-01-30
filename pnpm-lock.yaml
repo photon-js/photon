@@ -236,8 +236,8 @@ importers:
         specifier: ^7.3.1
         version: 7.3.1(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.20.6)(yaml@2.8.2)
       vite-plugin-vercel:
-        specifier: ^11.0.0-beta.9
-        version: 11.0.0-beta.9(@hattip/core@0.0.49)(@types/express@5.0.6)(@universal-middleware/h3@0.4.16(@hattip/core@0.0.49)(@types/express@5.0.6)(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(srvx@0.9.8))(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(express@5.2.1)(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(rollup@4.53.5)(srvx@0.9.8)(vite@7.3.1(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.20.6)(yaml@2.8.2))
+        specifier: ^11.0.0-beta.10
+        version: 11.0.0-beta.10(@hattip/core@0.0.49)(@types/express@5.0.6)(@universal-middleware/h3@0.4.16(@hattip/core@0.0.49)(@types/express@5.0.6)(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(srvx@0.9.8))(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(express@5.2.1)(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(rollup@4.53.5)(srvx@0.9.8)(vite@7.3.1(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.20.6)(yaml@2.8.2))
       wrangler:
         specifier: ^4.60.0
         version: 4.60.0
@@ -709,8 +709,8 @@ importers:
         specifier: ^7.3.1
         version: 7.3.1(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.20.6)(yaml@2.8.2)
       vite-plugin-vercel:
-        specifier: ^11.0.0-beta.9
-        version: 11.0.0-beta.9(@hattip/core@0.0.49)(@types/express@5.0.6)(@universal-middleware/h3@0.4.16(@hattip/core@0.0.49)(@types/express@5.0.6)(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(srvx@0.9.8))(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(express@5.2.1)(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(rollup@4.53.5)(srvx@0.9.8)(vite@7.3.1(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.20.6)(yaml@2.8.2))
+        specifier: ^11.0.0-beta.10
+        version: 11.0.0-beta.10(@hattip/core@0.0.49)(@types/express@5.0.6)(@universal-middleware/h3@0.4.16(@hattip/core@0.0.49)(@types/express@5.0.6)(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(srvx@0.9.8))(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(express@5.2.1)(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(rollup@4.53.5)(srvx@0.9.8)(vite@7.3.1(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.20.6)(yaml@2.8.2))
       wrangler:
         specifier: ^4.60.0
         version: 4.60.0
@@ -7217,8 +7217,8 @@ packages:
       '@nuxt/kit':
         optional: true
 
-  vite-plugin-vercel@11.0.0-beta.9:
-    resolution: {integrity: sha512-QsWGW+KLMlRbLNJAuo5hvpVIIQT9n3AKbHa9YNi4X6qQN26YfmW0vAqwzu4sKCsf8BPaj7gfRbr3NlGAkNMGkw==}
+  vite-plugin-vercel@11.0.0-beta.10:
+    resolution: {integrity: sha512-dk3C6kITw0d9LTIOX4agJkrxdJ0cClLMcz6oziswxd0iQtNQ1IUOJ/dVbWClZHTmU/XPmw1BLHHKbeJoBlltRQ==}
     peerDependencies:
       vite: '>=7.1'
 
@@ -14768,7 +14768,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  vite-plugin-vercel@11.0.0-beta.9(@hattip/core@0.0.49)(@types/express@5.0.6)(@universal-middleware/h3@0.4.16(@hattip/core@0.0.49)(@types/express@5.0.6)(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(srvx@0.9.8))(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(express@5.2.1)(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(rollup@4.53.5)(srvx@0.9.8)(vite@7.3.1(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.20.6)(yaml@2.8.2)):
+  vite-plugin-vercel@11.0.0-beta.10(@hattip/core@0.0.49)(@types/express@5.0.6)(@universal-middleware/h3@0.4.16(@hattip/core@0.0.49)(@types/express@5.0.6)(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(srvx@0.9.8))(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(express@5.2.1)(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(rollup@4.53.5)(srvx@0.9.8)(vite@7.3.1(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.20.6)(yaml@2.8.2)):
     dependencies:
       '@manypkg/find-root': 3.1.0
       '@universal-deploy/store': 0.0.6(@hattip/core@0.0.49)(@types/express@5.0.6)(elysia@1.4.22(@sinclair/typebox@0.34.41)(@types/bun@1.3.3)(exact-mirror@0.2.2(@sinclair/typebox@0.34.41))(file-type@21.0.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.7.1)(h3@1.15.5)(hono@4.11.5)(srvx@0.9.8)
