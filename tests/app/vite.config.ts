@@ -1,29 +1,35 @@
-/// <reference types="@photonjs/runtime" />
-/* The Vite plugin cloudflare() will be replaced by this:
-import cloudflare from '@photonjs/cloudflare'
-*/
-import { cloudflare } from "@photonjs/cloudflare/vite";
-import { vercel } from "@photonjs/vercel/vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
+import { photon } from "@photonjs/runtime";
+import { node } from "@universal-deploy/node/vite";
+import { store } from "@universal-deploy/store";
 import { awesomeFramework } from "awesome-framework/vite";
 import { defineConfig } from "vite";
+import { vercel } from "vite-plugin-vercel/vite";
 
 const target = process.env.TARGET ?? "node";
 const server = process.env.SERVER ?? "hono";
 
+if (!(store as any)[Symbol.for("photon:test")]) {
+  (store as any)[Symbol.for("photon:test")] = true;
+  store.entries.push({
+    id: "./hmr-route.ts",
+    method: "GET",
+    pattern: "/hmr",
+  });
+}
+
 export default defineConfig({
-  photon: {
-    server: `${server}-entry.ts`,
-    /* The Vite plugin cloudflare() will be replaced by this:
-    target: cloudflare, // not needed when using @photonjs/auto
-    */
-  },
   plugins: [
-    // Will be replaced with a photon.target setting
+    photon({ entry: `./${server}-entry.ts` }),
     target === "cloudflare" &&
       cloudflare({
+        viteEnvironment: {
+          name: "ssr",
+        },
         inspectorPort: false,
-      }), // not needed when using @photonjs/auto
+      }),
     target === "vercel" && vercel(),
+    (target === "node" || target === "bun" || target === "deno") && node(),
     awesomeFramework(),
   ],
   build: {

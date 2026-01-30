@@ -1,16 +1,23 @@
-import { createRouter } from "@hattip/router";
-import { apply, serve } from "@photonjs/hattip";
-import { hmrRoute } from "./hmr-route.js";
+import awesomeEntry from "virtual:photon:entry";
+import { createRouter, type Router } from "@hattip/router";
+import type { ServeReturn } from "@photonjs/core";
+import { serve } from "@photonjs/hattip";
+import { apply } from "@universal-middleware/hattip";
+import awesomeMiddlewares from "awesome-framework/middlewares";
 
-function startServer() {
+function startServer(): ServeReturn<Router> {
   const app = createRouter();
 
-  // Auto applies `awesomeFramework`
-  apply(
-    app,
-    // HMR route
-    [hmrRoute],
-  );
+  app.get("/serverid", () => {
+    return new Response("hattip", {
+      status: 200,
+      headers: {
+        "Content-Type": "text/plain",
+      },
+    });
+  });
+
+  apply(app, [...awesomeMiddlewares, awesomeEntry.fetch]);
 
   return serve(app);
 }

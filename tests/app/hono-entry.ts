@@ -1,16 +1,23 @@
-import { apply, serve } from "@photonjs/hono";
+import awesomeEntry from "virtual:photon:entry";
+import type { ServeReturn } from "@photonjs/core";
+import { serve } from "@photonjs/hono";
+import { type App, apply } from "@universal-middleware/hono";
+import awesomeMiddlewares from "awesome-framework/middlewares";
 import { Hono } from "hono";
-import { hmrRoute } from "./hmr-route.js";
 
-function startServer() {
+function startServer(): ServeReturn<App> {
   const app = new Hono();
 
-  // Auto applies `awesomeFramework`
-  apply(
-    app,
-    // HMR route
-    [hmrRoute],
-  );
+  app.get("/serverid", () => {
+    return new Response("hono", {
+      status: 200,
+      headers: {
+        "Content-Type": "text/plain",
+      },
+    });
+  });
+
+  apply(app, [...awesomeMiddlewares, awesomeEntry.fetch]);
 
   return serve(app);
 }

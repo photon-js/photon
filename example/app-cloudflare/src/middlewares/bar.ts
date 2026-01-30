@@ -1,3 +1,5 @@
-export default function bar() {
-  return new Response("bar");
-}
+export default {
+  fetch() {
+    return new Response("bar");
+  },
+};

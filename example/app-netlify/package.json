@@ -12,15 +12,19 @@
   },
   "devDependencies": {
     "@photonjs/core": "^0.1.21",
-    "@photonjs/netlify": "workspace:^",
     "@photonjs/runtime": "^0.1.16",
+    "@universal-deploy/netlify": "^0.0.1",
+    "@universal-deploy/store": "^0.0.6",
     "e2e": "workspace:",
     "playwright": "^1.57.0",
     "typescript": "^5.9.3",
-    "vite": "^7.2.4"
+    "vite": "^7.3.1"
   },
   "dependencies": {
-    "@universal-middleware/core": "^0.4.14",
+    "@hattip/router": "^0.0.49",
+    "@photonjs/hattip": "^0.1.12",
+    "@universal-middleware/core": "^0.4.16",
+    "@universal-middleware/hattip": "^0.4.15",
     "awesome-framework": "0.0.0"
   }
 }

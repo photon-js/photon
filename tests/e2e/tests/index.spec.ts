@@ -21,11 +21,6 @@ test("/api", async ({ request }) => {
   expect(await response.text()).toBe("The API Route");
 });
 
-test("/standalone", async ({ request }) => {
-  const response = await request.get("/standalone");
-  expect(await response.text()).toBe("The /standalone Route");
-});
-
 test("/bar", async ({ request }) => {
   const response = await request.get("/bar");
   expect(await response.text()).toBe("bar");

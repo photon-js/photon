@@ -1,4 +1,4 @@
-import type { NodeHandler, ServeReturn, ServerOptions } from "@photonjs/core/serve";
+import type { NodeHandler, ServeReturn, ServerOptions } from "@photonjs/core";
 import type { App as H3App } from "@universal-middleware/h3";
 import { toNodeListener } from "h3";
 import { defineFetchLazy } from "./utils.js";

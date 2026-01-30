@@ -1,24 +1,30 @@
-/// <reference types="@photonjs/runtime" />
-import { netlify } from "@photonjs/netlify/vite";
+import { photon } from "@photonjs/runtime/vite";
+import { netlify } from "@universal-deploy/netlify/vite";
+import { store } from "@universal-deploy/store";
 import { awesomeFramework } from "awesome-framework/vite";
 import { defineConfig } from "vite";
 
+// should be a helper in @universal-deploy/store
+if (!(store as any)[Symbol.for("myapp")]) {
+  (store as any)[Symbol.for("myapp")] = true;
+  store.entries.push({
+    id: "./src/middlewares/foo.ts",
+    method: "GET",
+    pattern: "/foo",
+  });
+  store.entries.push({
+    id: "./src/middlewares/bar.ts",
+    method: "GET",
+    pattern: "/bar",
+  });
+}
+
 export default defineConfig({
-  // No photon server entry is defined, it will fallback to a virtual entry
-  photon: {
-    entries: {
-      // foo entry declares its route with `enhance` directly inside the file
-      foo: "src/middlewares/foo.ts",
-      // bar entry route is declared here, and `enhance` is not used
-      bar: {
-        id: "src/middlewares/bar.ts",
-        route: "/bar",
-      },
-    },
-  },
   plugins: [
-    // Will be replaced with a photon.target setting
-    netlify(), // not needed when using @photonjs/auto
+    photon({
+      entry: "./server.ts",
+    }),
+    netlify(),
     awesomeFramework(),
   ],
 });

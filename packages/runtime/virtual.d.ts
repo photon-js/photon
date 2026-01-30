@@ -1,15 +1,4 @@
-declare module "virtual:photon:fallback-entry" {
-  // biome-ignore lint/suspicious/noExplicitAny: any
-  const handler: any;
+declare module "virtual:ud:catch-all" {
+  const handler: import("@photonjs/core").ServeReturn;
   export default handler;
-}
-
-declare module "virtual:photon:server-entry" {
-  const handler: undefined | import("@photonjs/core/serve").ServeReturn;
-  export default handler;
-}
-
-declare module "virtual:photon:get-middlewares:*" {
-  export const getUniversalEntries: () => import("@universal-middleware/core").UniversalHandler[];
-  export const getUniversalMiddlewares: () => import("@universal-middleware/core").UniversalMiddleware[];
 }

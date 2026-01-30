@@ -21,10 +21,12 @@
     "test:types": "tsc --noEmit"
   },
   "dependencies": {
-    "@photonjs/core": "workspace:^",
     "@photonjs/srvx": "workspace:^",
-    "@universal-middleware/core": "^0.4.14",
+    "@universal-deploy/node": "^0.0.1",
+    "@universal-deploy/store": "^0.0.6",
+    "@universal-middleware/core": "^0.4.16",
     "@universal-middleware/sirv": "^0.1.24",
+    "sirv": "^3.0.2",
     "srvx": "^0.9.8",
     "standaloner": "^0.1.11"
   },
@@ -37,10 +39,11 @@
     }
   },
   "devDependencies": {
+    "@photonjs/core": "workspace:^",
     "@types/node": "^22.19.1",
     "tsdown": "^0.18.1",
     "typescript": "^5.9.3",
-    "vite": "^7.2.4"
+    "vite": "^7.3.1"
   },
   "files": [
     "dist/",

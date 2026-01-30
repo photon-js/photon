@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
-import type { NodeHandler, ServeReturn, ServerOptionsBase } from "@photonjs/core/serve";
+import type { NodeHandler, ServeReturn, ServerOptionsBase } from "@photonjs/core";
 import type { App as FastifyApp } from "@universal-middleware/fastify";
 import { bold, yellow } from "ansis";
 

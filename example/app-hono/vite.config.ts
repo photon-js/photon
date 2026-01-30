@@ -1,19 +1,30 @@
-/// <reference types="@photonjs/runtime" />
+import { photon } from "@photonjs/runtime/vite";
+import { node } from "@universal-deploy/node/vite";
+import { store } from "@universal-deploy/store";
 import { awesomeFramework } from "awesome-framework/vite";
 import { defineConfig } from "vite";
 
+// should be a helper in @universal-deploy/store
+if (!(store as any)[Symbol.for("myapp")]) {
+  (store as any)[Symbol.for("myapp")] = true;
+  store.entries.push({
+    id: "./src/middlewares/foo.ts",
+    method: "GET",
+    pattern: "/foo",
+  });
+  store.entries.push({
+    id: "./src/middlewares/bar.ts",
+    method: "GET",
+    pattern: "/bar",
+  });
+}
+
 export default defineConfig({
-  photon: {
-    server: "server.ts",
-    entries: {
-      // foo entry declares its route with `enhance` directly inside the file
-      foo: "src/middlewares/foo.ts",
-      // bar entry route is declared here, and `enhance` is not used
-      bar: {
-        id: "src/middlewares/bar.ts",
-        route: "/bar",
-      },
-    },
-  },
-  plugins: [awesomeFramework()],
+  plugins: [
+    photon({
+      entry: "./server.ts",
+    }),
+    node(),
+    awesomeFramework(),
+  ],
 });

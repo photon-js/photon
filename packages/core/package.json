@@ -5,33 +5,12 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
-    "./vite": "./dist/plugin.js",
-    "./api": "./dist/api.js",
-    "./api/internal": "./dist/internal.js",
-    "./dev": "./dist/dev.js",
-    "./apply": "./dist/apply.js",
-    "./serve": "./dist/serve.js",
-    "./errors": "./dist/assert.js",
-    ".": "./dist/index.js",
-    "./virtual": {
-      "types": "./virtual.d.ts"
-    }
+    ".": "./dist/index.js"
   },
   "scripts": {
     "dev": "tsdown --watch",
     "build": "tsdown",
     "test:types": "tsc --noEmit"
-  },
-  "dependencies": {
-    "@brillout/vite-plugin-server-entry": "^0.7.15",
-    "@universal-middleware/cloudflare": "^0.4.10",
-    "@universal-middleware/compress": "^0.2.34",
-    "@universal-middleware/core": "^0.4.14",
-    "@universal-middleware/express": "^0.4.22",
-    "@universal-middleware/sirv": "^0.1.24",
-    "estree-walker": "^3.0.3",
-    "ts-deepmerge": "^7.0.3",
-    "zod": "^4.2.1"
   },
   "peerDependencies": {
     "vite": ">=7.1"
@@ -42,20 +21,13 @@
     }
   },
   "devDependencies": {
-    "@types/bun": "^1.3.3",
-    "@types/deno": "^2.5.0",
     "@types/node": "^22.19.1",
-    "ansis": "^4.2.0",
-    "esbuild": "^0.27.2",
-    "magic-string": "^0.30.21",
     "tsdown": "^0.18.1",
     "typescript": "^5.9.3",
-    "unplugin": "^2.3.11",
-    "vite": "^7.2.4"
+    "vite": "^7.3.1"
   },
   "files": [
-    "dist/",
-    "virtual.d.ts"
+    "dist/"
   ],
   "repository": "github:photon-js/photon",
   "license": "MIT"

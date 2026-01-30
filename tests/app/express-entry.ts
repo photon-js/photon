@@ -1,17 +1,18 @@
-import type { ServeReturn } from "@photonjs/core/serve";
-import { apply, serve } from "@photonjs/express";
+import awesomeEntry from "virtual:photon:entry";
+import type { ServeReturn } from "@photonjs/core";
+import { serve } from "@photonjs/express";
+import { apply } from "@universal-middleware/express";
+import awesomeMiddlewares from "awesome-framework/middlewares";
 import express, { type Express } from "express";
-import { hmrRoute } from "./hmr-route.js";
 
 function startServer(): ServeReturn<Express> {
   const app = express();
 
-  // Auto applies `awesomeFramework`
-  apply(
-    app,
-    // HMR route
-    [hmrRoute],
-  );
+  app.get("/serverid", (_, res) => {
+    res.status(200).send("express");
+  });
+
+  apply(app, [...awesomeMiddlewares, awesomeEntry.fetch]);
 
   return serve(app);
 }

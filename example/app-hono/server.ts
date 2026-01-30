@@ -1,13 +1,15 @@
-import { apply, serve } from "@photonjs/hono";
+import photonEntry from "virtual:photon:entry";
+import { serve } from "@photonjs/hono";
+import { apply } from "@universal-middleware/hono";
+import awesomeMiddlewares from "awesome-framework/middlewares";
 import { Hono } from "hono";
 
 function startServer() {
   const app = new Hono();
 
-  // awesomeFramework will automatically be injected by apply
-  apply(app);
+  apply(app, [...awesomeMiddlewares, photonEntry.fetch]);
 
   return serve(app);
 }
 
-export default startServer();
+export default startServer() as unknown;

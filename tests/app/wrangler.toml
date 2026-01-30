@@ -1,3 +1,3 @@
 name = "cloudflare-vite-get-started"
 compatibility_date = "2025-04-03"
-main = "virtual:photon:cloudflare:server-entry"
+main = "virtual:ud:catch-all"
