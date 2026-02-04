@@ -1,19 +1,15 @@
 import * as fs from "node:fs";
 import { catchAllEntry } from "@universal-deploy/store";
 import { assertFetchable, type Fetchable } from "@universal-deploy/store/utils";
-import { type Environment, mergeConfig, type Plugin, type RunnableDevEnvironment, type UserConfig } from "vite";
+import { type Environment, mergeConfig, type Plugin, type UserConfig, type ViteDevServer } from "vite";
 import type { ServerOptions } from "../types.js";
-
-// Vite's isRunnableDevEnvironment isn't reliable when multiple Vite versions are installed
-export function isRunnableDevEnvironment(environment: Environment): environment is RunnableDevEnvironment {
-  return "runner" in environment;
-}
 
 const alreadySetSymbol = Symbol.for("photon:dev-server");
 
 /**
  * Resolves catch-all entry and forwards config to vite devServer
  */
+// TODO handle HMR
 export function photonDevPlugin(): Plugin {
   return {
     name: "photon:dev-server",
@@ -31,19 +27,8 @@ export function photonDevPlugin(): Plugin {
       const resolved = await server.pluginContainer.resolveId(catchAllEntry);
       if (!resolved) return;
 
-      const env = Object.values(server.environments).find((x) => {
-        return isRunnableDevEnvironment(x) && x.config.consumer === "server";
-      }) as RunnableDevEnvironment | undefined;
-
-      if (!env) {
-        server.config.logger.warn(
-          "Warning: Could not load server configuration. Vite dev server will use default settings.",
-        );
-        return;
-      }
-
-      const mod = await envImportFetchable<ServerOptions>(env, resolved.id);
-      const options = mapServerOptionsToVite(mod, { logger: env.logger });
+      const mod = await envImportFetchable<ServerOptions>(server, resolved.id);
+      const options = mapServerOptionsToVite(mod, { logger: server.config.logger });
       if (!options) return;
 
       const inlineConfig = mergeConfig(originalInlineConfig, options);
@@ -70,10 +55,10 @@ export function photonDevPlugin(): Plugin {
 }
 
 async function envImportFetchable<R extends object = object>(
-  env: RunnableDevEnvironment,
+  server: ViteDevServer,
   resolvedId: string,
 ): Promise<Fetchable & R> {
-  const mod = await env.runner.import<unknown>(resolvedId);
+  const mod = await server.ssrLoadModule(resolvedId);
   return assertFetchable(mod, resolvedId) as Fetchable & R;
 }
 

@@ -20,7 +20,6 @@ function startServer(): ServerOptions {
 
   return {
     fetch: app.fetch,
-    port: 3001,
   };
 }
 
