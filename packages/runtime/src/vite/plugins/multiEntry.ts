@@ -16,8 +16,6 @@ export function photonMultiEntryPlugin(options: PhotonPluginOptions): Plugin {
     name: "photon:resolve-entry",
     enforce: "pre",
     async config() {
-      // FIXME support .server.nodeHandler entries directly in VPV
-      // FIXME use same format as srvx for serve option and nodeHandler ?
       transformStoreInPlace(store, (entry) => ({
         ...entry,
         // ?γ is to avoid overriding the entry extension
