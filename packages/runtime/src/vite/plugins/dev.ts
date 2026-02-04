@@ -27,7 +27,6 @@ export function photonDevPlugin(): Plugin {
     async configureServer(server) {
       const originalInlineConfig = server.config.inlineConfig;
       if ((originalInlineConfig as any)[alreadySetSymbol]) return;
-      console.log("configureServer");
 
       const resolved = await server.pluginContainer.resolveId(catchAllEntry);
       if (!resolved) return;
@@ -45,8 +44,9 @@ export function photonDevPlugin(): Plugin {
 
       const mod = await envImportFetchable<ServerOptions>(env, resolved.id);
       const options = mapServerOptionsToVite(mod, { logger: env.logger });
+      if (!options) return;
 
-      const inlineConfig = mergeConfig(originalInlineConfig ?? {}, options ?? {});
+      const inlineConfig = mergeConfig(originalInlineConfig, options);
       (inlineConfig as any)[alreadySetSymbol] = true;
       Object.defineProperty(server.config, "inlineConfig", {
         get() {
