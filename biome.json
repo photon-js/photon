@@ -23,6 +23,9 @@
       "linter": {
         "rules": {
           "a11y": "off",
+          "correctness": {
+            "useExhaustiveDependencies": "off"
+          },
           "suspicious": {
             "noArrayIndexKey": "off"
           }
