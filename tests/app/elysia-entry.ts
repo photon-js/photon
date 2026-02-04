@@ -1,10 +1,10 @@
 import awesomeEntry from "virtual:photon:entry";
-import { serve } from "@photonjs/elysia";
+import type { ServerOptions } from "@photonjs/runtime";
 import { apply } from "@universal-middleware/elysia";
 import awesomeMiddlewares from "awesome-framework/middlewares";
 import { Elysia } from "elysia";
 
-function startServer() {
+function startServer(): ServerOptions {
   const app = new Elysia();
 
   app.get("/serverid", () => {
@@ -18,7 +18,9 @@ function startServer() {
 
   apply(app, [...awesomeMiddlewares, awesomeEntry.fetch]);
 
-  return serve(app);
+  return {
+    fetch: app.fetch,
+  };
 }
 
-export default startServer() as unknown;
+export default startServer();

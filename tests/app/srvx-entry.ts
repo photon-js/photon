@@ -1,11 +1,10 @@
 import awesomeEntry from "virtual:photon:entry";
-import type { ServeReturn } from "@photonjs/core";
-import { serve } from "@photonjs/srvx";
+import type { ServerOptions } from "@photonjs/runtime";
 import { enhance } from "@universal-middleware/core";
-import { apply, type SrvxHandler } from "@universal-middleware/srvx";
+import { apply } from "@universal-middleware/srvx";
 import awesomeMiddlewares from "awesome-framework/middlewares";
 
-function startServer(): ServeReturn<SrvxHandler<Universal.Context>> {
+function startServer(): ServerOptions {
   const app = apply([
     ...awesomeMiddlewares,
     enhance(
@@ -25,7 +24,9 @@ function startServer(): ServeReturn<SrvxHandler<Universal.Context>> {
     awesomeEntry.fetch,
   ]);
 
-  return serve(app);
+  return {
+    fetch: app,
+  };
 }
 
 export default startServer();

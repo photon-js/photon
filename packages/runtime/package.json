@@ -21,7 +21,6 @@
     "test:types": "tsc --noEmit"
   },
   "dependencies": {
-    "@photonjs/srvx": "workspace:^",
     "@universal-deploy/node": "^0.0.3",
     "@universal-deploy/store": "^0.0.7",
     "@universal-middleware/core": "^0.4.16",
@@ -39,11 +38,11 @@
     }
   },
   "devDependencies": {
-    "@photonjs/core": "workspace:^",
     "@types/node": "^22.19.1",
     "tsdown": "^0.18.1",
     "typescript": "^5.9.3",
-    "vite": "^7.3.1"
+    "vite": "^7.3.1",
+    "vite-plugin-wrapper": "^0.0.1"
   },
   "files": [
     "dist/",

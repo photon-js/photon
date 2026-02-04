@@ -1,11 +1,10 @@
 import awesomeEntry from "virtual:photon:entry";
-import type { ServeReturn } from "@photonjs/core";
-import { serve } from "@photonjs/h3";
+import type { ServerOptions } from "@photonjs/runtime";
 import { apply } from "@universal-middleware/h3";
 import awesomeMiddlewares from "awesome-framework/middlewares";
-import { type App, createApp, eventHandler } from "h3";
+import { createApp, eventHandler, toWebHandler } from "h3";
 
-function startServer(): ServeReturn<App> {
+function startServer(): ServerOptions {
   const app = createApp();
 
   app.use(
@@ -22,7 +21,9 @@ function startServer(): ServeReturn<App> {
 
   apply(app, [...awesomeMiddlewares, awesomeEntry.fetch]);
 
-  return serve(app);
+  return {
+    fetch: toWebHandler(app),
+  };
 }
 
 export default startServer();

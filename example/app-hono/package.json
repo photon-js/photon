@@ -12,8 +12,6 @@
     "test:types": "tsc --noEmit"
   },
   "devDependencies": {
-    "@photonjs/core": "^0.1.21",
-    "@photonjs/hono": "^0.1.12",
     "@photonjs/runtime": "^0.1.16",
     "@universal-deploy/node": "^0.0.3",
     "@universal-deploy/store": "^0.0.7",

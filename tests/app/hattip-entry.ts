@@ -1,11 +1,30 @@
 import awesomeEntry from "virtual:photon:entry";
-import { createRouter, type Router } from "@hattip/router";
-import type { ServeReturn } from "@photonjs/core";
-import { serve } from "@photonjs/hattip";
+import type { HattipHandler } from "@hattip/core";
+import { createRouter } from "@hattip/router";
+import type { ServerOptions } from "@photonjs/runtime";
 import { apply } from "@universal-middleware/hattip";
 import awesomeMiddlewares from "awesome-framework/middlewares";
 
-function startServer(): ServeReturn<Router> {
+function createFetchHandler(handler: HattipHandler) {
+  return (request: Request) => {
+    return handler({
+      request,
+      ip: "",
+      env(variable) {
+        return process.env[variable];
+      },
+      waitUntil() {
+        // No op
+      },
+      passThrough() {
+        // No op
+      },
+      platform: { name: "fetch" },
+    });
+  };
+}
+
+function startServer(): ServerOptions {
   const app = createRouter();
 
   app.get("/serverid", () => {
@@ -19,7 +38,9 @@ function startServer(): ServeReturn<Router> {
 
   apply(app, [...awesomeMiddlewares, awesomeEntry.fetch]);
 
-  return serve(app);
+  return {
+    fetch: createFetchHandler(app.buildHandler()),
+  };
 }
 
 export default startServer();

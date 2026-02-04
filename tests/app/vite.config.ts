@@ -29,7 +29,10 @@ export default defineConfig({
         inspectorPort: false,
       }),
     target === "vercel" && vercel(),
-    (target === "node" || target === "bun" || target === "deno") && node(),
+    (target === "node" || target === "bun" || target === "deno") &&
+      node({
+        static: "dist/client",
+      }),
     awesomeFramework(),
   ],
   build: {

@@ -1,11 +1,10 @@
 import awesomeEntry from "virtual:photon:entry";
-import type { ServeReturn } from "@photonjs/core";
-import { serve } from "@photonjs/hono";
-import { type App, apply } from "@universal-middleware/hono";
+import type { ServerOptions } from "@photonjs/runtime";
+import { apply } from "@universal-middleware/hono";
 import awesomeMiddlewares from "awesome-framework/middlewares";
 import { Hono } from "hono";
 
-function startServer(): ServeReturn<App> {
+function startServer(): ServerOptions {
   const app = new Hono();
 
   app.get("/serverid", () => {
@@ -19,7 +18,9 @@ function startServer(): ServeReturn<App> {
 
   apply(app, [...awesomeMiddlewares, awesomeEntry.fetch]);
 
-  return serve(app);
+  return {
+    fetch: app.fetch,
+  };
 }
 
 export default startServer();

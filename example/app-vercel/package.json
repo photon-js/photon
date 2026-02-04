@@ -9,7 +9,6 @@
     "test:types": "tsc --noEmit"
   },
   "devDependencies": {
-    "@photonjs/core": "^0.1.21",
     "@photonjs/runtime": "^0.1.16",
     "@types/express": "^5.0.6",
     "@universal-deploy/store": "^0.0.7",
@@ -17,11 +16,10 @@
     "playwright": "^1.57.0",
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
-    "vite-plugin-vercel": "^11.0.0-beta.10",
+    "vite-plugin-vercel": "^11.0.0-beta.11",
     "wrangler": "^4.60.0"
   },
   "dependencies": {
-    "@photonjs/express": "^0.1.13",
     "@universal-middleware/core": "^0.4.16",
     "@universal-middleware/express": "^0.4.23",
     "awesome-framework": "0.0.0",

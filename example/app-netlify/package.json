@@ -11,7 +11,6 @@
     "test:types": "tsc --noEmit"
   },
   "devDependencies": {
-    "@photonjs/core": "^0.1.21",
     "@photonjs/runtime": "^0.1.16",
     "@universal-deploy/netlify": "^0.0.2",
     "@universal-deploy/store": "^0.0.7",
@@ -22,7 +21,6 @@
   },
   "dependencies": {
     "@hattip/router": "^0.0.49",
-    "@photonjs/hattip": "^0.1.12",
     "@universal-middleware/core": "^0.4.16",
     "@universal-middleware/hattip": "^0.4.15",
     "awesome-framework": "0.0.0"

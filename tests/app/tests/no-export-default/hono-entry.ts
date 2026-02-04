@@ -1,15 +1,17 @@
 import awesomeEntry from "virtual:photon:entry";
-import { serve } from "@photonjs/hono";
+import type { ServerOptions } from "@photonjs/runtime";
 import { apply } from "@universal-middleware/hono";
 import awesomeMiddlewares from "awesome-framework/middlewares";
 import { Hono } from "hono";
 
-function startServer() {
+function startServer(): ServerOptions {
   const app = new Hono();
 
   apply(app, [...awesomeMiddlewares, awesomeEntry.fetch]);
 
-  return serve(app);
+  return {
+    fetch: app.fetch,
+  };
 }
 
 startServer();

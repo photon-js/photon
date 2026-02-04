@@ -1,5 +1,6 @@
 import type { Plugin } from "vite";
 
+// TODO forward srvx options to viteDevServer
 export function photonDevPlugin(): Plugin {
   let userPort: number | undefined;
   let userHost: string | boolean | undefined;

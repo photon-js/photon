@@ -1,11 +1,11 @@
 import awesomeEntry from "virtual:photon:entry";
-import type { ServeReturn } from "@photonjs/core";
-import { serve } from "@photonjs/express";
+import type { ServerOptions } from "@photonjs/runtime";
 import { apply } from "@universal-middleware/express";
 import awesomeMiddlewares from "awesome-framework/middlewares";
-import express, { type Express } from "express";
+import express from "express";
+import { toFetchHandler } from "srvx/node";
 
-function startServer(): ServeReturn<Express> {
+function startServer(): ServerOptions {
   const app = express();
 
   app.get("/serverid", (_, res) => {
@@ -14,7 +14,9 @@ function startServer(): ServeReturn<Express> {
 
   apply(app, [...awesomeMiddlewares, awesomeEntry.fetch]);
 
-  return serve(app);
+  return {
+    fetch: toFetchHandler(app),
+  };
 }
 
 export default startServer();
