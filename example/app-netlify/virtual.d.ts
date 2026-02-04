@@ -1,4 +1,6 @@
 declare module "virtual:photon:entry" {
-  const handler: import("@photonjs/core").ServeReturn;
-  export default handler;
+  export default {
+    // biome-ignore lint/correctness/noUnusedFunctionParameters: typings
+    fetch: (request: Request) => Response | Promise<Response>,
+  };
 }
