@@ -24,7 +24,9 @@ export default defineConfig({
     photon({
       entry: "./server.ts",
     }),
-    node(),
+    node({
+      static: "dist/client",
+    }),
     awesomeFramework(),
   ],
 });
