@@ -1,16 +1,32 @@
 import * as fs from "node:fs";
+import equal from "@gilbarbara/deep-equal";
 import { catchAllEntry } from "@universal-deploy/store";
 import { assertFetchable, type Fetchable } from "@universal-deploy/store/utils";
-import { type Environment, mergeConfig, type Plugin, type UserConfig, type ViteDevServer } from "vite";
+import {
+  type Environment,
+  type EnvironmentModuleNode,
+  type InlineConfig,
+  mergeConfig,
+  type Plugin,
+  type UserConfig,
+  type ViteDevServer,
+} from "vite";
 import type { ServerOptions } from "../types.js";
 
-const alreadySetSymbol = Symbol.for("photon:dev-server");
+const savedOptsSymbol = Symbol.for("photon:saved-hmr-opts");
+
+interface State {
+  resolvedId: string;
+  options?: UserConfig | undefined;
+  config?: InlineConfig | undefined;
+}
 
 /**
  * Resolves catch-all entry and forwards config to vite devServer
  */
-// TODO handle HMR
 export function photonDevPlugin(): Plugin {
+  let state: State | undefined;
+
   return {
     name: "photon:dev-server",
     perEnvironmentStartEndDuringDev: true,
@@ -22,17 +38,28 @@ export function photonDevPlugin(): Plugin {
     },
     async configureServer(server) {
       const originalInlineConfig = server.config.inlineConfig;
-      if ((originalInlineConfig as any)[alreadySetSymbol]) return;
+      const last = readOptions(originalInlineConfig);
+      // Avoids infinite restart loop
+      if (last) {
+        state = last;
+        return;
+      }
 
       const resolved = await server.pluginContainer.resolveId(catchAllEntry);
       if (!resolved) return;
 
-      const mod = await envImportFetchable<ServerOptions>(server, resolved.id);
+      state = {
+        resolvedId: resolved.id,
+        config: originalInlineConfig,
+      };
+
+      const mod = await envImportFetchable<ServerOptions>(server, state.resolvedId);
       const options = mapServerOptionsToVite(mod, { logger: server.config.logger });
+      state.options = options;
       if (!options) return;
 
       const inlineConfig = mergeConfig(originalInlineConfig, options);
-      (inlineConfig as any)[alreadySetSymbol] = true;
+      saveOptions(inlineConfig, state);
       Object.defineProperty(server.config, "inlineConfig", {
         get() {
           return inlineConfig;
@@ -51,7 +78,59 @@ export function photonDevPlugin(): Plugin {
         });
       });
     },
+    async hotUpdate({ file, modules, read, server, timestamp }) {
+      if (state?.resolvedId !== file) return;
+
+      const invalidatedModules = new Set<EnvironmentModuleNode>();
+      for (const mod of modules) {
+        this.environment.moduleGraph.invalidateModule(mod, invalidatedModules, timestamp, true);
+      }
+      // Wait for updated file to be ready
+      await read();
+
+      const mod = await envImportFetchable<ServerOptions>(server, state.resolvedId);
+      const options = mapServerOptionsToVite(mod, { logger: server.config.logger });
+
+      if (!equal(state.options, options)) {
+        const savedLastOptions = state.options;
+        state.options = options;
+        const inlineConfig = mergeConfig(state.config ?? {}, options ?? {});
+        saveOptions(inlineConfig, state);
+        Object.defineProperty(server.config, "inlineConfig", {
+          get() {
+            return inlineConfig;
+          },
+        });
+        // If hostname or port changed, printUrls again
+        server.restart().then(() => {
+          if (
+            savedLastOptions?.server?.port !== options?.server?.port ||
+            savedLastOptions?.server?.host !== options?.server?.host
+          ) {
+            server.printUrls();
+          }
+        });
+        return [];
+      }
+
+      return modules;
+    },
   };
+}
+
+function saveOptions(
+  // biome-ignore lint/suspicious/noExplicitAny: ok
+  obj: any,
+  options: State,
+) {
+  obj[savedOptsSymbol] = options;
+}
+
+function readOptions(
+  // biome-ignore lint/suspicious/noExplicitAny: ok
+  obj: any,
+): State | undefined {
+  return obj[savedOptsSymbol];
 }
 
 async function envImportFetchable<R extends object = object>(

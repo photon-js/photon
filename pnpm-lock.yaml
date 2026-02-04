@@ -358,6 +358,9 @@ importers:
         specifier: ^0.4.23
         version: 0.4.23(@hattip/core@0.0.49)(@types/express@5.0.6)(elysia@1.4.22(@sinclair/typebox@0.34.48)(exact-mirror@0.2.6(@sinclair/typebox@0.34.48))(file-type@21.3.0)(openapi-types@12.1.3)(typescript@5.9.3))(fastify@5.7.4)(h3@1.15.5)(hono@4.11.7)(srvx@0.10.1)
     devDependencies:
+      '@gilbarbara/deep-equal':
+        specifier: ^0.4.1
+        version: 0.4.1
       '@types/node':
         specifier: ^22.19.1
         version: 22.19.8
@@ -1484,6 +1487,9 @@ packages:
 
   '@fastify/proxy-addr@5.1.0':
     resolution: {integrity: sha512-INS+6gh91cLUjB+PVHfu1UqcB76Sqtpyp7bnL+FYojhjygvOPA9ctiD/JDKsyD9Xgu4hUhCSJBPig/w7duNajw==}
+
+  '@gilbarbara/deep-equal@0.4.1':
+    resolution: {integrity: sha512-QF2BGeQjsa59T59XvFdR3is5jrl28Eg0J6giXAC5919bcqvR8XP4B+07tpbs6Y6/IQd4FBncaL2WVXIBgSxt4w==}
 
   '@hattip/compose@0.0.49':
     resolution: {integrity: sha512-jEJGi6EdHpLJGxpFMqcF2J6cNYKGhkDyepXtR7Esxthk5rWC37lFQEl19rWsYOqByn4zpwq87W8qGgsl940dWQ==}
@@ -8047,6 +8053,8 @@ snapshots:
     dependencies:
       '@fastify/forwarded': 3.0.1
       ipaddr.js: 2.3.0
+
+  '@gilbarbara/deep-equal@0.4.1': {}
 
   '@hattip/compose@0.0.49':
     dependencies:
