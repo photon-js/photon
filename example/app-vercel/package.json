@@ -23,6 +23,7 @@
     "@universal-middleware/core": "^0.4.16",
     "@universal-middleware/express": "^0.4.23",
     "awesome-framework": "0.0.0",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "srvx": "^0.10.1"
   }
 }

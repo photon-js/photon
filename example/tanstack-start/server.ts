@@ -1,16 +1,16 @@
 import photonEntry from "virtual:photon:entry";
-import { serve } from "@photonjs/hono";
+import type { ServerOptions } from "@photonjs/runtime";
 import { apply } from "@universal-middleware/hono";
 import { Hono } from "hono";
 
-console.log(photonEntry);
-// FIXME this file is imported twice in the bundle
-function startServer() {
+function startServer(): ServerOptions {
   const app = new Hono();
 
   apply(app, [photonEntry.fetch]);
 
-  return serve(app);
+  return {
+    fetch: app.fetch,
+  };
 }
 
 export default startServer() as unknown;

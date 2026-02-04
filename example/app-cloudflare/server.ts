@@ -1,21 +1,17 @@
 import photonEntry from "virtual:photon:entry";
-import { serve } from "@photonjs/hono";
+import type { ServerOptions } from "@photonjs/runtime";
 import { apply } from "@universal-middleware/hono";
 import awesomeMiddlewares from "awesome-framework/middlewares";
 import { Hono } from "hono";
 
-console.log({
-  awesomeMiddlewares,
-  photonEntry,
-  fetch: photonEntry.fetch,
-});
-
-function startApp() {
+function startApp(): ServerOptions {
   const app = new Hono();
 
   apply(app, [...awesomeMiddlewares, photonEntry.fetch]);
 
-  return serve(app);
+  return {
+    fetch: app.fetch,
+  };
 }
 
-export default startApp() as unknown;
+export default startApp();

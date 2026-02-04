@@ -1,15 +1,18 @@
 import photonEntry from "virtual:photon:entry";
-import { serve } from "@photonjs/express";
+import type { ServerOptions } from "@photonjs/runtime";
 import { apply } from "@universal-middleware/express";
 import awesomeMiddlewares from "awesome-framework/middlewares";
 import express from "express";
+import { toFetchHandler } from "srvx/node";
 
-function startServer() {
+function startServer(): ServerOptions {
   const app = express();
 
   apply(app, [...awesomeMiddlewares, photonEntry.fetch]);
 
-  return serve(app);
+  return {
+    fetch: toFetchHandler(app),
+  };
 }
 
-export default startServer() as unknown;
+export default startServer();

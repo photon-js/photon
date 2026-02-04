@@ -153,6 +153,9 @@ importers:
         specifier: 0.0.0
         version: link:../awesome-framework
     devDependencies:
+      '@hattip/core':
+        specifier: ^0.0.49
+        version: 0.0.49
       '@photonjs/runtime':
         specifier: ^0.1.16
         version: link:../../packages/runtime
@@ -189,6 +192,9 @@ importers:
       express:
         specifier: ^5.2.1
         version: 5.2.1
+      srvx:
+        specifier: ^0.10.1
+        version: 0.10.1
     devDependencies:
       '@photonjs/runtime':
         specifier: ^0.1.16
