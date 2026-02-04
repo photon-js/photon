@@ -3,12 +3,15 @@ import { defineConfig, type UserConfig as TsdownOptions } from "tsdown";
 const commonOptions: TsdownOptions = {
   format: ["esm"],
   target: "es2022",
-  dts: true,
+  dts: {
+    enabled: true,
+    resolve: ["srvx"],
+  },
   outDir: "dist",
   treeshake: true,
   nodeProtocol: true,
   fixedExtension: false,
-  external: [/^@photonjs\/core/, /^@photonjs\/hono/, "virtual:photon:server-entry", "virtual:ud:catch-all"],
+  external: ["virtual:photon:server-entry", "virtual:ud:catch-all"],
 };
 
 export default defineConfig([
@@ -17,10 +20,8 @@ export default defineConfig([
     platform: "node",
     entry: {
       vite: "./src/vite/index.ts",
-      serve: "./src/serve.ts",
       internal: "./src/internal.ts",
       index: "./src/index.ts",
-      sirv: "./src/sirv.ts",
     },
   },
 ]);
