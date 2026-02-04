@@ -23,7 +23,7 @@
     "test:types": "tsc --noEmit"
   },
   "dependencies": {
-    "@universal-middleware/express": "^0.4.22"
+    "@universal-middleware/express": "^0.4.23"
   },
   "peerDependencies": {
     "vite": ">=7.1"
@@ -37,7 +37,7 @@
     "@photonjs/core": "workspace:^",
     "@types/node": "^22.19.1",
     "express": "^5.2.1",
-    "srvx": "^0.9.8",
+    "srvx": "^0.10.1",
     "tsdown": "^0.18.1",
     "typescript": "^5.9.3",
     "vite": "^7.3.1"

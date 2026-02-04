@@ -22,7 +22,7 @@
     "@photonjs/srvx": "workspace:^",
     "@types/express": "^5.0.6",
     "@types/node": "^22.19.1",
-    "@universal-deploy/node": "^0.0.2",
+    "@universal-deploy/node": "^0.0.3",
     "@universal-deploy/store": "^0.0.7",
     "@universal-middleware/core": "^0.4.16",
     "pkg-types": "^2.3.0",
@@ -46,6 +46,6 @@
     "fastify": "^5.7.1",
     "h3": "^1.15.5",
     "hono": "^4.11.5",
-    "srvx": "^0.9.8"
+    "srvx": "^0.10.1"
   }
 }

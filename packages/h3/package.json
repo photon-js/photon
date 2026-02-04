@@ -14,7 +14,7 @@
     "test:types": "tsc --noEmit"
   },
   "dependencies": {
-    "@universal-middleware/h3": "^0.4.15"
+    "@universal-middleware/h3": "^0.4.16"
   },
   "peerDependencies": {
     "vite": ">=7.1"

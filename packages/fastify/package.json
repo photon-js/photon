@@ -31,14 +31,14 @@
     }
   },
   "dependencies": {
-    "@universal-middleware/fastify": "^0.5.22"
+    "@universal-middleware/fastify": "^0.5.23"
   },
   "devDependencies": {
     "@photonjs/core": "workspace:^",
     "@types/node": "^22.19.1",
     "ansis": "^4.2.0",
     "fastify": "^5.7.1",
-    "srvx": "^0.9.8",
+    "srvx": "^0.10.1",
     "tsdown": "^0.18.1",
     "typescript": "^5.9.3",
     "vite": "^7.3.1"

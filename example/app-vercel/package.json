@@ -21,10 +21,10 @@
     "wrangler": "^4.60.0"
   },
   "dependencies": {
-    "express": "^5.2.1",
     "@photonjs/express": "^0.1.13",
     "@universal-middleware/core": "^0.4.16",
-    "@universal-middleware/express": "^0.4.16",
-    "awesome-framework": "0.0.0"
+    "@universal-middleware/express": "^0.4.23",
+    "awesome-framework": "0.0.0",
+    "express": "^5.2.1"
   }
 }

@@ -20,7 +20,7 @@ export function photonMultiEntryPlugin(options: PhotonPluginOptions): Plugin {
       // FIXME use same format as srvx for serve option and nodeHandler ?
       transformStoreInPlace(store, (entry) => ({
         ...entry,
-        // ?γ=0 is to avoid overriding the entry extension
+        // ?γ is to avoid overriding the entry extension
         id: `${options.entry}?${p_photonEntryRaw.param}=${encodeURIComponent(`${entry.id}?γ`)}`,
       }));
     },

@@ -5,6 +5,7 @@ import { createParam } from "../../utils.js";
 const p_enhanced = createParam("enhanced");
 const re_catchAllDefault = /^virtual:ud:catch-all\?default$/;
 
+// TODO make this a generic plugin (that can insert multiple layers)
 export function photonEnhancePlugin(): Plugin {
   return {
     name: "photon:wrap-enhance",
