@@ -19,7 +19,8 @@
   },
   "dependencies": {
     "@universal-deploy/store": "^0.0.7",
-    "@universal-middleware/core": "^0.4.16"
+    "@universal-middleware/core": "^0.4.16",
+    "@universal-middleware/express": "^0.4.23"
   },
   "peerDependencies": {
     "vite": ">=7.1"
