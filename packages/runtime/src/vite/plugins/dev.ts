@@ -206,7 +206,7 @@ function mapServerOptionsToVite(
       viteConfig.server.host = srvxOptions.hostname;
     }
 
-    // HTTPS mapping with better error handling
+    // HTTPS mapping
     if (srvxOptions.protocol === "https" || srvxOptions.tls) {
       viteConfig.server.https = {};
 

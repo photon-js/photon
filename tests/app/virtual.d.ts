@@ -1,5 +1,7 @@
 declare module "virtual:photon:entry" {
-  export default {
-    fetch(_request: Request): Response | Promise<Response> {},
+  const mod: {
+    fetch: (request: Request) => Response | Promise<Response>;
   };
+
+  export default mod;
 }
