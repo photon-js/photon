@@ -35,7 +35,7 @@
   "packageManager": "pnpm@10.24.0",
   "pnpm": {
     "overrides": {
-      "@universal-deploy/store": "^0.0.7",
+      "@universal-deploy/store": "^0.0.8-beta.1",
       "baseline-browser-mapping": "^2.9.15"
     }
   }

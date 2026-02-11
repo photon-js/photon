@@ -1,6 +1,5 @@
-import { store } from "@universal-deploy/store";
+import { setEntryTransformer } from "@universal-deploy/store";
 import type { Plugin } from "vite";
-import { transformStoreInPlace } from "../../store-proxy.js";
 import { createParam } from "../../utils.js";
 import type { PhotonPluginOptions } from "../types.js";
 
@@ -16,7 +15,7 @@ export function photonMultiEntryPlugin(options: PhotonPluginOptions): Plugin {
     name: "photon:resolve-entry",
     enforce: "pre",
     async config() {
-      transformStoreInPlace(store, (entry) => ({
+      setEntryTransformer((entry) => ({
         ...entry,
         // ?γ is to avoid overriding the entry extension
         id: `${options.entry}?${p_photonEntryRaw.param}=${encodeURIComponent(`${entry.id}?γ`)}`,

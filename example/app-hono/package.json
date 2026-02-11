@@ -14,7 +14,7 @@
   "devDependencies": {
     "@photonjs/runtime": "^0.1.16",
     "@universal-deploy/node": "^0.0.3",
-    "@universal-deploy/store": "^0.0.7",
+    "@universal-deploy/store": "^0.0.8-beta.1",
     "e2e": "workspace:",
     "playwright": "^1.57.0",
     "typescript": "^5.9.3",

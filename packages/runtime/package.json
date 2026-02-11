@@ -18,7 +18,7 @@
     "test:types": "tsc --noEmit"
   },
   "dependencies": {
-    "@universal-deploy/store": "^0.0.7",
+    "@universal-deploy/store": "^0.0.8-beta.1",
     "@universal-middleware/core": "^0.4.16",
     "@universal-middleware/express": "^0.4.23"
   },

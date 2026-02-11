@@ -1,7 +1,7 @@
 import { cloudflare } from "@cloudflare/vite-plugin";
 import { photon } from "@photonjs/runtime";
 import { node } from "@universal-deploy/node/vite";
-import { store } from "@universal-deploy/store";
+import { addEntry } from "@universal-deploy/store";
 import { awesomeFramework } from "awesome-framework/vite";
 import { defineConfig } from "vite";
 import { vercel } from "vite-plugin-vercel/vite";
@@ -9,14 +9,11 @@ import { vercel } from "vite-plugin-vercel/vite";
 const target = process.env.TARGET ?? "node";
 const server = process.env.SERVER ?? "hono";
 
-if (!(store as any)[Symbol.for("photon:test")]) {
-  (store as any)[Symbol.for("photon:test")] = true;
-  store.entries.push({
-    id: "./hmr-route.ts",
-    method: "GET",
-    pattern: "/hmr",
-  });
-}
+addEntry({
+  id: "./hmr-route.ts",
+  method: "GET",
+  route: "/hmr",
+});
 
 export default defineConfig({
   plugins: [
