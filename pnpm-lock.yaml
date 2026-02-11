@@ -374,8 +374,8 @@ importers:
         specifier: ^7.3.1
         version: 7.3.1(@types/node@22.19.8)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2)
       vite-plugin-wrapper:
-        specifier: ^0.0.1
-        version: 0.0.1(vite@7.3.1(@types/node@22.19.8)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2))
+        specifier: ^0.0.2
+        version: 0.0.2(vite@7.3.1(@types/node@22.19.8)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2))
 
   tests/app:
     dependencies:
@@ -6847,8 +6847,8 @@ packages:
     peerDependencies:
       vite: ^2 || ^3 || ^4 || ^5 || ^6 || ^7
 
-  vite-plugin-wrapper@0.0.1:
-    resolution: {integrity: sha512-EwrNWcsRnt7RY6uA7uJpYqrEVgLW5FAATun2l6BoCDesut8SHZ1YHTypb6m3B59ql0DuHrlxWm7RBxk9xaOeBQ==}
+  vite-plugin-wrapper@0.0.2:
+    resolution: {integrity: sha512-Sqvcos4EJHFAf0LCKxDzVwe35JFRVu8DPh4TOD9iogbFhCZeNyIVoDI5KYWbnRvhAfOT2VER5P1hOQewC4Z4qw==}
     peerDependencies:
       vite: ^7.3.0
 
@@ -14392,7 +14392,7 @@ snapshots:
     dependencies:
       vite: 7.3.1(@types/node@22.19.8)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2)
 
-  vite-plugin-wrapper@0.0.1(vite@7.3.1(@types/node@22.19.8)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2)):
+  vite-plugin-wrapper@0.0.2(vite@7.3.1(@types/node@22.19.8)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2)):
     dependencies:
       vite: 7.3.1(@types/node@22.19.8)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2)
 
