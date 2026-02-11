@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.10",
-    "@brillout/test-e2e": "^0.6.21",
+    "@brillout/test-e2e": "^0.6.22",
     "@changesets/cli": "^2.29.8",
     "@vikejs/biome-config": "^2.0.1",
     "playwright": "^1.57.0"

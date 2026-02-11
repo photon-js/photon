@@ -1,11 +1,6 @@
-import { expectLog, fetchHtml, run, test } from "@brillout/test-e2e";
+import { runCommandThatThrows } from "../utils.js";
 
 process.env.TARGET = "cloudflare";
 process.env.SERVER = "tests/no-export-default/hono";
 
-run("pnpm run dev --strictPort --port 3000");
-
-test("page crashes with error message", async () => {
-  await fetchHtml("/");
-  expectLog('Expected "default" export');
-});
+await runCommandThatThrows("pnpm run dev --strictPort --port 3000", "must include a { fetch() } function");

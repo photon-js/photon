@@ -8,6 +8,7 @@ import {
   type InlineConfig,
   mergeConfig,
   type Plugin,
+  type RunnableDevEnvironment,
   type UserConfig,
   type ViteDevServer,
 } from "vite";
@@ -30,6 +31,30 @@ export function photonDevPlugin(): Plugin {
   return {
     name: "photon:dev-server",
     perEnvironmentStartEndDuringDev: true,
+    config() {
+      return {
+        environments: {
+          // Similar usage to `runnerImport`, but can resolve our virtual modules
+          photon: {
+            consumer: "server",
+            dev: {
+              moduleRunnerTransform: true,
+              runnerOptions: {
+                hmr: {
+                  logger: false,
+                },
+              },
+              hot: false,
+            },
+            resolve: {
+              external: true,
+              mainFields: [],
+              conditions: ["node"],
+            },
+          },
+        },
+      };
+    },
     apply(_config, { command, mode }) {
       return command === "serve" && mode !== "test";
     },
@@ -137,7 +162,8 @@ async function envImportFetchable<R extends object = object>(
   server: ViteDevServer,
   resolvedId: string,
 ): Promise<Fetchable & R> {
-  const mod = await server.ssrLoadModule(resolvedId);
+  const ssr = server.environments.photon as RunnableDevEnvironment;
+  const mod = await ssr.runner.import(resolvedId);
   return assertFetchable(mod, resolvedId) as Fetchable & R;
 }
 
