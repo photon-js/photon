@@ -1,4 +1,18 @@
-import { autoRetry, expect, expectLog, fetchHtml, getServerUrl, page, run, test } from "@brillout/test-e2e";
+import { fileURLToPath } from "node:url";
+import {
+  autoRetry,
+  editFile,
+  editFileRevert,
+  expect,
+  expectLog,
+  fetchHtml,
+  getServerUrl,
+  page,
+  run,
+  sleep,
+  test,
+} from "@brillout/test-e2e";
+import { findFile } from "pkg-types";
 import { runCommandThatThrows } from "./utils.js";
 
 export { testRun, testRunUnsupported };
@@ -31,7 +45,7 @@ function testRun(
   runtime: Runtimes,
   mode: Modes,
   server: Servers,
-  options?: { hmr?: boolean | "prefer-restart" } & Parameters<typeof run>[1],
+  options?: { hmr?: boolean } & Parameters<typeof run>[1],
 ) {
   run(getCmd(runtime, mode, server), {
     // Preview => builds app which takes a long time
@@ -61,50 +75,49 @@ function testRun(
     expect(text).toContain(server);
   });
 
-  // FIXME in universal-deploy
-  // if (options?.hmr) {
-  //   const entry = findFile("hmr-route.ts", {
-  //     startingFrom: fileURLToPath(import.meta.url),
-  //   });
-  //
-  //   test("vite hmr websocket", async () => {
-  //     await page.goto(`${getServerUrl()}/`);
-  //
-  //     // Wait for the connection message
-  //     await autoRetry(async () => {
-  //       expectLog("[vite] connected.");
-  //     });
-  //   });
-  //
-  //   test("server-side HMR", async () => {
-  //     const getHmrText = async () => {
-  //       const response = await fetch(`${getServerUrl()}/hmr`);
-  //       return response.text();
-  //     };
-  //
-  //     expect(await getHmrText()).toBe("BEFORE HMR");
-  //
-  //     editFile(await entry, (content) => content.replaceAll("BEFORE", "AFTER"));
-  //
-  //     await sleep(300);
-  //     await autoRetry(async () => {
-  //       if (options.hmr === true) {
-  //         expectLog("[vite] program reload");
-  //       }
-  //       expect(await getHmrText()).toBe("AFTER HMR");
-  //     });
-  //
-  //     editFileRevert();
-  //
-  //     await sleep(300);
-  //     await autoRetry(async () => {
-  //       if (options.hmr === true) {
-  //         expectLog("[vite] program reload");
-  //       }
-  //       expect(await getHmrText()).toBe("BEFORE HMR");
-  //     });
-  //   });
-  // }
+  if (options?.hmr) {
+    const entry = findFile("hmr-route.ts", {
+      startingFrom: fileURLToPath(import.meta.url),
+    });
+
+    test("vite hmr websocket", async () => {
+      await page.goto(`${getServerUrl()}/`);
+
+      // Wait for the connection message
+      await autoRetry(async () => {
+        expectLog("[vite] connected.");
+      });
+    });
+
+    test("server-side HMR", async () => {
+      const getHmrText = async () => {
+        const response = await fetch(`${getServerUrl()}/hmr`);
+        return response.text();
+      };
+
+      expect(await getHmrText()).toBe("BEFORE HMR");
+
+      editFile(await entry, (content) => content.replaceAll("BEFORE", "AFTER"));
+
+      await sleep(300);
+      await autoRetry(async () => {
+        if (options.hmr === true) {
+          expectLog("[vite] program reload");
+        }
+        expect(await getHmrText()).toBe("AFTER HMR");
+      });
+
+      editFileRevert();
+
+      await sleep(300);
+      await autoRetry(async () => {
+        if (options.hmr === true) {
+          expectLog("[vite] program reload");
+        }
+        expect(await getHmrText()).toBe("BEFORE HMR");
+      });
+    });
+  }
 }
 
 async function testRunUnsupported(

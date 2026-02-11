@@ -60,6 +60,7 @@ export function photonDevPlugin(options: PhotonPluginOptions): Plugin {
       if (config.consumer === "client") return;
       return {
         dev: {
+          // Avoids printing error messages when server is restarting
           recoverable: false,
         },
       };
@@ -91,6 +92,7 @@ export function photonDevPlugin(options: PhotonPluginOptions): Plugin {
         const mod = await envImportFetchable<ServerOptions>(server, state.resolvedId);
         state.options = mapServerOptionsToVite(mod, { logger: server.config.logger });
       } catch {
+        // TODO Could be fixed by using a virtual module sending those information through IPC
         this.warn(
           `[photon] Failed to parse server entry options. If you're defining server options in '${options.entry}', make sure to also configure them in your Vite config.`,
         );
