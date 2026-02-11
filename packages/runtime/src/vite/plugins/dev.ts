@@ -12,7 +12,7 @@ import {
   type UserConfig,
   type ViteDevServer,
 } from "vite";
-import type { ServerOptions } from "../types.js";
+import type { PhotonPluginOptions, ServerOptions } from "../types.js";
 
 const savedOptsSymbol = Symbol.for("photon:saved-hmr-opts");
 
@@ -25,8 +25,9 @@ interface State {
 /**
  * Resolves catch-all entry and forwards config to vite devServer
  */
-export function photonDevPlugin(): Plugin {
+export function photonDevPlugin(options: PhotonPluginOptions): Plugin {
   let state: State | undefined;
+  let enabled = true;
 
   return {
     name: "photon:dev-server",
@@ -55,6 +56,14 @@ export function photonDevPlugin(): Plugin {
         },
       };
     },
+    configEnvironment(_name, config) {
+      if (config.consumer === "client") return;
+      return {
+        dev: {
+          recoverable: false,
+        },
+      };
+    },
     apply(_config, { command, mode }) {
       return command === "serve" && mode !== "test";
     },
@@ -78,12 +87,20 @@ export function photonDevPlugin(): Plugin {
         config: originalInlineConfig,
       };
 
-      const mod = await envImportFetchable<ServerOptions>(server, state.resolvedId);
-      const options = mapServerOptionsToVite(mod, { logger: server.config.logger });
-      state.options = options;
-      if (!options) return;
+      try {
+        const mod = await envImportFetchable<ServerOptions>(server, state.resolvedId);
+        state.options = mapServerOptionsToVite(mod, { logger: server.config.logger });
+      } catch {
+        this.warn(
+          `[photon] Failed to parse server entry options. If you're defining server options in '${options.entry}', make sure to also configure them in your Vite config.`,
+        );
+        enabled = false;
+        return;
+      }
 
-      const inlineConfig = mergeConfig(originalInlineConfig, options);
+      if (!state.options) return;
+
+      const inlineConfig = mergeConfig(originalInlineConfig, state.options);
       saveOptions(inlineConfig, state);
       Object.defineProperty(server.config, "inlineConfig", {
         get() {
@@ -104,6 +121,7 @@ export function photonDevPlugin(): Plugin {
       });
     },
     async hotUpdate({ file, modules, read, server, timestamp }) {
+      if (!enabled) return;
       if (state?.resolvedId !== file) return;
 
       const invalidatedModules = new Set<EnvironmentModuleNode>();

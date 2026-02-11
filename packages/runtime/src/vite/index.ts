@@ -9,7 +9,7 @@ const re_catchAll = /^virtual:ud:catch-all$/;
 export function photon(options: PhotonPluginOptions): Plugin[] {
   return [
     photonMultiEntryPlugin(options),
-    photonDevPlugin(),
+    photonDevPlugin(options),
     photonEnhancePlugin(),
     {
       name: "photon:node:resolve-local-entry",

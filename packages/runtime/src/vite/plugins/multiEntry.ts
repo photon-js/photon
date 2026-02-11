@@ -21,6 +21,14 @@ export function photonMultiEntryPlugin(options: PhotonPluginOptions): Plugin {
         id: `${options.entry}?${p_photonEntryRaw.param}=${encodeURIComponent(`${entry.id}?γ`)}`,
       }));
     },
+    configEnvironment(_name, config) {
+      if (config.consumer === "client") return;
+      return {
+        optimizeDeps: {
+          entries: options.entry,
+        },
+      };
+    },
     resolveId: {
       filter: {
         id: [re_photonEntry, p_photonEntryRaw.re],

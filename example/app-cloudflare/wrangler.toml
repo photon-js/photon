@@ -2,3 +2,6 @@ name = "app-cloudflare-photon"
 compatibility_date = "2025-04-03"
 main = "virtual:ud:catch-all"
 preview_urls = true
+
+[vars]
+TEST_VAL = "test"

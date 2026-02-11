@@ -28,4 +28,10 @@ export default defineConfig({
     }),
     awesomeFramework(),
   ],
+
+  ssr: {
+    optimizeDeps: {
+      include: ["@universal-middleware/core"],
+    },
+  },
 });

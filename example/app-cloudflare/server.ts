@@ -1,3 +1,4 @@
+import { env } from "cloudflare:workers";
 import photonEntry from "virtual:photon:entry";
 import type { ServerOptions } from "@photonjs/runtime";
 import { apply } from "@universal-middleware/hono";
@@ -10,7 +11,10 @@ function startApp(): ServerOptions {
   apply(app, [...awesomeMiddlewares, photonEntry.fetch]);
 
   return {
-    fetch: app.fetch,
+    fetch(request) {
+      console.log("TEST_VAL", env.TEST_VAL);
+      return app.fetch(request);
+    },
   };
 }
 
