@@ -1,6 +1,4 @@
-export { headings };
-export { headingsDetached };
-export { categories };
+export { categories, headings, headingsDetached };
 
 import { type Config, type HeadingDefinition, type HeadingDetachedDefinition, iconCompass } from "@brillout/docpress";
 

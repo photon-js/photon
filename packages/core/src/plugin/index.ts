@@ -11,13 +11,13 @@ import { supportedTargetServers } from "./plugins/supportedServers.js";
 import { targetLoader } from "./plugins/targetLoader.js";
 
 export {
-  photon,
+  type InstallPhotonCoreOptions,
   installPhotonCore,
   installPhotonResolver,
+  photon,
+  photon as default,
   supportedTargetServers,
   targetLoader,
-  type InstallPhotonCoreOptions,
-  photon as default,
 };
 
 function photon(config?: Photon.Config): Plugin[] {

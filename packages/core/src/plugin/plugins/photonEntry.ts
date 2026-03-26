@@ -222,11 +222,6 @@ export function photonEntry(): Plugin[] {
 
             entry.resolvedId = resolved.id;
 
-            // Ensure early resolution of photon meta during build
-            if (this.environment.config.command === "build") {
-              await this.load({ ...resolved, resolveDependencies: true });
-            }
-
             return {
               ...resolved,
               meta: {
@@ -290,11 +285,6 @@ export function photonEntry(): Plugin[] {
 
             assertUsage(entry, `Cannot find a handler for ${resolved.id}`);
             entry.resolvedId = resolved.id;
-
-            // Ensure early resolution of photon meta during build
-            if (this.environment.config.command === "build") {
-              await this.load({ ...resolved, resolveDependencies: true });
-            }
 
             return {
               ...resolved,

@@ -20,4 +20,4 @@ export default [
     name: "photon:sirv",
     immutable: true,
   }),
-] satisfies UniversalMiddleware[];
+] as UniversalMiddleware[];

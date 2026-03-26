@@ -61,7 +61,10 @@ export function installPhotonResolver(name: string, options?: InstallPhotonBaseO
   ) {
     return async function resolvePhotonVirtualModule(this: Pick<PluginContext, "resolve">) {
       // first, try basic resolve
-      let resolved = await this.resolve(id, importer, opts);
+      let resolved = await this.resolve(id, importer, {
+        ...opts,
+        custom: { ...opts?.custom, photonVirtualImporterSkip: true },
+      });
 
       if (resolved) {
         return resolved;
@@ -159,6 +162,7 @@ export function installPhotonResolver(name: string, options?: InstallPhotonBaseO
       name: `photon:resolve-virtual-importer:${name}`,
 
       async resolveId(id, importer, opts) {
+        if (opts?.custom?.photonVirtualImporterSkip) return null;
         return ifPhotonModule(
           ["fallback-entry", "get-middlewares"],
           importer,

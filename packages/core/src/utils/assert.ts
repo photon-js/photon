@@ -3,12 +3,12 @@ import { red as _red, bold } from "ansis";
 export {
   assert,
   assertUsage,
-  PhotonError,
   PhotonBugError,
-  PhotonUsageError,
   PhotonConfigError,
-  PhotonRuntimeError,
   PhotonDependencyError,
+  PhotonError,
+  PhotonRuntimeError,
+  PhotonUsageError,
 };
 
 /**
