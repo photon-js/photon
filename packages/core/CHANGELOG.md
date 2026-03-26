@@ -1,3 +1,9 @@
+## 0.1.22
+
+### Patch Changes
+
+- d214211: fix: support Vite 8
+
 ## 0.1.15
 
 ## 0.1.21

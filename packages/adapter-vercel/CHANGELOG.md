@@ -1,5 +1,13 @@
 # @photonjs/vercel
 
+## 0.1.23
+
+### Patch Changes
+
+- d214211: fix: support Vite 8
+- Updated dependencies [d214211]
+  - @photonjs/core@0.1.22
+
 ## 0.1.22
 
 ### Patch Changes
