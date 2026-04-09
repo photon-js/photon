@@ -1,5 +1,13 @@
 # @photonjs/runtime
 
+## 0.1.17
+
+### Patch Changes
+
+- af8334b: fix: widen srvx version range
+- Updated dependencies [af8334b]
+  - @photonjs/srvx@0.1.13
+
 ## 0.1.16
 
 ### Patch Changes

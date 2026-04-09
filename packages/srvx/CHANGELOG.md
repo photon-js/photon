@@ -1,5 +1,11 @@
 # @photonjs/srvx
 
+## 0.1.13
+
+### Patch Changes
+
+- af8334b: fix: widen srvx version range
+
 ## 0.1.12
 
 ### Patch Changes
