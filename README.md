@@ -1,7 +1,7 @@
 # Photon
 
 > [!WARNING]
-> **Beta**: Photon is currently in beta. Some details may change before stable release.
+> **Deprecated**: This repository is deprecated in favor of [universal-deploy](https://github.com/universal-deploy/universal-deploy). See [issue #72](https://github.com/photon-js/photon/issues/72).
 
 ## Links
 
